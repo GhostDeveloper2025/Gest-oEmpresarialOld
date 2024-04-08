@@ -1,5 +1,4 @@
-﻿using GestãoEmpresarial.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,14 +16,13 @@ using System.Windows.Shapes;
 namespace GestãoEmpresarial.Views
 {
     /// <summary>
-    /// Interação lógica para MenuView.xam
+    /// Interação lógica para PesquisaView.xam
     /// </summary>
-    public partial class MenuView : UserControl
+    public partial class PesquisaView : UserControl
     {
-        public MenuView()
+        public PesquisaView()
         {
             InitializeComponent();
-            DataContext = new MenuViewModel();
         }
     }
 }

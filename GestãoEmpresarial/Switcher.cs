@@ -1,4 +1,7 @@
-﻿using MicroMvvm;
+﻿using GestãoEmpresarial.Models;
+using GestãoEmpresarial.Views;
+using GestãoEmpresarial.Views.Layout;
+using MicroMvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,25 +17,20 @@ namespace GestãoEmpresarial
     /// </summary>
     internal class Switcher
     {
-        //public static MenuView pageSwitcher;
-        //private static Dictionary<ObservableObject, UserControl> Menus;
+        public static MainWindow pageSwitcher;
+        //private readonly static Dictionary<ObservableObject, UserControl> Menus;
 
-        ///// <summary>
-        ///// É um construtor (metodo) estático, para inicializar as variaveis necessárias.
-        ///// </summary>
-        //static Switcher()
-        //{
-        //    Menus = new Dictionary<ObservableObject, UserControl>();
-        //}
+        /// <summary>
+        /// É um construtor (metodo) estático, para inicializar as variaveis necessárias.
+        /// </summary>
+        static Switcher()
+        {
+            //Menus = new Dictionary<ObservableObject, UserControl>();
+        }
 
-        //public static void Switch(Type type, object[] paramters)
-        //{
-        //    pageSwitcher.Navigate(type, paramters);
-        //}
-
-        //public static void Switch(ItemMenu newPage)
-        //{
-        //    pageSwitcher.Navigate(newPage, newPage.Parameters);
-        //}
+        public static void Switch(TreeviewMenu menu)
+        {
+            pageSwitcher.Navigate(menu);
+        }
     }
 }

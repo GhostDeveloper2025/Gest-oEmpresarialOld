@@ -105,8 +105,29 @@
     <Compile Include="Utils\EnumDescriptionConverter.cs" />
     <Compile Include="Utils\Methods.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
-    <Compile Include="Views\MenuView.xaml.cs">
+    <Compile Include="Views\CadastroCategoriaView.xaml.cs">
+      <DependentUpon>CadastroCategoriaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CadastroClienteView.xaml.cs">
+      <DependentUpon>CadastroClienteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CadastroColaboradorView.xaml.cs">
+      <DependentUpon>CadastroColaboradorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CadastroOrdemServicoView.xaml.cs">
+      <DependentUpon>CadastroOrdemServicoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CadastroProdutoView.xaml.cs">
+      <DependentUpon>CadastroProdutoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CadastroVendaView.xaml.cs">
+      <DependentUpon>CadastroVendaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Layout\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PesquisaView.xaml.cs">
+      <DependentUpon>PesquisaView.xaml</DependentUpon>
     </Compile>
     <Page Include="CustomControls\CelularTextBox.xaml">
       <SubType>Designer</SubType>
@@ -180,7 +201,35 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MenuView.xaml">
+    <Page Include="Views\CadastroCategoriaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CadastroClienteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CadastroColaboradorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CadastroOrdemServicoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CadastroProdutoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CadastroVendaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Layout\MenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PesquisaView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

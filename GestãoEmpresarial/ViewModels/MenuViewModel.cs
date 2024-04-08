@@ -1,5 +1,6 @@
 ﻿using FontAwesome.Sharp;
 using GestãoEmpresarial.Models;
+using GestãoEmpresarial.Views;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -25,12 +26,12 @@ namespace GestãoEmpresarial.ViewModels
                     Icon = PackIconKind.PlaylistPlus,
                     Items = new TreeviewMenuCollection
                     {
-                        { "Cliente", PackIconKind.PersonAdd , null},
-                        { "Colaborador", PackIconKind.PersonChild, null },
-                        { "Categoria", PackIconKind.Tags, null },
-                        { "Produto", PackIconKind.BoxAdd, null },
-                        { "OS", PackIconKind.HammerScrewdriver, null },
-                        { "Venda", PackIconKind.BoxAdd, null },
+                        { "Cliente", PackIconKind.PersonAdd , typeof(CadastroClienteView) },
+                        { "Colaborador", PackIconKind.PersonChild, typeof(CadastroColaboradorView) },
+                        { "Categoria", PackIconKind.Tags, typeof(CadastroCategoriaView) },
+                        { "Produto", PackIconKind.BoxAdd, typeof(CadastroProdutoView) },
+                        { "OS", PackIconKind.HammerScrewdriver, typeof(CadastroOrdemServicoView) },
+                        { "Venda", PackIconKind.BoxAdd, typeof(CadastroVendaView) },
                     }
                 },
                 new TreeviewMenu

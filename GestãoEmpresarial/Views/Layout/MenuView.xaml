@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="GestãoEmpresarial.Views.MenuView"
+﻿<UserControl x:Class="GestãoEmpresarial.Views.Layout.MenuView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -17,10 +17,13 @@
         <!--Painel Lateral-->
             <!-- StackPanel Panel Left-->
             <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                <TreeView ItemsSource="{Binding Items}" ItemContainerStyle="{StaticResource TreeViewItemStyle_ExpandAll}" >
+                <TreeView 
+                    Name="TrMenu"
+                    ItemsSource="{Binding Items}" 
+                    ItemContainerStyle="{StaticResource TreeViewItemStyle_ExpandAll}" >
                     <TreeView.ItemTemplate>
                         <HierarchicalDataTemplate DataType="{x:Type localmodels:TreeviewMenu}" ItemsSource="{Binding Items}">
-                            <WrapPanel>
+                            <WrapPanel MouseLeftButtonUp="WrapPanel_MouseLeftButtonUp" >
                                 <materialDesign:PackIcon Kind="{Binding Icon}"  Margin="0,0,5,0"/>
                                 <TextBlock Text="{Binding Header}"  Margin="0,0,10,0"/>
                             </WrapPanel>
