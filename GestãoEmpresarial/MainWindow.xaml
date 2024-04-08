@@ -1,0 +1,19 @@
+﻿<Window x:Class="GestãoEmpresarial.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GestãoEmpresarial"
+        xmlns:view="clr-namespace:GestãoEmpresarial.Views"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <DockPanel LastChildFill="True">
+        <StackPanel>
+            <!--Painel De Informações:-->
+            <TextBlock Text="VERSÃO DO SOFTWARE"/>
+            <TextBlock Text="V1.0"/>
+            <view:MenuView></view:MenuView>
+        </StackPanel>
+        <Grid DockPanel.Dock="Bottom" Name="fContainer" Margin="10,10,10,10" />
+    </DockPanel>
+</Window>
