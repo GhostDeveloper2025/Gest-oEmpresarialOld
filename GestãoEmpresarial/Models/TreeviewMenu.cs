@@ -11,8 +11,11 @@ namespace GestãoEmpresarial.Models
     public class TreeviewMenu
     {
         public string Header { get; set; }
-        public PackIconKind Icon { get; set; } // Adicionando a propriedade Icon
+        public PackIconKind Icon { get; set; }
 
-        public ObservableCollection<TreeviewMenuItem> Items { get; set; }
+        public Type Screen { get; set; }
+        public object[] ScreenParameters { get; set; }
+
+        public TreeviewMenuCollection Items { get; set; }
     }
 }

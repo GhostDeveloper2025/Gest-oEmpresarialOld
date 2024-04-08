@@ -1,4 +1,5 @@
-﻿using GestãoEmpresarial.Models;
+﻿using FontAwesome.Sharp;
+using GestãoEmpresarial.Models;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -22,76 +23,28 @@ namespace GestãoEmpresarial.ViewModels
                 {
                     Header = "Cadastros",
                     Icon = PackIconKind.PlaylistPlus,
-                    Items = new ObservableCollection<TreeviewMenuItem>
+                    Items = new TreeviewMenuCollection
                     {
-                        new TreeviewMenuItem
-                        {
-                            Header = "Cliente",
-                            Icon = PackIconKind.PersonAdd
-                        },
-                        new TreeviewMenuItem
-                        {
-                            Header = "Colaborador",
-                            Icon = PackIconKind.PersonChild
-                        },
-                        new TreeviewMenuItem
-                        {
-                            Header = "Categoria",
-                            Icon = PackIconKind.Tags
-                        },
-                        new TreeviewMenuItem
-                        {
-                            Header = "Produto",
-                             Icon = PackIconKind.BoxAdd
-                        },
-                        new TreeviewMenuItem
-                        {
-                            Header = "OS",
-                            Icon= PackIconKind.HammerScrewdriver,
-                        },
-                        new TreeviewMenuItem
-                        {
-                            Header = "Venda",
-                            Icon = PackIconKind.BoxAdd,
-                        },
+                        { "Cliente", PackIconKind.PersonAdd , null},
+                        { "Colaborador", PackIconKind.PersonChild, null },
+                        { "Categoria", PackIconKind.Tags, null },
+                        { "Produto", PackIconKind.BoxAdd, null },
+                        { "OS", PackIconKind.HammerScrewdriver, null },
+                        { "Venda", PackIconKind.BoxAdd, null },
                     }
                 },
                 new TreeviewMenu
                 {
                     Header = "Pesquisar",
                     Icon = PackIconKind.FileSearch,
-                    Items = new ObservableCollection<TreeviewMenuItem>
+                    Items = new TreeviewMenuCollection
                     {
-                        new TreeviewMenuItem
-                        {
-                            Header = "Cliente",
-                             Icon = PackIconKind.PersonAdd
-                        },
-                        new TreeviewMenuItem
-                        {
-                            Header = "Colaborador",
-                            Icon = PackIconKind.PersonChild
-                        },
-                        new TreeviewMenuItem
-                        {
-                            Header = "Categoria",
-                            Icon = PackIconKind.Tags
-                        },
-                        new TreeviewMenuItem
-                        {
-                            Header = "Produto",
-                            Icon = PackIconKind.BoxAdd
-                        },
-                        new TreeviewMenuItem
-                        {
-                            Header = "OS",
-                            Icon= PackIconKind.HammerScrewdriver,
-                        },
-                        new TreeviewMenuItem
-                        {
-                            Header = "Venda",
-                            Icon = PackIconKind.BoxAdd,
-                        },
+                        { "Cliente", PackIconKind.PersonAdd , null},
+                        { "Colaborador", PackIconKind.PersonChild, null },
+                        { "Categoria", PackIconKind.Tags, null },
+                        { "Produto", PackIconKind.BoxAdd, null },
+                        { "OS", PackIconKind.HammerScrewdriver, null },
+                        { "Venda", PackIconKind.BoxAdd, null },
                     }
                 }
             };

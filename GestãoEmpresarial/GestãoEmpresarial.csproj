@@ -98,7 +98,7 @@
       <DependentUpon>TelefoneTextBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\TreeviewMenu.cs" />
-    <Compile Include="Models\TreeviewMenuItem.cs" />
+    <Compile Include="Models\TreeviewMenuCollection.cs" />
     <Compile Include="Switcher.cs" />
     <Compile Include="Utils\CapitalizeWordsConverter.cs" />
     <Compile Include="Utils\DecimalConverter.cs" />
