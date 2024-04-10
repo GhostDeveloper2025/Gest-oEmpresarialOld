@@ -17,9 +17,9 @@
 
             <!--#region  Converters-->
             <!-- Converters -->
-            <util:DecimalConverter x:Key="DecimalConverter"/>
+            <!--<util:DecimalConverter x:Key="DecimalConverter"/>
             <util:EnumDescriptionConverter x:Key="EnumConverter"/>
-            <util:CapitalizeWordsConverter  x:Key="CapitalizeWordsConverter "/>
+            <util:CapitalizeWordsConverter  x:Key="CapitalizeWordsConverter "/>-->
             <!--#endregion-->
 
             <!--#region MergedDictionaries recursos compartilhados... -->

@@ -18,7 +18,7 @@ namespace GestãoEmpresarial.CustomControls
     /// <summary>
     /// Interação lógica para MoedaTextBox.xam
     /// </summary>
-    public partial class MoedaTextBox : UserControl
+    public partial class MoedaTextBox : TextBox
     {
         public MoedaTextBox()
         {

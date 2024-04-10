@@ -18,7 +18,7 @@ namespace GestãoEmpresarial.CustomControls
     /// <summary>
     /// Interação lógica para CnpjTextBox.xam
     /// </summary>
-    public partial class CnpjTextBox : UserControl
+    public partial class CnpjTextBox : TextBox
     {
         public CnpjTextBox()
         {

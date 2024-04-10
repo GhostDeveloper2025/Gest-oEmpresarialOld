@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Markup;
+using static System.Resources.ResXFileRef;
 
 namespace GestãoEmpresarial.Utils
 {
-    public class CapitalizeWordsConverter : IValueConverter
+    public class CapitalizeWordsConverter : MarkupExtensionGestaoEmpresarial, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

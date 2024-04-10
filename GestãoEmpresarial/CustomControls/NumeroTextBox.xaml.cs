@@ -18,7 +18,7 @@ namespace GestãoEmpresarial.CustomControls
     /// <summary>
     /// Interação lógica para NumeroTextBox.xam
     /// </summary>
-    public partial class NumeroTextBox : UserControl
+    public partial class NumeroTextBox : TextBox
     {
         public NumeroTextBox()
         {

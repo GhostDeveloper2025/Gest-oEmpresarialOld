@@ -4,9 +4,240 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GestãoEmpresarial.Views"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:wpfcc="http://wpfcontrols.com/"
+             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
+             xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
+             xmlns:providers="clr-namespace:GestãoEmpresarial.Providers"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <StackPanel>
+        <UniformGrid>
+            <wpfcc:AutoCompleteTextBox 
+                DisplayMember="Nome" 
+                IsEnabled="{Binding NovaOrdemServico}"
+                Provider="{providers:ClienteProvider}"
+                SelectedItem="{Binding ObjectoEditar.Cliente, 
+                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <wpfcc:AutoCompleteTextBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Path=Nome}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </wpfcc:AutoCompleteTextBox.ItemTemplate>
+            </wpfcc:AutoCompleteTextBox>
+
+            <wpfcc:AutoCompleteTextBox
+                DisplayMember="Nome"
+                IsEnabled="{Binding PodeEditar}"
+                Provider="{providers:ColaboradorTecnicoProvider}"
+                SelectedItem="{Binding ObjectoEditar.Responsavel, 
+                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <wpfcc:AutoCompleteTextBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Path=Nome}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </wpfcc:AutoCompleteTextBox.ItemTemplate>
+            </wpfcc:AutoCompleteTextBox>
+
+            <wpfcc:AutoCompleteTextBox
+                DisplayMember="Nome"
+                IsEnabled="{Binding PodeEditar}"
+                Provider="{providers:ColaboradorTecnicoProvider}"
+                SelectedItem="{Binding ObjectoEditar.Tecnico, 
+                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <wpfcc:AutoCompleteTextBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Path=Nome}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </wpfcc:AutoCompleteTextBox.ItemTemplate>
+            </wpfcc:AutoCompleteTextBox>
+
+            <ComboBox 
+                Tag="Buscar" 
+                HorizontalAlignment="Left"
+                SelectedValuePath="Key"
+                DisplayMemberPath="Value"
+                ItemsSource="{Binding StatusList}"   
+                SelectedValue="{Binding ObjectoEditar.Status, 
+                UpdateSourceTrigger=PropertyChanged}">
+            </ComboBox>
+            <TextBox
+                IsEnabled="{Binding NovaOrdemServico}"
+                Text="{Binding ObjectoEditar.Ferramenta, 
+                UpdateSourceTrigger=PropertyChanged, 
+                Converter={utils:CapitalizeWordsConverter}}">
+            </TextBox>
+
+            <ComboBox 
+                Tag="Buscar"
+                HorizontalAlignment="Left"
+                SelectedValuePath="Key"
+                DisplayMemberPath="Value"
+                IsEnabled="{Binding NovaOrdemServico}"
+                ItemsSource="{Binding MarcasList}"    
+                SelectedValue="{Binding ObjectoEditar.Marca, UpdateSourceTrigger=PropertyChanged}">
+            </ComboBox>
+
+            <TextBox 
+                IsEnabled="{Binding NovaOrdemServico}"
+                Text="{Binding ObjectoEditar.Modelo, 
+                UpdateSourceTrigger=PropertyChanged, 
+                Converter={utils:CapitalizeWordsConverter}}">
+            </TextBox>
+
+            <CheckBox 
+                VerticalAlignment="Center" 
+                Margin="15,10,0,0" 
+                Background="Blue" 
+                IsChecked="{Binding ObjectoEditar.Garantia}"
+                IsEnabled="{Binding NovaOrdemServico}">
+                <TextBlock 
+                    Text="  É Garantia? " 
+                    FontSize="20" 
+                    HorizontalAlignment="Left"
+                    Foreground="#B40946" />
+            </CheckBox>
+
+            <TextBox
+                AcceptsReturn="True" 
+                TextWrapping="Wrap" 
+                MaxLines="1" 
+                MaxLength="150"
+                VerticalAlignment="Stretch"
+                Text="{Binding ObjectoEditar.Obs,  
+                UpdateSourceTrigger=PropertyChanged,
+                Converter={utils:CapitalizeWordsConverter}}">
+            </TextBox>
+
+            <TextBox
+                Text="{Binding ObjectoEditar.Box}"
+                IsEnabled="{Binding PodeEditar}">
+            </TextBox>
+        </UniformGrid>
+
+        <TextBlock 
+                Margin="0,15,0,0"
+                Text="Seção Adicionar Itens" 
+                FontSize="22" 
+                Background="#1A2A40" 
+                Foreground="#ADBFC3" />
+        
+        <UniformGrid>
+            <wpfcc:AutoCompleteTextBox
+                DisplayMember="Nome"
+                Provider="{Binding Path=DataContext, RelativeSource={RelativeSource Self}}"
+                SelectedItem="{Binding ObjectoEditar.ItemOsAdicionar.Produto, 
+                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <wpfcc:AutoCompleteTextBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Path=Nome}" />
+                            <TextBlock Text="{Binding Path=CodProduto}"/>
+                            <TextBlock Text="{Binding Path=ValorVenda}"/>
+                            <TextBlock Text="{Binding Path=Estoque.Quantidade}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </wpfcc:AutoCompleteTextBox.ItemTemplate>
+            </wpfcc:AutoCompleteTextBox>
+
+            <TextBox
+                Text="{Binding ObjectoEditar.ItemOsAdicionar.Produto.Estoque.Quantidade}"
+                IsReadOnly="True" 
+                IsHitTestVisible="False">
+            </TextBox>
+
+            <cc:MoedaTextBox 
+                Text="{Binding ObjectoEditar.ItemOsAdicionar.ValUnitario, 
+                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            </cc:MoedaTextBox>
+
+            <cc:NumeroTextBox
+                Text="{Binding ObjectoEditar.ItemOsAdicionar.Quantidade, 
+                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                MaxLength="9">
+            </cc:NumeroTextBox>
+
+            <cc:NumeroTextBox
+                Text="{Binding ObjectoEditar.ItemOsAdicionar.Desconto, 
+                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            </cc:NumeroTextBox>
+
+            <cc:MoedaTextBox
+                Text="{Binding ObjectoEditar.ItemOsAdicionar.TotalItem, 
+                Converter={utils:DecimalConverter}, Mode=OneWay}" 
+                IsReadOnly="True" 
+                IsHitTestVisible="False">
+            </cc:MoedaTextBox>
+        </UniformGrid>
+
+        <TextBlock 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Center" 
+            Foreground="#836EFB" FontSize="15" 
+            FontFamily="Cambria Mat" 
+            FontWeight="Medium">
+            <Run Text="Número De Registros: " />
+            <Run Text="{Binding ObjectoEditar.NumberOfRecords}" />
+        </TextBlock>
             
-    </Grid>
+        <DataGrid x:Name="DgItensOsModel"
+                  IsReadOnly="True" 
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding ObjectoEditar.ListItensOs}">
+            <!-- ... Define as colunas dos Botões ... -->
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Opções">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <WrapPanel Margin="0,0,15,0">
+                                <Button 
+                                    Cursor="Hand"
+                                    Command="{Binding DataContext.ApagarItemOsCommand, ElementName=DgItensOsModel}" 
+                                    CommandParameter="{Binding}">
+                                    <fa:IconImage Icon="Trash" />
+                                </Button>
+                            </WrapPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <UniformGrid>
+            <cc:MoedaTextBox
+                Text="{Binding ObjectoEditar.TotalMaoObra, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            </cc:MoedaTextBox>
+
+            <TextBox 
+                Text="{Binding ObjectoEditar.SubTotalProduto, Mode=OneWay}"
+                IsReadOnly="True" 
+                IsHitTestVisible="False">
+            </TextBox>
+
+            <TextBox
+                Text="{Binding ObjectoEditar.TotalDescontoProduto, Mode=OneWay}" 
+                IsReadOnly="True" 
+                IsHitTestVisible="False">
+            </TextBox>
+
+            <TextBox
+                Text="{Binding ObjectoEditar.TotalProduto, Mode=OneWay}"
+                IsReadOnly="True" 
+                IsHitTestVisible="False">
+            </TextBox>
+
+            <cc:MoedaTextBox
+                Text="{Binding ObjectoEditar.TotalOS, 
+                Converter={utils:DecimalConverter}, Mode=OneWay}" 
+                IsReadOnly="True" 
+                IsHitTestVisible="False">
+            </cc:MoedaTextBox>
+        </UniformGrid>
+            
+    </StackPanel>
 </UserControl>

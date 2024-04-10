@@ -85,9 +85,6 @@
     <Compile Include="CustomControls\CpfTextBox.xaml.cs">
       <DependentUpon>CpfTextBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomControls\MenuExpander.xaml.cs">
-      <DependentUpon>MenuExpander.xaml</DependentUpon>
-    </Compile>
     <Compile Include="CustomControls\MoedaTextBox.xaml.cs">
       <DependentUpon>MoedaTextBox.xaml</DependentUpon>
     </Compile>
@@ -99,10 +96,16 @@
     </Compile>
     <Compile Include="Models\TreeviewMenu.cs" />
     <Compile Include="Models\TreeviewMenuCollection.cs" />
+    <Compile Include="Providers\ClienteProvider.cs" />
+    <Compile Include="Providers\ColaboradorProvider.cs" />
+    <Compile Include="Providers\ColaboradorResponsavelProvider.cs" />
+    <Compile Include="Providers\ColaboradorTecnicoProvider.cs" />
+    <Compile Include="Providers\ProdutoProvider.cs" />
     <Compile Include="Switcher.cs" />
     <Compile Include="Utils\CapitalizeWordsConverter.cs" />
     <Compile Include="Utils\DecimalConverter.cs" />
     <Compile Include="Utils\EnumDescriptionConverter.cs" />
+    <Compile Include="Utils\MarkupExtensionGestaoEmpresarial.cs" />
     <Compile Include="Utils\Methods.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="Views\CadastroCategoriaView.xaml.cs">
@@ -142,10 +145,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomControls\CpfTextBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\MenuExpander.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

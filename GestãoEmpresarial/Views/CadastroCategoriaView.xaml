@@ -4,22 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GestãoEmpresarial.Views"
-             xmlns:util="clr-namespace:GestãoEmpresarial.Utils"
+             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
-        <TextBlock 
-                         HorizontalAlignment="Left"
-                         Text="{Binding ObjectoEditar.IdCategoria}"/>
-        <TextBox Text="">
-        </TextBox>
-        <TextBox 
+        <TextBlock Text="{Binding ObjectoEditar.IdCategoria}"/>
+        <UniformGrid>
+            <TextBox Text="{Binding ObjectoEditar.Nome, 
+            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+            Converter={utils:CapitalizeWordsConverter}}">
+            </TextBox>
+            <TextBox 
             AcceptsReturn="True" 
             TextWrapping="Wrap" 
             MaxLines="1" 
             MaxLength="150"
-            VerticalAlignment="Stretch"
-            Text="">
-        </TextBox>
+            VerticalAlignment="Stretch"                       
+            Text="{Binding ObjectoEditar.Descricao, 
+            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+            Converter={utils:CapitalizeWordsConverter}}">
+            </TextBox>
+        </UniformGrid>
     </StackPanel>
 </UserControl>

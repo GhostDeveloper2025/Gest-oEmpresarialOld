@@ -7,10 +7,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Markup;
 
 namespace GestãoEmpresarial.Utils
 {
-    public class EnumDescriptionConverter : IValueConverter
+    public class EnumDescriptionConverter : MarkupExtensionGestaoEmpresarial, IValueConverter
     {
         private string GetEnumDescription(Enum enumObj)
         {

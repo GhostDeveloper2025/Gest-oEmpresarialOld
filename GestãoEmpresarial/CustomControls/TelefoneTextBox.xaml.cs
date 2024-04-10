@@ -18,7 +18,7 @@ namespace GestãoEmpresarial.CustomControls
     /// <summary>
     /// Interação lógica para TelefoneTextBox.xam
     /// </summary>
-    public partial class TelefoneTextBox : UserControl
+    public partial class TelefoneTextBox : TextBox
     {
         public TelefoneTextBox()
         {

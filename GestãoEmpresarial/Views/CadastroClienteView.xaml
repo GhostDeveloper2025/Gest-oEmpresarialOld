@@ -4,9 +4,97 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GestãoEmpresarial.Views"
+             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
+             xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <!-- Linha do topo -->
+            <RowDefinition Height="Auto" />
+            <!-- Linha do meio -->
+            <RowDefinition Height="*" />
+            <!-- Linha do rodapé -->
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <DockPanel>
+                <!--//TextBox ID\\-->
+                <TextBlock
+                      Width="80"                   
+                      Text="{Binding ObjectoEditar.Idcliente}"/>
+
+                <!-- DATPICKR-->
+                <TextBox x:Name="DtpCliente"
+                      IsEnabled="False"
+                      Text="{Binding ObjectoEditar.DataCadastro, Mode=OneWay, StringFormat=dd/MM/yyyy hh:mm:ss}">
+                </TextBox>
+            </DockPanel>
             
+            <ProgressBar x:Name="progressBar"
+                         Margin="20,20,10,0"
+                         IsIndeterminate="True"
+                         Visibility="Hidden"/>
+            
+            <UniformGrid>
+                <TextBox
+                      Text="{Binding ObjectoEditar.Nome, 
+                 UpdateSourceTrigger=PropertyChanged,  Converter={utils:CapitalizeWordsConverter}}">
+                </TextBox>
+                <cc:CpfTextBox
+                            Text="{Binding ObjectoEditar.CPF,
+                 UpdateSourceTrigger=PropertyChanged}"/>
+                <cc:CpfTextBox                     
+                             Text="{Binding ObjectoEditar.CNPJ,
+                 UpdateSourceTrigger=PropertyChanged}"/>
+                <cc:CepTextBox
+                            Text="{Binding ObjectoEditar.Cep, 
+                 UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox 
+                      Text="{Binding ObjectoEditar.UF, 
+                 UpdateSourceTrigger=PropertyChanged, 
+                 Converter={utils:CapitalizeWordsConverter}}"/>
+                <TextBox 
+                      Text="{Binding ObjectoEditar.Localidade, 
+                 UpdateSourceTrigger=PropertyChanged, 
+                 Converter={utils:CapitalizeWordsConverter}}"/>
+                <TextBox                      
+                      Text="{Binding ObjectoEditar.Logradouro, 
+                 UpdateSourceTrigger=PropertyChanged, 
+                 Converter={utils:CapitalizeWordsConverter}}"/>
+                <TextBox 
+                 Text="{Binding ObjectoEditar.Numero, 
+                 UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox                        
+                      Text="{Binding ObjectoEditar.Bairro, 
+                 UpdateSourceTrigger=PropertyChanged, 
+                 Converter={utils:CapitalizeWordsConverter}}"/>
+                <cc:CelularTextBox
+                                Text="{Binding ObjectoEditar.Celular, 
+                 UpdateSourceTrigger=PropertyChanged}"/>
+                <cc:TelefoneTextBox 
+                                 Text="{Binding ObjectoEditar.Telefone, 
+                 UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox
+                 Text="{Binding ObjectoEditar.Email, 
+                 UpdateSourceTrigger=PropertyChanged, 
+                 Converter={utils:CapitalizeWordsConverter}}"/>
+                <cc:MoedaTextBox 
+                              Text="{Binding ObjectoEditar.LimiteCredito, 
+                 UpdateSourceTrigger=PropertyChanged}"/>
+            </UniformGrid>
+        </StackPanel>
+        <!-- Conteúdo do rodapé -->
+        <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
+            <Button x:Name="BtnSalvar"
+                 Margin="10,10,0,10"
+                 Command="{Binding SaveCommand}"
+                 HorizontalAlignment="Left">
+                <!-- Muda A Cor Do Icone... -->
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Salvar" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>

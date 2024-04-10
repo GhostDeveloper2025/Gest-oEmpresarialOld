@@ -18,7 +18,7 @@ namespace GestãoEmpresarial.CustomControls
     /// <summary>
     /// Interação lógica para CpfTextBox.xam
     /// </summary>
-    public partial class CpfTextBox : UserControl
+    public partial class CpfTextBox : TextBox
     {
         public CpfTextBox()
         {

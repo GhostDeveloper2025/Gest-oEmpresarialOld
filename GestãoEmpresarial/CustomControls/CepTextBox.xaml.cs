@@ -18,7 +18,7 @@ namespace GestãoEmpresarial.CustomControls
     /// <summary>
     /// Interação lógica para CepTextBox.xam
     /// </summary>
-    public partial class CepTextBox : UserControl
+    public partial class CepTextBox : TextBox
     {
         public CepTextBox()
         {
