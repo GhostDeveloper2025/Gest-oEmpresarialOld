@@ -26,12 +26,12 @@ namespace GestãoEmpresarial.ViewModels
                     Icon = PackIconKind.PlaylistPlus,
                     Items = new TreeviewMenuCollection
                     {
-                        { "Cliente", PackIconKind.PersonAdd , typeof(CadastroClienteView) },
-                        { "Colaborador", PackIconKind.PersonChild, typeof(CadastroColaboradorView) },
-                        { "Categoria", PackIconKind.Tags, typeof(CadastroCategoriaView) },
-                        { "Produto", PackIconKind.BoxAdd, typeof(CadastroProdutoView) },
-                        { "OS", PackIconKind.HammerScrewdriver, typeof(CadastroOrdemServicoView) },
-                        { "Venda", PackIconKind.BoxAdd, typeof(CadastroVendaView) },
+                        { "Cliente", PackIconKind.PersonAdd , typeof(CadastroClienteView), new[] { new CadastroClienteViewModel(null) } },
+                        { "Colaborador", PackIconKind.PersonChild, typeof(CadastroColaboradorView), new[] { new CadastroColaboradorViewModel(null) } },
+                        { "Categoria", PackIconKind.Tags, typeof(CadastroCategoriaView), new[] { new CadastroCategoriaViewModel(null) } },
+                        { "Produto", PackIconKind.BoxAdd, typeof(CadastroProdutoView) , new[] { new CadastroProdutoViewModel(null) }},
+                        { "OS", PackIconKind.HammerScrewdriver, typeof(CadastroOrdemServicoView) , new[] { new CadastroOrdemServicoViewModel(null) }},
+                        { "Venda", PackIconKind.BoxAdd, typeof(CadastroVendaView), new[] { new CadastroVendaViewModel (null) } },
                     }
                 },
                 new TreeviewMenu

@@ -29,7 +29,7 @@ namespace GestãoEmpresarial
                     view = (UserControl)Activator.CreateInstance(menu.Screen);
                 else
                     view = (UserControl)Activator.CreateInstance(menu.Screen, menu.ScreenParameters);
-
+                
                 fContainer.Children.Clear();
                 fContainer.Children.Add(view);
                 //só coloca focus depois da thread atual terminar, para ocorrer tem de ser focusable

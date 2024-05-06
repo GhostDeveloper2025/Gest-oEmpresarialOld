@@ -107,6 +107,13 @@
     <Compile Include="Utils\EnumDescriptionConverter.cs" />
     <Compile Include="Utils\MarkupExtensionGestaoEmpresarial.cs" />
     <Compile Include="Utils\Methods.cs" />
+    <Compile Include="ViewModels\CadastroCategoriaViewModel.cs" />
+    <Compile Include="ViewModels\CadastroClienteViewModel.cs" />
+    <Compile Include="ViewModels\CadastroColaboradorViewModel.cs" />
+    <Compile Include="ViewModels\CadastroOrdemServicoViewModel.cs" />
+    <Compile Include="ViewModels\CadastroProdutoViewModel.cs" />
+    <Compile Include="ViewModels\CadastroVendaViewModel.cs" />
+    <Compile Include="ViewModels\CadastroViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="Views\CadastroCategoriaView.xaml.cs">
       <DependentUpon>CadastroCategoriaView.xaml</DependentUpon>

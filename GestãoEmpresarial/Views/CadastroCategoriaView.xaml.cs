@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestãoEmpresarial.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,10 @@ namespace GestãoEmpresarial.Views
     /// </summary>
     public partial class CadastroCategoriaView : UserControl
     {
-        public CadastroCategoriaView()
+        public CadastroCategoriaView(CadastroViewModel cadastroViewModel)
         {
             InitializeComponent();
+            DataContext = cadastroViewModel;
         }
     }
 }
