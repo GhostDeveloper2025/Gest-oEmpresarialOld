@@ -4,9 +4,109 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GestãoEmpresarial.Views"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:wpfcc="http://wpfcontrols.com/"
+             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
+             xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
+             xmlns:providers="clr-namespace:GestãoEmpresarial.Providers"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <StackPanel>
+        <UniformGrid>
+            <TextBox x:Name="TxtId" 
+           Width="80"
+           IsReadOnly="True"
+           Text="{Binding ObjectoEditar.IdVenda}">
+            </TextBox>
+            <TextBox x:Name="DtpOS" Margin="0,0,10,0"
+          IsEnabled="False"
+          Text="{Binding ObjectoEditar.DataVenda, Mode=OneWay, StringFormat=dd/MM/yyyy hh:mm:ss}">
+            </TextBox>
+            <!-- ... DATPICKR Finalizacao ... -->
+            <TextBox x:Name="DtpOSFinalizacao" Margin="0,0,10,0"
+          IsEnabled="False"
+          Text="{Binding ObjectoEditar.DataFinalizacao, Mode=OneWay, StringFormat=dd/MM/yyyy hh:mm:ss}">
+
+            </TextBox>
+
+            <wpfcc:AutoCompleteTextBox x:Name="TxtCliente" Width="250"
+                           DisplayMember="Nome" 
+                           Provider="{providers:ClienteProvider}"
+                           SelectedItem="{Binding ObjectoEditar.Cliente, 
+    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <wpfcc:AutoCompleteTextBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Path=Nome}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </wpfcc:AutoCompleteTextBox.ItemTemplate>
+            </wpfcc:AutoCompleteTextBox>
+            <ComboBox x:Name="CbxStatus" Width="250"
+          Tag="Buscar" HorizontalAlignment="Left"
+          SelectedValuePath="Key"
+          DisplayMemberPath="Value"
+          ItemsSource="{Binding TiposPagamento}"   
+          SelectedValue="{Binding ObjectoEditar.IdCodigoTipoPagamento, 
+    UpdateSourceTrigger=PropertyChanged}">
+            </ComboBox>
+        </UniformGrid>
+
+        <Grid Margin="0,15,0,0">
+            <TextBlock Text="   Seção Adicionar Itens" 
+FontSize="22" Background="#1A2A40" 
+Foreground="#ADBFC3" />
+        </Grid>
+        <UniformGrid>
             
-    </Grid>
+
+            <wpfcc:AutoCompleteTextBox x:Name="TxtProduto" Width="250" 
+                                           DisplayMember="Nome"
+                                           Provider="{Binding Path=DataContext, RelativeSource={RelativeSource Self}}"
+                                           SelectedItem="{Binding ObjectoEditar.ItemVendaAdicionar.Produto, 
+                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <wpfcc:AutoCompleteTextBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Path=Nome}" />
+                            <TextBlock Text="{Binding Path=CodProduto}"/>
+                            <TextBlock Text="{Binding Path=ValorVenda}"/>
+                            <TextBlock Text="{Binding Path=Estoque.Quantidade}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </wpfcc:AutoCompleteTextBox.ItemTemplate>
+            </wpfcc:AutoCompleteTextBox>
+
+            <!-- 
+    No binding do text, o "ElementName" significa o nome do objecto dentro do WPF.
+    E depois no "Path", colocamos a propriedade(atributo) à qual queremos tirar os valores
+-->
+            <TextBox x:Name="TxtQtdEst" Width="100"
+                         Text="{Binding ObjectoEditar.ItemVendaAdicionar.Produto.Estoque.Quantidade}"
+                         IsReadOnly="True" IsHitTestVisible="False">
+            </TextBox>
+
+            <cc:MoedaTextBox x:Name="TxtValUnitario" Width="100"             
+                                 Text="{Binding ObjectoEditar.ItemVendaAdicionar.ValUnitario, 
+                                 Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            </cc:MoedaTextBox>
+
+            <cc:NumeroTextBox x:Name="TxtQtd" Width="100"
+                                   Text="{Binding ObjectoEditar.ItemVendaAdicionar.Quantidade, 
+                                   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                   MaxLength="9" >
+            </cc:NumeroTextBox>
+
+            <cc:NumeroTextBox x:Name="TxtDesconto" Width="100"
+                                   Text="{Binding ObjectoEditar.ItemVendaAdicionar.Desconto, 
+                                   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            </cc:NumeroTextBox>
+
+            <cc:MoedaTextBox x:Name="TxtTotalItens" Width="100"
+                                 Text="{Binding ObjectoEditar.ItemVendaAdicionar.TotalItem, 
+                Converter={utils:DecimalConverter}, Mode=TwoWay}" 
+                                 IsReadOnly="True" IsHitTestVisible="False">
+            </cc:MoedaTextBox>
+        </UniformGrid>
+    </StackPanel>
 </UserControl>

@@ -4,9 +4,99 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GestãoEmpresarial.Views"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+            xmlns:wpfcc="http://wpfcontrols.com/"
+            xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
+            xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
+            xmlns:providers="clr-namespace:GestãoEmpresarial.Providers"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+    <StackPanel>
+        <UniformGrid>
+            <!-- TextBox ID... -->
+            <TextBox x:Name="TxtId"
+          Width="80"
+          IsReadOnly="True"            
+          Text="{Binding ObjectoEditar.IdProduto}"/>
+
+            <!-- DATPICKR... -->
+            <TextBox x:Name="DtpProduto"
+          Margin="0,0,10,0"
+          HorizontalAlignment="Right" 
+          IsEnabled="False"
+          Text="{Binding ObjectoEditar.DataCadastro, Mode=OneWay, StringFormat=dd/MM/yyyy hh:mm:ss}">
+            </TextBox>
+
+            <TextBox x:Name="TxtNome"
+          Width="250"
+          HorizontalAlignment="Left"
+          Text="{Binding ObjectoEditar.Nome, 
+     UpdateSourceTrigger=PropertyChanged, 
+                Converter={utils:DecimalConverter}, Mode=OneWay}" >
+            </TextBox>
+            <!-- TextBox CodProduto... -->
+            <TextBox
+     Width="150"
+     HorizontalAlignment="Left"
+     Text="{Binding ObjectoEditar.CodProduto, 
+     UpdateSourceTrigger=PropertyChanged, 
+                Converter={utils:DecimalConverter}, Mode=OneWay}"/>
+            <!-- ComboBox Marca... -->
+            <ComboBox x:Name="CbxMarca"
+           Width="150"
+           Tag="Buscar"
+           SelectedValuePath="Key"
+           DisplayMemberPath="Value"
+           ItemsSource="{Binding MarcasList}"  
+           SelectedValue="{Binding ObjectoEditar.IdMarca, 
+     UpdateSourceTrigger=PropertyChanged}">
+            </ComboBox>
+            <!-- ComboBox Categoria... -->
+            <ComboBox x:Name="CbxCategoria"
+           Width="200"
+           SelectedValuePath="Key"
+           DisplayMemberPath="Value"
+           ItemsSource="{Binding CategoriasLista}"
+           SelectedValue="{Binding ObjectoEditar.IdCategoria, 
+     UpdateSourceTrigger=PropertyChanged}">
+            </ComboBox>
+            <cc:MoedaTextBox x:Name="TxtValorCusto"
+                  Width="90"
+                  HorizontalAlignment="Left"
+                  Text="{Binding ObjectoEditar.ValorCusto, 
+     UpdateSourceTrigger=PropertyChanged}"/>
+            <!-- TextBox ValorVenda... -->
+            <cc:MoedaTextBox x:Name="TxtValorVenda"
+                  Width="90"
+                  HorizontalAlignment="Left"
+                  Text="{Binding ObjectoEditar.ValorVenda, 
+     UpdateSourceTrigger=PropertyChanged}"/>
+            <!-- TextBox Quantidade... -->
+            <cc:NumeroTextBox x:Name="TxtQuantidade" 
+                    Width="120"
+                    MaxLength="9"
+                    HorizontalAlignment="Left"
+                    Text="{Binding ObjectoEditar.EstoqueQuantidade, 
+     UpdateSourceTrigger=PropertyChanged}"/>
+            <!-- TextBox localizacao... -->
+            <TextBox
+     Width="120"
+     HorizontalAlignment="Left"    
+     Text="{Binding ObjectoEditar.EstoqueLocalizacao, 
+     UpdateSourceTrigger=PropertyChanged, 
+                Converter={utils:DecimalConverter}, Mode=OneWay}"/>
+            <!-- Textbox Descriçao... -->
+            <TextBox x:Name="TxtDescricao" 
+          Width="300"
+          AcceptsReturn="True" 
+          TextWrapping="Wrap" 
+          MaxLines="1" 
+          MaxLength="150"
+          VerticalAlignment="Stretch"                     
+          Text="{Binding ObjectoEditar.Descricao, 
+     UpdateSourceTrigger=PropertyChanged, 
+     Converter={utils:DecimalConverter}, Mode=TwoWay}">
+            </TextBox>
+        </UniformGrid>
+    </StackPanel>
 </UserControl>
