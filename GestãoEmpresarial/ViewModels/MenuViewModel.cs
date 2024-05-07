@@ -40,12 +40,12 @@ namespace GestãoEmpresarial.ViewModels
                     Icon = PackIconKind.FileSearch,
                     Items = new TreeviewMenuCollection
                     {
-                        { "Cliente", PackIconKind.PersonAdd , null},
-                        { "Colaborador", PackIconKind.PersonChild, null },
-                        { "Categoria", PackIconKind.Tags, null },
-                        { "Produto", PackIconKind.BoxAdd, null },
-                        { "OS", PackIconKind.HammerScrewdriver, null },
-                        { "Venda", PackIconKind.BoxAdd, null },
+                        { "Cliente", PackIconKind.PersonAdd , typeof(PesquisaView), new[] { new PesquisaClienteViewModel(null) } },
+                        { "Colaborador", PackIconKind.PersonChild, typeof(PesquisaView) },
+                        { "Categoria", PackIconKind.Tags, typeof(PesquisaView) },
+                        { "Produto", PackIconKind.BoxAdd, typeof(PesquisaView) },
+                        { "OS", PackIconKind.HammerScrewdriver, typeof(PesquisaView) },
+                        { "Venda", PackIconKind.BoxAdd, typeof(PesquisaView) },
                     }
                 }
             };

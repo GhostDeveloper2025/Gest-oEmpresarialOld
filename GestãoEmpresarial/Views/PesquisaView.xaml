@@ -3,10 +3,59 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
              xmlns:local="clr-namespace:GestãoEmpresarial.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+    <DockPanel>
+        <WrapPanel Name="fContainer" DockPanel.Dock="Top" HorizontalAlignment="Right">
+            <TextBox 
+                    MinWidth="100"
+                    Visibility="{Binding CampoPesquisaGlobalVisivel}"
+                     Text="{Binding FiltroGlobal, UpdateSourceTrigger=PropertyChanged,  
+                    Converter={utils:CapitalizeWordsConverter}}"/>
+            <!-- Button Pesquisar... -->
+            <Button  Command="{Binding FiltroCommand, UpdateSourceTrigger=PropertyChanged}">
+                <StackPanel>
+                    <fa:IconImage Height="30" Width="30" Icon="CircleArrowRight" />
+                </StackPanel>
+            </Button>
+        </WrapPanel>
+        <!-- TextBlock para mostrar o número de registros -->
+        <TextBlock DockPanel.Dock="Top" 
+                    Margin="0,10,0,10" 
+                    Foreground="#836EFB"
+                    FontSize="15" 
+                    FontFamily="Cambria Mat" 
+                    FontWeight="Medium">
+                 <Run Text="Número de Registros: " />
+                 <Run Text="{Binding NumberOfRecords}" />
+        </TextBlock>
+        <!--Gera as colunas com base no objecto recebido "AutoGenerateColumns"-->
+        <DataGrid x:Name="DataGridGlobal"
+               AutoGeneratingColumn="OnAutoGeneratingColumn"
+               SelectedItem="{Binding ObjectoSelecionado, Mode=TwoWay}"
+               ItemsSource="{Binding ListaDaGrid, Mode=TwoWay, 
+               UpdateSourceTrigger=PropertyChanged}">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Opções">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <WrapPanel>
+                                <Button Cursor="Hand"
+                                     Command="{Binding DataContext.RemoverCommand, ElementName=DataGridGlobal}" 
+                                     CommandParameter="{Binding}">
+                                    <fa:IconImage Icon="Trash" />
+                                </Button>
+                                <Button Cursor="Hand" Click="BtnEditar_Click">
+                                    <fa:IconImage Icon="Edit" />
+                                </Button>
+                            </WrapPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
 </UserControl>

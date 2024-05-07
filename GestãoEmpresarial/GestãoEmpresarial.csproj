@@ -94,6 +94,10 @@
     <Compile Include="CustomControls\TelefoneTextBox.xaml.cs">
       <DependentUpon>TelefoneTextBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataGridClienteModel.cs" />
+    <Compile Include="Models\DataGridOrdemServicoModel.cs" />
+    <Compile Include="Models\DataGridProdutoModel.cs" />
+    <Compile Include="Models\DataGridVendaModel.cs" />
     <Compile Include="Models\TreeviewMenu.cs" />
     <Compile Include="Models\TreeviewMenuCollection.cs" />
     <Compile Include="Providers\ClienteProvider.cs" />
@@ -115,6 +119,13 @@
     <Compile Include="ViewModels\CadastroVendaViewModel.cs" />
     <Compile Include="ViewModels\CadastroViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\PesquisaCategoriaViewModel.cs" />
+    <Compile Include="ViewModels\PesquisaClienteViewModel.cs" />
+    <Compile Include="ViewModels\PesquisaColaboradorViewModel.cs" />
+    <Compile Include="ViewModels\PesquisaOrdemServicoViewModel.cs" />
+    <Compile Include="ViewModels\PesquisaProdutoViewModel.cs" />
+    <Compile Include="ViewModels\PesquisaVendaViewModel.cs" />
+    <Compile Include="ViewModels\PesquisaViewModel.cs" />
     <Compile Include="Views\CadastroCategoriaView.xaml.cs">
       <DependentUpon>CadastroCategoriaView.xaml</DependentUpon>
     </Compile>

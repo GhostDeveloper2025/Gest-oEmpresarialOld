@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,19 @@ namespace GestãoEmpresarial.Views
         public PesquisaView()
         {
             InitializeComponent();
+        }
+        private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            e.Column.Header = ((PropertyDescriptor)e.PropertyDescriptor).DisplayName;
+            if (e.PropertyType == typeof(System.DateTime))
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "dd/MM/yyyy HH:mm:ss";
+            else if (e.PropertyType == typeof(System.DateTime?))
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "dd/MM/yyyy";
+        }
+
+        private void BtnEditar_Click(object sender, RoutedEventArgs e)
+        {
+            //Switcher.Switch(EditViewType, new[] { DataGridGlobal.SelectedItem });
         }
     }
 }
