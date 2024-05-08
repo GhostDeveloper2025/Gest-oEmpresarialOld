@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace GestãoEmpresarial.Models
 {
@@ -20,27 +21,27 @@ namespace GestãoEmpresarial.Models
             Add(obj);
         }
 
-        public void Add(string header, PackIconKind icon, Type screen)
+        public void Add(string header, PackIconKind icon, Func<UserControl> getView)
         {
             var obj = new TreeviewMenu()
             {
                 Header = header,
                 Icon = icon,
-                Screen = screen,
+                GetView = getView,
             };
             Add(obj);
         }
 
-        public void Add(string header, PackIconKind icon, Type screen, object[] parameters)
-        {
-            var obj = new TreeviewMenu()
-            {
-                Header = header, 
-                Icon = icon,
-                Screen  = screen,
-                ScreenParameters = parameters
-            };
-            Add(obj);
-        }
+        //public void Add(string header, PackIconKind icon, Type screen, object[] parameters)
+        //{
+        //    var obj = new TreeviewMenu()
+        //    {
+        //        Header = header, 
+        //        Icon = icon,
+        //        Screen  = screen,
+        //        ScreenParameters = parameters
+        //    };
+        //    Add(obj);
+        //}
     }
 }

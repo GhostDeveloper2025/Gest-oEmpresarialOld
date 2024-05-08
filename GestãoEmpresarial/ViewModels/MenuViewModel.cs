@@ -28,12 +28,12 @@ namespace GestãoEmpresarial.ViewModels
                     Icon = PackIconKind.PlaylistPlus,
                     Items = new TreeviewMenuCollection
                     {
-                        { "Cliente", PackIconKind.PersonAdd , typeof(CadastroClienteView), new[] { new CadastroClienteViewModel(null) } },
-                        { "Colaborador", PackIconKind.PersonChild, typeof(CadastroColaboradorView), new[] { new CadastroColaboradorViewModel(null) } },
-                        { "Categoria", PackIconKind.Tags, typeof(CadastroCategoriaView), new[] { new CadastroCategoriaViewModel(null) } },
-                        { "Produto", PackIconKind.BoxAdd, typeof(CadastroProdutoView) , new[] { new CadastroProdutoViewModel(null) }},
-                        { "OS", PackIconKind.HammerScrewdriver, typeof(CadastroOrdemServicoView) , new[] { new CadastroOrdemServicoViewModel(null) }},
-                        { "Venda", PackIconKind.BoxAdd, typeof(CadastroVendaView), new[] { new CadastroVendaViewModel (null) } },
+                        { "Cliente", PackIconKind.PersonAdd , () => { return new CadastroClienteView(new CadastroClienteViewModel(null)); } },
+                        { "Colaborador", PackIconKind.PersonChild,  () => { return new CadastroColaboradorView(new CadastroColaboradorViewModel(null)); } },
+                        { "Categoria", PackIconKind.Tags,  () => { return new CadastroCategoriaView(new CadastroCategoriaViewModel(null)); } },
+                        { "Produto", PackIconKind.BoxAdd,  () => { return new CadastroProdutoView(new CadastroProdutoViewModel(null)); }},
+                        { "OS", PackIconKind.HammerScrewdriver,  () => { return new CadastroOrdemServicoView(new CadastroOrdemServicoViewModel(null)); }},
+                        { "Venda", PackIconKind.BoxAdd,  () => { return new CadastroVendaView(new CadastroVendaViewModel (null)); } },
                     }
                 },
                 new TreeviewMenu
@@ -42,12 +42,12 @@ namespace GestãoEmpresarial.ViewModels
                     Icon = PackIconKind.FileSearch,
                     Items = new TreeviewMenuCollection
                     {
-                        { "Cliente", PackIconKind.PersonAdd , typeof(PesquisaView), new[] { new PesquisaClienteViewModel(new RClienteDAL(LoginViewModel.colaborador.IdFuncionario)) } },
-                        { "Colaborador", PackIconKind.PersonChild, typeof(PesquisaView), new[] { new PesquisaColaboradorViewModel(new RColaboradorDAL(LoginViewModel.colaborador.IdFuncionario)) } },
-                        { "Categoria", PackIconKind.Tags, typeof(PesquisaView), new[] { new PesquisaCategoriaViewModel(new RCategoriaDAL(LoginViewModel.colaborador.IdFuncionario)) } },
-                        { "Produto", PackIconKind.BoxAdd, typeof(PesquisaView) , new[] { new PesquisaProdutoViewModel(new RProdutoDAL(LoginViewModel.colaborador.IdFuncionario)) } },
-                        { "OS", PackIconKind.HammerScrewdriver, typeof(PesquisaView), new[] { new PesquisaOrdemServicoViewModel(new ROsDAL(LoginViewModel.colaborador.IdFuncionario)) } },
-                        { "Venda", PackIconKind.BoxAdd, typeof(PesquisaView), new[] { new PesquisaVendaViewModel(new RVendasDAL(LoginViewModel.colaborador.IdFuncionario)) } },
+                        { "Cliente", PackIconKind.PersonAdd ,  () => { return new PesquisaView(new PesquisaClienteViewModel(new RClienteDAL(LoginViewModel.colaborador.IdFuncionario))); } },
+                        { "Colaborador", PackIconKind.PersonChild,  () => { return new PesquisaView( new PesquisaColaboradorViewModel(new RColaboradorDAL(LoginViewModel.colaborador.IdFuncionario)) );} },
+                        { "Categoria", PackIconKind.Tags,  () => { return new PesquisaView(new PesquisaCategoriaViewModel(new RCategoriaDAL(LoginViewModel.colaborador.IdFuncionario)) );} },
+                        { "Produto", PackIconKind.BoxAdd,  () => { return new PesquisaView(new PesquisaProdutoViewModel(new RProdutoDAL(LoginViewModel.colaborador.IdFuncionario))); } },
+                        { "OS", PackIconKind.HammerScrewdriver,  () => { return new PesquisaView(new PesquisaOrdemServicoViewModel(new ROsDAL(LoginViewModel.colaborador.IdFuncionario))); } },
+                        { "Venda", PackIconKind.BoxAdd,  () => { return new PesquisaView(new PesquisaVendaViewModel(new RVendasDAL(LoginViewModel.colaborador.IdFuncionario))); } },
                     }
                 }
             };

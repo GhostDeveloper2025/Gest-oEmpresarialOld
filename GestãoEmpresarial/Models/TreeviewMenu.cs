@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace GestãoEmpresarial.Models
 {
@@ -13,8 +14,10 @@ namespace GestãoEmpresarial.Models
         public string Header { get; set; }
         public PackIconKind Icon { get; set; }
 
-        public Type Screen { get; set; }
-        public object[] ScreenParameters { get; set; }
+        //public Type Screen { get; set; }
+        //public object[] ScreenParameters { get; set; }
+
+        public Func<UserControl> GetView { get; set; }
 
         public TreeviewMenuCollection Items { get; set; }
     }
