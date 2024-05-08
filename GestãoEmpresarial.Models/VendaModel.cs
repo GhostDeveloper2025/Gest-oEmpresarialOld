@@ -14,10 +14,10 @@ namespace GestãoEmpresarial.Models
         //cada vez que é chamado o new, este construtor é chamado
         public VendaModel()
         {
-            //ListItensVenda = new List<ItensVendaModel>();
+            ListItensVenda = new List<ItemVendaModel>();
         }
 
-        //public IList<ItensVendaModel> ListItensVenda { get; set; }
+        public IList<ItemVendaModel> ListItensVenda { get; set; }
 
         // public ColaboradorModel Cadastrante { get; set; }
 

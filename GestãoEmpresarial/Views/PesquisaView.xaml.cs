@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestãoEmpresarial.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -21,9 +22,10 @@ namespace GestãoEmpresarial.Views
     /// </summary>
     public partial class PesquisaView : UserControl
     {
-        public PesquisaView()
+        public PesquisaView(IPesquisaViewModel viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel;
         }
         private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {

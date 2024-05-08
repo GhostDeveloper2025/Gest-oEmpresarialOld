@@ -11,12 +11,12 @@ namespace GestãoEmpresarial.Models
         //cada vez que é chamado o new, este construtor é chamado
         public OsModel()
         {
-            //ListItensOs = new List<ItensOsModel>();
+            ListItensOs = new List<ItemOrdemServicoModel>();
             // Defina o valor inicial da propriedade ObjectoEditar.Status para "O.S ABERTA!"
             //Status = EstadoOS.Aberta; //"O.S ABERTA!";
         }
 
-        //public IList<ItensOsModel> ListItensOs { get; set; }
+        public IList<ItemOrdemServicoModel> ListItensOs { get; set; }
 
         public ColaboradorModel Cadastrante { get; set; }
         public ColaboradorModel Responsavel { get; set; }

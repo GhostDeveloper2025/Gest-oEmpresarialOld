@@ -1,4 +1,5 @@
-﻿using GestãoEmpresarial.Models;
+﻿using GestãoEmpresarial.Interface;
+using GestãoEmpresarial.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace GestãoEmpresarial.ViewModels
 {
-    internal class PesquisaProdutoViewModel : PesquisaViewModel<DataGridProdutoModel>
+    internal class PesquisaProdutoViewModel : PesquisaViewModel<ProdutoModel, DataGridProdutoModel>
     {
+        public PesquisaProdutoViewModel(IDAL<ProdutoModel> Repositorio) : base(Repositorio)
+        {
+        }
     }
 }

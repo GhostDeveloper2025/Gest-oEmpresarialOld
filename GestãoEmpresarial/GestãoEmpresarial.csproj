@@ -98,6 +98,8 @@
     <Compile Include="Models\DataGridOrdemServicoModel.cs" />
     <Compile Include="Models\DataGridProdutoModel.cs" />
     <Compile Include="Models\DataGridVendaModel.cs" />
+    <Compile Include="Models\ItemVendaModelObservavel.cs" />
+    <Compile Include="Models\ItensOrdemServicoModelObservavel.cs" />
     <Compile Include="Models\TreeviewMenu.cs" />
     <Compile Include="Models\TreeviewMenuCollection.cs" />
     <Compile Include="Providers\ClienteProvider.cs" />
@@ -118,6 +120,8 @@
     <Compile Include="ViewModels\CadastroProdutoViewModel.cs" />
     <Compile Include="ViewModels\CadastroVendaViewModel.cs" />
     <Compile Include="ViewModels\CadastroViewModel.cs" />
+    <Compile Include="ViewModels\IPesquisaViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\PesquisaCategoriaViewModel.cs" />
     <Compile Include="ViewModels\PesquisaClienteViewModel.cs" />
@@ -283,6 +287,10 @@
     <ProjectReference Include="..\GestãoEmpresarial.Models\GestãoEmpresarial.Models.csproj">
       <Project>{ba925445-4a5c-44f1-b7bc-0f8f6b0c015f}</Project>
       <Name>GestãoEmpresarial.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GestãoEmpresarial.Repositorios\GestãoEmpresarial.Repositorios.csproj">
+      <Project>{87759D98-2EA0-4C01-975B-00FE6ED56A4C}</Project>
+      <Name>GestãoEmpresarial.Repositorios</Name>
     </ProjectReference>
     <ProjectReference Include="..\GestãoEmpresarial.ViewModels\GestãoEmpresarial.ViewModels.csproj">
       <Project>{570ef2ee-b834-4ba8-803b-c79892bf689d}</Project>

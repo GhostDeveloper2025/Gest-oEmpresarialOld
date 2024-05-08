@@ -1,11 +1,13 @@
 ﻿using FontAwesome.Sharp;
 using GestãoEmpresarial.Models;
+using GestãoEmpresarial.Repositorios;
 using GestãoEmpresarial.Views;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Cache;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,12 +42,12 @@ namespace GestãoEmpresarial.ViewModels
                     Icon = PackIconKind.FileSearch,
                     Items = new TreeviewMenuCollection
                     {
-                        { "Cliente", PackIconKind.PersonAdd , typeof(PesquisaView), new[] { new PesquisaClienteViewModel(null) } },
-                        { "Colaborador", PackIconKind.PersonChild, typeof(PesquisaView) },
-                        { "Categoria", PackIconKind.Tags, typeof(PesquisaView) },
-                        { "Produto", PackIconKind.BoxAdd, typeof(PesquisaView) },
-                        { "OS", PackIconKind.HammerScrewdriver, typeof(PesquisaView) },
-                        { "Venda", PackIconKind.BoxAdd, typeof(PesquisaView) },
+                        { "Cliente", PackIconKind.PersonAdd , typeof(PesquisaView), new[] { new PesquisaClienteViewModel(new RClienteDAL(LoginViewModel.colaborador.IdFuncionario)) } },
+                        { "Colaborador", PackIconKind.PersonChild, typeof(PesquisaView), new[] { new PesquisaColaboradorViewModel(new RColaboradorDAL(LoginViewModel.colaborador.IdFuncionario)) } },
+                        { "Categoria", PackIconKind.Tags, typeof(PesquisaView), new[] { new PesquisaCategoriaViewModel(new RCategoriaDAL(LoginViewModel.colaborador.IdFuncionario)) } },
+                        { "Produto", PackIconKind.BoxAdd, typeof(PesquisaView) , new[] { new PesquisaProdutoViewModel(new RProdutoDAL(LoginViewModel.colaborador.IdFuncionario)) } },
+                        { "OS", PackIconKind.HammerScrewdriver, typeof(PesquisaView), new[] { new PesquisaOrdemServicoViewModel(new ROsDAL(LoginViewModel.colaborador.IdFuncionario)) } },
+                        { "Venda", PackIconKind.BoxAdd, typeof(PesquisaView), new[] { new PesquisaVendaViewModel(new RVendasDAL(LoginViewModel.colaborador.IdFuncionario)) } },
                     }
                 }
             };

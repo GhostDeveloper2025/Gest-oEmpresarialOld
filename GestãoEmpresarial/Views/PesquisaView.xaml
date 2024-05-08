@@ -16,7 +16,7 @@
                      Text="{Binding FiltroGlobal, UpdateSourceTrigger=PropertyChanged,  
                     Converter={utils:CapitalizeWordsConverter}}"/>
             <!-- Button Pesquisar... -->
-            <Button  Command="{Binding FiltroCommand, UpdateSourceTrigger=PropertyChanged}">
+            <Button  Command="{Binding PesquisarCommand, UpdateSourceTrigger=PropertyChanged}">
                 <StackPanel>
                     <fa:IconImage Height="30" Width="30" Icon="CircleArrowRight" />
                 </StackPanel>

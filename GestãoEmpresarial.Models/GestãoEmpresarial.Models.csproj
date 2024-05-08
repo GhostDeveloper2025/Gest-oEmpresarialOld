@@ -44,11 +44,12 @@
     <Compile Include="Atributos\ColumnHeaderAttribute.cs" />
     <Compile Include="CategoriaModel.cs" />
     <Compile Include="ClienteModel.cs" />
+    <Compile Include="CodigoModel.cs" />
     <Compile Include="ColaboradorModel.cs" />
     <Compile Include="EstoqueModel.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="ItensOsModel.cs" />
-    <Compile Include="ItensVendaModel.cs" />
+    <Compile Include="ItemOrdemServicoModel.cs" />
+    <Compile Include="ItemVendaModel.cs" />
     <Compile Include="OsModel.cs" />
     <Compile Include="ProdutoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
