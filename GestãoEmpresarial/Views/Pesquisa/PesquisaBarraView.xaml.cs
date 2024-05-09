@@ -1,5 +1,4 @@
-﻿using GestãoEmpresarial.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,17 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GestãoEmpresarial.Views
+namespace GestãoEmpresarial.Views.Pesquisa
 {
     /// <summary>
-    /// Interação lógica para CadastroColaboradorView.xam
+    /// Interação lógica para PesquisaBarraView.xam
     /// </summary>
-    public partial class CadastroColaboradorView : UserControl
+    public partial class PesquisaBarraView : WrapPanel
     {
-        public CadastroColaboradorView(CadastroViewModel cadastroViewModel)
+        public PesquisaBarraView()
         {
             InitializeComponent();
-            DataContext = cadastroViewModel;
         }
     }
 }

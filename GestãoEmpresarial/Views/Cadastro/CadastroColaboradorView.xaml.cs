@@ -14,14 +14,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GestãoEmpresarial.Views
+namespace GestãoEmpresarial.Views.Cadastro
 {
     /// <summary>
-    /// Interação lógica para CadastroCategoriaView.xam
+    /// Interação lógica para CadastroColaboradorView.xam
     /// </summary>
-    public partial class CadastroCategoriaView : UserControl
+    public partial class CadastroColaboradorView : UserControl
     {
-        public CadastroCategoriaView(CadastroViewModel cadastroViewModel)
+        public CadastroColaboradorView(CadastroViewModel cadastroViewModel)
         {
             InitializeComponent();
             DataContext = cadastroViewModel;

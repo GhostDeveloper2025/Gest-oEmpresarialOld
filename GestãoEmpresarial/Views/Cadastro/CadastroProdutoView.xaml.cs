@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GestãoEmpresarial.Views
+namespace GestãoEmpresarial.Views.Cadastro
 {
     /// <summary>
     /// Interação lógica para CadastroProdutoView.xam

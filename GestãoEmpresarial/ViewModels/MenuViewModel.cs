@@ -1,16 +1,9 @@
-﻿using FontAwesome.Sharp;
-using GestãoEmpresarial.Models;
+﻿using GestãoEmpresarial.Models;
 using GestãoEmpresarial.Repositorios;
-using GestãoEmpresarial.Views;
+using GestãoEmpresarial.Views.Cadastro;
+using GestãoEmpresarial.Views.Pesquisa;
 using MaterialDesignThemes.Wpf;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net.Cache;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestãoEmpresarial.ViewModels
 {

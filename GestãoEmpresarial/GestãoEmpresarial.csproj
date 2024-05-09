@@ -130,28 +130,31 @@
     <Compile Include="ViewModels\PesquisaProdutoViewModel.cs" />
     <Compile Include="ViewModels\PesquisaVendaViewModel.cs" />
     <Compile Include="ViewModels\PesquisaViewModel.cs" />
-    <Compile Include="Views\CadastroCategoriaView.xaml.cs">
+    <Compile Include="Views\Cadastro\CadastroCategoriaView.xaml.cs">
       <DependentUpon>CadastroCategoriaView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CadastroClienteView.xaml.cs">
+    <Compile Include="Views\Cadastro\CadastroClienteView.xaml.cs">
       <DependentUpon>CadastroClienteView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CadastroColaboradorView.xaml.cs">
+    <Compile Include="Views\Cadastro\CadastroColaboradorView.xaml.cs">
       <DependentUpon>CadastroColaboradorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CadastroOrdemServicoView.xaml.cs">
+    <Compile Include="Views\Cadastro\CadastroOrdemServicoView.xaml.cs">
       <DependentUpon>CadastroOrdemServicoView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CadastroProdutoView.xaml.cs">
+    <Compile Include="Views\Cadastro\CadastroProdutoView.xaml.cs">
       <DependentUpon>CadastroProdutoView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CadastroVendaView.xaml.cs">
+    <Compile Include="Views\Cadastro\CadastroVendaView.xaml.cs">
       <DependentUpon>CadastroVendaView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Layout\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PesquisaView.xaml.cs">
+    <Compile Include="Views\Pesquisa\PesquisaBarraView.xaml.cs">
+      <DependentUpon>PesquisaBarraView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pesquisa\PesquisaView.xaml.cs">
       <DependentUpon>PesquisaView.xaml</DependentUpon>
     </Compile>
     <Page Include="CustomControls\CelularTextBox.xaml">
@@ -222,27 +225,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CadastroCategoriaView.xaml">
+    <Page Include="Views\Cadastro\CadastroCategoriaView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CadastroClienteView.xaml">
+    <Page Include="Views\Cadastro\CadastroClienteView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CadastroColaboradorView.xaml">
+    <Page Include="Views\Cadastro\CadastroColaboradorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CadastroOrdemServicoView.xaml">
+    <Page Include="Views\Cadastro\CadastroOrdemServicoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CadastroProdutoView.xaml">
+    <Page Include="Views\Cadastro\CadastroProdutoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CadastroVendaView.xaml">
+    <Page Include="Views\Cadastro\CadastroVendaView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -250,7 +253,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\PesquisaView.xaml">
+    <Page Include="Views\Pesquisa\PesquisaBarraView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pesquisa\PesquisaView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

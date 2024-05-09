@@ -9,13 +9,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace GestãoEmpresarial.Views
+namespace GestãoEmpresarial.Views.Pesquisa
 {
     /// <summary>
     /// Interação lógica para PesquisaView.xam
@@ -23,10 +18,20 @@ namespace GestãoEmpresarial.Views
     public partial class PesquisaView : UserControl
     {
         public PesquisaView(IPesquisaViewModel viewModel)
+            : this(viewModel, new PesquisaBarraView())
+        {
+        }
+
+        public PesquisaView(IPesquisaViewModel viewModel, UIElement barraPesquisa)
         {
             InitializeComponent();
             DataContext = viewModel;
+            if (barraPesquisa != null)
+            {
+                fContainer.Children.Add(barraPesquisa);
+            }
         }
+
         private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             e.Column.Header = ((PropertyDescriptor)e.PropertyDescriptor).DisplayName;
