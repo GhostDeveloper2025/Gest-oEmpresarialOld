@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GestãoEmpresarial.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
              xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
              mc:Ignorable="d" 
@@ -38,35 +38,41 @@
             
             <UniformGrid>
                 <TextBox
+                      materialDesign:HintAssist.Hint="Nome"
                       Text="{Binding ObjectoEditar.Nome, 
                  UpdateSourceTrigger=PropertyChanged,  Converter={utils:CapitalizeWordsConverter}}">
                 </TextBox>
                 <cc:CpfTextBox
-                            Text="{Binding ObjectoEditar.CPF,
+                    Text="{Binding ObjectoEditar.CPF,
                  UpdateSourceTrigger=PropertyChanged}"/>
-                <cc:CpfTextBox                     
-                             Text="{Binding ObjectoEditar.CNPJ,
+                <cc:CnpjTextBox                     
+                    Text="{Binding ObjectoEditar.CNPJ,
                  UpdateSourceTrigger=PropertyChanged}"/>
                 <cc:CepTextBox
-                            Text="{Binding ObjectoEditar.Cep, 
+                    Text="{Binding ObjectoEditar.Cep, 
                  UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox 
-                      Text="{Binding ObjectoEditar.UF, 
+                <TextBox
+                    materialDesign:HintAssist.Hint="UF"
+                    Text="{Binding ObjectoEditar.UF, 
                  UpdateSourceTrigger=PropertyChanged, 
                  Converter={utils:CapitalizeWordsConverter}}"/>
                 <TextBox 
-                      Text="{Binding ObjectoEditar.Localidade, 
+                    materialDesign:HintAssist.Hint="Localidade"
+                    Text="{Binding ObjectoEditar.Localidade, 
                  UpdateSourceTrigger=PropertyChanged, 
                  Converter={utils:CapitalizeWordsConverter}}"/>
                 <TextBox                      
+                    materialDesign:HintAssist.Hint="Logradouro"
                       Text="{Binding ObjectoEditar.Logradouro, 
                  UpdateSourceTrigger=PropertyChanged, 
                  Converter={utils:CapitalizeWordsConverter}}"/>
                 <TextBox 
-                 Text="{Binding ObjectoEditar.Numero, 
+                    materialDesign:HintAssist.Hint="Numero"
+                    Text="{Binding ObjectoEditar.Numero, 
                  UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBox                        
-                      Text="{Binding ObjectoEditar.Bairro, 
+                    materialDesign:HintAssist.Hint="Bairro"
+                    Text="{Binding ObjectoEditar.Bairro, 
                  UpdateSourceTrigger=PropertyChanged, 
                  Converter={utils:CapitalizeWordsConverter}}"/>
                 <cc:CelularTextBox
@@ -76,10 +82,12 @@
                                  Text="{Binding ObjectoEditar.Telefone, 
                  UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBox
-                 Text="{Binding ObjectoEditar.Email, 
-                 UpdateSourceTrigger=PropertyChanged, 
-                 Converter={utils:CapitalizeWordsConverter}}"/>
+                    materialDesign:HintAssist.Hint="Email"
+                    Text="{Binding ObjectoEditar.Email, 
+                    UpdateSourceTrigger=PropertyChanged, 
+                    Converter={utils:CapitalizeWordsConverter}}"/>
                 <cc:MoedaTextBox 
+                    materialDesign:HintAssist.Hint="Logradouro"
                               Text="{Binding ObjectoEditar.LimiteCredito, 
                  UpdateSourceTrigger=PropertyChanged}"/>
             </UniformGrid>

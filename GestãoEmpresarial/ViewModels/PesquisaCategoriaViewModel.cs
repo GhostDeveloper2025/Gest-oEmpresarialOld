@@ -1,10 +1,5 @@
 ﻿using GestãoEmpresarial.Interface;
 using GestãoEmpresarial.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestãoEmpresarial.ViewModels
 {
@@ -12,6 +7,11 @@ namespace GestãoEmpresarial.ViewModels
     {
         public PesquisaCategoriaViewModel(IDAL<CategoriaModel> Repositorio) : base(Repositorio)
         {
+        }
+
+        public override CategoriaModel GetDataGridModel(CategoriaModel item)
+        {
+            return item;
         }
     }
 }

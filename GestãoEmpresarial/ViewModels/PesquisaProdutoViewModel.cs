@@ -13,5 +13,10 @@ namespace GestãoEmpresarial.ViewModels
         public PesquisaProdutoViewModel(IDAL<ProdutoModel> Repositorio) : base(Repositorio)
         {
         }
+
+        public override DataGridProdutoModel GetDataGridModel(ProdutoModel item)
+        {
+            return new DataGridProdutoModel(item);
+        }
     }
 }

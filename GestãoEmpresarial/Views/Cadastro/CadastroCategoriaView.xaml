@@ -3,27 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GestãoEmpresarial.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
         <TextBlock Text="{Binding ObjectoEditar.IdCategoria}"/>
-        <UniformGrid>
-            <TextBox Text="{Binding ObjectoEditar.Nome, 
+        <StackPanel>
+            <TextBox 
+                materialDesign:HintAssist.Hint="Nome"
+                Text="{Binding ObjectoEditar.Nome, 
             Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
             Converter={utils:CapitalizeWordsConverter}}">
             </TextBox>
             <TextBox 
-            AcceptsReturn="True" 
-            TextWrapping="Wrap" 
-            MaxLines="1" 
-            MaxLength="150"
-            VerticalAlignment="Stretch"                       
+                materialDesign:HintAssist.Hint="Descrição"
+            MaxLength="150"                   
             Text="{Binding ObjectoEditar.Descricao, 
             Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
             Converter={utils:CapitalizeWordsConverter}}">
             </TextBox>
-        </UniformGrid>
+        </StackPanel>
     </StackPanel>
 </UserControl>

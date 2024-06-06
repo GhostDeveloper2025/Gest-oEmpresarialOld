@@ -16,7 +16,7 @@ namespace GestãoEmpresarial
         public MainWindow()
         {
             InitializeComponent();
-            Switcher.pageSwitcher = this;
+            Switcher.pageSwitcher = this;            
         }
 
         internal void Navigate(TreeviewMenu menu)

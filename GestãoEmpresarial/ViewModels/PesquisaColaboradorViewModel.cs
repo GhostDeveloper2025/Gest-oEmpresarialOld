@@ -13,5 +13,10 @@ namespace GestãoEmpresarial.ViewModels
         public PesquisaColaboradorViewModel(IDAL<ColaboradorModel> Repositorio) : base(Repositorio)
         {
         }
+
+        public override ColaboradorModel GetDataGridModel(ColaboradorModel item)
+        {
+            return item;
+        }
     }
 }

@@ -8,11 +8,11 @@
         <ResourceDictionary>
             <!--#region  Custon Fontes-->
             <!-- Fonte Custon-->
-            <FontFamily x:Key="CustomFont">/NewProject;component/Fonts/Philosopher.ttf#Philosopher</FontFamily>
-            <FontFamily x:Key="CustomFont1">/NewProject;component/Fonts/Afacad.ttf#Afacad</FontFamily>
-            <FontFamily x:Key="CustomFont2">/NewProject;component/Fonts/Ibarra Real Nova.ttf#Ibarra Real Nova</FontFamily>
-            <FontFamily x:Key="CustomFont3">/NewProject;component/Fonts/Sansita.ttf#Sansita</FontFamily>
-            <FontFamily x:Key="CustomFont4">/NewProject;component/Fonts/STIX Two Text.ttf#STIX Two Text</FontFamily>
+            <FontFamily x:Key="CustomFont">/GestãoEmpresarial;component/Fonts/Philosopher.ttf#Philosopher</FontFamily>
+            <FontFamily x:Key="CustomFont1">/GestãoEmpresarial;component/Fonts/Afacad.ttf#Afacad</FontFamily>
+            <FontFamily x:Key="CustomFont2">/GestãoEmpresarial;component/Fonts/Ibarra Real Nova.ttf#Ibarra Real Nova</FontFamily>
+            <FontFamily x:Key="CustomFont3">/GestãoEmpresarial;component/Fonts/Sansita.ttf#Sansita</FontFamily>
+            <FontFamily x:Key="CustomFont4">/GestãoEmpresarial;component/Fonts/STIX Two Text.ttf#STIX Two Text</FontFamily>
             <!--#endregion-->
 
             <!--#region  Converters-->
@@ -37,14 +37,16 @@
 
                 <!--#region Default Theme... -->
                 <!-- Default Theme... -->
-                <!--<materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="DeepPurple" SecondaryColor="Blue" />-->
+                <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="Blue" SecondaryColor="DeepOrange" />
                 <!--#endregion-->
 
                 <!--#region include your primary palette... -->
-                <!-- include your primary palette... -->
+                 <!--include your primary palette... -->
                 <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />-->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
+
                 <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
-         <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />-->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />-->
                 <!--#endregion-->
 
                 <!--#region Importam diferentes dicionários de recursos... -->
@@ -56,6 +58,7 @@
              visual e o comportamento de vários elementos na interface do usuário 
              da aplicação.
          -->
+                <ResourceDictionary Source="Styles/UIControls.xaml"/>
                 <ResourceDictionary Source="Styles/ColorResources.xaml"/>
                 <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/TextBoxStyle.xaml"/>

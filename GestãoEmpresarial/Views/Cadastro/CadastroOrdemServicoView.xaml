@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GestãoEmpresarial.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:wpfcc="http://wpfcontrols.com/"
              xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
@@ -14,6 +14,7 @@
     <StackPanel>
         <UniformGrid>
             <wpfcc:AutoCompleteTextBox 
+                materialDesign:HintAssist.Hint="Cliente"
                 DisplayMember="Nome" 
                 IsEnabled="{Binding NovaOrdemServico}"
                 Provider="{providers:ClienteProvider}"
@@ -29,6 +30,7 @@
             </wpfcc:AutoCompleteTextBox>
 
             <wpfcc:AutoCompleteTextBox
+                materialDesign:HintAssist.Hint="Responsavel"
                 DisplayMember="Nome"
                 IsEnabled="{Binding PodeEditar}"
                 Provider="{providers:ColaboradorTecnicoProvider}"
@@ -44,6 +46,7 @@
             </wpfcc:AutoCompleteTextBox>
 
             <wpfcc:AutoCompleteTextBox
+                materialDesign:HintAssist.Hint="Tecnico"
                 DisplayMember="Nome"
                 IsEnabled="{Binding PodeEditar}"
                 Provider="{providers:ColaboradorTecnicoProvider}"
@@ -59,6 +62,7 @@
             </wpfcc:AutoCompleteTextBox>
 
             <ComboBox 
+                materialDesign:HintAssist.Hint="Status"
                 Tag="Buscar" 
                 HorizontalAlignment="Left"
                 SelectedValuePath="Key"
@@ -67,7 +71,10 @@
                 SelectedValue="{Binding ObjectoEditar.Status, 
                 UpdateSourceTrigger=PropertyChanged}">
             </ComboBox>
+        </UniformGrid>
+        <UniformGrid>
             <TextBox
+                materialDesign:HintAssist.Hint="Ferramenta"
                 IsEnabled="{Binding NovaOrdemServico}"
                 Text="{Binding ObjectoEditar.Ferramenta, 
                 UpdateSourceTrigger=PropertyChanged, 
@@ -75,6 +82,7 @@
             </TextBox>
 
             <ComboBox 
+                materialDesign:HintAssist.Hint="Marca"
                 Tag="Buscar"
                 HorizontalAlignment="Left"
                 SelectedValuePath="Key"
@@ -85,10 +93,17 @@
             </ComboBox>
 
             <TextBox 
+                materialDesign:HintAssist.Hint="Modelo"
                 IsEnabled="{Binding NovaOrdemServico}"
                 Text="{Binding ObjectoEditar.Modelo, 
                 UpdateSourceTrigger=PropertyChanged, 
                 Converter={utils:CapitalizeWordsConverter}}">
+            </TextBox>
+
+            <TextBox
+                materialDesign:HintAssist.Hint="Box"
+                Text="{Binding ObjectoEditar.Box}"
+                IsEnabled="{Binding PodeEditar}">
             </TextBox>
 
             <CheckBox 
@@ -104,8 +119,10 @@
                     Foreground="#B40946" />
             </CheckBox>
 
-            <TextBox
-                AcceptsReturn="True" 
+        </UniformGrid>
+
+        <TextBox
+                materialDesign:HintAssist.Hint="Observação"
                 TextWrapping="Wrap" 
                 MaxLines="1" 
                 MaxLength="150"
@@ -113,13 +130,7 @@
                 Text="{Binding ObjectoEditar.Obs,  
                 UpdateSourceTrigger=PropertyChanged,
                 Converter={utils:CapitalizeWordsConverter}}">
-            </TextBox>
-
-            <TextBox
-                Text="{Binding ObjectoEditar.Box}"
-                IsEnabled="{Binding PodeEditar}">
-            </TextBox>
-        </UniformGrid>
+        </TextBox>
 
         <TextBlock 
                 Margin="0,15,0,0"
@@ -130,6 +141,7 @@
         
         <UniformGrid>
             <wpfcc:AutoCompleteTextBox
+                materialDesign:HintAssist.Hint="Produto"
                 DisplayMember="Nome"
                 Provider="{Binding Path=DataContext, RelativeSource={RelativeSource Self}}"
                 SelectedItem="{Binding ObjectoEditar.ItemOsAdicionar.Produto, 
@@ -147,28 +159,33 @@
             </wpfcc:AutoCompleteTextBox>
 
             <TextBox
+                materialDesign:HintAssist.Hint="Quantidade"
                 Text="{Binding ObjectoEditar.ItemOsAdicionar.Produto.Estoque.Quantidade}"
                 IsReadOnly="True" 
                 IsHitTestVisible="False">
             </TextBox>
 
             <cc:MoedaTextBox 
+                materialDesign:HintAssist.Hint="Valor Unitário"
                 Text="{Binding ObjectoEditar.ItemOsAdicionar.ValUnitario, 
                 Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </cc:MoedaTextBox>
 
             <cc:NumeroTextBox
+                materialDesign:HintAssist.Hint="Quantidade"
                 Text="{Binding ObjectoEditar.ItemOsAdicionar.Quantidade, 
                 Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                 MaxLength="9">
             </cc:NumeroTextBox>
 
             <cc:NumeroTextBox
+                materialDesign:HintAssist.Hint="Desconto"
                 Text="{Binding ObjectoEditar.ItemOsAdicionar.Desconto, 
                 Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </cc:NumeroTextBox>
 
             <cc:MoedaTextBox
+                materialDesign:HintAssist.Hint="Total Item"
                 Text="{Binding ObjectoEditar.ItemOsAdicionar.TotalItem, 
                 Converter={utils:DecimalConverter}, Mode=OneWay}" 
                 IsReadOnly="True" 
@@ -210,28 +227,33 @@
         </DataGrid>
         <UniformGrid>
             <cc:MoedaTextBox
+                materialDesign:HintAssist.Hint="Toal Mão Obra"
                 Text="{Binding ObjectoEditar.TotalMaoObra, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </cc:MoedaTextBox>
 
             <TextBox 
+                materialDesign:HintAssist.Hint="SubTotal Produto"
                 Text="{Binding ObjectoEditar.SubTotalProduto, Mode=OneWay}"
                 IsReadOnly="True" 
                 IsHitTestVisible="False">
             </TextBox>
 
             <TextBox
+                materialDesign:HintAssist.Hint="Total Desconto"
                 Text="{Binding ObjectoEditar.TotalDescontoProduto, Mode=OneWay}" 
                 IsReadOnly="True" 
                 IsHitTestVisible="False">
             </TextBox>
 
             <TextBox
+                materialDesign:HintAssist.Hint="Total Produto"
                 Text="{Binding ObjectoEditar.TotalProduto, Mode=OneWay}"
                 IsReadOnly="True" 
                 IsHitTestVisible="False">
             </TextBox>
 
             <cc:MoedaTextBox
+                materialDesign:HintAssist.Hint="Total OS"
                 Text="{Binding ObjectoEditar.TotalOS, 
                 Converter={utils:DecimalConverter}, Mode=OneWay}" 
                 IsReadOnly="True" 

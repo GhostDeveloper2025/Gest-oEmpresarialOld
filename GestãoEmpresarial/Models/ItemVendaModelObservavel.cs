@@ -13,7 +13,6 @@ namespace GestãoEmpresarial.Models
         public int IdItensVenda { get; set; }
         private int _quantidade;
 
-
         //public string NomeProduto
         //{
         //    get { return _produto?.Nome; }
@@ -34,7 +33,9 @@ namespace GestãoEmpresarial.Models
                 RaisePropertyChanged(nameof(TotalItem));
             }
         }
+
         private decimal _valUnitario;
+
         public decimal ValUnitario
         {
             get { return _valUnitario; }
@@ -47,6 +48,7 @@ namespace GestãoEmpresarial.Models
         }
 
         public decimal _Desconto;
+
         public decimal Desconto
         {
             get { return _Desconto; }
@@ -57,13 +59,19 @@ namespace GestãoEmpresarial.Models
                 RaisePropertyChanged(nameof(TotalItem));
             }
         }
-        public decimal CustoTotal { get { return Quantidade * ValUnitario; } } // => ValTotal
-        public decimal DescontoValor { get { return Desconto <= 0 ? 0 : CustoTotal * Desconto / 100; } }
+
+        public decimal CustoTotal
+        { get { return Quantidade * ValUnitario; } } // => ValTotal
+
+        public decimal DescontoValor
+        { get { return Desconto <= 0 ? 0 : CustoTotal * Desconto / 100; } }
 
         //public decimal TotalItem { get { return CustoTotal - DescontoValor; } }
-        public decimal TotalItem { get { return Math.Round(CustoTotal - DescontoValor, 2); } }
+        public decimal TotalItem
+        { get { return Math.Round(CustoTotal - DescontoValor, 2); } }
 
         private ProdutoModel _produto;
+
         public ProdutoModel Produto
         {
             get { return _produto; }

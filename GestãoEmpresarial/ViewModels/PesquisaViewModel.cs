@@ -1,4 +1,5 @@
 ﻿using GestãoEmpresarial.Interface;
+using GestãoEmpresarial.Utils;
 using MicroMvvm;
 using System;
 using System.Collections.Generic;
@@ -78,10 +79,7 @@ namespace GestãoEmpresarial.ViewModels
             return Repositorio.List(FiltroGlobal);
         }
 
-        public virtual TDataGridModel GetDataGridModel(TObjectoBD item)
-        {
-            return (TDataGridModel)Activator.CreateInstance(typeof(TDataGridModel), item);
-        }
+        public abstract TDataGridModel GetDataGridModel(TObjectoBD item);
 
         /// <summary>
         /// metodo virtual onde é possivel que o filho altere o conteudo do metodo
