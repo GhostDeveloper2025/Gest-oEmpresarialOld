@@ -129,6 +129,14 @@
     <Compile Include="Utils\EnumDescriptionConverter.cs" />
     <Compile Include="Utils\MarkupExtensionGestaoEmpresarial.cs" />
     <Compile Include="Utils\Methods.cs" />
+    <Compile Include="Validations\CategoriaValidar.cs" />
+    <Compile Include="Validations\ClienteValidar.cs" />
+    <Compile Include="Validations\ColaboradorValidar.cs" />
+    <Compile Include="Validations\ItemOrdemServicoValidar.cs" />
+    <Compile Include="Validations\ItemVendaValidar.cs" />
+    <Compile Include="Validations\OrdemServicoValidar.cs" />
+    <Compile Include="Validations\ProdutoValidar.cs" />
+    <Compile Include="Validations\VendaValidar.cs" />
     <Compile Include="ViewModels\CadastroCategoriaViewModel.cs" />
     <Compile Include="ViewModels\CadastroClienteViewModel.cs" />
     <Compile Include="ViewModels\CadastroColaboradorViewModel.cs" />

@@ -12,13 +12,13 @@ using System.Windows.Input;
 
 namespace GestãoEmpresarial.ViewModels
 {
-    internal class CadastroOrdemServicoViewModel : CadastroViewModel<OsModel, EditarOsModel>
+    internal class CadastroOrdemServicoViewModel : CadastroViewModel<OrdemServicoModel, EditarOsModel>
     {
         private readonly RCodigosDAL codigosDal;
         private readonly RItensOSDAL itensOsDal;
         //private readonly ItemOsValidar itemOsvalidador;
 
-        public CadastroOrdemServicoViewModel(int? id, IDAL<OsModel> Repositorio) : base(id, Repositorio)
+        public CadastroOrdemServicoViewModel(int? id, IDAL<OrdemServicoModel> Repositorio) : base(id, Repositorio)
         {
         }
 

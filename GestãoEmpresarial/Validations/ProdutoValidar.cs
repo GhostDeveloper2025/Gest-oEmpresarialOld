@@ -1,11 +1,10 @@
 ﻿using FluentValidation;
-using NewProject.Models;
-using NewProject.ViewModel;
+using GestãoEmpresarial.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NewProject.Validations
+namespace GestãoEmpresarial.Validations
 {
     public class ProdutoValidar : AbstractValidator<ProdutoModel>
     {

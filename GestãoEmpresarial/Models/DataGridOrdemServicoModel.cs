@@ -5,7 +5,7 @@ namespace GestãoEmpresarial.Models
 {
     public class DataGridOrdemServicoModel
     {
-        public DataGridOrdemServicoModel(OsModel model, Dictionary<int, string> StatusList)
+        public DataGridOrdemServicoModel(OrdemServicoModel model, Dictionary<int, string> StatusList)
         {
             IdOs = model.IdOs;
             NomeCliente = GetNome(model.Cliente);

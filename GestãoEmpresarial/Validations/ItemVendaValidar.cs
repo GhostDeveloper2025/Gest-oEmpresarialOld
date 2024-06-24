@@ -1,14 +1,14 @@
 ﻿using FluentValidation;
-using NewProject.Models;
+using GestãoEmpresarial.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NewProject.Validations
+namespace GestãoEmpresarial.Validations
 {
-    internal class ItemVendaValidar : AbstractValidator<ItensVendaModel>
+    internal class ItemVendaValidar : AbstractValidator<ItemVendaModel>
     {
         public ItemVendaValidar()
         {

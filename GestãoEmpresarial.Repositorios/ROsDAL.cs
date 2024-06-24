@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace GestãoEmpresarial.Repositorios
 {
-    public class ROsDAL : DatabaseConnection, IDAL<OsModel>
+    public class ROsDAL : DatabaseConnection, IDAL<OrdemServicoModel>
     {
         internal readonly RColaboradorDAL rColaboradorDAL;
         internal readonly RClienteDAL rClienteDAL;
@@ -29,7 +29,7 @@ namespace GestãoEmpresarial.Repositorios
             return Convert.ToBoolean(existe);
         }
 
-        public void Delete(OsModel t)
+        public void Delete(OrdemServicoModel t)
         {
             string query = "DELETE FROM tb_os WHERE IdOs = @id";
             MySqlParameter[] arr = new MySqlParameter[]
@@ -39,12 +39,12 @@ namespace GestãoEmpresarial.Repositorios
             ExecuteNonQuery(query, arr);
         }
 
-        public OsModel GetById(int id)
+        public OrdemServicoModel GetById(int id)
         {
             return GetLista(true, idOs: id).FirstOrDefault();
         }
 
-        public int Insert(OsModel t)
+        public int Insert(OrdemServicoModel t)
         {
             string query = "INSERT INTO tb_os (DataEntrada, DataFinalizacao, IdCadastrante, IdCliente, Finalizado, IdCodigoStatus, Ferramenta, IdCodigoMarcasF, Modelo, Obs, IdTecnico, IdResponsavel, TotalMaoObra, Box, Garantia, SubTotalProduto, DescontoProduto, TotalProduto, TotalOS) "
             + " VALUES(NOW(),@DataFinalizacao,@IdCadastrante,@IdCliente,@Finalizado,@Status,@Ferramenta,@Marca,@Modelo,@Obs,@IdTecnico,@IdResponsavel,@TotalMaoObra,@Box,@Garantia,@SubTotalProduto,@DescontoProduto,@TotalProduto,@TotalOS);"
@@ -73,14 +73,14 @@ namespace GestãoEmpresarial.Repositorios
             return Convert.ToInt32(id);
         }
 
-        public List<OsModel> List(string filtro)
+        public List<OrdemServicoModel> List(string filtro)
         {
             return GetLista(false, filtro);
         }
 
 
         #region Codigo que eu tentei fazer
-        public List<OsModel> GetLista(bool comItens, string nomeCliente = null, int? idStatus = null, DateTime? dataEntrada = null, int? idOs = null)
+        public List<OrdemServicoModel> GetLista(bool comItens, string nomeCliente = null, int? idStatus = null, DateTime? dataEntrada = null, int? idOs = null)
         {
             string query = @"
                  SELECT IdOs, DataEntrada, DataFinalizacao, IdCadastrante, IdCliente, Finalizado, Ferramenta, Modelo, Obs, IdTecnico,
@@ -92,7 +92,7 @@ namespace GestãoEmpresarial.Repositorios
                  AND (@idOs IS NULL OR IdOS = @idOs)
                  LIMIT 200";  // Adicionando LIMIT 200 para limitar o número de registros
 
-            List<OsModel> lista = new List<OsModel>();
+            List<OrdemServicoModel> lista = new List<OrdemServicoModel>();
             List<MySqlParameter> parametros = new List<MySqlParameter>();
             AddParameter(parametros, "@nomeCliente", nomeCliente);
             AddParameter(parametros, "@idStatus", idStatus);
@@ -103,7 +103,7 @@ namespace GestãoEmpresarial.Repositorios
             {
                 while (reader.Read())
                 {
-                    var obj = new OsModel
+                    var obj = new OrdemServicoModel
                     {
                         IdOs = reader.GetInt32("IdOs"),
                         DataEntrada = reader.GetDateTime("DataEntrada"),
@@ -160,7 +160,7 @@ namespace GestãoEmpresarial.Repositorios
 
         #endregion
 
-        public void Update(OsModel t)
+        public void Update(OrdemServicoModel t)
         {
             List<MySqlParameter> lista = new List<MySqlParameter>();
             AddParameter(lista, "id", t.IdOs);

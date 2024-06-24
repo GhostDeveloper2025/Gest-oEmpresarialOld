@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace GestãoEmpresarial.ViewModels
 {
-    internal class PesquisaOrdemServicoViewModel : PesquisaViewModel<OsModel, DataGridOrdemServicoModel>
+    internal class PesquisaOrdemServicoViewModel : PesquisaViewModel<OrdemServicoModel, DataGridOrdemServicoModel>
     {
         public Dictionary<int, string> StatusList { get; internal set; }
 
-        public PesquisaOrdemServicoViewModel(IDAL<OsModel> Repositorio, RCodigosDAL RepositorioCodigos) : base(Repositorio)
+        public PesquisaOrdemServicoViewModel(IDAL<OrdemServicoModel> Repositorio, RCodigosDAL RepositorioCodigos) : base(Repositorio)
         {
             StatusList = new Dictionary<int, string>
             {
@@ -25,7 +25,7 @@ namespace GestãoEmpresarial.ViewModels
             }
         }
 
-        public override DataGridOrdemServicoModel GetDataGridModel(OsModel item)
+        public override DataGridOrdemServicoModel GetDataGridModel(OrdemServicoModel item)
         {
             return new DataGridOrdemServicoModel(item, StatusList);
         }

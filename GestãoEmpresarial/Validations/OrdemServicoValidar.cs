@@ -1,19 +1,19 @@
 ﻿using FluentValidation;
-using NewProject.Models;
-using NewProject.Repositorios;
-using NewProject.ViewModel;
+using GestãoEmpresarial.Models;
+using GestãoEmpresarial.Repositorios;
+using GestãoEmpresarial.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NewProject.Validations
+namespace GestãoEmpresarial.Validations
 {
-    public class OsValidar : AbstractValidator<OsModel>
+    public class OrdemServicoValidar : AbstractValidator<OrdemServicoModel>
     {
         //Cada regra é independente (ou seja, cada regra tem de ser verdade)        
-        public OsValidar()
+        public OrdemServicoValidar()
         {
             RCodigosDAL codigos = new RCodigosDAL(LoginViewModel.colaborador.IdFuncionario);
             var prontoParaConsertoId = codigos.GetStatusProntoParaConserto().Id;

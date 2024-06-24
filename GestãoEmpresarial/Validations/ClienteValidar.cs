@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using NewProject.Models;
+using GestãoEmpresarial.Models;
 using System;
 
-namespace NewProject.Validations
+namespace GestãoEmpresarial.Validations
 {
     public class ClienteValidar : AbstractValidator<ClienteModel>
     {

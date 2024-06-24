@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace GestãoEmpresarial.Models
 {
-    public class EditarOsModel : EditarBaseModel<OsModel>
+    public class EditarOsModel : EditarBaseModel<OrdemServicoModel>
     {
         public EditarOsModel() : this(null)
         {
             DataEntrada = DateTime.Now;
         }
 
-        public EditarOsModel(OsModel osModel) : base(osModel)
+        public EditarOsModel(OrdemServicoModel osModel) : base(osModel)
         {
             ItemOsAdicionar = new ItemOrdemServicoModel();
 
@@ -75,9 +75,9 @@ namespace GestãoEmpresarial.Models
             RaisePropertyChanged(nameof(ItemOsAdicionar));
         }
 
-        public override OsModel DevolveObjectoBD()
+        public override OrdemServicoModel DevolveObjectoBD()
         {
-            return new OsModel
+            return new OrdemServicoModel
             {
                 //TotalOS = TotalOS,
                 TotalMaoObra = TotalMaoObra,
@@ -101,7 +101,7 @@ namespace GestãoEmpresarial.Models
             };
         }
 
-        protected override void SetPropriedadesDoObjectoBD(OsModel obj)
+        protected override void SetPropriedadesDoObjectoBD(OrdemServicoModel obj)
         {
             ListItensOs = new ObservableCollection<ItemOrdemServicoModel>(obj.ListItensOs);
             TotalMaoObra = obj.TotalMaoObra;

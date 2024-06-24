@@ -1,14 +1,14 @@
 ﻿using FluentValidation;
-using NewProject.Models;
-using NewProject.Repositorios;
-using NewProject.ViewModel;
+using GestãoEmpresarial.Models;
+using GestãoEmpresarial.Repositorios;
+using GestãoEmpresarial.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NewProject.Validations
+namespace GestãoEmpresarial.Validations
 {
     public class VendaValidar : AbstractValidator<VendaModel>
     {

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentValidation;
-using NewProject.Model;
+using GestãoEmpresarial.Models;
 
-namespace NewProject.Validations
+namespace GestãoEmpresarial.Validations
 {
     public class CategoriaValidar : AbstractValidator<CategoriaModel>
     {

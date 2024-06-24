@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace GestãoEmpresarial.Models
 {
-    public class OsModel
+    public class OrdemServicoModel
     {
         //cada vez que é chamado o new, este construtor é chamado
-        public OsModel()
+        public OrdemServicoModel()
         {
             ListItensOs = new List<ItemOrdemServicoModel>();
             // Defina o valor inicial da propriedade ObjectoEditar.Status para "O.S ABERTA!"

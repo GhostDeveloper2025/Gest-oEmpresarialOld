@@ -1,17 +1,16 @@
 ﻿using FluentValidation;
-using NewProject.Models;
-using NewProject.ViewModel;
+using GestãoEmpresarial.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NewProject.Validations
+namespace GestãoEmpresarial.Validations
 {
-    public class ItemOsValidar : AbstractValidator<ItensOsModel>
+    public class ItemOrdemServicoValidar : AbstractValidator<ItemOrdemServicoModel>
     {
-        public ItemOsValidar()
+        public ItemOrdemServicoValidar()
         {
             //Func<ItensOsModel, bool> temEstoque = a => a.Produto != null && a.Produto.Estoque != null;
 

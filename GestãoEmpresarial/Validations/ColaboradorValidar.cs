@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using NewProject.Model;
+using GestãoEmpresarial.Models;
 using System;
 using System.Collections.Generic;
 
-namespace NewProject.Validations
+namespace GestãoEmpresarial.Validations
 {
     public class ColaboradorValidar : AbstractValidator<ColaboradorModel>
     {
