@@ -1,4 +1,192 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <!--Icones Botoes -->
+    <!--#region Icones Botoes... -->
+    <!-- Corresponde a cor do icone dos botoes salvar e add... -->
+    <Style x:Key="IconsButtonGlobal" TargetType="fa:IconImage">
+        <!--<Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>-->
+        <Setter Property="Foreground" Value="{StaticResource color49}"/>
+        <Setter Property="Width" Value="22"/>
+        <Setter Property="Height" Value="22"/>
+        <Setter Property="Margin" Value="10,0,20,0"/>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region IconButton Este Controle É Responssavel Pela Cor Dos Icones... -->
+    <!-- IconButton Este Controle É Responssavel Pela Cor Dos Icones Minimizar, Fechar E Do Data Grid 
+Sendo que Nao É aqui que se define As Cores... -->
+    <Style x:Key="IconButton" TargetType="fa:IconImage">
+        <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+        <!--<Setter Property="Foreground" Value="{StaticResource color1}"/>-->
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Height" Value="20"/>
+    </Style>
+    <!--#endregion-->
+
+    <!--Icons Screen... -->
+    <!--#region IconScreen Corresponde Aos Icones Da Tela De Cadastros... -->
+    <!-- Este IconScreen Corresponde Aos Icones Da Tela De Cadastros E Pesquisas... -->
+    <Style x:Key="IconScreen" TargetType="fa:IconImage">
+        <Setter Property="Foreground" Value="{StaticResource color49}"/>
+        <Setter Property="Width" Value="22"/>
+        <Setter Property="Height" Value="22"/>
+        <Setter Property="Margin" Value="10,0,20,0"/>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region Esta relacionado ao sbumenu icons Com MaterialDesign... -->
+    <!-- Esta relacionado ao sbumenu icons Com MaterialDesign... -->
+    <Style x:Key="IconMenu" TargetType="materialDesign:PackIcon">
+        <Setter Property="Width" Value="22"/>
+        <Setter Property="Height" Value="22"/>
+        <Setter Property="Margin" Value="10,0,20,0"/>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region Textos Botoes Salvar E Add... -->
+    <!-- Textos Botoes Salvar E Add... -->
+    <Style x:Key="ButtonText" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource CustomFont4}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    <!--#endregion-->
+
+    <!-- Meus botoes -->
+    <Style x:Key="ButtonGlobal" TargetType="Button">
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="Width" Value="150"/>
+        <Setter Property="Margin" Value="5,0,0,5"/>
+        <!--<Setter Property="Tag" Value="{StaticResource color49}"/>-->
+        <Setter Property="Background" Value="{StaticResource color45}"/>
+        <Setter Property="Foreground" Value="{StaticResource plainTextColor7}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource color45}"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+             CornerRadius="5"
+             BorderBrush="{TemplateBinding BorderBrush}">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Content">
+            <Setter.Value>
+                <StackPanel Orientation="Horizontal">
+                    <fa:IconImage Height="40" Width="40" Icon="FileExport" Style="{StaticResource IconsButtonGlobal}"/>
+                    <TextBlock Text="Salvar" Style="{StaticResource ButtonText}"/>
+                </StackPanel>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <!--Estilo De Botao hover-->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Margin" Value="0,0,0,5"/>
+                <!--Muda A Cor Da Fonte Ao Passar O Mouse-->
+                <Setter Property="Background" Value="{StaticResource panelActiveColor12}"/>
+                <!--Muda A Cor Da Fonte AO Passar O Mouse-->
+                <Setter Property="Foreground" Value="{StaticResource titleColor10}"/>
+                <Setter Property="BorderBrush" Value="{Binding Path=Tag, RelativeSource={RelativeSource Self}}"/>
+            </Trigger>
+        </Style.Triggers>
+
+    </Style>
+
+    <!--#region CloseMinimizeButtonStyle (Botoes da janela Fechar e Minimizar)... -->
+    <!-- CloseMinimizeButtonStyle (Botoes da janela Fechar e Minimizar)
+           Este Controle Cria O Estilo Redondo E Inicia Com A Cor
+           Pré Definida E Muda A Cor ao Passar O Mouse... -->
+    <Style x:Key="CloseMinimizeButtonStyle" TargetType="Button">
+        <!--Normal button style-->
+        <Setter Property="Width" Value="25"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <!--Cor: Do Botao Fechar E Minimizar-->
+        <Setter Property="Foreground" Value="{StaticResource plainTextColor3}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+               CornerRadius="9">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <!--Button Style on hover-->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource panelActiveColor4}"/>
+                <Setter Property="Foreground" Value="{StaticResource panelActiveColor1}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region  SearchButtonStyle... -->
+    <!-- SearchButtonStyle (Botao De Pesquisar. Sendo Um Controle Redondo)
+           Este Controle Cria O Estilo Redondo E Inicia Com A Cor
+           Pré Definida E Muda A Cor ao Passar O Mouse...-->
+    <Style x:Key="SearchButtonStyle" TargetType="Button">
+        <!--Normal button style-->
+        <Setter Property="Width" Value="25"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <!--Cor: Do Botao Fechar E Minimizar-->
+        <Setter Property="Foreground" Value="{StaticResource color10}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                CornerRadius="9">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <!--Button Style on hover-->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource panelActiveColor4}"/>
+                <Setter Property="Foreground" Value="{StaticResource plainTextColor8}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region ButtonDataGrid...  -->
+    <!-- ButtonDataGrid Botoes do DataGrid (Botos De Exclusao e Ediçao Do DataGrid)  
+           Este Controle  Inicia Com A Cor
+           Pré Definida E Muda A Cor ao Passar O Mouse...-->
+    <Style x:Key="ButtonDataGrid" TargetType="Button">
+        <!--Normal button style-->
+        <Setter Property="Width" Value="25"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <!--Cor: Do Botao Fechar E Minimizar-->
+        <Setter Property="Foreground" Value="{StaticResource plainTextColor5}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                CornerRadius="9">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <!--Button Style on hover-->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource panelActiveColor4}"/>
+                <Setter Property="Foreground" Value="{StaticResource color12}"/>
+                <!-- muda a cor do icone do data grida so que muda a cors dos 2 icones-->
+            </Trigger>
+
+        </Style.Triggers>
+    </Style>
+    <!--#endregion-->
 </ResourceDictionary>

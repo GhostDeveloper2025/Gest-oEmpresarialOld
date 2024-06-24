@@ -3,53 +3,49 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GestãoEmpresarial.Views"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:wpfcc="http://wpfcontrols.com/"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
              xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
              xmlns:providers="clr-namespace:GestãoEmpresarial.Providers"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="ComboBox" BasedOn="{StaticResource FormComboBox}"/>
+        <!--Este recurso é utilizado para converter o texto em 
+ cada palavra para que a primeira letra de cada palavra seja maiúscula.-->
+    </UserControl.Resources>
     <StackPanel>
         <UniformGrid>
-            <TextBox x:Name="TxtId" 
-           Width="80"
-           IsReadOnly="True"
-           Text="{Binding ObjectoEditar.IdVenda}">
-            </TextBox>
-            <TextBox x:Name="DtpOS" Margin="0,0,10,0"
-          IsEnabled="False"
-          Text="{Binding ObjectoEditar.DataVenda, Mode=OneWay, StringFormat=dd/MM/yyyy hh:mm:ss}">
-            </TextBox>
-            <!-- ... DATPICKR Finalizacao ... -->
-            <TextBox x:Name="DtpOSFinalizacao" Margin="0,0,10,0"
-          IsEnabled="False"
-          Text="{Binding ObjectoEditar.DataFinalizacao, Mode=OneWay, StringFormat=dd/MM/yyyy hh:mm:ss}">
-
-            </TextBox>
-
-            <wpfcc:AutoCompleteTextBox x:Name="TxtCliente" Width="250"
-                           DisplayMember="Nome" 
+            <StackPanel Orientation="Horizontal">
+                <wpfcc:AutoCompleteTextBox x:Name="TxtCliente" Width="250"
+                            DisplayMember="Nome" 
+                                           materialDesign:HintAssist.Hint="Cliente" 
                            Provider="{providers:ClienteProvider}"
                            SelectedItem="{Binding ObjectoEditar.Cliente, 
-    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <wpfcc:AutoCompleteTextBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Path=Nome}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </wpfcc:AutoCompleteTextBox.ItemTemplate>
-            </wpfcc:AutoCompleteTextBox>
-            <ComboBox x:Name="CbxStatus" Width="250"
-          Tag="Buscar" HorizontalAlignment="Left"
-          SelectedValuePath="Key"
-          DisplayMemberPath="Value"
-          ItemsSource="{Binding TiposPagamento}"   
-          SelectedValue="{Binding ObjectoEditar.IdCodigoTipoPagamento, 
-    UpdateSourceTrigger=PropertyChanged}">
-            </ComboBox>
+                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                    <wpfcc:AutoCompleteTextBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Path=Nome}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </wpfcc:AutoCompleteTextBox.ItemTemplate>
+                </wpfcc:AutoCompleteTextBox>
+
+                <ComboBox x:Name="CbxStatus" Width="250"
+                                  Tag="Buscar" HorizontalAlignment="Left"
+                                  SelectedValuePath="Key"
+                                  DisplayMemberPath="Value"
+                          materialDesign:HintAssist.Hint="Tipos De Pagamento"
+                                  ItemsSource="{Binding TiposPagamento}"   
+                                  SelectedValue="{Binding ObjectoEditar.IdCodigoTipoPagamento, 
+                            UpdateSourceTrigger=PropertyChanged}">
+                </ComboBox>
+            </StackPanel>
+
         </UniformGrid>
 
         <Grid Margin="0,15,0,0">
@@ -58,55 +54,159 @@ FontSize="22" Background="#1A2A40"
 Foreground="#ADBFC3" />
         </Grid>
         <UniformGrid>
-            
-
-            <wpfcc:AutoCompleteTextBox x:Name="TxtProduto" Width="250" 
+            <StackPanel Orientation="Horizontal">
+                <wpfcc:AutoCompleteTextBox x:Name="TxtProduto" Width="250" 
                                            DisplayMember="Nome"
+                                           materialDesign:HintAssist.Hint="Produto"
                                            Provider="{Binding Path=DataContext, RelativeSource={RelativeSource Self}}"
                                            SelectedItem="{Binding ObjectoEditar.ItemVendaAdicionar.Produto, 
                     Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <wpfcc:AutoCompleteTextBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Path=Nome}" />
-                            <TextBlock Text="{Binding Path=CodProduto}"/>
-                            <TextBlock Text="{Binding Path=ValorVenda}"/>
-                            <TextBlock Text="{Binding Path=Estoque.Quantidade}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </wpfcc:AutoCompleteTextBox.ItemTemplate>
-            </wpfcc:AutoCompleteTextBox>
+                    <wpfcc:AutoCompleteTextBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Path=Nome}" />
+                                <TextBlock Text="{Binding Path=CodProduto}"/>
+                                <TextBlock Text="{Binding Path=ValorVenda}"/>
+                                <TextBlock Text="{Binding Path=Estoque.Quantidade}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </wpfcc:AutoCompleteTextBox.ItemTemplate>
+                </wpfcc:AutoCompleteTextBox>
 
-            <!-- 
+                <!-- 
     No binding do text, o "ElementName" significa o nome do objecto dentro do WPF.
     E depois no "Path", colocamos a propriedade(atributo) à qual queremos tirar os valores
 -->
-            <TextBox x:Name="TxtQtdEst" Width="100"
+                <TextBox x:Name="TxtQtdEst" Width="100"
+                      materialDesign:HintAssist.Hint="Disponível"
                          Text="{Binding ObjectoEditar.ItemVendaAdicionar.Produto.Estoque.Quantidade}"
                          IsReadOnly="True" IsHitTestVisible="False">
-            </TextBox>
+                </TextBox>
 
-            <cc:MoedaTextBox x:Name="TxtValUnitario" Width="100"             
+                <cc:MoedaTextBox x:Name="TxtValUnitario" Width="100"  
+                             materialDesign:HintAssist.Hint="Val. Unitario"
                                  Text="{Binding ObjectoEditar.ItemVendaAdicionar.ValUnitario, 
                                  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-            </cc:MoedaTextBox>
+                </cc:MoedaTextBox>
 
-            <cc:NumeroTextBox x:Name="TxtQtd" Width="100"
+                <cc:NumeroTextBox x:Name="TxtQtd" Width="100"
+                              materialDesign:HintAssist.Hint="Quantidade"
                                    Text="{Binding ObjectoEditar.ItemVendaAdicionar.Quantidade, 
                                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                    MaxLength="9" >
-            </cc:NumeroTextBox>
+                </cc:NumeroTextBox>
 
-            <cc:NumeroTextBox x:Name="TxtDesconto" Width="100"
+                <cc:NumeroTextBox x:Name="TxtDesconto" Width="100"
+                               materialDesign:HintAssist.Hint="Desconto. %" 
                                    Text="{Binding ObjectoEditar.ItemVendaAdicionar.Desconto, 
                                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-            </cc:NumeroTextBox>
+                </cc:NumeroTextBox>
 
-            <cc:MoedaTextBox x:Name="TxtTotalItens" Width="100"
+                <cc:MoedaTextBox x:Name="TxtTotalItens" Width="100"
+                             materialDesign:HintAssist.Hint="Total"
                                  Text="{Binding ObjectoEditar.ItemVendaAdicionar.TotalItem, 
                 Converter={utils:DecimalConverter}, Mode=TwoWay}" 
                                  IsReadOnly="True" IsHitTestVisible="False">
-            </cc:MoedaTextBox>
+                </cc:MoedaTextBox>
+
+            </StackPanel>
         </UniformGrid>
+        <StackPanel>
+            <Button x:Name="BtnPopupAdicionarProduto" Margin="0,10,10,0"
+            Style="{StaticResource ButtonGlobal}"
+            Tag="{StaticResource color11}"
+            Command="{Binding AdicionarItemVendaCommand}"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Right">
+                <!-- Muda A Cor Do Icone -->
+                <StackPanel Orientation="Horizontal">
+                    <fa:IconImage Height="40" Width="40" Icon="FileCirclePlus" Style="{StaticResource IconsButtonGlobal}"/>
+                    <TextBlock Text="Adicionar" Style="{StaticResource ButtonText}"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        <StackPanel>
+            <!-- TextBlock para mostrar o número de registros -->
+            <TextBlock 
+         HorizontalAlignment="Left" 
+         VerticalAlignment="Center" 
+         Foreground="#836EFB" FontSize="15" 
+         FontFamily="Cambria Mat" 
+         FontWeight="Medium">
+           <Run Text="Número De Registros: " />
+           <Run Text="{Binding ObjectoEditar.NumberOfRecords}" />
+            </TextBlock>
+        </StackPanel>
+        <UniformGrid>
+            <Grid Grid.Row="1">
+                <DataGrid x:Name="DgItensModel"
+              IsReadOnly="True" AutoGenerateColumns="False"
+              ItemsSource="{Binding ObjectoEditar.ListItensVenda}">
+                    <!-- ... Define as colunas dos Botões ... -->
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Opções">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <WrapPanel Margin="0,0,15,0">
+                                        <Button Style="{StaticResource ButtonDataGrid}"
+                                     Tag="{StaticResource color13}"
+                                     Cursor="Hand"
+                                     Command="{Binding DataContext.ApagarItemVendaCommand, ElementName=DgItensModel}" 
+                                     CommandParameter="{Binding}">
+                                            <fa:IconImage Icon="Trash" Style="{StaticResource IconButton}"/>
+                                        </Button>
+                                    </WrapPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </UniformGrid>
+        <StackPanel Grid.Row="2">
+            <!--#region Elementos de Rodapé -->
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
+
+                <cc:MoedaTextBox x:Name="TxtValorFrete" Width="90"
+            materialDesign:HintAssist.Hint="M. Obra"
+            Text="{Binding ObjectoEditar.ValorFrete, 
+            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+                </cc:MoedaTextBox>
+
+                <TextBox x:Name="TxtSubTotal" Width="150"
+                   Foreground="{StaticResource color38}"
+                   BorderBrush="{StaticResource color38}"
+                   materialDesign:HintAssist.Hint="SubTotal Produto"
+                   Text="{Binding ObjectoEditar.SubTotalProduto, Mode=OneWay}"
+                   IsReadOnly="True" IsHitTestVisible="False">
+                </TextBox>
+
+                <TextBox x:Name="TxtTotalDesc" Width="150"
+                   Foreground="{StaticResource color38}"
+                   BorderBrush="{StaticResource color38}"
+                   materialDesign:HintAssist.Hint="Total Desconto"
+                   Text="{Binding ObjectoEditar.TotalDescontoProduto, Mode=OneWay}" 
+                   IsReadOnly="True" IsHitTestVisible="False">
+                </TextBox>
+
+                <TextBox x:Name="TxtTotal" Width="150"
+                 Foreground="{StaticResource color38}"
+                 BorderBrush="{StaticResource color38}"
+                 materialDesign:HintAssist.Hint="Total Produto"
+                 Text="{Binding ObjectoEditar.TotalProduto, Mode=OneWay}"
+                 IsReadOnly="True" IsHitTestVisible="False">
+                </TextBox>
+
+                <cc:MoedaTextBox x:Name="TxtTotalOs" Width="150"
+            Foreground="{StaticResource color38}"
+            BorderBrush="{StaticResource color38}"
+            materialDesign:HintAssist.Hint="Total Venda"
+            Text="{Binding ObjectoEditar.TotalVenda,  
+                Converter={utils:DecimalConverter}, Mode=TwoWay}" 
+            IsReadOnly="True" IsHitTestVisible="False">
+                </cc:MoedaTextBox>
+            </StackPanel>
+            <!--#endregion-->
+        </StackPanel>
     </StackPanel>
 </UserControl>

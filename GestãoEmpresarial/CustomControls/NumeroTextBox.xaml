@@ -6,5 +6,7 @@
              xmlns:local="clr-namespace:GestãoEmpresarial.CustomControls"
              mc:Ignorable="d" 
              Style="{StaticResource StyleTB}"
+             TextChanged="TextBox_TextChanged"
+             PreviewTextInput="TextBox_PreviewTextInput"
              d:DesignHeight="450" d:DesignWidth="800">
 </TextBox>

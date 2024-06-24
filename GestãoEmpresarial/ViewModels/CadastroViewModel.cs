@@ -44,6 +44,9 @@ namespace GestãoEmpresarial.ViewModels
             return Activator.CreateInstance<ObjectoEditarView>(); //Ver Com O Professor se fica  o activator mesmo
         }
 
+        public int Id { get; set; }
+        public DateTime DataCadastro { get; set; } = DateTime.Now;
+
         /// <summary>
         /// Este objecto é usado para editar (é feito o bind nele), e posteriormente para guardar as alterações.
         /// </summary>

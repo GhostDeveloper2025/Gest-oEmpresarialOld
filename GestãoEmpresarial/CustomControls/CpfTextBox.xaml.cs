@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestãoEmpresarial.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,40 @@ namespace GestãoEmpresarial.CustomControls
         public CpfTextBox()
         {
             InitializeComponent();
+        }
+
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+
+            if (e.Key == Key.Back && textBox.CaretIndex > 0)
+            {
+                int caretIndex = textBox.CaretIndex;
+
+                // Se o cursor estiver antes de um ponto ou traço, move o cursor para a posição anterior
+                if (caretIndex == 12 || caretIndex == 8 || caretIndex == 4)
+                {
+                    caretIndex--;
+                }
+
+                if (caretIndex > 0)
+                {
+                    // Remove o caractere antes do cursor
+                    textBox.Text = textBox.Text.Remove(caretIndex - 1, 1);
+
+                    // Atualiza a posição do cursor
+                    textBox.CaretIndex = caretIndex;
+
+                    // Marca o evento como manipulado para evitar que outros manipuladores de eventos do teclado sejam chamados
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            Methods.FormatCPF(ref textBox);
         }
     }
 }

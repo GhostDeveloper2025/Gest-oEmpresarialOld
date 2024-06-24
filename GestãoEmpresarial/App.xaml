@@ -32,12 +32,12 @@
 
                 <!--#region My Custom Them Light...-->
                 <!-- My Custom Them... -->
-                <!--<materialDesign:CustomColorTheme BaseTheme="Dark" PrimaryColor="#6D2FFF" SecondaryColor="#141724" />-->
+                <materialDesign:CustomColorTheme BaseTheme="Dark" PrimaryColor="#6D2FFF" SecondaryColor="#141724" />
                 <!--#endregion-->
 
                 <!--#region Default Theme... -->
                 <!-- Default Theme... -->
-                <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="Blue" SecondaryColor="DeepOrange" />
+                <!--<materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="Blue" SecondaryColor="DeepOrange" />-->
                 <!--#endregion-->
 
                 <!--#region include your primary palette... -->

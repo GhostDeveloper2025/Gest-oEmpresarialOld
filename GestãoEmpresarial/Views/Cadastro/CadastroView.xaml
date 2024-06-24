@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="GestãoEmpresarial.Views.Cadastro.CadastroView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GestãoEmpresarial.Views.Cadastro"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <!-- Linha do topo -->
+            <RowDefinition Height="Auto" />
+            <!-- Linha do meio -->
+            <RowDefinition Height="*" />
+            <!-- Linha do rodapé -->
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <TextBox 
+                Width="80"
+                IsReadOnly="True"  
+                HorizontalAlignment="Left"          
+                Text="{Binding Id}"/>
+            <TextBox 
+                Width="100"
+                HorizontalAlignment="Right"
+                Text="{Binding DataCadastro, Mode=OneWay, StringFormat=dd/MM/yyyy hh:mm:ss}">
+            </TextBox>
+        </Grid>
+        <Grid Grid.Row="1" Name="fContainer" Margin="10,10,10,10" />
+        <!-- Conteúdo do rodapé -->
+        <StackPanel Grid.Row="2" VerticalAlignment="Bottom">
+            <Button x:Name="BtnSalvar"
+                 Margin="10,10,0,10"
+                 Command="{Binding SaveCommand}"
+                 HorizontalAlignment="Left">
+                <!-- Muda A Cor Do Icone... -->
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Salvar" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

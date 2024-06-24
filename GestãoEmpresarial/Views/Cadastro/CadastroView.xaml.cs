@@ -1,4 +1,5 @@
 ﻿using GestãoEmpresarial.ViewModels;
+using GestãoEmpresarial.Views.Pesquisa;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,22 +9,20 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GestãoEmpresarial.Views.Cadastro
 {
     /// <summary>
-    /// Interação lógica para CadastroColaboradorView.xam
+    /// Interação lógica para CadastroView.xam
     /// </summary>
-    public partial class CadastroColaboradorView : UserControl
+    public partial class CadastroView : UserControl
     {
-        public CadastroColaboradorView()
+        public CadastroView(ICadastroViewModel viewModel, UIElement view)
         {
             InitializeComponent();
+            DataContext = viewModel;
+            fContainer.Children.Clear();
+            fContainer.Children.Add(view);
         }
     }
 }

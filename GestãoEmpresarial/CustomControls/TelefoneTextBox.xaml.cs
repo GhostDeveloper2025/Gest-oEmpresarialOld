@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestãoEmpresarial.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,30 @@ namespace GestãoEmpresarial.CustomControls
         public TelefoneTextBox()
         {
             InitializeComponent();
+        }
+
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (e.Key == Key.Back && textBox.CaretIndex > 0)
+            {
+                int caretIndex = textBox.CaretIndex;
+
+                // Remove o caractere anterior ao cursor, independentemente de ser um dígito ou um caractere de formatação
+                textBox.Text = textBox.Text.Remove(caretIndex - 1, 1);
+
+                // Atualiza a posição do cursor
+                textBox.CaretIndex = caretIndex - 1;
+
+                // Marca o evento como manipulado para evitar que outros manipuladores de eventos do teclado sejam chamados
+                e.Handled = true;
+            }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            Methods.FormatTelefoneFixo(ref textBox);
         }
     }
 }

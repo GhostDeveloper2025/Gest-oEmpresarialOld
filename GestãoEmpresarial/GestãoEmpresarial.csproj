@@ -165,6 +165,9 @@
     <Compile Include="Views\Cadastro\CadastroVendaView.xaml.cs">
       <DependentUpon>CadastroVendaView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Cadastro\CadastroView.xaml.cs">
+      <DependentUpon>CadastroView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Layout\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>
@@ -267,6 +270,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Cadastro\CadastroVendaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Cadastro\CadastroView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

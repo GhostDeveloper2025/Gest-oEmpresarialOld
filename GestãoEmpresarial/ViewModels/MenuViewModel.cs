@@ -21,12 +21,12 @@ namespace GestãoEmpresarial.ViewModels
                     Icon = PackIconKind.PlaylistPlus,
                     Items = new TreeviewMenuCollection
                     {
-                        { "Cliente", PackIconKind.PersonAdd , () => { return new CadastroClienteView(new CadastroClienteViewModel(null, new RClienteDAL(LoginViewModel.colaborador.IdFuncionario))); } },
-                        { "Colaborador", PackIconKind.PersonChild,  () => { return new CadastroColaboradorView(new CadastroColaboradorViewModel(null, new RColaboradorDAL(LoginViewModel.colaborador.IdFuncionario))); } },
-                        { "Categoria", PackIconKind.Tags,  () => { return new CadastroCategoriaView(new CadastroCategoriaViewModel(null, new RCategoriaDAL(LoginViewModel.colaborador.IdFuncionario))); } },
-                        { "Produto", PackIconKind.BoxAdd,  () => { return new CadastroProdutoView(new CadastroProdutoViewModel(null, new RProdutoDAL(LoginViewModel.colaborador.IdFuncionario))); }},
-                        { "OS", PackIconKind.HammerScrewdriver,  () => { return new CadastroOrdemServicoView(new CadastroOrdemServicoViewModel(null, new ROsDAL(LoginViewModel.colaborador.IdFuncionario))); }},
-                        { "Venda", PackIconKind.BoxAdd,  () => { return new CadastroVendaView(new CadastroVendaViewModel (null, new RVendasDAL(LoginViewModel.colaborador.IdFuncionario))); } },
+                        { "Cliente", PackIconKind.PersonAdd , () => { return new CadastroView(new CadastroClienteViewModel(null, new RClienteDAL(LoginViewModel.colaborador.IdFuncionario)), new CadastroClienteView()); } },
+                        { "Colaborador", PackIconKind.PersonChild,  () => { return new CadastroView(new CadastroColaboradorViewModel (null, new RColaboradorDAL(LoginViewModel.colaborador.IdFuncionario)), new CadastroColaboradorView()); } },
+                        { "Categoria", PackIconKind.Tags,  () => { return new CadastroView(new CadastroCategoriaViewModel(null, new RCategoriaDAL(LoginViewModel.colaborador.IdFuncionario)), new CadastroCategoriaView()); } },
+                        { "Produto", PackIconKind.BoxAdd,  () => { return new CadastroView(new CadastroProdutoViewModel(null, new RProdutoDAL(LoginViewModel.colaborador.IdFuncionario)), new CadastroProdutoView()); }},
+                        { "OS", PackIconKind.HammerScrewdriver,  () => { return new CadastroView(new CadastroOrdemServicoViewModel(null, new ROsDAL(LoginViewModel.colaborador.IdFuncionario)), new CadastroOrdemServicoView()); }},
+                        { "Venda", PackIconKind.BoxAdd,  () => { return new CadastroView(new CadastroVendaViewModel (null, new RVendasDAL(LoginViewModel.colaborador.IdFuncionario)), new CadastroVendaView()); } },
                     }
                 },
                 new TreeviewMenu
@@ -39,22 +39,22 @@ namespace GestãoEmpresarial.ViewModels
                         { "Colaborador", PackIconKind.PersonChild,  () => { return new PesquisaView( new PesquisaColaboradorViewModel(new RColaboradorDAL(LoginViewModel.colaborador.IdFuncionario)) );} },
                         { "Categoria", PackIconKind.Tags,  () => { return new PesquisaView(new PesquisaCategoriaViewModel(new RCategoriaDAL(LoginViewModel.colaborador.IdFuncionario)) );} },
                         { "Produto", PackIconKind.BoxAdd,  () => { return new PesquisaView(new PesquisaProdutoViewModel(new RProdutoDAL(LoginViewModel.colaborador.IdFuncionario))); } },
-                        { "OS", PackIconKind.HammerScrewdriver,  () => 
-                            { 
+                        { "OS", PackIconKind.HammerScrewdriver,  () =>
+                            {
                                     return new PesquisaView(
                                         new PesquisaOrdemServicoViewModel(
-                                            new ROsDAL(LoginViewModel.colaborador.IdFuncionario), 
+                                            new ROsDAL(LoginViewModel.colaborador.IdFuncionario),
                                             new RCodigosDAL(LoginViewModel.colaborador.IdFuncionario))
-                                        ); 
-                            } 
+                                        );
+                            }
                         },
-                        { "Venda", PackIconKind.BoxAdd,  () => 
+                        { "Venda", PackIconKind.BoxAdd,  () =>
                             {
                                 return new PesquisaView(
                                     new PesquisaVendaViewModel(
                                         new RVendasDAL(LoginViewModel.colaborador.IdFuncionario),
-                                            new RCodigosDAL(LoginViewModel.colaborador.IdFuncionario))); 
-                            } 
+                                            new RCodigosDAL(LoginViewModel.colaborador.IdFuncionario)));
+                            }
                         },
                     }
                 }

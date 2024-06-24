@@ -21,10 +21,9 @@ namespace GestãoEmpresarial.Views.Cadastro
     /// </summary>
     public partial class CadastroOrdemServicoView : UserControl
     {
-        public CadastroOrdemServicoView(ICadastroViewModel cadastroViewModel)
+        public CadastroOrdemServicoView()
         {
             InitializeComponent();
-            DataContext = cadastroViewModel;
         }
     }
 }
