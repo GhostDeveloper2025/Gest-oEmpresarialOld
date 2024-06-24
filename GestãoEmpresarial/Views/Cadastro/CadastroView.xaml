@@ -34,7 +34,6 @@
                  Margin="10,10,0,10"
                  Command="{Binding SaveCommand}"
                  HorizontalAlignment="Left">
-                <!-- Muda A Cor Do Icone... -->
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Salvar" />
                 </StackPanel>

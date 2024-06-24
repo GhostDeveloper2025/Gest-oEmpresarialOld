@@ -13,7 +13,7 @@ namespace GestãoEmpresarial.Models
 
         public EditarOsModel(OrdemServicoModel osModel) : base(osModel)
         {
-            ItemOsAdicionar = new ItemOrdemServicoModel();
+            ItemOsAdicionarPlanilha = new ItemOrdemServicoModel();
 
             if (ListItensOs == null)
                 ListItensOs = new ObservableCollection<ItemOrdemServicoModel>();
@@ -65,14 +65,14 @@ namespace GestãoEmpresarial.Models
 
         //public decimal TotalProduto { get { return ListItensOs.Sum(x => x.TotalItem); } } //total valor com desconto
 
-        public ItemOrdemServicoModel ItemOsAdicionar { get; set; }
+        public ItemOrdemServicoModel ItemOsAdicionarPlanilha { get; set; }
         public ObservableCollection<ItemOrdemServicoModel> ListItensOs { get; set; }
 
         public void AdicionarNaLista()
         {
-            ListItensOs.Add(ItemOsAdicionar);
-            ItemOsAdicionar = new ItemOrdemServicoModel();
-            RaisePropertyChanged(nameof(ItemOsAdicionar));
+            ListItensOs.Add(ItemOsAdicionarPlanilha);
+            ItemOsAdicionarPlanilha = new ItemOrdemServicoModel();
+            RaisePropertyChanged(nameof(ItemOsAdicionarPlanilha));
         }
 
         public override OrdemServicoModel DevolveObjectoBD()

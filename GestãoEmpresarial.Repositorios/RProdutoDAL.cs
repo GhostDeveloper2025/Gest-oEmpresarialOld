@@ -71,7 +71,7 @@ namespace GestãoEmpresarial.Repositorios
         public List<ProdutoModel> List(string filtro)
         {
             string query = SelectQuery
-                + " WHERE a.Nome LIKE CONCAT(@filtro, '%') OR IdFuncionario = @filtro OR CodProduto = @filtro OR IdMarcaF = @filtro AND Apagado = 0"
+                + " WHERE a.Nome LIKE CONCAT(@filtro, '%') OR IdFuncionario = @filtro OR CodProduto = @filtro OR IdMarcaF = @filtro"
                 + " ORDER BY a.Nome ASC" // ASC para ordenação ascendente (A-Z)
                 + " LIMIT 200"; // Adicionando LIMIT 200 para limitar o número de registros
 

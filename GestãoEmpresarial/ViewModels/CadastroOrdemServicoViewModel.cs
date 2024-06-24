@@ -1,6 +1,7 @@
 ﻿using GestãoEmpresarial.Interface;
 using GestãoEmpresarial.Models;
 using GestãoEmpresarial.Repositorios;
+using GestãoEmpresarial.Validations;
 using MicroMvvm;
 using System;
 using System.Collections;
@@ -16,42 +17,37 @@ namespace GestãoEmpresarial.ViewModels
     {
         private readonly RCodigosDAL codigosDal;
         private readonly RItensOSDAL itensOsDal;
-        //private readonly ItemOsValidar itemOsvalidador;
+        private readonly ItemOrdemServicoValidar itemOsvalidador;
 
         public CadastroOrdemServicoViewModel(int? id, IDAL<OrdemServicoModel> Repositorio) : base(id, Repositorio)
         {
+            itemOsvalidador = new ItemOrdemServicoValidar();
+            AdicionarItemOsCommand = new RelayCommandWithParameter(ExecutarGuardarItemOsNaLista, CanExecuteAdicionarItem);
+            ApagarItemOsCommand = new RelayCommandWithParameter(ExecutarApagarItemOsNaLista, CanExecuteApagarItem);
+
+            codigosDal = new RCodigosDAL(LoginViewModel.colaborador.IdFuncionario);
+            itensOsDal = new RItensOSDAL(LoginViewModel.colaborador.IdFuncionario);
+
+            if (id.HasValue)
+            {
+                itensOsDal.GetByIdOs(id.Value);
+            }
+
+            MarcasList = codigosDal.GetListaMarcasFerramenta().ToDictionary(b => b.Id, a => a.Nome);
+            NovaOrdemServico = ObjectoEditar.Status == 0; //se estiver diferente de 0 é pq já tem um status associado
+
+            if (NovaOrdemServico)
+            {
+                var statusInicial = codigosDal.GetStatusAberta();
+                ObjectoEditar.Status = statusInicial.Id;
+                StatusList = new Dictionary<int, string>() { { statusInicial.Id, statusInicial.Nome } };
+            }
+            else
+            {
+                PodeEditar = ((ROsDAL)Repositorio).PodeEditar(ObjectoEditar.Status);
+                StatusList = codigosDal.ListaStatusSeguintes(ObjectoEditar.Status).ToDictionary(b => b.Id, a => a.Nome);
+            }
         }
-
-        // Inicializa a instância de OsViewModel com os parâmetros:
-        //public CadastroOrdemServicoViewModel(int? id) : base(id, new OsValidar(), new ROsDAL(LoginViewModel.colaborador.IdFuncionario))
-        //{
-        //    itemOsvalidador = new ItemOsValidar();
-        //    AdicionarItemOsCommand = new RelayCommandWithParameter(ExecutarGuardarItemOsNaLista, CanExecuteAdicionarItem);
-        //    ApagarItemOsCommand = new RelayCommandWithParameter(ExecutarApagarItemOsNaLista, CanExecuteApagarItem);
-
-        //    codigosDal = new RCodigosDAL(LoginViewModel.colaborador.IdFuncionario);
-        //    itensOsDal = new RItensOSDAL(LoginViewModel.colaborador.IdFuncionario);
-
-        //    if (id.HasValue)
-        //    {
-        //        itensOsDal.GetByIdOs(id.Value);
-        //    }
-
-        //    MarcasList = codigosDal.GetListaMarcasFerramenta().ToDictionary(b => b.Id, a => a.Nome);
-        //    NovaOrdemServico = ObjectoEditar.Status == 0; //se estiver diferente de 0 é pq já tem um status associado
-
-        //    if (NovaOrdemServico)
-        //    {
-        //        var statusInicial = codigosDal.GetStatusAberta();
-        //        ObjectoEditar.Status = statusInicial.Id;
-        //        StatusList = new Dictionary<int, string>() { { statusInicial.Id, statusInicial.Nome } };
-        //    }
-        //    else
-        //    {
-        //        PodeEditar = ((ROsDAL)Repositorio).PodeEditar(ObjectoEditar.Status);
-        //        StatusList = codigosDal.ListaStatusSeguintes(ObjectoEditar.Status).ToDictionary(b => b.Id, a => a.Nome);
-        //    }
-        //}
 
         //public List<string> StatusList => ValoresEstaticos.Status.ToList();
         public ICommand AdicionarItemOsCommand { get; set; }
@@ -119,11 +115,11 @@ namespace GestãoEmpresarial.ViewModels
             AtualizarTotaisItens();
         }
 
-        //public bool CanExecuteAdicionarItem(object parameter)
-        //{
-        //    var result = itemOsvalidador.Validate(ObjectoEditar.ItemOsAdicionar);
-        //    return result.IsValid;
-        //}
+        public bool CanExecuteAdicionarItem(object parameter)
+        {
+            var result = itemOsvalidador.Validate(ObjectoEditar.ItemOsAdicionarPlanilha);
+            return result.IsValid;
+        }
 
         public void ExecutarGuardarItemOsNaLista(object tag)
         {

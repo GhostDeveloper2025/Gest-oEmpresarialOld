@@ -1,5 +1,7 @@
 ﻿using AutoCompleteTextBox.Editors;
+using GestãoEmpresarial.Repositorios;
 using GestãoEmpresarial.Utils;
+using GestãoEmpresarial.ViewModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,10 +16,9 @@ namespace GestãoEmpresarial.Providers
     {
         public IEnumerable GetSuggestions(string filter)
         {
-            return null;
-            //var repo = new RColaboradorDAL(LoginViewModel.colaborador.IdFuncionario);
-            //var list = repo.List(filter).Take(20); // Limita a 20 registros
-            //return list.Where(a => a.Cargo == "Responsavel");
+            var repo = new RColaboradorDAL(LoginViewModel.colaborador.IdFuncionario);
+            var list = repo.List(filter).Take(20); // Limita a 20 registros
+            return list.Where(a => a.Cargo == "Responsavel");
         }
     }
 }

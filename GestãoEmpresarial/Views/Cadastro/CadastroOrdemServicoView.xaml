@@ -10,7 +10,7 @@
              xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
              xmlns:providers="clr-namespace:GestãoEmpresarial.Providers"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="806.25" d:DesignWidth="800">
 
     <UserControl.Resources>
         <Style TargetType="ComboBox" BasedOn="{StaticResource FormComboBox}"/>
@@ -144,13 +144,13 @@
                 FontSize="22" 
                 Background="#1A2A40" 
                 Foreground="#ADBFC3" />
-        
+
         <UniformGrid>
             <wpfcc:AutoCompleteTextBox
                 materialDesign:HintAssist.Hint="Produto"
                 DisplayMember="Nome"
-                Provider="{Binding Path=DataContext, RelativeSource={RelativeSource Self}}"
-                SelectedItem="{Binding ObjectoEditar.ItemOsAdicionar.Produto, 
+                Provider="{providers:ProdutoProvider}"
+                SelectedItem="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Produto, 
                 Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <wpfcc:AutoCompleteTextBox.ItemTemplate>
                     <DataTemplate>
@@ -166,49 +166,59 @@
 
             <TextBox
                 materialDesign:HintAssist.Hint="Quantidade"
-                Text="{Binding ObjectoEditar.ItemOsAdicionar.Produto.Estoque.Quantidade}"
+                Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Produto.Estoque.Quantidade}"
                 IsReadOnly="True" 
                 IsHitTestVisible="False">
             </TextBox>
 
             <cc:MoedaTextBox 
                 materialDesign:HintAssist.Hint="Valor Unitário"
-                Text="{Binding ObjectoEditar.ItemOsAdicionar.ValUnitario, 
+                Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.ValUnitario, 
                 Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </cc:MoedaTextBox>
 
             <cc:NumeroTextBox
                 materialDesign:HintAssist.Hint="Quantidade"
-                Text="{Binding ObjectoEditar.ItemOsAdicionar.Quantidade, 
+                Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Quantidade, 
                 Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                 MaxLength="9">
             </cc:NumeroTextBox>
 
             <cc:NumeroTextBox
                 materialDesign:HintAssist.Hint="Desconto"
-                Text="{Binding ObjectoEditar.ItemOsAdicionar.Desconto, 
+                Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Desconto, 
                 Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </cc:NumeroTextBox>
 
             <cc:MoedaTextBox
                 materialDesign:HintAssist.Hint="Total Item"
-                Text="{Binding ObjectoEditar.ItemOsAdicionar.TotalItem, 
+                Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.TotalItem, 
                 Converter={utils:DecimalConverter}, Mode=OneWay}" 
                 IsReadOnly="True" 
                 IsHitTestVisible="False">
             </cc:MoedaTextBox>
         </UniformGrid>
 
+        <Button x:Name="BtnPopupAdicionarProduto"
+                        Style="{StaticResource ButtonGlobal}"
+                        Command="{Binding AdicionarItemOsCommand}"
+                        HorizontalAlignment="Right">            
+            <StackPanel Orientation="Horizontal">
+                <fa:IconImage Height="40" Width="40" Icon="FileCirclePlus" Style="{StaticResource IconsButtonGlobal}"/>
+                <TextBlock Text="Adicionar" Style="{StaticResource ButtonText}"/>
+            </StackPanel>
+        </Button>
         <TextBlock 
             HorizontalAlignment="Left" 
             VerticalAlignment="Center" 
-            Foreground="#836EFB" FontSize="15" 
+            Foreground="#836EFB"
+            FontSize="15" 
             FontFamily="Cambria Mat" 
             FontWeight="Medium">
             <Run Text="Número De Registros: " />
             <Run Text="{Binding ObjectoEditar.NumberOfRecords}" />
         </TextBlock>
-            
+
         <DataGrid x:Name="DgItensOsModel"
                   IsReadOnly="True" 
                   AutoGenerateColumns="False"
@@ -233,7 +243,7 @@
         </DataGrid>
         <UniformGrid>
             <cc:MoedaTextBox
-                materialDesign:HintAssist.Hint="Toal Mão Obra"
+                materialDesign:HintAssist.Hint="Total Mão Obra"
                 Text="{Binding ObjectoEditar.TotalMaoObra, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </cc:MoedaTextBox>
 
@@ -266,6 +276,6 @@
                 IsHitTestVisible="False">
             </cc:MoedaTextBox>
         </UniformGrid>
-            
+
     </StackPanel>
 </UserControl>
