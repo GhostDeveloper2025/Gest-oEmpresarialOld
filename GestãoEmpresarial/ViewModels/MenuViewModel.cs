@@ -1,15 +1,29 @@
 ﻿using GestãoEmpresarial.Models;
 using GestãoEmpresarial.Repositorios;
+using GestãoEmpresarial.Validations;
 using GestãoEmpresarial.Views.Cadastro;
 using GestãoEmpresarial.Views.Pesquisa;
 using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace GestãoEmpresarial.ViewModels
 {
     public class MenuViewModel
     {
         public ObservableCollection<TreeviewMenu> Items { get; set; }
+
+        private CadastroView GetCadastroView<TViewModel, TRepositorio, TValidar, TView>()
+            where TViewModel : ICadastroViewModel
+            where TView : UIElement
+        {
+            var repositorio = Activator.CreateInstance(typeof(TRepositorio), LoginViewModel.colaborador.IdFuncionario);
+            var validar = Activator.CreateInstance<TValidar>();
+            var view = Activator.CreateInstance<TView>();
+            var viewModel = Activator.CreateInstance(typeof(TViewModel), null, validar, repositorio) as ICadastroViewModel;
+            return new CadastroView(viewModel, view);
+        }
 
         public MenuViewModel()
         {
@@ -21,12 +35,12 @@ namespace GestãoEmpresarial.ViewModels
                     Icon = PackIconKind.PlaylistPlus,
                     Items = new TreeviewMenuCollection
                     {
-                        { "Cliente", PackIconKind.PersonAdd , () => { return new CadastroView(new CadastroClienteViewModel(null, new RClienteDAL(LoginViewModel.colaborador.IdFuncionario)), new CadastroClienteView()); } },
-                        { "Colaborador", PackIconKind.PersonChild,  () => { return new CadastroView(new CadastroColaboradorViewModel (null, new RColaboradorDAL(LoginViewModel.colaborador.IdFuncionario)), new CadastroColaboradorView()); } },
-                        { "Categoria", PackIconKind.Tags,  () => { return new CadastroView(new CadastroCategoriaViewModel(null, new RCategoriaDAL(LoginViewModel.colaborador.IdFuncionario)), new CadastroCategoriaView()); } },
-                        { "Produto", PackIconKind.BoxAdd,  () => { return new CadastroView(new CadastroProdutoViewModel(null, new RProdutoDAL(LoginViewModel.colaborador.IdFuncionario)), new CadastroProdutoView()); }},
-                        { "OS", PackIconKind.HammerScrewdriver,  () => { return new CadastroView(new CadastroOrdemServicoViewModel(null, new ROsDAL(LoginViewModel.colaborador.IdFuncionario)), new CadastroOrdemServicoView()); }},
-                        { "Venda", PackIconKind.BoxAdd,  () => { return new CadastroView(new CadastroVendaViewModel (null, new RVendasDAL(LoginViewModel.colaborador.IdFuncionario)), new CadastroVendaView()); } },
+                        { "Cliente", PackIconKind.PersonAdd , () => GetCadastroView<CadastroClienteViewModel, RClienteDAL, ClienteValidar, CadastroClienteView>() },
+                        { "Colaborador", PackIconKind.PersonChild,  () => GetCadastroView<CadastroColaboradorViewModel, RColaboradorDAL, ColaboradorValidar, CadastroColaboradorView>() },
+                        { "Categoria", PackIconKind.Tags,  () => GetCadastroView<CadastroCategoriaViewModel, RCategoriaDAL, CategoriaValidar, CadastroCategoriaView>() },
+                        { "Produto", PackIconKind.BoxAdd,  () => GetCadastroView<CadastroProdutoViewModel, RProdutoDAL, ProdutoValidar, CadastroProdutoView >()},
+                        { "OS", PackIconKind.HammerScrewdriver,  () => GetCadastroView<CadastroOrdemServicoViewModel, ROsDAL, OrdemServicoValidar, CadastroOrdemServicoView >()},
+                        { "Venda", PackIconKind.BoxAdd,  () => GetCadastroView <CadastroVendaViewModel, RVendasDAL, VendaValidar, CadastroVendaView >() },
                     }
                 },
                 new TreeviewMenu

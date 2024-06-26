@@ -4,7 +4,7 @@ using System;
 
 namespace GestãoEmpresarial.Models
 {
-    internal class ItensOrdemServicoModelObservavel : ObservableObject
+    public class ItensOrdemServicoModelObservavel : ObservableObject
     {
         public static ItemOrdemServicoModel MapearItemOrdemServicoModel(ItensOrdemServicoModelObservavel model)
         {

@@ -1,15 +1,16 @@
-﻿using System;
+﻿using GestãoEmpresarial.Validations;
+using System;
 
 namespace GestãoEmpresarial.Models
 {
     public class EditarColaboradorModel : EditarBaseModel<ColaboradorModel>
     {
-        public EditarColaboradorModel() : this(null)
+        public EditarColaboradorModel(ColaboradorValidar validar) : this(null, validar)
         {
             DataCadastro = DateTime.Now;
         }
 
-        public EditarColaboradorModel(ColaboradorModel obj) : base(obj)
+        public EditarColaboradorModel(ColaboradorModel obj, ColaboradorValidar validar) : base(obj, validar)
         {
         }
 

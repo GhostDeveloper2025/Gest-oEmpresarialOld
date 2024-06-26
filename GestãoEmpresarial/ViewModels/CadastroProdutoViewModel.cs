@@ -1,6 +1,7 @@
 ﻿using GestãoEmpresarial.Interface;
 using GestãoEmpresarial.Models;
 using GestãoEmpresarial.Repositorios;
+using GestãoEmpresarial.Validations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,8 @@ namespace GestãoEmpresarial.ViewModels
         private readonly RCodigosDAL codigosDal;
         private readonly REstoqueDAL restoqueDal;
         //
-        public CadastroProdutoViewModel(int? id, IDAL<ProdutoModel> Repositorio) : base(id, Repositorio)
+        public CadastroProdutoViewModel(int? id, ProdutoValidar validar, IDAL<ProdutoModel> repositorio) 
+            : base(id, validar, repositorio)
         {
             codigosDal = new RCodigosDAL(LoginViewModel.colaborador.IdFuncionario);
             var categoriaDal = new RCategoriaDAL(LoginViewModel.colaborador.IdFuncionario);

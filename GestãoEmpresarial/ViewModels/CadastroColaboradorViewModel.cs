@@ -1,5 +1,6 @@
 ﻿using GestãoEmpresarial.Interface;
 using GestãoEmpresarial.Models;
+using GestãoEmpresarial.Validations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ namespace GestãoEmpresarial.ViewModels
 {
     public class CadastroColaboradorViewModel : CadastroViewModel<ColaboradorModel, EditarColaboradorModel>
     {
-        public CadastroColaboradorViewModel(int? id , IDAL<ColaboradorModel> Repositorio) : base(id, Repositorio)
+        public CadastroColaboradorViewModel(int? id, ColaboradorValidar validar, IDAL<ColaboradorModel> repositorio) 
+            : base(id, validar, repositorio)
         {
         }
     }

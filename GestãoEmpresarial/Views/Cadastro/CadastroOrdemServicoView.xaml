@@ -173,8 +173,8 @@
 
             <cc:MoedaTextBox 
                 materialDesign:HintAssist.Hint="Valor Unitário"
-                Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.ValUnitario, 
-                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Produto.ValorVenda}"
+                IsReadOnly="True">
             </cc:MoedaTextBox>
 
             <cc:NumeroTextBox
@@ -220,20 +220,20 @@
         </TextBlock>
 
         <DataGrid x:Name="DgItensOsModel"
-                  IsReadOnly="True" 
-                  AutoGenerateColumns="False"
-                  ItemsSource="{Binding ObjectoEditar.ListItensOs}">
+          IsReadOnly="True" AutoGenerateColumns="False"
+          ItemsSource="{Binding ObjectoEditar.ListItensOs}">
             <!-- ... Define as colunas dos Botões ... -->
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Opções">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <WrapPanel Margin="0,0,15,0">
-                                <Button 
-                                    Cursor="Hand"
-                                    Command="{Binding DataContext.ApagarItemOsCommand, ElementName=DgItensOsModel}" 
-                                    CommandParameter="{Binding}">
-                                    <fa:IconImage Icon="Trash" />
+                                <Button Style="{StaticResource ButtonDataGrid}"
+                                 Tag="{StaticResource color13}"
+                                 Cursor="Hand"
+                                 Command="{Binding DataContext.ApagarItemOsCommand, ElementName=DgItensOsModel}" 
+                                 CommandParameter="{Binding}">
+                                    <fa:IconImage Icon="Trash" Style="{StaticResource IconButton}"/>
                                 </Button>
                             </WrapPanel>
                         </DataTemplate>

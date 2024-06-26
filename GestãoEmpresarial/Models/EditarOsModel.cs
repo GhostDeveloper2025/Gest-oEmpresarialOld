@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestãoEmpresarial.Validations;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -6,17 +7,17 @@ namespace GestãoEmpresarial.Models
 {
     public class EditarOsModel : EditarBaseModel<OrdemServicoModel>
     {
-        public EditarOsModel() : this(null)
+        public EditarOsModel(OrdemServicoValidar validar) : this(null, validar)
         {
             DataEntrada = DateTime.Now;
         }
 
-        public EditarOsModel(OrdemServicoModel osModel) : base(osModel)
+        public EditarOsModel(OrdemServicoModel osModel, OrdemServicoValidar validar) : base(osModel, validar)
         {
-            ItemOsAdicionarPlanilha = new ItemOrdemServicoModel();
+            ItemOsAdicionarPlanilha = new ItensOrdemServicoModelObservavel();
 
             if (ListItensOs == null)
-                ListItensOs = new ObservableCollection<ItemOrdemServicoModel>();
+                ListItensOs = new ObservableCollection<ItensOrdemServicoModelObservavel>();
 
             NumberOfRecords = ListItensOs.Count;
             // Registre o evento CollectionChanged para atualizar o NumberOfRecords quando a coleção mudar
@@ -59,19 +60,31 @@ namespace GestãoEmpresarial.Models
             }
         }
 
+        //public decimal TotalItemOrdemServicoPlanilha
+        //{
+        //    get
+        //    {
+        //        if (ItemOsAdicionarPlanilha.Produto == null)
+        //            return 0;
+        //        var CustoTotal = ItemOsAdicionarPlanilha.Quantidade * ItemOsAdicionarPlanilha.Produto.ValorVenda;
+        //        var DescontoValor = ItemOsAdicionarPlanilha.Desconto <= 0 ? 0 : CustoTotal * ItemOsAdicionarPlanilha.Desconto / 100;
+        //        return Math.Round(CustoTotal - DescontoValor, 2);
+        //    }
+        //}
+
         //public decimal TotalOS { get { return TotalProduto + TotalMaoObra; } }
 
         //public decimal TotalDescontoProduto { get { return Math.Round(ListItensOs.Sum(x => x.DescontoValor), 2); } }
 
         //public decimal TotalProduto { get { return ListItensOs.Sum(x => x.TotalItem); } } //total valor com desconto
 
-        public ItemOrdemServicoModel ItemOsAdicionarPlanilha { get; set; }
-        public ObservableCollection<ItemOrdemServicoModel> ListItensOs { get; set; }
+        public ItensOrdemServicoModelObservavel ItemOsAdicionarPlanilha { get; set; }
+        public ObservableCollection<ItensOrdemServicoModelObservavel> ListItensOs { get; set; }
 
         public void AdicionarNaLista()
         {
             ListItensOs.Add(ItemOsAdicionarPlanilha);
-            ItemOsAdicionarPlanilha = new ItemOrdemServicoModel();
+            ItemOsAdicionarPlanilha = new ItensOrdemServicoModelObservavel();
             RaisePropertyChanged(nameof(ItemOsAdicionarPlanilha));
         }
 
@@ -103,7 +116,8 @@ namespace GestãoEmpresarial.Models
 
         protected override void SetPropriedadesDoObjectoBD(OrdemServicoModel obj)
         {
-            ListItensOs = new ObservableCollection<ItemOrdemServicoModel>(obj.ListItensOs);
+            var listDeObservaveis = obj.ListItensOs.Select(a => ItensOrdemServicoModelObservavel.MapearItemOrdemServicoModel(a));
+            ListItensOs = new ObservableCollection<ItensOrdemServicoModelObservavel>(listDeObservaveis);
             TotalMaoObra = obj.TotalMaoObra;
             Status = obj.Status;
             IdOs = obj.IdOs;

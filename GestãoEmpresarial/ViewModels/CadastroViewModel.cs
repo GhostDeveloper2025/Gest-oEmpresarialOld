@@ -18,30 +18,28 @@ namespace GestãoEmpresarial.ViewModels
         /// <summary>
         /// Propriedade que faz bind para saber se pode editar ou inserir
         /// </summary>
-        private readonly bool PodeInserir;
+        private readonly bool _podeInserir;
 
-        private readonly AbstractValidator<ObjectBD> validador;
-        protected readonly IDAL<ObjectBD> Repositorio;
+        private readonly AbstractValidator<ObjectBD> _validador;
+        protected readonly IDAL<ObjectBD> _repositorio;
 
-        public CadastroViewModel(int? id, IDAL<ObjectBD> Repositorio)
+        public CadastroViewModel(int? id, AbstractValidator<ObjectBD> validador, IDAL<ObjectBD> repositorio)
         {
-            //this.validador = validador;
-            this.Repositorio = Repositorio;
+            _validador = validador;
+            _repositorio = repositorio;
+            _podeInserir = id.HasValue == false;
 
-            SaveCommand = new RelayCommandWithParameter(ExecutarSalvar, PodeExecutarSalvar);
-
-            if (id.HasValue)
-                ObjectoEditar = (ObjectoEditarView)Activator.CreateInstance(typeof(ObjectoEditarView), Repositorio.GetById(id.Value));
-            else
-            {
-                //criamos um novo model
-                ObjectoEditar = NovoObjectoEditar();
-                PodeInserir = true;
-            }
+            SaveCommand = new RelayCommandWithParameter(ExecutarSalvar);
+            ObjectoEditar = NovoObjectoEditar(id);
         }
-        public virtual ObjectoEditarView NovoObjectoEditar()
+        public virtual ObjectoEditarView NovoObjectoEditar(int? id)
         {
-            return Activator.CreateInstance<ObjectoEditarView>(); //Ver Com O Professor se fica  o activator mesmo
+            Type tipoEditar = typeof(ObjectoEditarView);
+            if (id.HasValue)
+                return Activator.CreateInstance(tipoEditar, _repositorio.GetById(id.Value), _validador) as ObjectoEditarView;
+            else
+                //criamos um novo model
+                return Activator.CreateInstance(tipoEditar, _validador) as ObjectoEditarView;
         }
 
         public int Id { get; set; }
@@ -60,32 +58,13 @@ namespace GestãoEmpresarial.ViewModels
         public virtual int InserirObjectoBD()
         {
             var objBD = ObjectoEditar.DevolveObjectoBD();
-            return Repositorio.Insert(objBD);
+            return _repositorio.Insert(objBD);
         }
 
         public virtual void AtualizarObjectoBD()
         {
             var objBD = ObjectoEditar.DevolveObjectoBD();
-            Repositorio.Update(objBD);
-        }
-
-        public bool PodeExecutarSalvar(object parameter)
-        {
-            return true; // TODO: AINDA TEM DE SER FEITO!!
-            //var objBD = ObjectoEditar.DevolveObjectoBD();
-            //var result = validador.Validate(objBD);
-            //if (!result.IsValid)
-            //{
-            //    string errors = null;
-            //    var count = 1;
-
-            //    foreach (var failure in result.Errors)
-            //    {
-            //        errors += $"{count++} - {failure.ErrorMessage}\n";
-            //    }
-            //    //MessageBox.Show(errors, "Alerta De Validação De Registro", MessageBoxButton.OK, MessageBoxImage.Information);
-            //}
-            //return result.IsValid;
+            _repositorio.Update(objBD);
         }
 
         public void ExecutarSalvar(object parameter)
@@ -93,7 +72,7 @@ namespace GestãoEmpresarial.ViewModels
             try
             {
                 var text = "Atualizado";
-                if (PodeInserir)
+                if (_podeInserir)
                 {
                     InserirObjectoBD();
                     text = "Adicionado";
@@ -104,7 +83,7 @@ namespace GestãoEmpresarial.ViewModels
                 MessageBox.Show($" Registo {text} Com Sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 //limpa os Campos
-                ObjectoEditar = NovoObjectoEditar();
+                ObjectoEditar = NovoObjectoEditar(null);
                 RaisePropertyChanged(nameof(ObjectoEditar));
             }
             catch (Exception ex)

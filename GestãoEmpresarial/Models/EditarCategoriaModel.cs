@@ -1,12 +1,14 @@
-﻿namespace GestãoEmpresarial.Models
+﻿using GestãoEmpresarial.Validations;
+
+namespace GestãoEmpresarial.Models
 {
     public class EditarCategoriaModel : EditarBaseModel<CategoriaModel>
     {
-        public EditarCategoriaModel() : this(null)
+        public EditarCategoriaModel(CategoriaValidar validar) : this(null, validar)
         {
         }
 
-        public EditarCategoriaModel(CategoriaModel obj) : base(obj)
+        public EditarCategoriaModel(CategoriaModel obj, CategoriaValidar validar) : base(obj, validar)
         {
         }
 

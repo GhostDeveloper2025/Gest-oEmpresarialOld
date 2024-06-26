@@ -5,23 +5,26 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
+             xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
-        <TextBlock Text="{Binding ObjectoEditar.IdCategoria}"/>
         <StackPanel>
-            <TextBox 
+            <cc:ValidarTextBox 
                 materialDesign:HintAssist.Hint="Nome"
                 Text="{Binding ObjectoEditar.Nome, 
-            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
-            Converter={utils:CapitalizeWordsConverter}}">
-            </TextBox>
+                Mode=TwoWay, 
+                UpdateSourceTrigger=PropertyChanged,
+                ValidatesOnDataErrors=True,
+                Converter={utils:CapitalizeWordsConverter}}">
+            </cc:ValidarTextBox>
             <TextBox 
                 materialDesign:HintAssist.Hint="Descrição"
-            MaxLength="150"                   
-            Text="{Binding ObjectoEditar.Descricao, 
-            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
-            Converter={utils:CapitalizeWordsConverter}}">
+                MaxLength="150"                   
+                Text="{Binding ObjectoEditar.Descricao, 
+                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                ValidatesOnDataErrors=True,
+                Converter={utils:CapitalizeWordsConverter}}">
             </TextBox>
         </StackPanel>
     </StackPanel>

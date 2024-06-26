@@ -19,7 +19,8 @@ namespace GestãoEmpresarial.ViewModels
         private readonly RItensOSDAL itensOsDal;
         private readonly ItemOrdemServicoValidar itemOsvalidador;
 
-        public CadastroOrdemServicoViewModel(int? id, IDAL<OrdemServicoModel> Repositorio) : base(id, Repositorio)
+        public CadastroOrdemServicoViewModel(int? id, OrdemServicoValidar validar, IDAL<OrdemServicoModel> repositorio) 
+            : base(id, validar, repositorio)
         {
             itemOsvalidador = new ItemOrdemServicoValidar();
             AdicionarItemOsCommand = new RelayCommandWithParameter(ExecutarGuardarItemOsNaLista, CanExecuteAdicionarItem);
@@ -44,7 +45,7 @@ namespace GestãoEmpresarial.ViewModels
             }
             else
             {
-                PodeEditar = ((ROsDAL)Repositorio).PodeEditar(ObjectoEditar.Status);
+                PodeEditar = ((ROsDAL)base._repositorio).PodeEditar(ObjectoEditar.Status);
                 StatusList = codigosDal.ListaStatusSeguintes(ObjectoEditar.Status).ToDictionary(b => b.Id, a => a.Nome);
             }
         }
@@ -66,14 +67,15 @@ namespace GestãoEmpresarial.ViewModels
         {
             foreach (var item in ObjectoEditar.ListItensOs)
             {
-                item.IdOs = idOs;
-                if (item.IdItensOs > 0)
+                var objBD = ItensOrdemServicoModelObservavel.MapearItemOrdemServicoModel(item);
+                objBD.IdOs = idOs;
+                if (objBD.IdItensOs > 0)
                 {
-                    itensOsDal.Update(item);
+                    itensOsDal.Update(objBD);
                 }
                 else
                 {
-                    itensOsDal.Insert(item);
+                    itensOsDal.Insert(objBD);
                 }
             }
         }
@@ -84,9 +86,9 @@ namespace GestãoEmpresarial.ViewModels
             base.AtualizarObjectoBD();
         }
 
-        public override EditarOsModel NovoObjectoEditar()
+        public override EditarOsModel NovoObjectoEditar(int? id)
         {
-            var obj = base.NovoObjectoEditar();
+            var obj = base.NovoObjectoEditar(id);
             if (obj.ListItensOs != null)
                 obj.ListItensOs.Clear();
             return obj;
@@ -106,10 +108,11 @@ namespace GestãoEmpresarial.ViewModels
 
         public void ExecutarApagarItemOsNaLista(object tag)
         {
-            var item = (ItemOrdemServicoModel)tag;
+            var item = (ItensOrdemServicoModelObservavel)tag;
             if (item.IdItensOs > 0)
             {
-                itensOsDal.Delete(item);
+                var objBD = ItensOrdemServicoModelObservavel.MapearItemOrdemServicoModel(item);
+                itensOsDal.Delete(objBD);
             }
             ObjectoEditar.ListItensOs.Remove(item);
             AtualizarTotaisItens();
@@ -117,7 +120,8 @@ namespace GestãoEmpresarial.ViewModels
 
         public bool CanExecuteAdicionarItem(object parameter)
         {
-            var result = itemOsvalidador.Validate(ObjectoEditar.ItemOsAdicionarPlanilha);
+            var objBD = ItensOrdemServicoModelObservavel.MapearItemOrdemServicoModel(ObjectoEditar.ItemOsAdicionarPlanilha);
+            var result = itemOsvalidador.Validate(objBD);
             return result.IsValid;
         }
 

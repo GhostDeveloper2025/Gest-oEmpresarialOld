@@ -1,15 +1,16 @@
-﻿using System;
+﻿using GestãoEmpresarial.Validations;
+using System;
 
 namespace GestãoEmpresarial.Models
 {
     public class EditarProdutoModel : EditarBaseModel<ProdutoModel>
     {
-        public EditarProdutoModel() : this(null)
+        public EditarProdutoModel(ProdutoValidar validar) : this(null, validar)
         {
             DataCadastro = DateTime.Now;
         }
 
-        public EditarProdutoModel(ProdutoModel obj) : base(obj)
+        public EditarProdutoModel(ProdutoModel obj, ProdutoValidar validar) : base(obj, validar)
         {
         }
 

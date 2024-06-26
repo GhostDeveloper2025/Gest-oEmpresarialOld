@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestãoEmpresarial.Validations;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -9,10 +10,21 @@ namespace GestãoEmpresarial.Models
     /// </summary>
     public class EditarVendaModel : EditarBaseModel<VendaModel>
     {
-        public EditarVendaModel() : this(null)
+        public EditarVendaModel(VendaValidar validar) : this(null, validar)
         {
             DataVenda = DateTime.Now;
             //DataFinalizacao = DateTime.Now;
+        }
+
+        public EditarVendaModel(VendaModel vendaModel, VendaValidar validar) : base(vendaModel, validar)
+        {
+            ItemVendaAdicionar = new ItemVendaModel();
+            if (ListItensVenda == null)
+                ListItensVenda = new ObservableCollection<ItemVendaModel>();
+
+            NumberOfRecords = ListItensVenda.Count;
+            // Registre o evento CollectionChanged para atualizar o NumberOfRecords quando a coleção mudar
+            ListItensVenda.CollectionChanged += (sender, e) => { NumberOfRecords = ListItensVenda.Count; };
         }
 
         public int IdVenda { get; set; }
@@ -25,19 +37,7 @@ namespace GestãoEmpresarial.Models
 
         public ItemVendaModel ItemVendaAdicionar { get; set; }
 
-        public EditarVendaModel(VendaModel vendaModel) : base(vendaModel)
-        {
-            ItemVendaAdicionar = new ItemVendaModel();
-            if (ListItensVenda == null)
-                ListItensVenda = new ObservableCollection<ItemVendaModel>();
-
-            NumberOfRecords = ListItensVenda.Count;
-            // Registre o evento CollectionChanged para atualizar o NumberOfRecords quando a coleção mudar
-            ListItensVenda.CollectionChanged += (sender, e) => { NumberOfRecords = ListItensVenda.Count; };
-        }
-
         public ObservableCollection<ItemVendaModel> ListItensVenda { get; set; }
-
         public void AdicionarNaLista()
         {
             ListItensVenda.Add(ItemVendaAdicionar);

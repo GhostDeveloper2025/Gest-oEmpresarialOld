@@ -1,15 +1,16 @@
-﻿using System;
+﻿using GestãoEmpresarial.Validations;
+using System;
 
 namespace GestãoEmpresarial.Models
 {
     public class EditarClienteModel : EditarBaseModel<ClienteModel>
     {
-        public EditarClienteModel() : this(null)
+        public EditarClienteModel(ClienteValidar validar) : this(null, validar)
         {
             DataCadastro = DateTime.Now;
         }
 
-        public EditarClienteModel(ClienteModel obj) : base(obj)
+        public EditarClienteModel(ClienteModel obj, ClienteValidar validar) : base(obj, validar)
         {
         }
 
