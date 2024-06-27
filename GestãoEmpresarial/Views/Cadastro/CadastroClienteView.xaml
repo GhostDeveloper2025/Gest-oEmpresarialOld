@@ -10,11 +10,12 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
         <UniformGrid>
-            <TextBox
+            <cc:ValidarTextBox
                       materialDesign:HintAssist.Hint="Nome"
                       Text="{Binding ObjectoEditar.Nome, 
+                ValidatesOnDataErrors=True,
                  UpdateSourceTrigger=PropertyChanged,  Converter={utils:CapitalizeWordsConverter}}">
-        </TextBox>
+        </cc:ValidarTextBox>
         <cc:CpfTextBox
                     Text="{Binding ObjectoEditar.CPF,
                  UpdateSourceTrigger=PropertyChanged}"/>
@@ -26,10 +27,11 @@
                  UpdateSourceTrigger=PropertyChanged}"/>
         </UniformGrid>
         <UniformGrid>
-            <TextBox
+            <cc:ValidarTextBox
                     materialDesign:HintAssist.Hint="UF"
                     Text="{Binding ObjectoEditar.UF, 
                  UpdateSourceTrigger=PropertyChanged, 
+                ValidatesOnDataErrors=True,
                  Converter={utils:CapitalizeWordsConverter}}"/>
         <TextBox 
                     materialDesign:HintAssist.Hint="Localidade"
@@ -47,9 +49,10 @@
                  UpdateSourceTrigger=PropertyChanged}"/>
         </UniformGrid>
         <UniformGrid>
-            <TextBox                        
+            <cc:ValidarTextBox                        
                     materialDesign:HintAssist.Hint="Bairro"
                     Text="{Binding ObjectoEditar.Bairro, 
+                ValidatesOnDataErrors=True,
                  UpdateSourceTrigger=PropertyChanged, 
                  Converter={utils:CapitalizeWordsConverter}}"/>
         <cc:CelularTextBox

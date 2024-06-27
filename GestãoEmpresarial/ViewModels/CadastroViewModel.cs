@@ -29,7 +29,7 @@ namespace GestãoEmpresarial.ViewModels
             _repositorio = repositorio;
             _podeInserir = id.HasValue == false;
 
-            SaveCommand = new RelayCommandWithParameter(ExecutarSalvar);
+            SaveCommand = new RelayCommandWithParameter(ExecutarSalvar, PodeExecutarSalvar);
             ObjectoEditar = NovoObjectoEditar(id);
         }
         public virtual ObjectoEditarView NovoObjectoEditar(int? id)
@@ -65,6 +65,13 @@ namespace GestãoEmpresarial.ViewModels
         {
             var objBD = ObjectoEditar.DevolveObjectoBD();
             _repositorio.Update(objBD);
+        }
+
+        public bool PodeExecutarSalvar(object parameter)
+        {
+            var objBD = ObjectoEditar.DevolveObjectoBD();
+            var result = _validador.Validate(objBD);
+            return result.IsValid;
         }
 
         public void ExecutarSalvar(object parameter)

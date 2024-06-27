@@ -132,6 +132,7 @@
     <Compile Include="Utils\EnumDescriptionConverter.cs" />
     <Compile Include="Utils\MarkupExtensionGestaoEmpresarial.cs" />
     <Compile Include="Utils\Methods.cs" />
+    <Compile Include="Validations\BaseValidar.cs" />
     <Compile Include="Validations\CategoriaValidar.cs" />
     <Compile Include="Validations\ClienteValidar.cs" />
     <Compile Include="Validations\ColaboradorValidar.cs" />

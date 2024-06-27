@@ -8,11 +8,13 @@ using GestãoEmpresarial.Models;
 
 namespace GestãoEmpresarial.Validations
 {
-    public class CategoriaValidar : AbstractValidator<CategoriaModel>
+    public class CategoriaValidar : BaseValidar<CategoriaModel>
     {
         public CategoriaValidar()
         {
-            RuleFor(x => x.Nome).NotEmpty().WithMessage("O campo `Nome` é Obrigatório. Favor Preencher");
+            RuleGenericaVazioFor(x => x.Nome);
+            RuleGenericaVazioFor(x => x.Descricao);
+            //RuleFor(x => x.Nome).NotEmpty().WithMessage("O campo `Nome` é Obrigatório. Favor Preencher!");
             //RuleFor(x => x.Descricao).NotEmpty().WithMessage("O Campo Descrição Esta Em Branco");
         }
         

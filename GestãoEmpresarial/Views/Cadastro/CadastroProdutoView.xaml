@@ -20,6 +20,7 @@
             <TextBox 
         materialDesign:HintAssist.Hint="Nome"
         Text="{Binding ObjectoEditar.Nome, 
+                ValidatesOnDataErrors=True,
         UpdateSourceTrigger=PropertyChanged, 
         Converter={utils:DecimalConverter}, Mode=OneWay}" >
             </TextBox>

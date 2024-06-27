@@ -10,6 +10,8 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
         <StackPanel>
+            <!--<cc:ValidarTextBoxLabel Path="ObjectoEditar.Nome"></cc:ValidarTextBoxLabel>-->
+            
             <cc:ValidarTextBox 
                 materialDesign:HintAssist.Hint="Nome"
                 Text="{Binding ObjectoEditar.Nome, 
