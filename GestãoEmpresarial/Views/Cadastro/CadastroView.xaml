@@ -16,16 +16,18 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <TextBox 
-                Width="80"
-                IsReadOnly="True"  
-                HorizontalAlignment="Left"          
-                Text="{Binding Id}"/>
-            <TextBox 
-                Width="100"
-                HorizontalAlignment="Right"
-                Text="{Binding DataCadastro, Mode=OneWay, StringFormat=dd/MM/yyyy hh:mm:ss}">
-            </TextBox>
+            <DockPanel>
+                <TextBox 
+                    DockPanel.Dock="Left"
+                    IsReadOnly="True"  
+                    HorizontalAlignment="Left"          
+                    Text="{Binding Id}"/>
+                <TextBox 
+                    DockPanel.Dock="Right"
+                    HorizontalAlignment="Right"
+                    Text="{Binding DataCadastro, Mode=OneWay, StringFormat=dd/MM/yyyy hh:mm:ss}">
+                </TextBox>
+            </DockPanel>
         </Grid>
         <Grid Grid.Row="1" Name="fContainer" Margin="10,10,10,10" />
         <!-- Conteúdo do rodapé -->
