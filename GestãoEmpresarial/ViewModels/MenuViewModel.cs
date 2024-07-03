@@ -1,10 +1,12 @@
-﻿using GestãoEmpresarial.Models;
+﻿using GestãoEmpresarial.Interface;
+using GestãoEmpresarial.Models;
 using GestãoEmpresarial.Repositorios;
 using GestãoEmpresarial.Validations;
 using GestãoEmpresarial.Views.Cadastro;
 using GestãoEmpresarial.Views.Pesquisa;
 using MaterialDesignThemes.Wpf;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 
@@ -14,14 +16,29 @@ namespace GestãoEmpresarial.ViewModels
     {
         public ObservableCollection<TreeviewMenu> Items { get; set; }
 
-        private CadastroView GetCadastroView<TViewModel, TRepositorio, TValidar, TView>()
+        private TRepositorio GetRepositorio<TRepositorio>()
+            where TRepositorio : class
+        {
+            return Activator.CreateInstance(typeof(TRepositorio), LoginViewModel.colaborador.IdFuncionario) as TRepositorio;
+        }
+
+        private CadastroView GetCadastroView<TViewModel, TRepositorio, TValidar, TView>(params object[] args)
+            where TRepositorio : class
             where TViewModel : ICadastroViewModel
             where TView : UIElement
         {
-            var repositorio = Activator.CreateInstance(typeof(TRepositorio), LoginViewModel.colaborador.IdFuncionario);
+            var repositorio = GetRepositorio<TRepositorio>();
             var validar = Activator.CreateInstance<TValidar>();
             var view = Activator.CreateInstance<TView>();
-            var viewModel = Activator.CreateInstance(typeof(TViewModel), null, validar, repositorio) as ICadastroViewModel;
+            List<object> listArgs = new List<object>()
+            {
+                null, validar, repositorio
+            };
+            foreach (var item in args)
+            {
+                listArgs.Add(item);
+            }
+            var viewModel = Activator.CreateInstance(typeof(TViewModel), listArgs.ToArray()) as ICadastroViewModel;
             return new CadastroView(viewModel, view);
         }
 
@@ -38,9 +55,21 @@ namespace GestãoEmpresarial.ViewModels
                         { "Cliente", PackIconKind.PersonAdd , () => GetCadastroView<CadastroClienteViewModel, RClienteDAL, ClienteValidar, CadastroClienteView>() },
                         { "Colaborador", PackIconKind.PersonChild,  () => GetCadastroView<CadastroColaboradorViewModel, RColaboradorDAL, ColaboradorValidar, CadastroColaboradorView>() },
                         { "Categoria", PackIconKind.Tags,  () => GetCadastroView<CadastroCategoriaViewModel, RCategoriaDAL, CategoriaValidar, CadastroCategoriaView>() },
-                        { "Produto", PackIconKind.BoxAdd,  () => GetCadastroView<CadastroProdutoViewModel, RProdutoDAL, ProdutoValidar, CadastroProdutoView >()},
-                        { "OS", PackIconKind.HammerScrewdriver,  () => GetCadastroView<CadastroOrdemServicoViewModel, ROsDAL, OrdemServicoValidar, CadastroOrdemServicoView >()},
-                        { "Venda", PackIconKind.BoxAdd,  () => GetCadastroView <CadastroVendaViewModel, RVendasDAL, VendaValidar, CadastroVendaView >() },
+                        { "Produto", PackIconKind.BoxAdd,  () => GetCadastroView<CadastroProdutoViewModel, RProdutoDAL, ProdutoValidar, CadastroProdutoView>
+                            (
+                                GetRepositorio<RCodigosDAL>(),
+                                GetRepositorio<RCategoriaDAL>(),
+                                GetRepositorio<REstoqueDAL>()
+                            )
+                        },
+                        { "OS", PackIconKind.HammerScrewdriver,  () => GetCadastroView<CadastroOrdemServicoViewModel, ROsDAL, OrdemServicoValidar, CadastroOrdemServicoView>
+                            (
+                                new ItemOrdemServicoValidar(),
+                                GetRepositorio<RCodigosDAL>(),
+                                GetRepositorio<RItensOSDAL>()
+                            )
+                        },
+                        { "Venda", PackIconKind.BoxAdd,  () => GetCadastroView <CadastroVendaViewModel, RVendasDAL, VendaValidar, CadastroVendaView >(GetRepositorio<RCodigosDAL>(), GetRepositorio<RItensVendaDAL>()) },
                     }
                 },
                 new TreeviewMenu
@@ -57,8 +86,9 @@ namespace GestãoEmpresarial.ViewModels
                             {
                                     return new PesquisaView(
                                         new PesquisaOrdemServicoViewModel(
-                                            new ROsDAL(LoginViewModel.colaborador.IdFuncionario),
-                                            new RCodigosDAL(LoginViewModel.colaborador.IdFuncionario))
+                                            GetRepositorio<ROsDAL>(),
+                                            GetRepositorio<RCodigosDAL>()
+                                            )
                                         );
                             }
                         },
@@ -66,8 +96,10 @@ namespace GestãoEmpresarial.ViewModels
                             {
                                 return new PesquisaView(
                                     new PesquisaVendaViewModel(
-                                        new RVendasDAL(LoginViewModel.colaborador.IdFuncionario),
-                                            new RCodigosDAL(LoginViewModel.colaborador.IdFuncionario)));
+                                        GetRepositorio<RVendasDAL>(),
+                                        GetRepositorio<RCodigosDAL>()
+                                        )
+                                    );
                             }
                         },
                     }

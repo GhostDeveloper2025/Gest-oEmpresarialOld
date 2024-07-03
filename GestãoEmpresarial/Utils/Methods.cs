@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestãoEmpresarial.Models.Atributos;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -16,36 +17,36 @@ namespace GestãoEmpresarial.Utils
     {
         //Recursividade - é a habilidade de um metodo/funcao efetuar um ciclo chamando se a si mesmo
         //temos de ter cuidado, porque temos de colocar uma condicao de paragem!
-        //public static void AddColumnToDataGrid(DataGrid dgItems, Type tt, string propriedadePai = "")
-        //{
-        //    // Crie as colunas com base nos atributos personalizados
-        //    //Este código criará automaticamente colunas na DataGrid com base nos atributos personalizados da classe Person.
-        //    //Certifique-se de definir o DataContext como this para vincular a DataGrid aos dados na classe MainWindow.
-        //    foreach (var property in tt.GetProperties())
-        //    {
-        //        var columnHeaderAttribute = property.GetCustomAttribute<ColumnHeaderAttribute>();
-        //        if (columnHeaderAttribute != null)
-        //        {
-        //            //vinculo = "CodProduto"
-        //            string vinculo = property.Name;
-        //            if (string.IsNullOrWhiteSpace(propriedadePai) == false)
-        //            {
-        //                //vinculo = "ProdutoObj" + "." + "CodProduto"
-        //                vinculo = propriedadePai + "." + vinculo;
-        //            }
+        public static void AddColumnToDataGrid(DataGrid dgItems, Type tt, string propriedadePai = "")
+        {
+            //Crie as colunas com base nos atributos personalizados
+            //Este código criará automaticamente colunas na DataGrid com base nos atributos personalizados da classe Person.
+            //Certifique-se de definir o DataContext como this para vincular a DataGrid aos dados na classe MainWindow.
+            foreach (var property in tt.GetProperties())
+            {
+                var columnHeaderAttribute = property.GetCustomAttribute<ColumnHeaderAttribute>();
+                if (columnHeaderAttribute != null)
+                {
+                    //vinculo = "CodProduto"
+                    string vinculo = property.Name;
+                    if (string.IsNullOrWhiteSpace(propriedadePai) == false)
+                    {
+                        //vinculo = "ProdutoObj" + "." + "CodProduto"
+                        vinculo = propriedadePai + "." + vinculo;
+                    }
 
-        //            var column = new DataGridTextColumn
-        //            {
-        //                Header = columnHeaderAttribute.TextoCabecalho,
-        //                Binding = new Binding(vinculo) //Name //CodProduto 
-        //            };
-        //            dgItems.Columns.Add(column);
-        //        }
-        //        else if (IsNonStringClass(property.PropertyType))
-        //            //para fazer recursividade, e adicionar mais colunas das classes que eu quero
-        //            AddColumnToDataGrid(dgItems, property.PropertyType, property.Name);
-        //    }
-        //}
+                    var column = new DataGridTextColumn
+                    {
+                        Header = columnHeaderAttribute.TextoCabecalho,
+                        Binding = new Binding(vinculo) //Name //CodProduto 
+                    };
+                    dgItems.Columns.Add(column);
+                }
+                else if (IsNonStringClass(property.PropertyType))
+                    //para fazer recursividade, e adicionar mais colunas das classes que eu quero
+                    AddColumnToDataGrid(dgItems, property.PropertyType, property.Name);
+            }
+        }
 
         //verifica se o tipo é classe, exclui string
         private static bool IsNonStringClass(Type type)

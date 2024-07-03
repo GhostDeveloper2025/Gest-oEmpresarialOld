@@ -29,7 +29,9 @@
                 </TextBox>
             </DockPanel>
         </Grid>
-        <Grid Grid.Row="1" Name="fContainer" Margin="10,10,10,10" />
+        <ScrollViewer Grid.Row="1">
+            <Grid Name="fContainer" Margin="10,10,10,10" />
+        </ScrollViewer>
         <!-- Conteúdo do rodapé -->
         <StackPanel Grid.Row="2" VerticalAlignment="Bottom">
             <Button x:Name="BtnSalvar"

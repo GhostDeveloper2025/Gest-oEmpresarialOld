@@ -1,8 +1,10 @@
-﻿using GestãoEmpresarial.ViewModels;
+﻿using GestãoEmpresarial.Models.Atributos;
+using GestãoEmpresarial.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -34,7 +36,13 @@ namespace GestãoEmpresarial.Views.Pesquisa
 
         private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            e.Column.Header = ((PropertyDescriptor)e.PropertyDescriptor).DisplayName;
+            var prop = ((PropertyDescriptor)e.PropertyDescriptor);
+            if (prop.Attributes.OfType<DisplayNameAttribute>().Any() == false)
+                e.Cancel = true;
+
+            e.Column.Header = prop.DisplayName;
+
+            //e.Column.Header = ((PropertyDescriptor)e.PropertyDescriptor).DisplayName;
             if (e.PropertyType == typeof(System.DateTime))
                 (e.Column as DataGridTextColumn).Binding.StringFormat = "dd/MM/yyyy HH:mm:ss";
             else if (e.PropertyType == typeof(System.DateTime?))

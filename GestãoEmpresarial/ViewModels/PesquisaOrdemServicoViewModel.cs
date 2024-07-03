@@ -13,7 +13,7 @@ namespace GestãoEmpresarial.ViewModels
     {
         public Dictionary<int, string> StatusList { get; internal set; }
 
-        public PesquisaOrdemServicoViewModel(IDAL<OrdemServicoModel> Repositorio, RCodigosDAL RepositorioCodigos) : base(Repositorio)
+        public PesquisaOrdemServicoViewModel(ROsDAL Repositorio, RCodigosDAL RepositorioCodigos) : base(Repositorio)
         {
             StatusList = new Dictionary<int, string>
             {

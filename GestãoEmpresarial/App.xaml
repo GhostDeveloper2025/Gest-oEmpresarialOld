@@ -41,7 +41,7 @@
                 <!--#endregion-->
 
                 <!--#region include your primary palette... -->
-                <!--include your primary palette... -->
+                 <!--include your primary palette... -->
                 <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />-->
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
 

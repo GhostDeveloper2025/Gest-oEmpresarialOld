@@ -58,7 +58,7 @@ Foreground="#ADBFC3" />
                 <wpfcc:AutoCompleteTextBox x:Name="TxtProduto" Width="250" 
                                            DisplayMember="Nome"
                                            materialDesign:HintAssist.Hint="Produto"
-                                           Provider="{Binding Path=DataContext, RelativeSource={RelativeSource Self}}"
+                                           Provider="{providers:ProdutoProvider}"
                                            SelectedItem="{Binding ObjectoEditar.ItemVendaAdicionar.Produto, 
                     Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <wpfcc:AutoCompleteTextBox.ItemTemplate>

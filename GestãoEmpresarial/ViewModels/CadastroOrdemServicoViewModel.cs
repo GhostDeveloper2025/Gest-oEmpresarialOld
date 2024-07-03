@@ -15,38 +15,38 @@ namespace GestãoEmpresarial.ViewModels
 {
     internal class CadastroOrdemServicoViewModel : CadastroViewModel<OrdemServicoModel, EditarOsModel>
     {
-        private readonly RCodigosDAL codigosDal;
-        private readonly RItensOSDAL itensOsDal;
-        private readonly ItemOrdemServicoValidar itemOsvalidador;
+        private readonly RCodigosDAL _codigosDal;
+        private readonly RItensOSDAL _itensOsDal;
+        private readonly ItemOrdemServicoValidar _itemOsvalidador;
 
-        public CadastroOrdemServicoViewModel(int? id, OrdemServicoValidar validar, IDAL<OrdemServicoModel> repositorio) 
+        public CadastroOrdemServicoViewModel(int? id, OrdemServicoValidar validar, ROsDAL repositorio, ItemOrdemServicoValidar itemOsvalidador, RCodigosDAL codigosDAL, RItensOSDAL itensOSDAL) 
             : base(id, validar, repositorio)
         {
-            itemOsvalidador = new ItemOrdemServicoValidar();
             AdicionarItemOsCommand = new RelayCommandWithParameter(ExecutarGuardarItemOsNaLista, CanExecuteAdicionarItem);
             ApagarItemOsCommand = new RelayCommandWithParameter(ExecutarApagarItemOsNaLista, CanExecuteApagarItem);
 
-            codigosDal = new RCodigosDAL(LoginViewModel.colaborador.IdFuncionario);
-            itensOsDal = new RItensOSDAL(LoginViewModel.colaborador.IdFuncionario);
+            _itemOsvalidador = itemOsvalidador;
+            _codigosDal = codigosDAL;
+            _itensOsDal = itensOSDAL;
 
             if (id.HasValue)
             {
-                itensOsDal.GetByIdOs(id.Value);
+                _itensOsDal.GetByIdOs(id.Value);
             }
 
-            MarcasList = codigosDal.GetListaMarcasFerramenta().ToDictionary(b => b.Id, a => a.Nome);
+            MarcasList = _codigosDal.GetListaMarcasFerramenta().ToDictionary(b => b.Id, a => a.Nome);
             NovaOrdemServico = ObjectoEditar.Status == 0; //se estiver diferente de 0 é pq já tem um status associado
 
             if (NovaOrdemServico)
             {
-                var statusInicial = codigosDal.GetStatusAberta();
+                var statusInicial = _codigosDal.GetStatusAberta();
                 ObjectoEditar.Status = statusInicial.Id;
                 StatusList = new Dictionary<int, string>() { { statusInicial.Id, statusInicial.Nome } };
             }
             else
             {
-                PodeEditar = ((ROsDAL)base._repositorio).PodeEditar(ObjectoEditar.Status);
-                StatusList = codigosDal.ListaStatusSeguintes(ObjectoEditar.Status).ToDictionary(b => b.Id, a => a.Nome);
+                PodeEditar = repositorio.PodeEditar(ObjectoEditar.Status);
+                StatusList = _codigosDal.ListaStatusSeguintes(ObjectoEditar.Status).ToDictionary(b => b.Id, a => a.Nome);
             }
         }
 
@@ -71,11 +71,11 @@ namespace GestãoEmpresarial.ViewModels
                 objBD.IdOs = idOs;
                 if (objBD.IdItensOs > 0)
                 {
-                    itensOsDal.Update(objBD);
+                    _itensOsDal.Update(objBD);
                 }
                 else
                 {
-                    itensOsDal.Insert(objBD);
+                    _itensOsDal.Insert(objBD);
                 }
             }
         }
@@ -103,7 +103,7 @@ namespace GestãoEmpresarial.ViewModels
 
         public bool CanExecuteApagarItem(object parameter)
         {
-            return codigosDal.PodeApagarItem(ObjectoEditar.Status);
+            return _codigosDal.PodeApagarItem(ObjectoEditar.Status);
         }
 
         public void ExecutarApagarItemOsNaLista(object tag)
@@ -112,7 +112,7 @@ namespace GestãoEmpresarial.ViewModels
             if (item.IdItensOs > 0)
             {
                 var objBD = ItensOrdemServicoModelObservavel.MapearItemOrdemServicoModel(item);
-                itensOsDal.Delete(objBD);
+                _itensOsDal.Delete(objBD);
             }
             ObjectoEditar.ListItensOs.Remove(item);
             AtualizarTotaisItens();
@@ -121,7 +121,7 @@ namespace GestãoEmpresarial.ViewModels
         public bool CanExecuteAdicionarItem(object parameter)
         {
             var objBD = ItensOrdemServicoModelObservavel.MapearItemOrdemServicoModel(ObjectoEditar.ItemOsAdicionarPlanilha);
-            var result = itemOsvalidador.Validate(objBD);
+            var result = _itemOsvalidador.Validate(objBD);
             return result.IsValid;
         }
 

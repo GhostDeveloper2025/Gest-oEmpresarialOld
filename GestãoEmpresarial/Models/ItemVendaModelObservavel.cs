@@ -1,4 +1,5 @@
-﻿using MicroMvvm;
+﻿using GestãoEmpresarial.Models.Atributos;
+using MicroMvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace GestãoEmpresarial.Models
         //{
         //    get { return _produto?.CodProduto; }
         //}
+        
+        [ColumnHeader("Quantidade")]
         public int Quantidade
         {
             get { return _quantidade; }

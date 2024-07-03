@@ -1,4 +1,6 @@
-﻿using GestãoEmpresarial.ViewModels;
+﻿using GestãoEmpresarial.Models;
+using GestãoEmpresarial.Utils;
+using GestãoEmpresarial.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,7 @@ namespace GestãoEmpresarial.Views.Cadastro
         public CadastroVendaView()
         {
             InitializeComponent();
+            Methods.AddColumnToDataGrid(DgItensModel, typeof(ItemVendaModelObservavel));
         }
     }
 }
