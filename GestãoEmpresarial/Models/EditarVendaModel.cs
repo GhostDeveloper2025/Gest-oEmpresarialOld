@@ -18,9 +18,9 @@ namespace GestãoEmpresarial.Models
 
         public EditarVendaModel(VendaModel vendaModel, VendaValidar validar) : base(vendaModel, validar)
         {
-            ItemVendaAdicionar = new ItemVendaModel();
+            ItemVendaAdicionarPlanilha = new ItemVendaModelObservavel();
             if (ListItensVenda == null)
-                ListItensVenda = new ObservableCollection<ItemVendaModel>();
+                ListItensVenda = new ObservableCollection<ItemVendaModelObservavel>();
 
             NumberOfRecords = ListItensVenda.Count;
             // Registre o evento CollectionChanged para atualizar o NumberOfRecords quando a coleção mudar
@@ -35,14 +35,30 @@ namespace GestãoEmpresarial.Models
 
         public ClienteModel Cliente { get; set; }
 
-        public ItemVendaModel ItemVendaAdicionar { get; set; }
+        public ItemVendaModelObservavel ItemVendaAdicionarPlanilha { get; set; }
+        public ObservableCollection<ItemVendaModelObservavel> ListItensVenda { get; set; }
 
-        public ObservableCollection<ItemVendaModel> ListItensVenda { get; set; }
         public void AdicionarNaLista()
         {
-            ListItensVenda.Add(ItemVendaAdicionar);
-            ItemVendaAdicionar = new ItemVendaModel();
-            RaisePropertyChanged(nameof(ItemVendaAdicionar));
+            ListItensVenda.Add(ItemVendaAdicionarPlanilha);
+            ItemVendaAdicionarPlanilha = new ItemVendaModelObservavel();
+            RaisePropertyChanged(nameof(ItemVendaAdicionarPlanilha));
+            AtualizarTotais();
+        }
+        public void RemoverDaLista(ItemVendaModelObservavel item)
+        {
+            ListItensVenda.Remove(item);
+            AtualizarTotais();
+        }
+
+        private void AtualizarTotais()
+        {
+            RaisePropertyChanged(nameof(TotalDescontoProduto));
+            //Aqui estamos a dizer, que no "ObjectoEditar" a propriedade SubtotalProduto foi alterada
+            //E como tal o ecrã deve atualizar o seu valor
+            RaisePropertyChanged(nameof(SubTotalProduto));
+            RaisePropertyChanged(nameof(TotalProduto));
+            RaisePropertyChanged(nameof(TotalVenda));
         }
 
         // Variável privada para armazenar o número de registros
@@ -67,18 +83,18 @@ namespace GestãoEmpresarial.Models
             {
                 _ValorFrete = value;
                 RaisePropertyChanged(nameof(ValorFrete));
-                //RaisePropertyChanged(nameof(TotalVenda));
+                RaisePropertyChanged(nameof(TotalVenda));
             }
         }
 
         //total valor sem desconto
         public decimal SubTotalProduto { get { return ListItensVenda.Sum(x => x.CustoTotal); } }
 
-        //public decimal TotalVenda { get { return TotalProduto + ValorFrete; } }
+        public decimal TotalVenda { get { return TotalProduto + ValorFrete; } }
 
-        //public decimal TotalDescontoProduto { get { return Math.Round(ListItensVenda.Sum(x => x.DescontoValor), 2); } }
+        public decimal TotalDescontoProduto { get { return Math.Round(ListItensVenda.Sum(x => x.DescontoValor), 2); } }
 
-        //public decimal TotalProduto { get { return ListItensVenda.Sum(x => x.TotalItem); } } //total valor com desconto
+        public decimal TotalProduto { get { return ListItensVenda.Sum(x => x.TotalItem); } } //total valor com desconto
 
         public override VendaModel DevolveObjectoBD()
         {
@@ -95,7 +111,8 @@ namespace GestãoEmpresarial.Models
 
         protected override void SetPropriedadesDoObjectoBD(VendaModel obj)
         {
-            ListItensVenda = new ObservableCollection<ItemVendaModel>(obj.ListItensVenda);
+            var listDeObservaveis = obj.ListItensVenda.Select(a => ItemVendaModelObservavel.MapearItemVendaModel(a));
+            ListItensVenda = new ObservableCollection<ItemVendaModelObservavel>(listDeObservaveis);
             IdVenda = obj.IdVenda;
             Situacao = obj.Situacao;
             DataFinalizacao = obj.DataFinalizacao;

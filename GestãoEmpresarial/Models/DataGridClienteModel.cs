@@ -30,7 +30,9 @@ namespace GestãoEmpresarial.Models
         }
 
         public int Idcliente { get; set; }
+        [DisplayName("Data Cadastro")]
         public string DataCadastro { get; set; }
+        [DisplayName("Nome")]
         public string Nome { get; set; }
         public string CPF { get; set; }
 

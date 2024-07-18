@@ -17,6 +17,9 @@ namespace GestãoEmpresarial.Validations
             //RuleFor(x => x.Produto.Estoque.Quantidade).GreaterThan(0).When(temEstoque);
             //RuleFor(x => x.Quantidade).GreaterThan(0).LessThanOrEqualTo(x => x.Produto.Estoque.Quantidade).When(temEstoque);
             //RuleFor(x => x.ValUnitario).GreaterThan(0);
+            RuleFor(x => x.Quantidade).NotEmpty();
+            RuleFor(x => x.ValUnitario).GreaterThan(0);
+            RuleFor(x => x.Produto).NotEmpty();
         }
     }
 }

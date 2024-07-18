@@ -22,8 +22,8 @@ namespace GestãoEmpresarial.ViewModels
         public CadastroOrdemServicoViewModel(int? id, OrdemServicoValidar validar, ROsDAL repositorio, ItemOrdemServicoValidar itemOsvalidador, RCodigosDAL codigosDAL, RItensOSDAL itensOSDAL) 
             : base(id, validar, repositorio)
         {
-            AdicionarItemOsCommand = new RelayCommandWithParameter(ExecutarGuardarItemOsNaLista, CanExecuteAdicionarItem);
-            ApagarItemOsCommand = new RelayCommandWithParameter(ExecutarApagarItemOsNaLista, CanExecuteApagarItem);
+            AdicionarItemOsCommand = new RelayCommandWithParameter(ExecutarGuardarItemNaLista, CanExecuteAdicionarItem);
+            ApagarItemOsCommand = new RelayCommandWithParameter(ExecutarApagarItemNaLista, CanExecuteApagarItem);
 
             _itemOsvalidador = itemOsvalidador;
             _codigosDal = codigosDAL;
@@ -106,7 +106,7 @@ namespace GestãoEmpresarial.ViewModels
             return _codigosDal.PodeApagarItem(ObjectoEditar.Status);
         }
 
-        public void ExecutarApagarItemOsNaLista(object tag)
+        public void ExecutarApagarItemNaLista(object tag)
         {
             var item = (ItensOrdemServicoModelObservavel)tag;
             if (item.IdItensOs > 0)
@@ -114,8 +114,7 @@ namespace GestãoEmpresarial.ViewModels
                 var objBD = ItensOrdemServicoModelObservavel.MapearItemOrdemServicoModel(item);
                 _itensOsDal.Delete(objBD);
             }
-            ObjectoEditar.ListItensOs.Remove(item);
-            AtualizarTotaisItens();
+            ObjectoEditar.RemoverDaLista(item);
         }
 
         public bool CanExecuteAdicionarItem(object parameter)
@@ -125,20 +124,9 @@ namespace GestãoEmpresarial.ViewModels
             return result.IsValid;
         }
 
-        public void ExecutarGuardarItemOsNaLista(object tag)
+        public void ExecutarGuardarItemNaLista(object tag)
         {
             ObjectoEditar.AdicionarNaLista();
-            AtualizarTotaisItens();
-        }
-
-        private void AtualizarTotaisItens()
-        {
-            //RaisePropertyChanged(nameof(ObjectoEditar.TotalDescontoProduto));
-            ////Aqui estamos a dizer, que no "ObjectoEditar" a propriedade SubtotalProduto foi alterada
-            ////E como tal o ecrã deve atualizar o seu valor
-            //RaisePropertyChanged(nameof(ObjectoEditar.SubTotalProduto));
-            //RaisePropertyChanged(nameof(ObjectoEditar.TotalProduto));
-            //RaisePropertyChanged(nameof(ObjectoEditar.TotalOS));
         }
 
         public IEnumerable GetSuggestions(string filter)

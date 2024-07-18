@@ -69,7 +69,7 @@ namespace GestãoEmpresarial.ViewModels
                                 GetRepositorio<RItensOSDAL>()
                             )
                         },
-                        { "Venda", PackIconKind.BoxAdd,  () => GetCadastroView <CadastroVendaViewModel, RVendasDAL, VendaValidar, CadastroVendaView >(GetRepositorio<RCodigosDAL>(), GetRepositorio<RItensVendaDAL>()) },
+                        { "Venda", PackIconKind.BoxAdd,  () => GetCadastroView <CadastroVendaViewModel, RVendasDAL, VendaValidar, CadastroVendaView >(GetRepositorio<RCodigosDAL>(), GetRepositorio<RItensVendaDAL>(), new ItemVendaValidar()) },
                     }
                 },
                 new TreeviewMenu
@@ -102,6 +102,18 @@ namespace GestãoEmpresarial.ViewModels
                                     );
                             }
                         },
+                    }
+                },
+                new TreeviewMenu
+                {
+                    Header = "Relatórios",
+                    Icon = PackIconKind.ReportBox,
+                    Items = new TreeviewMenuCollection
+                    {
+                        { "Cliente", PackIconKind.PersonAdd ,  () => null },
+                        { "Cliente", PackIconKind.PersonAdd ,  () => null },
+                        { "Cliente", PackIconKind.PersonAdd ,  () => null },
+                        { "Cliente", PackIconKind.PersonAdd ,  () => null },
                     }
                 }
             };

@@ -27,6 +27,11 @@ namespace GestãoEmpresarial.Views.Layout
             InitializeComponent();
             DataContext = new MenuViewModel();
         }
+        //private void TreeViewItem_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    var menu = ((FrameworkElement)sender).DataContext as TreeviewMenu;
+        //    Switcher.Switch(menu);
+        //}
 
         private void WrapPanel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {

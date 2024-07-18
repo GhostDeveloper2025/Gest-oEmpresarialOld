@@ -102,6 +102,7 @@
     <SolidColorBrush x:Key="color58" Color="#080808" />
     <SolidColorBrush x:Key="color59" Color="#10111A" />
     <SolidColorBrush x:Key="color60" Color="#191A2C" />
+    <SolidColorBrush x:Key="color61" Color="#1A2A40" />
     <!--#Cores Transparentes#-->
     <!--<SolidColorBrush x:Key="color46" Color="#ff000000" />-->
     <!--#endregion-->

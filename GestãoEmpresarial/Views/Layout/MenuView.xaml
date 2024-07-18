@@ -14,21 +14,21 @@
     </UserControl.Resources>
     <Border >
         <!--Painel Lateral-->
-            <!-- StackPanel Panel Left-->
-            <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                <TreeView 
-                    Name="TrMenu"
-                    ItemsSource="{Binding Items}" 
-                    ItemContainerStyle="{StaticResource TreeViewItemStyle_ExpandAll}" >
-                    <TreeView.ItemTemplate>
-                        <HierarchicalDataTemplate DataType="{x:Type localmodels:TreeviewMenu}" ItemsSource="{Binding Items}">
-                            <WrapPanel MouseLeftButtonUp="WrapPanel_MouseLeftButtonUp" >
-                                <materialDesign:PackIcon Kind="{Binding Icon}"  Margin="0,0,5,0"/>
-                                <TextBlock Text="{Binding Header}"  Margin="0,0,10,0"/>
-                            </WrapPanel>
-                        </HierarchicalDataTemplate>
-                    </TreeView.ItemTemplate>
-                </TreeView>
-            </ScrollViewer>
+        <!-- StackPanel Panel Left-->
+        <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <TreeView 
+                 Name="TrMenu"
+                 ItemsSource="{Binding Items}" 
+                 ItemContainerStyle="{StaticResource TreeViewItemStyle_ExpandAll}" >
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type localmodels:TreeviewMenu}" ItemsSource="{Binding Items}">
+                        <WrapPanel MouseLeftButtonUp="WrapPanel_MouseLeftButtonUp" >
+                            <materialDesign:PackIcon Kind="{Binding Icon}"  Margin="0,0,5,0"/>
+                            <TextBlock Text="{Binding Header}"  Margin="0,0,10,0"/>
+                        </WrapPanel>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+        </ScrollViewer>
     </Border>
 </UserControl>

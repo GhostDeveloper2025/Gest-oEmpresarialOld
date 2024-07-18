@@ -5,8 +5,7 @@
     <!--Icones Botoes -->
     <!--#region Icones Botoes... -->
     <!-- Corresponde a cor do icone dos botoes salvar e add... -->
-    <Style x:Key="IconsButtonGlobal" TargetType="fa:IconImage">
-        <!--<Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>-->
+    <Style x:Key="IconsButtonGlobal" TargetType="materialDesign:PackIcon">
         <Setter Property="Foreground" Value="{StaticResource color49}"/>
         <Setter Property="Width" Value="22"/>
         <Setter Property="Height" Value="22"/>
@@ -17,7 +16,7 @@
     <!--#region IconButton Este Controle É Responssavel Pela Cor Dos Icones... -->
     <!-- IconButton Este Controle É Responssavel Pela Cor Dos Icones Minimizar, Fechar E Do Data Grid 
 Sendo que Nao É aqui que se define As Cores... -->
-    <Style x:Key="IconButton" TargetType="fa:IconImage">
+    <Style x:Key="IconButton"  TargetType="materialDesign:PackIcon">
         <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
         <!--<Setter Property="Foreground" Value="{StaticResource color1}"/>-->
         <Setter Property="Width" Value="20"/>
@@ -28,7 +27,7 @@ Sendo que Nao É aqui que se define As Cores... -->
     <!--Icons Screen... -->
     <!--#region IconScreen Corresponde Aos Icones Da Tela De Cadastros... -->
     <!-- Este IconScreen Corresponde Aos Icones Da Tela De Cadastros E Pesquisas... -->
-    <Style x:Key="IconScreen" TargetType="fa:IconImage">
+    <Style x:Key="IconScreen"  TargetType="materialDesign:PackIcon">
         <Setter Property="Foreground" Value="{StaticResource color49}"/>
         <Setter Property="Width" Value="22"/>
         <Setter Property="Height" Value="22"/>
@@ -56,7 +55,7 @@ Sendo que Nao É aqui que se define As Cores... -->
     <!-- Meus botoes -->
     <Style x:Key="ButtonGlobal" TargetType="Button">
         <Setter Property="Height" Value="50"/>
-        <Setter Property="Width" Value="150"/>
+        <Setter Property="Width" Value="160"/>
         <Setter Property="Margin" Value="5,0,0,5"/>
         <!--<Setter Property="Tag" Value="{StaticResource color49}"/>-->
         <Setter Property="Background" Value="{StaticResource color45}"/>
@@ -78,11 +77,12 @@ Sendo que Nao É aqui que se define As Cores... -->
         <Setter Property="Content">
             <Setter.Value>
                 <StackPanel Orientation="Horizontal">
-                    <fa:IconImage Height="40" Width="40" Icon="FileExport" Style="{StaticResource IconsButtonGlobal}"/>
+                    <materialDesign:PackIcon Height="40" Width="40" Kind="FileExport" Style="{StaticResource IconsButtonGlobal}"/>
                     <TextBlock Text="Salvar" Style="{StaticResource ButtonText}"/>
                 </StackPanel>
             </Setter.Value>
         </Setter>
+
 
         <Style.Triggers>
             <!--Estilo De Botao hover-->

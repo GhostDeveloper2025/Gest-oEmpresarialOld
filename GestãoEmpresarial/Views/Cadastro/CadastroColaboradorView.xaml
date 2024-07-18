@@ -7,18 +7,69 @@
              xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
              xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel>
-        <cc:CelularTextBox
-            Text="{Binding ObjectoEditar.Telefone, 
-            UpdateSourceTrigger=PropertyChanged}"/>
-        <cc:MoedaTextBox
-                materialDesign:HintAssist.Hint="Comissão"
-                         Text="{Binding ObjectoEditar.Comissao, 
-            Converter={utils:DecimalConverter}}"/>
-        <TextBox
-                materialDesign:HintAssist.Hint="Senha"
-            Text="{Binding ObjectoEditar.Senha, 
-            UpdateSourceTrigger=PropertyChanged}"/>
-    </StackPanel>
+             d:DesignHeight="1000" d:DesignWidth="1150">
+    <!--#region  Grid Pai Onde Vai Todo O Codigo... -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="TxtNome"
+                         Width="250" materialDesign:HintAssist.Hint="Nome" 
+                         Text="{Binding ObjectoEditar.Nome, 
+                    UpdateSourceTrigger=PropertyChanged,  
+                    ValidatesOnDataErrors=True,
+                    Converter={utils:CapitalizeWordsConverter}}"
+                         />
+                <TextBox
+                    Width="200"
+                    materialDesign:HintAssist.Hint="Ocupação" 
+                    Text="{Binding ObjectoEditar.Cargo, 
+                    UpdateSourceTrigger=PropertyChanged, 
+                    ValidatesOnDataErrors=True,
+                    Converter={utils:CapitalizeWordsConverter}}"
+                    />
+                <cc:CpfTextBox x:Name="TxtCpf" 
+                               Width="130"
+                               Text="{Binding ObjectoEditar.CPF, 
+                    UpdateSourceTrigger=PropertyChanged}"
+                               />
+                <TextBox 
+                    Width="200"
+                    materialDesign:HintAssist.Hint="Email" 
+                    Text="{Binding ObjectoEditar.Email, 
+                    UpdateSourceTrigger=PropertyChanged,  
+                    Converter={utils:CapitalizeWordsConverter}}"
+                    />
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <cc:CelularTextBox 
+                Width="120"   
+                HorizontalAlignment="Left"
+                Text="{Binding ObjectoEditar.Telefone, 
+                UpdateSourceTrigger=PropertyChanged}"
+                />
+            <cc:MoedaTextBox x:Name="TxtComissao" 
+                             Width="90"  
+                             Emoeda="True" 
+                             materialDesign:HintAssist.Hint="Comissão" 
+                             Text="{Binding ObjectoEditar.Comissao,  
+                Converter={utils:CapitalizeWordsConverter}}"
+                             />
+            <TextBox 
+                Width="120" 
+                materialDesign:HintAssist.Hint="Senha" 
+                Text="{Binding ObjectoEditar.Senha, 
+                UpdateSourceTrigger=PropertyChanged}"
+                />
+        </StackPanel>
+    </Grid>
+    <!--#endregion-->
+
 </UserControl>

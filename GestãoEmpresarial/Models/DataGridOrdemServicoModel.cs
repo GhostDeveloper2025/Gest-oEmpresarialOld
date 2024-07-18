@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace GestãoEmpresarial.Models
 {
@@ -31,23 +32,26 @@ namespace GestãoEmpresarial.Models
             if (model == null) return null;
             else return model.Nome;
         }
-
+        [DisplayName("N° Os")]
         public int IdOs { get; set; }
 
-        //[ColumnHeader("Nome Cliente")]
+        [DisplayName("Cliente")]
         public string NomeCliente { get; set; }
-
+        [DisplayName("Status")]
         public string Status { get; set; }
+
         public string NomeTecnico { get; set; }
 
-        //public string NomeResponsavel { get; set; }
+        [DisplayName("Cadastrante")]
         public string NomeCadastrante { get; set; }
 
         //public string Box { get; set; }
         public bool Finalizado { get; set; }
 
         public bool Garantia { get; set; }
+        [DisplayName("Data Entrada")]
         public DateTime DataEntrada { get; set; }
+        [DisplayName("Data Finalização")]
         public DateTime? DataFinalizacao { get; set; }
     }
 }

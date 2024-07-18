@@ -17,11 +17,16 @@ namespace GestãoEmpresarial.Models
         }
 
         public int IdProduto { get; set; }
+        [DisplayName("Codigo Produo")]
         public string CodProduto { get; set; }
+        [DisplayName("Nome Produto")]
         public string Nome { get; set; }
+        [DisplayName("Descrição Produto")]
         public string Descricao { get; set; }
         public string Marca { get; set; }
+        [DisplayName("Valor Custo")]
         public decimal ValorCusto { get; set; }
+        [DisplayName("Valor Venda")]
         public decimal ValorVenda { get; set; }
 
         [DisplayName("Cadastrante")]

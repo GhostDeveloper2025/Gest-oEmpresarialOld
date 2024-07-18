@@ -46,7 +46,7 @@ namespace GestãoEmpresarial.Models
             {
                 _TotalMaoObra = value;
                 RaisePropertyChanged(nameof(TotalMaoObra));
-                //RaisePropertyChanged(nameof(TotalOS));
+                RaisePropertyChanged(nameof(TotalOS));
             }
         }
 
@@ -72,11 +72,11 @@ namespace GestãoEmpresarial.Models
         //    }
         //}
 
-        //public decimal TotalOS { get { return TotalProduto + TotalMaoObra; } }
+        public decimal TotalOS { get { return TotalProduto + TotalMaoObra; } }
 
-        //public decimal TotalDescontoProduto { get { return Math.Round(ListItensOs.Sum(x => x.DescontoValor), 2); } }
+        public decimal TotalDescontoProduto { get { return Math.Round(ListItensOs.Sum(x => x.DescontoValor), 2); } }
 
-        //public decimal TotalProduto { get { return ListItensOs.Sum(x => x.TotalItem); } } //total valor com desconto
+        public decimal TotalProduto { get { return ListItensOs.Sum(x => x.TotalItem); } } //total valor com desconto
 
         public ItensOrdemServicoModelObservavel ItemOsAdicionarPlanilha { get; set; }
         public ObservableCollection<ItensOrdemServicoModelObservavel> ListItensOs { get; set; }
@@ -86,16 +86,33 @@ namespace GestãoEmpresarial.Models
             ListItensOs.Add(ItemOsAdicionarPlanilha);
             ItemOsAdicionarPlanilha = new ItensOrdemServicoModelObservavel();
             RaisePropertyChanged(nameof(ItemOsAdicionarPlanilha));
+            AtualizarTotais();
+        }
+
+        public void RemoverDaLista(ItensOrdemServicoModelObservavel item)
+        {
+            ListItensOs.Remove(item);
+            AtualizarTotais();
+        }
+
+        private void AtualizarTotais()
+        {
+            RaisePropertyChanged(nameof(TotalDescontoProduto));
+            //Aqui estamos a dizer, que no "ObjectoEditar" a propriedade SubtotalProduto foi alterada
+            //E como tal o ecrã deve atualizar o seu valor
+            RaisePropertyChanged(nameof(SubTotalProduto));
+            RaisePropertyChanged(nameof(TotalProduto));
+            RaisePropertyChanged(nameof(TotalOS));
         }
 
         public override OrdemServicoModel DevolveObjectoBD()
         {
             return new OrdemServicoModel
             {
-                //TotalOS = TotalOS,
+                TotalOS = TotalOS,
                 TotalMaoObra = TotalMaoObra,
-                //TotalDescontoProduto = TotalDescontoProduto,
-                //TotalProduto = TotalProduto,
+                TotalDescontoProduto = TotalDescontoProduto,
+                TotalProduto = TotalProduto,
                 SubTotalProduto = SubTotalProduto,
                 IdOs = IdOs,
                 Status = Status,

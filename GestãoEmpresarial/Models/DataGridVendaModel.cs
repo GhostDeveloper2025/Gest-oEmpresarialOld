@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace GestãoEmpresarial.Models
 {
@@ -25,14 +26,17 @@ namespace GestãoEmpresarial.Models
             if (model == null) return null;
             else return model.Nome;
         }
-
+        [DisplayName("N° Venda")]
         public int IdVenda { get; set; }
-        //public int IdCodigoTipoPagamento { get; set; }
+        [DisplayName("Cliente")]
         public string NomeCliente { get; set; }
         public string TipoPagamento { get; set; }
+        [DisplayName("Cadastrante")]
         public string NomeCadastrante { get; set; }
         public bool Finalizado { get; set; }
+        [DisplayName("Data Venda")]
         public DateTime DataVenda { get; set; }
+        [DisplayName("Data Finalização")]
         public DateTime? DataFinalizacao { get; set; }
     }
 }
