@@ -1,5 +1,6 @@
 ﻿using GestãoEmpresarial.Interface;
 using GestãoEmpresarial.Models;
+using GestãoEmpresarial.Providers;
 using GestãoEmpresarial.Repositorios;
 using GestãoEmpresarial.Validations;
 using MicroMvvm;
@@ -27,6 +28,7 @@ namespace GestãoEmpresarial.ViewModels
         {
             AdicionarItemVendaCommand = new RelayCommandWithParameter(ExecutarGuardarItemNaLista, CanExecuteAdicionarItem);
             ApagarItemVendaCommand = new RelayCommandWithParameter(ExecutarApagarItemNaLista, CanExecuteApagarItem);
+            ProdutoProviderItem = new ProdutoProvider();
 
             _itemVendaDal = itensVendaDAL;
             _codigosDal = codigosDAL;
@@ -52,6 +54,7 @@ namespace GestãoEmpresarial.ViewModels
             {
                 var objBD = ItemVendaModelObservavel.MapearItemVendaModel(item);
                 _itemVendaDal.Delete(objBD);
+                ProdutoProviderItem.ListaExclusoes.Remove(item.Produto.IdProduto);
             }
             ObjectoEditar.RemoverDaLista(item);
         }
@@ -65,7 +68,11 @@ namespace GestãoEmpresarial.ViewModels
 
         public void ExecutarGuardarItemNaLista(object tag)
         {
+
+            ProdutoProviderItem.ListaExclusoes.Add(ObjectoEditar.ItemVendaAdicionarPlanilha.Produto.IdProduto);
             ObjectoEditar.AdicionarNaLista();
         }
+
+        public ProdutoProvider ProdutoProviderItem { get; set; }
     }
 }

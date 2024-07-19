@@ -14,6 +14,10 @@ namespace GestãoEmpresarial.ViewModels
         {
         }
 
+        public override int Id => ObjectoSelecionado.IdProduto;
+
+        public override string NomeEditarView => nameof(CadastroProdutoViewModel);
+
         public override DataGridProdutoModel GetDataGridModel(ProdutoModel item)
         {
             return new DataGridProdutoModel(item);

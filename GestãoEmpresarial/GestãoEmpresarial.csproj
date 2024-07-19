@@ -109,6 +109,7 @@
     <Compile Include="CustomControls\ValidarTextBox.xaml.cs">
       <DependentUpon>ValidarTextBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DI.cs" />
     <Compile Include="Models\DataGridClienteModel.cs" />
     <Compile Include="Models\DataGridOrdemServicoModel.cs" />
     <Compile Include="Models\DataGridProdutoModel.cs" />

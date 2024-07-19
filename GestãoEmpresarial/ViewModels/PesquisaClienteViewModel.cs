@@ -9,6 +9,10 @@ namespace GestãoEmpresarial.ViewModels
         {
         }
 
+        public override int Id => ObjectoSelecionado.Idcliente;
+
+        public override string NomeEditarView => nameof(CadastroClienteViewModel);
+
         public override DataGridClienteModel GetDataGridModel(ClienteModel item)
         {
             return new DataGridClienteModel(item);

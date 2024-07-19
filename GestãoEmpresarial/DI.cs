@@ -1,0 +1,76 @@
+﻿using GestãoEmpresarial.Repositorios;
+using GestãoEmpresarial.Validations;
+using GestãoEmpresarial.ViewModels;
+using GestãoEmpresarial.Views.Cadastro;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+
+namespace GestãoEmpresarial
+{
+    /// <summary>
+    /// DI = Dependency Injection 
+    /// Serve para injectar os parametros nos contructores, definnado como serão instanciadas novas classes
+    /// </summary>
+    internal static class DI
+    {
+        private static TRepositorio GetRepositorio<TRepositorio>()
+        where TRepositorio : class
+        {
+            return Activator.CreateInstance(typeof(TRepositorio), LoginViewModel.colaborador.IdFuncionario) as TRepositorio;
+        }
+
+        private static CadastroView GetCadastroView<TViewModel, TRepositorio, TValidar, TView>(int? id, params object[] args)
+            where TRepositorio : class
+            where TViewModel : ICadastroViewModel
+            where TView : UIElement
+        {
+            var repositorio = GetRepositorio<TRepositorio>();
+            var validar = Activator.CreateInstance<TValidar>();
+            var view = Activator.CreateInstance<TView>();
+            List<object> listArgs = new List<object>()
+            {
+                id, validar, repositorio
+            };
+            foreach (var item in args)
+            {
+                listArgs.Add(item);
+            }
+            var viewModel = Activator.CreateInstance(typeof(TViewModel), listArgs.ToArray()) as ICadastroViewModel;
+            return new CadastroView(viewModel, view);
+        }
+
+        public static Func<UserControl> GetView(string name)
+        {
+            return () => Views[name](null);
+        }
+
+        public static Dictionary<string, Func<int?, UserControl>> Views = new Dictionary<string, Func<int?, UserControl>>()
+        {
+            { nameof(CadastroClienteViewModel), (id) => GetCadastroView<CadastroClienteViewModel, RClienteDAL, ClienteValidar, CadastroClienteView>(id) },
+            { nameof(CadastroColaboradorViewModel), (id) => GetCadastroView < CadastroColaboradorViewModel, RColaboradorDAL, ColaboradorValidar, CadastroColaboradorView >(id) },
+            { nameof(CadastroCategoriaViewModel), (id) => GetCadastroView<CadastroCategoriaViewModel, RCategoriaDAL, CategoriaValidar, CadastroCategoriaView>(id) },
+            { nameof(CadastroProdutoViewModel), (id) => GetCadastroView<CadastroProdutoViewModel, RProdutoDAL, ProdutoValidar, CadastroProdutoView>
+                            (
+                                id,
+                                GetRepositorio<RCodigosDAL>(),
+                                GetRepositorio<RCategoriaDAL>(),
+                                GetRepositorio<REstoqueDAL>()
+                            ) },
+            { nameof(CadastroOrdemServicoViewModel), (id) => GetCadastroView<CadastroOrdemServicoViewModel, ROsDAL, OrdemServicoValidar, CadastroOrdemServicoView>
+                            (
+                                id,
+                                new ItemOrdemServicoValidar(),
+                                GetRepositorio<RCodigosDAL>(),
+                                GetRepositorio<RItensOSDAL>()
+                            ) },
+            { nameof(CadastroVendaViewModel), (id) => GetCadastroView<CadastroVendaViewModel, RVendasDAL, VendaValidar, CadastroVendaView>(id, GetRepositorio<RCodigosDAL>(), GetRepositorio<RItensVendaDAL>(), new ItemVendaValidar()) },
+        };
+
+
+    }
+}

@@ -13,6 +13,10 @@ namespace GestãoEmpresarial.ViewModels
     {
         public Dictionary<int, string> TipoPagamentoList { get; internal set; }
 
+        public override int Id => ObjectoSelecionado.IdVenda;
+
+        public override string NomeEditarView => nameof(CadastroVendaViewModel);
+
         public PesquisaVendaViewModel(IDAL<VendaModel> Repositorio, RCodigosDAL RepositorioCodigos) : base(Repositorio)
         {
             TipoPagamentoList = new Dictionary<int, string>

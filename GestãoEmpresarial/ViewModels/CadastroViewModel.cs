@@ -28,21 +28,22 @@ namespace GestãoEmpresarial.ViewModels
             _validador = validador;
             _repositorio = repositorio;
             _podeInserir = id.HasValue == false;
+            Id = id;
 
             SaveCommand = new RelayCommandWithParameter(ExecutarSalvar, PodeExecutarSalvar);
-            ObjectoEditar = NovoObjectoEditar(id);
+            ObjectoEditar = NovoObjectoEditar();
         }
-        public virtual ObjectoEditarView NovoObjectoEditar(int? id)
+        public virtual ObjectoEditarView NovoObjectoEditar()
         {
             Type tipoEditar = typeof(ObjectoEditarView);
-            if (id.HasValue)
-                return Activator.CreateInstance(tipoEditar, _repositorio.GetById(id.Value), _validador) as ObjectoEditarView;
+            if (Id.HasValue)
+                return Activator.CreateInstance(tipoEditar, _repositorio.GetById(Id.Value), _validador) as ObjectoEditarView;
             else
                 //criamos um novo model
                 return Activator.CreateInstance(tipoEditar, _validador) as ObjectoEditarView;
         }
 
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public DateTime DataCadastro { get; set; } = DateTime.Now;
 
         /// <summary>
@@ -90,7 +91,7 @@ namespace GestãoEmpresarial.ViewModels
                 MessageBox.Show($" Registo {text} Com Sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 //limpa os Campos
-                ObjectoEditar = NovoObjectoEditar(null);
+                ObjectoEditar = NovoObjectoEditar();
                 RaisePropertyChanged(nameof(ObjectoEditar));
             }
             catch (Exception ex)

@@ -12,7 +12,7 @@ namespace GestãoEmpresarial.Models
 {
     public class CategoriaModel
     {
-        [DisplayName("Id")]
+        [DisplayName("Nome")]
         //[Display(Name = "string1", ResourceType = typeof(Resource1))]
         //[Display(Description = "Id")]
         public int IdCategoria { get; set; }

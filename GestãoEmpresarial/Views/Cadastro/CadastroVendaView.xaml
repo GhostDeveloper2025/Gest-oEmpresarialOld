@@ -74,7 +74,7 @@
                                            Width="250" 
                                            materialDesign:HintAssist.Hint="Produto" 
                                            DisplayMember="Nome" 
-                                           Provider="{providers:ProdutoProvider}"
+                                           Provider="{Binding ProdutoProviderItem, Mode=OneWay}"
                                            SelectedItem="{Binding ObjectoEditar.ItemVendaAdicionarPlanilha.Produto, 
                     Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <wpfcc:AutoCompleteTextBox.ItemTemplate>

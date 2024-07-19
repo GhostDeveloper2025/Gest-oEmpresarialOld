@@ -14,6 +14,10 @@ namespace GestãoEmpresarial.ViewModels
         {
         }
 
+        public override int Id => ObjectoSelecionado.IdFuncionario;
+
+        public override string NomeEditarView => nameof(CadastroColaboradorViewModel);
+
         public override ColaboradorModel GetDataGridModel(ColaboradorModel item)
         {
             return item;

@@ -4,13 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 
 namespace GestãoEmpresarial.Views.Pesquisa
 {
@@ -19,6 +14,8 @@ namespace GestãoEmpresarial.Views.Pesquisa
     /// </summary>
     public partial class PesquisaView : UserControl
     {
+        private readonly IPesquisaViewModel _viewModel;
+
         public PesquisaView(IPesquisaViewModel viewModel)
             : this(viewModel, new PesquisaBarraView())
         {
@@ -28,6 +25,7 @@ namespace GestãoEmpresarial.Views.Pesquisa
         {
             InitializeComponent();
             DataContext = viewModel;
+            _viewModel = viewModel;
             if (barraPesquisa != null)
             {
                 fContainer.Children.Add(barraPesquisa);
@@ -51,7 +49,9 @@ namespace GestãoEmpresarial.Views.Pesquisa
 
         private void BtnEditar_Click(object sender, RoutedEventArgs e)
         {
+            var func = DI.Views[_viewModel.NomeEditarView];
             //Switcher.Switch(EditViewType, new[] { DataGridGlobal.SelectedItem });
+            Switcher.Switch(func(_viewModel.Id));
         }
     }
 }

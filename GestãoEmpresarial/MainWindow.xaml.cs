@@ -16,25 +16,24 @@ namespace GestãoEmpresarial
         public MainWindow()
         {
             InitializeComponent();
-            Switcher.pageSwitcher = this;            
+            Switcher.pageSwitcher = this;
         }
 
         internal void Navigate(TreeviewMenu menu)
         {
             if (menu.GetView != null)
             {
-                //TreeviewMenu
                 UserControl view = menu.GetView();
-                //if (menu.ScreenParameters == null)
-                //    view = (UserControl)Activator.CreateInstance(menu.Screen);
-                //else
-                //    view = (UserControl)Activator.CreateInstance(menu.Screen, menu.ScreenParameters);
-                
-                fContainer.Children.Clear();
-                fContainer.Children.Add(view);
-                //só coloca focus depois da thread atual terminar, para ocorrer tem de ser focusable
-                Focus(view);
+                Navigate(view);
             }
+        }
+
+        internal void Navigate(UserControl view)
+        {
+            fContainer.Children.Clear();
+            fContainer.Children.Add(view);
+            //só coloca focus depois da thread atual terminar, para ocorrer tem de ser focusable
+            Focus(view);
         }
 
         public static void Focus(UIElement element)

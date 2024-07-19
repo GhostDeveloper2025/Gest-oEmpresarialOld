@@ -13,6 +13,10 @@ namespace GestãoEmpresarial.ViewModels
     {
         public Dictionary<int, string> StatusList { get; internal set; }
 
+        public override int Id => ObjectoSelecionado.IdOs;
+
+        public override string NomeEditarView => nameof(CadastroOrdemServicoViewModel);
+
         public PesquisaOrdemServicoViewModel(ROsDAL Repositorio, RCodigosDAL RepositorioCodigos) : base(Repositorio)
         {
             StatusList = new Dictionary<int, string>

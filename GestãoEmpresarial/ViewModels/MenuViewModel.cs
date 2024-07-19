@@ -16,30 +16,10 @@ namespace GestãoEmpresarial.ViewModels
     {
         public ObservableCollection<TreeviewMenu> Items { get; set; }
 
-        private TRepositorio GetRepositorio<TRepositorio>()
-            where TRepositorio : class
+        private static TRepositorio GetRepositorio<TRepositorio>()
+        where TRepositorio : class
         {
             return Activator.CreateInstance(typeof(TRepositorio), LoginViewModel.colaborador.IdFuncionario) as TRepositorio;
-        }
-
-        private CadastroView GetCadastroView<TViewModel, TRepositorio, TValidar, TView>(params object[] args)
-            where TRepositorio : class
-            where TViewModel : ICadastroViewModel
-            where TView : UIElement
-        {
-            var repositorio = GetRepositorio<TRepositorio>();
-            var validar = Activator.CreateInstance<TValidar>();
-            var view = Activator.CreateInstance<TView>();
-            List<object> listArgs = new List<object>()
-            {
-                null, validar, repositorio
-            };
-            foreach (var item in args)
-            {
-                listArgs.Add(item);
-            }
-            var viewModel = Activator.CreateInstance(typeof(TViewModel), listArgs.ToArray()) as ICadastroViewModel;
-            return new CadastroView(viewModel, view);
         }
 
         public MenuViewModel()
@@ -52,24 +32,12 @@ namespace GestãoEmpresarial.ViewModels
                     Icon = PackIconKind.PlaylistPlus,
                     Items = new TreeviewMenuCollection
                     {
-                        { "Cliente", PackIconKind.PersonAdd , () => GetCadastroView<CadastroClienteViewModel, RClienteDAL, ClienteValidar, CadastroClienteView>() },
-                        { "Colaborador", PackIconKind.PersonChild,  () => GetCadastroView<CadastroColaboradorViewModel, RColaboradorDAL, ColaboradorValidar, CadastroColaboradorView>() },
-                        { "Categoria", PackIconKind.Tags,  () => GetCadastroView<CadastroCategoriaViewModel, RCategoriaDAL, CategoriaValidar, CadastroCategoriaView>() },
-                        { "Produto", PackIconKind.BoxAdd,  () => GetCadastroView<CadastroProdutoViewModel, RProdutoDAL, ProdutoValidar, CadastroProdutoView>
-                            (
-                                GetRepositorio<RCodigosDAL>(),
-                                GetRepositorio<RCategoriaDAL>(),
-                                GetRepositorio<REstoqueDAL>()
-                            )
-                        },
-                        { "OS", PackIconKind.HammerScrewdriver,  () => GetCadastroView<CadastroOrdemServicoViewModel, ROsDAL, OrdemServicoValidar, CadastroOrdemServicoView>
-                            (
-                                new ItemOrdemServicoValidar(),
-                                GetRepositorio<RCodigosDAL>(),
-                                GetRepositorio<RItensOSDAL>()
-                            )
-                        },
-                        { "Venda", PackIconKind.BoxAdd,  () => GetCadastroView <CadastroVendaViewModel, RVendasDAL, VendaValidar, CadastroVendaView >(GetRepositorio<RCodigosDAL>(), GetRepositorio<RItensVendaDAL>(), new ItemVendaValidar()) },
+                        { "Cliente", PackIconKind.PersonAdd, DI.GetView(nameof(CadastroClienteViewModel)) },
+                        { "Colaborador", PackIconKind.PersonChild, DI.GetView(nameof(CadastroColaboradorViewModel)) },
+                        { "Categoria", PackIconKind.Tags, DI.GetView(nameof(CadastroCategoriaViewModel)) },
+                        { "Produto", PackIconKind.BoxAdd, DI.GetView(nameof(CadastroProdutoViewModel)) },
+                        { "OS", PackIconKind.HammerScrewdriver, DI.GetView(nameof(CadastroOrdemServicoViewModel)) },
+                        { "Venda", PackIconKind.BoxAdd, DI.GetView(nameof(CadastroVendaViewModel)) },
                     }
                 },
                 new TreeviewMenu
@@ -110,10 +78,9 @@ namespace GestãoEmpresarial.ViewModels
                     Icon = PackIconKind.ReportBox,
                     Items = new TreeviewMenuCollection
                     {
-                        { "Cliente", PackIconKind.PersonAdd ,  () => null },
-                        { "Cliente", PackIconKind.PersonAdd ,  () => null },
-                        { "Cliente", PackIconKind.PersonAdd ,  () => null },
-                        { "Cliente", PackIconKind.PersonAdd ,  () => null },
+                        { "Comissão", PackIconKind.PersonAdd ,  () => null },
+                        { "Venda de Produtos", PackIconKind.PersonAdd ,  () => null },
+                        { "Ordem Serviço", PackIconKind.PersonAdd ,  () => null },
                     }
                 }
             };

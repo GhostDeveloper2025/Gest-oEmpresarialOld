@@ -8,5 +8,7 @@ namespace GestãoEmpresarial.ViewModels
 {
     public interface IPesquisaViewModel
     {
+        int Id { get; }
+        string NomeEditarView { get; }
     }
 }

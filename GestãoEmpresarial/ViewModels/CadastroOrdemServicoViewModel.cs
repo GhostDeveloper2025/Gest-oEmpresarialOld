@@ -1,5 +1,6 @@
 ﻿using GestãoEmpresarial.Interface;
 using GestãoEmpresarial.Models;
+using GestãoEmpresarial.Providers;
 using GestãoEmpresarial.Repositorios;
 using GestãoEmpresarial.Validations;
 using MicroMvvm;
@@ -24,6 +25,7 @@ namespace GestãoEmpresarial.ViewModels
         {
             AdicionarItemOsCommand = new RelayCommandWithParameter(ExecutarGuardarItemNaLista, CanExecuteAdicionarItem);
             ApagarItemOsCommand = new RelayCommandWithParameter(ExecutarApagarItemNaLista, CanExecuteApagarItem);
+            ProdutoProviderItem = new ProdutoProvider();
 
             _itemOsvalidador = itemOsvalidador;
             _codigosDal = codigosDAL;
@@ -51,6 +53,7 @@ namespace GestãoEmpresarial.ViewModels
         }
 
         //public List<string> StatusList => ValoresEstaticos.Status.ToList();
+        public ProdutoProvider ProdutoProviderItem { get; set; }
         public ICommand AdicionarItemOsCommand { get; set; }
         public ICommand ApagarItemOsCommand { get; set; }
 
@@ -86,9 +89,9 @@ namespace GestãoEmpresarial.ViewModels
             base.AtualizarObjectoBD();
         }
 
-        public override EditarOsModel NovoObjectoEditar(int? id)
+        public override EditarOsModel NovoObjectoEditar()
         {
-            var obj = base.NovoObjectoEditar(id);
+            var obj = base.NovoObjectoEditar();
             if (obj.ListItensOs != null)
                 obj.ListItensOs.Clear();
             return obj;
@@ -115,6 +118,7 @@ namespace GestãoEmpresarial.ViewModels
                 _itensOsDal.Delete(objBD);
             }
             ObjectoEditar.RemoverDaLista(item);
+            ProdutoProviderItem.ListaExclusoes.Remove(item.Produto.IdProduto);
         }
 
         public bool CanExecuteAdicionarItem(object parameter)
@@ -126,6 +130,7 @@ namespace GestãoEmpresarial.ViewModels
 
         public void ExecutarGuardarItemNaLista(object tag)
         {
+            ProdutoProviderItem.ListaExclusoes.Add(ObjectoEditar.ItemOsAdicionarPlanilha.Produto.IdProduto);
             ObjectoEditar.AdicionarNaLista();
         }
 

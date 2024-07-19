@@ -18,19 +18,22 @@ namespace GestãoEmpresarial
     internal class Switcher
     {
         public static MainWindow pageSwitcher;
-        //private readonly static Dictionary<ObservableObject, UserControl> Menus;
 
         /// <summary>
         /// É um construtor (metodo) estático, para inicializar as variaveis necessárias.
         /// </summary>
         static Switcher()
         {
-            //Menus = new Dictionary<ObservableObject, UserControl>();
         }
 
         public static void Switch(TreeviewMenu menu)
         {
             pageSwitcher.Navigate(menu);
+        }
+
+        public static void Switch(UserControl view)
+        {
+            pageSwitcher.Navigate(view);
         }
     }
 }

@@ -9,6 +9,10 @@ namespace GestãoEmpresarial.ViewModels
         {
         }
 
+        public override int Id => ObjectoSelecionado.IdCategoria;
+
+        public override string NomeEditarView => nameof(CadastroCategoriaViewModel);
+
         public override CategoriaModel GetDataGridModel(CategoriaModel item)
         {
             return item;

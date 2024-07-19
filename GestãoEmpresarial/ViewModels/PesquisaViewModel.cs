@@ -53,6 +53,8 @@ namespace GestãoEmpresarial.ViewModels
 
         public ICommand PesquisarCommand { get; set; }
         public ICommand RemoverCommand { get; set; }
+        public abstract int Id { get; }
+        public abstract string NomeEditarView { get; }
 
         // O readonly apenas podes colocar uma valor na variavel dentro do construtor.
         protected readonly IDAL<TObjectoBD> Repositorio;
