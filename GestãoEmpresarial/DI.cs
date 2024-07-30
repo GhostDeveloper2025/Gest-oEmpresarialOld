@@ -2,6 +2,7 @@
 using GestãoEmpresarial.Validations;
 using GestãoEmpresarial.ViewModels;
 using GestãoEmpresarial.Views.Cadastro;
+using GestãoEmpresarial.Views.Pesquisa;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,23 @@ namespace GestãoEmpresarial
             return new CadastroView(viewModel, view);
         }
 
+        private static PesquisaView GetPesquisaView<TViewModel, TRepositorio>(params object[] args)
+            where TRepositorio : class
+            where TViewModel : IPesquisaViewModel
+        {
+            var repositorio = GetRepositorio<TRepositorio>();
+            List<object> listArgs = new List<object>()
+            {
+                repositorio
+            };
+            foreach (var item in args)
+            {
+                listArgs.Add(item);
+            }
+            var viewModel = Activator.CreateInstance(typeof(TViewModel), listArgs.ToArray()) as IPesquisaViewModel;
+            return new PesquisaView(viewModel);
+        }
+
         public static Func<UserControl> GetView(string name)
         {
             return () => Views[name](null);
@@ -52,7 +70,7 @@ namespace GestãoEmpresarial
         public static Dictionary<string, Func<int?, UserControl>> Views = new Dictionary<string, Func<int?, UserControl>>()
         {
             { nameof(CadastroClienteViewModel), (id) => GetCadastroView<CadastroClienteViewModel, RClienteDAL, ClienteValidar, CadastroClienteView>(id) },
-            { nameof(CadastroColaboradorViewModel), (id) => GetCadastroView < CadastroColaboradorViewModel, RColaboradorDAL, ColaboradorValidar, CadastroColaboradorView >(id) },
+            { nameof(CadastroColaboradorViewModel), (id) => GetCadastroView<CadastroColaboradorViewModel, RColaboradorDAL, ColaboradorValidar, CadastroColaboradorView>(id) },
             { nameof(CadastroCategoriaViewModel), (id) => GetCadastroView<CadastroCategoriaViewModel, RCategoriaDAL, CategoriaValidar, CadastroCategoriaView>(id) },
             { nameof(CadastroProdutoViewModel), (id) => GetCadastroView<CadastroProdutoViewModel, RProdutoDAL, ProdutoValidar, CadastroProdutoView>
                             (
@@ -71,6 +89,14 @@ namespace GestãoEmpresarial
             { nameof(CadastroVendaViewModel), (id) => GetCadastroView<CadastroVendaViewModel, RVendasDAL, VendaValidar, CadastroVendaView>(id, GetRepositorio<RCodigosDAL>(), GetRepositorio<RItensVendaDAL>(), new ItemVendaValidar()) },
         };
 
-
+        public static Dictionary<string, Func<UserControl>> PesquisaViews = new Dictionary<string, Func<UserControl>>()
+        {
+            { nameof(PesquisaClienteViewModel), () => GetPesquisaView<PesquisaClienteViewModel, RClienteDAL>() },
+            { nameof(PesquisaColaboradorViewModel), () => GetPesquisaView<PesquisaColaboradorViewModel, RColaboradorDAL>() },
+            { nameof(PesquisaCategoriaViewModel), () => GetPesquisaView<PesquisaCategoriaViewModel, RCategoriaDAL>() },
+            { nameof(PesquisaProdutoViewModel), () => GetPesquisaView<PesquisaProdutoViewModel, RProdutoDAL>() },
+            { nameof(PesquisaOrdemServicoViewModel), () => GetPesquisaView<PesquisaOrdemServicoViewModel, ROsDAL>(GetRepositorio<RCodigosDAL>()) },
+            { nameof(PesquisaVendaViewModel), () => GetPesquisaView<PesquisaVendaViewModel, RVendasDAL>(GetRepositorio<RCodigosDAL>()) },
+        };
     }
 }

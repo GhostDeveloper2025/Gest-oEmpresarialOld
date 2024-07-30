@@ -25,65 +25,48 @@ namespace GestãoEmpresarial.ViewModels
         public MenuViewModel()
         {
             Items = new ObservableCollection<TreeviewMenu>()
+    {
+        new TreeviewMenu
+        {
+            Header = "Cadastros",
+            Icon = PackIconKind.PlaylistPlus,
+            Items = new TreeviewMenuCollection
             {
-                new TreeviewMenu
-                {
-                    Header = "Cadastros",
-                    Icon = PackIconKind.PlaylistPlus,
-                    Items = new TreeviewMenuCollection
-                    {
-                        { "Cliente", PackIconKind.PersonAdd, DI.GetView(nameof(CadastroClienteViewModel)) },
-                        { "Colaborador", PackIconKind.PersonChild, DI.GetView(nameof(CadastroColaboradorViewModel)) },
-                        { "Categoria", PackIconKind.Tags, DI.GetView(nameof(CadastroCategoriaViewModel)) },
-                        { "Produto", PackIconKind.BoxAdd, DI.GetView(nameof(CadastroProdutoViewModel)) },
-                        { "OS", PackIconKind.HammerScrewdriver, DI.GetView(nameof(CadastroOrdemServicoViewModel)) },
-                        { "Venda", PackIconKind.BoxAdd, DI.GetView(nameof(CadastroVendaViewModel)) },
-                    }
-                },
-                new TreeviewMenu
-                {
-                    Header = "Pesquisar",
-                    Icon = PackIconKind.FileSearch,
-                    Items = new TreeviewMenuCollection
-                    {
-                        { "Cliente", PackIconKind.PersonAdd ,  () => { return new PesquisaView(new PesquisaClienteViewModel(new RClienteDAL(LoginViewModel.colaborador.IdFuncionario))); } },
-                        { "Colaborador", PackIconKind.PersonChild,  () => { return new PesquisaView( new PesquisaColaboradorViewModel(new RColaboradorDAL(LoginViewModel.colaborador.IdFuncionario)) );} },
-                        { "Categoria", PackIconKind.Tags,  () => { return new PesquisaView(new PesquisaCategoriaViewModel(new RCategoriaDAL(LoginViewModel.colaborador.IdFuncionario)) );} },
-                        { "Produto", PackIconKind.BoxAdd,  () => { return new PesquisaView(new PesquisaProdutoViewModel(new RProdutoDAL(LoginViewModel.colaborador.IdFuncionario))); } },
-                        { "OS", PackIconKind.HammerScrewdriver,  () =>
-                            {
-                                    return new PesquisaView(
-                                        new PesquisaOrdemServicoViewModel(
-                                            GetRepositorio<ROsDAL>(),
-                                            GetRepositorio<RCodigosDAL>()
-                                            )
-                                        );
-                            }
-                        },
-                        { "Venda", PackIconKind.BoxAdd,  () =>
-                            {
-                                return new PesquisaView(
-                                    new PesquisaVendaViewModel(
-                                        GetRepositorio<RVendasDAL>(),
-                                        GetRepositorio<RCodigosDAL>()
-                                        )
-                                    );
-                            }
-                        },
-                    }
-                },
-                new TreeviewMenu
-                {
-                    Header = "Relatórios",
-                    Icon = PackIconKind.ReportBox,
-                    Items = new TreeviewMenuCollection
-                    {
-                        { "Comissão", PackIconKind.PersonAdd ,  () => null },
-                        { "Venda de Produtos", PackIconKind.PersonAdd ,  () => null },
-                        { "Ordem Serviço", PackIconKind.PersonAdd ,  () => null },
-                    }
-                }
-            };
+                { "Cliente", PackIconKind.PersonAdd, DI.GetView(nameof(CadastroClienteViewModel)) },
+                { "Colaborador", PackIconKind.PersonChild, DI.GetView(nameof(CadastroColaboradorViewModel)) },
+                { "Categoria", PackIconKind.Tags, DI.GetView(nameof(CadastroCategoriaViewModel)) },
+                { "Produto", PackIconKind.BoxAdd, DI.GetView(nameof(CadastroProdutoViewModel)) },
+                { "OS", PackIconKind.HammerScrewdriver, DI.GetView(nameof(CadastroOrdemServicoViewModel)) },
+                { "Venda", PackIconKind.BoxAdd, DI.GetView(nameof(CadastroVendaViewModel)) },
+            }
+        },
+        new TreeviewMenu
+        {
+            Header = "Pesquisar",
+            Icon = PackIconKind.FileSearch,
+            Items = new TreeviewMenuCollection
+            {
+                { "Cliente", PackIconKind.PersonAdd, DI.PesquisaViews[nameof(PesquisaClienteViewModel)] },
+                { "Colaborador", PackIconKind.PersonChild, DI.PesquisaViews[nameof(PesquisaColaboradorViewModel)] },
+                { "Categoria", PackIconKind.Tags, DI.PesquisaViews[nameof(PesquisaCategoriaViewModel)] },
+                { "Produto", PackIconKind.BoxAdd, DI.PesquisaViews[nameof(PesquisaProdutoViewModel)] },
+                { "OS", PackIconKind.HammerScrewdriver, DI.PesquisaViews[nameof(PesquisaOrdemServicoViewModel)] },
+                { "Venda", PackIconKind.BoxAdd, DI.PesquisaViews[nameof(PesquisaVendaViewModel)] },
+            }
+        },
+        new TreeviewMenu
+     {
+         Header = "Relatórios",
+         Icon = PackIconKind.ReportBox,
+         Items = new TreeviewMenuCollection
+         {
+             { "Comissão", PackIconKind.PersonAdd ,  () => null },
+             { "Venda de Produtos", PackIconKind.PersonAdd ,  () => null },
+             { "Ordem Serviço", PackIconKind.PersonAdd ,  () => null },
+         }
+     }
+        };
         }
+
     }
 }

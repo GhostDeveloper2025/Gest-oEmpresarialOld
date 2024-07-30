@@ -9,7 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace GestãoEmpresarial.ViewModels
 {
@@ -23,7 +25,7 @@ namespace GestãoEmpresarial.ViewModels
         public ICommand AdicionarItemVendaCommand { get; set; }
         public ICommand ApagarItemVendaCommand { get; set; }
 
-        public CadastroVendaViewModel(int? id, VendaValidar validar, IDAL<VendaModel> repositorio, RCodigosDAL codigosDAL, RItensVendaDAL itensVendaDAL, ItemVendaValidar itemVendaValidar) 
+        public CadastroVendaViewModel(int? id, VendaValidar validar, IDAL<VendaModel> repositorio, RCodigosDAL codigosDAL, RItensVendaDAL itensVendaDAL, ItemVendaValidar itemVendaValidar)
             : base(id, validar, repositorio)
         {
             AdicionarItemVendaCommand = new RelayCommandWithParameter(ExecutarGuardarItemNaLista, CanExecuteAdicionarItem);
@@ -34,10 +36,10 @@ namespace GestãoEmpresarial.ViewModels
             _codigosDal = codigosDAL;
             _itemValidador = itemVendaValidar;
 
-            if (id.HasValue)
-            {
-                itensVendaDAL.GetByIdVenda(id.Value);
-            }
+            //if (id.HasValue)
+            //{
+            //    itensVendaDAL.GetByIdVenda(id.Value);
+            //}
             TiposPagamento = codigosDAL.GetListaTiposPagamentos().ToDictionary(b => b.Id, a => a.Nome);
         }
 
@@ -74,5 +76,48 @@ namespace GestãoEmpresarial.ViewModels
         }
 
         public ProdutoProvider ProdutoProviderItem { get; set; }
+
+        public override int InserirObjectoBD()
+        {
+            int idOs = base.InserirObjectoBD();
+            AtualizarItensOs(idOs);
+            return idOs;
+        }
+
+        public override void AtualizarObjectoBD()
+        {
+            AtualizarItensOs(ObjectoEditar.IdVenda);
+            base.AtualizarObjectoBD();
+        }
+
+        public override void ExecutarSalvar(object parameter)
+        {
+            if (ObjectoEditar.Situacao != 1)
+            {
+                MessageBoxResult result = MessageBox.Show("Quer finalizar a venda já?", "Finalizar", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    ObjectoEditar.Situacao = 1;
+                }
+            }
+            base.ExecutarSalvar(parameter); // salvar ou atualizar
+        }
+
+        private void AtualizarItensOs(int id)
+        {
+            foreach (var item in ObjectoEditar.ListItensVenda)
+            {
+                var objBD = ItemVendaModelObservavel.MapearItemVendaModel(item);
+                objBD.IdVenda = id;
+                if (objBD.IdItensVenda > 0)
+                {
+                    _itemVendaDal.Update(objBD);
+                }
+                else
+                {
+                    _itemVendaDal.Insert(objBD);
+                }
+            }
+        }
     }
 }

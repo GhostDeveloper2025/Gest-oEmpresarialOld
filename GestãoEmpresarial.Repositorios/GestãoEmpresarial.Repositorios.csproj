@@ -106,6 +106,7 @@
     <Compile Include="RItensVendaDAL.cs" />
     <Compile Include="ROsDAL.cs" />
     <Compile Include="RProdutoDAL.cs" />
+    <Compile Include="RRelatoriosDAL.cs" />
     <Compile Include="RVendasDAL.cs" />
   </ItemGroup>
   <ItemGroup>

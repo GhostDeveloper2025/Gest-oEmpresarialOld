@@ -7,6 +7,7 @@ using MicroMvvm;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,10 +32,10 @@ namespace GestãoEmpresarial.ViewModels
             _codigosDal = codigosDAL;
             _itensOsDal = itensOSDAL;
 
-            if (id.HasValue)
-            {
-                _itensOsDal.GetByIdOs(id.Value);
-            }
+            //if (id.HasValue)
+            //{
+            //   _itensOsDal.GetByIdOs(id.Value);
+            //}
 
             MarcasList = _codigosDal.GetListaMarcasFerramenta().ToDictionary(b => b.Id, a => a.Nome);
             NovaOrdemServico = ObjectoEditar.Status == 0; //se estiver diferente de 0 é pq já tem um status associado
@@ -92,7 +93,7 @@ namespace GestãoEmpresarial.ViewModels
         public override EditarOsModel NovoObjectoEditar()
         {
             var obj = base.NovoObjectoEditar();
-            if (obj.ListItensOs != null)
+            if (obj.ListItensOs != null && Id.HasValue == false)
                 obj.ListItensOs.Clear();
             return obj;
         }

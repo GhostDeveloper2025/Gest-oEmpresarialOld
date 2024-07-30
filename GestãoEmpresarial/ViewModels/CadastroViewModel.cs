@@ -33,6 +33,7 @@ namespace GestãoEmpresarial.ViewModels
             SaveCommand = new RelayCommandWithParameter(ExecutarSalvar, PodeExecutarSalvar);
             ObjectoEditar = NovoObjectoEditar();
         }
+
         public virtual ObjectoEditarView NovoObjectoEditar()
         {
             Type tipoEditar = typeof(ObjectoEditarView);
@@ -75,7 +76,7 @@ namespace GestãoEmpresarial.ViewModels
             return result.IsValid;
         }
 
-        public void ExecutarSalvar(object parameter)
+        public virtual void ExecutarSalvar(object parameter)
         {
             try
             {
@@ -91,6 +92,7 @@ namespace GestãoEmpresarial.ViewModels
                 MessageBox.Show($" Registo {text} Com Sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 //limpa os Campos
+                Id = null; //obrigamos a limpar
                 ObjectoEditar = NovoObjectoEditar();
                 RaisePropertyChanged(nameof(ObjectoEditar));
             }

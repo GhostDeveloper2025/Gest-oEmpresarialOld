@@ -49,7 +49,7 @@ namespace GestãoEmpresarial.Repositorios
             + " SELECT last_insert_id()";
             List<MySqlParameter> lista = new List<MySqlParameter>();
             //lAcessoDados.LimparParametro();// Limpar parâmetro salvar
-            AddParameter(lista, "@idFuncionario", idFuncionario);
+            AddParameter(lista, "@IdFuncionario", idFuncionario);
             AddParameter(lista, "@IdCliente", t.Cliente.Idcliente);
             AddParameter(lista, "@Situacao", t.Situacao);
 
@@ -93,8 +93,9 @@ namespace GestãoEmpresarial.Repositorios
                     {
                         IdVenda = reader.GetInt32("IdVenda"),
                         DataVenda = reader.GetDateTime("DataVenda"),
-                        DataFinalizacao = reader.GetDateTime("DataFinalizacao"),
+                        DataFinalizacao = DALHelper.GetDateTime(reader, "DataFinalizacao"),
                         IdCodigoTipoPagamento = reader.GetInt32("IdCodigoTipoPagamento"),
+                        Situacao = reader.GetInt32("Situacao"),
                     };
 
                     if (comItens)
@@ -122,8 +123,16 @@ namespace GestãoEmpresarial.Repositorios
 
         public void Update(VendaModel t)
         {
-            throw new NotImplementedException();
+            string query = "UPDATE tb_venda "
+                + " SET DataFinalizacao = CASE WHEN Situacao = 0 AND @Situacao = 1 THEN NOW() ELSE DataFinalizacao END"
+                 + " , ValorFrete = @ValorFrete, Situacao = @Situacao, IdCodigoTipoPagamento = @IdCodigoTipoPagamento "
+                 + " WHERE IdVenda = @Id";
+            List<MySqlParameter> lista = new List<MySqlParameter>();
+            AddParameter(lista, "@id", t.IdVenda);
+            AddParameter(lista, "@Situacao", t.Situacao);
+            AddParameter(lista, "@ValorFrete", t.ValorFrete);
+            AddParameter(lista, "@IdCodigoTipoPagamento", t.IdCodigoTipoPagamento);
+            ExecuteNonQuery(query, lista.ToArray());
         }
-
     }
 }

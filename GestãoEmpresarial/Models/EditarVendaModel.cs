@@ -106,6 +106,7 @@ namespace GestãoEmpresarial.Models
                 Cliente = Cliente,
                 ValorFrete = ValorFrete,
                 IdCodigoTipoPagamento = IdCodigoTipoPagamento,
+                DataVenda = DataVenda,
             };
         }
 

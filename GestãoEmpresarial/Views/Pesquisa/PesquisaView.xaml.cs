@@ -44,7 +44,7 @@ namespace GestãoEmpresarial.Views.Pesquisa
             if (e.PropertyType == typeof(System.DateTime))
                 (e.Column as DataGridTextColumn).Binding.StringFormat = "dd/MM/yyyy HH:mm:ss";
             else if (e.PropertyType == typeof(System.DateTime?))
-                (e.Column as DataGridTextColumn).Binding.StringFormat = "dd/MM/yyyy";
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "dd/MM/yyyy HH:mm:ss";
         }
 
         private void BtnEditar_Click(object sender, RoutedEventArgs e)
