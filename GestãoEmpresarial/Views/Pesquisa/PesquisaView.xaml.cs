@@ -32,24 +32,9 @@ namespace GestãoEmpresarial.Views.Pesquisa
             }
         }
 
-        private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
-        {
-            var prop = ((PropertyDescriptor)e.PropertyDescriptor);
-            if (prop.Attributes.OfType<DisplayNameAttribute>().Any() == false)
-                e.Cancel = true;
-
-            e.Column.Header = prop.DisplayName;
-
-            //e.Column.Header = ((PropertyDescriptor)e.PropertyDescriptor).DisplayName;
-            if (e.PropertyType == typeof(System.DateTime))
-                (e.Column as DataGridTextColumn).Binding.StringFormat = "dd/MM/yyyy HH:mm:ss";
-            else if (e.PropertyType == typeof(System.DateTime?))
-                (e.Column as DataGridTextColumn).Binding.StringFormat = "dd/MM/yyyy HH:mm:ss";
-        }
-
         private void BtnEditar_Click(object sender, RoutedEventArgs e)
         {
-            var func = DI.Views[_viewModel.NomeEditarView];
+            var func = DI.CadastrosViews[_viewModel.NomeEditarView];
             //Switcher.Switch(EditViewType, new[] { DataGridGlobal.SelectedItem });
             Switcher.Switch(func(_viewModel.Id));
         }

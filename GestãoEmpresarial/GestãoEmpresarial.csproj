@@ -59,6 +59,7 @@
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -97,6 +98,7 @@
     <Compile Include="CustomControls\CpfTextBox.xaml.cs">
       <DependentUpon>CpfTextBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\DataGridAuto.cs" />
     <Compile Include="CustomControls\MoedaTextBox.xaml.cs">
       <DependentUpon>MoedaTextBox.xaml</DependentUpon>
     </Compile>
@@ -164,6 +166,10 @@
     <Compile Include="ViewModels\PesquisaProdutoViewModel.cs" />
     <Compile Include="ViewModels\PesquisaVendaViewModel.cs" />
     <Compile Include="ViewModels\PesquisaViewModel.cs" />
+    <Compile Include="ViewModels\RelatorioComissaoViewModel.cs" />
+    <Compile Include="ViewModels\RelatorioHistoricoVendasViewModel.cs" />
+    <Compile Include="ViewModels\RelatorioProdutoMaisVendidoViewModel.cs" />
+    <Compile Include="ViewModels\RelatorioViewModel.cs" />
     <Compile Include="Views\Cadastro\CadastroCategoriaView.xaml.cs">
       <DependentUpon>CadastroCategoriaView.xaml</DependentUpon>
     </Compile>
@@ -193,6 +199,15 @@
     </Compile>
     <Compile Include="Views\Pesquisa\PesquisaView.xaml.cs">
       <DependentUpon>PesquisaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Relatorios\RelatorioComissao.xaml.cs">
+      <DependentUpon>RelatorioComissao.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Relatorios\RelatorioHistoricoVenda.xaml.cs">
+      <DependentUpon>RelatorioHistoricoVenda.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Relatorios\RelatorioProdutoMaisVendido.xaml.cs">
+      <DependentUpon>RelatorioProdutoMaisVendido.xaml</DependentUpon>
     </Compile>
     <Page Include="CustomControls\CelularTextBox.xaml">
       <SubType>Designer</SubType>
@@ -258,6 +273,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\DatePickerStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\ScrollviewStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -310,6 +329,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Relatorios\RelatorioComissao.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Relatorios\RelatorioHistoricoVenda.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Relatorios\RelatorioProdutoMaisVendido.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -343,9 +374,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Relatorios\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\GestãoEmpresarial.Models\GestãoEmpresarial.Models.csproj">
       <Project>{ba925445-4a5c-44f1-b7bc-0f8f6b0c015f}</Project>

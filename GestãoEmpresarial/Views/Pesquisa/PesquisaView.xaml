@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel>
@@ -20,8 +21,7 @@
                  <Run Text="{Binding NumberOfRecords}" />
         </TextBlock>
         <!--Gera as colunas com base no objecto recebido "AutoGenerateColumns"-->
-        <DataGrid x:Name="DataGridGlobal"
-                  AutoGeneratingColumn="OnAutoGeneratingColumn"
+        <cc:DataGridAuto x:Name="DataGridGlobal"
                   SelectedItem="{Binding ObjectoSelecionado, Mode=TwoWay}"
                   ItemsSource="{Binding ListaDaGrid, Mode=TwoWay, 
             UpdateSourceTrigger=PropertyChanged}">
@@ -48,6 +48,6 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
-        </DataGrid>
+        </cc:DataGridAuto>
     </DockPanel>
 </UserControl>

@@ -9,30 +9,50 @@ using System.Threading.Tasks;
 
 namespace GestãoEmpresarial.Repositorios
 {
-    public class RRelatoriosDAL : DatabaseConnection
+    namespace GestãoEmpresarial.Repositorios
     {
-        public RRelatoriosDAL(int idFuncionario) : base(idFuncionario)
+        public class RRelatoriosDAL : DatabaseConnection
         {
-        }
-
-        public object ObterCommissao()
-        {
-            string query = "feita no sql";
-            using (MySqlDataReader reader = ExecuteReader(query))
+            public RRelatoriosDAL(int idFuncionario) : base(idFuncionario)
             {
-                while (reader.Read())
-                {
-                    //list.Add(new CategoriaModel()
-                    //{
-                    //    IdCategoria = reader.GetInt32("IdCategoria"),
-                    //    Nome = DALHelper.GetString(reader, "Nome"),
-                    //    Descricao = DALHelper.GetString(reader, "Descricao"),
-
-                    //});
-                }
             }
-            //return list;
-            return null;
+
+            public List<RelatorioProdutoMaisVendido> ObterProdutoMaisVendido(DateTime? dataInicial, DateTime? dataFinal)
+            {
+                string query = "SELECT * FROM dbnew.uvw_relatorio_produto_mais_vendido WHERE 1=1";
+
+                if (dataInicial.HasValue)
+                {
+                    query += $" AND DataFinalizacao >= '{dataInicial.Value:yyyy-MM-dd}'";
+                }
+
+                if (dataFinal.HasValue)
+                {
+                    query += $" AND DataFinalizacao <= '{dataFinal.Value:yyyy-MM-dd}'";
+                }
+
+                var list = new List<RelatorioProdutoMaisVendido>();
+                using (MySqlDataReader reader = ExecuteReader(query))
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new RelatorioProdutoMaisVendido()
+                        {
+                            Id = reader.GetInt32("IdProduto"),
+                            Codigo = DALHelper.GetString(reader, "CodigoProduto"),
+                            Descricao = DALHelper.GetString(reader, "DescricaoProduto"),
+                            Localizacao = DALHelper.GetString(reader, "Localizacao"),
+                            Desconto = DALHelper.GetDecimal(reader, "Desconto"),
+                            Quantidade = reader.GetInt32("QuantidadeVendida"),
+                            ValUnitario = DALHelper.GetDecimal(reader, "ValUnitario"),
+                            CustoTotal = DALHelper.GetDecimal(reader, "ValTotal"),
+                            DataFinalizacao = reader.GetDateTime("DataFinalizacao"),
+                        });
+                    }
+                }
+                return list;
+            }
         }
     }
+
 }

@@ -1,8 +1,10 @@
 ﻿using GestãoEmpresarial.Repositorios;
+using GestãoEmpresarial.Repositorios.GestãoEmpresarial.Repositorios;
 using GestãoEmpresarial.Validations;
 using GestãoEmpresarial.ViewModels;
 using GestãoEmpresarial.Views.Cadastro;
 using GestãoEmpresarial.Views.Pesquisa;
+using GestãoEmpresarial.Views.Relatorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,12 +64,12 @@ namespace GestãoEmpresarial
             return new PesquisaView(viewModel);
         }
 
-        public static Func<UserControl> GetView(string name)
+        public static Func<UserControl> GetCadastroView(string name)
         {
-            return () => Views[name](null);
+            return () => CadastrosViews[name](null);
         }
 
-        public static Dictionary<string, Func<int?, UserControl>> Views = new Dictionary<string, Func<int?, UserControl>>()
+        public static Dictionary<string, Func<int?, UserControl>> CadastrosViews = new Dictionary<string, Func<int?, UserControl>>()
         {
             { nameof(CadastroClienteViewModel), (id) => GetCadastroView<CadastroClienteViewModel, RClienteDAL, ClienteValidar, CadastroClienteView>(id) },
             { nameof(CadastroColaboradorViewModel), (id) => GetCadastroView<CadastroColaboradorViewModel, RColaboradorDAL, ColaboradorValidar, CadastroColaboradorView>(id) },
@@ -97,6 +99,13 @@ namespace GestãoEmpresarial
             { nameof(PesquisaProdutoViewModel), () => GetPesquisaView<PesquisaProdutoViewModel, RProdutoDAL>() },
             { nameof(PesquisaOrdemServicoViewModel), () => GetPesquisaView<PesquisaOrdemServicoViewModel, ROsDAL>(GetRepositorio<RCodigosDAL>()) },
             { nameof(PesquisaVendaViewModel), () => GetPesquisaView<PesquisaVendaViewModel, RVendasDAL>(GetRepositorio<RCodigosDAL>()) },
+        };
+
+        public static Dictionary<string, Func<UserControl>> RelatoriosViews = new Dictionary<string, Func<UserControl>>()
+        {
+            { nameof(RelatorioProdutoMaisVendidoViewModel), () => new RelatorioProdutoMaisVendido(new RelatorioProdutoMaisVendidoViewModel(GetRepositorio<RRelatoriosDAL>())) },
+            { nameof(RelatorioHistoricoVendasViewModel), () => new RelatorioHistoricoVenda(new RelatorioHistoricoVendasViewModel(GetRepositorio<RRelatorioHistoricoVendasDAL>())) },
+            { nameof(RelatorioComissaoViewModel), () => new RelatorioComissao(new RelatorioComissaoViewModel(GetRepositorio<RRelatorioComissaoVendaDAL>())) },
         };
     }
 }

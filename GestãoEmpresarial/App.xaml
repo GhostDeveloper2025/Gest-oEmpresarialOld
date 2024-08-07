@@ -62,6 +62,7 @@
                 <ResourceDictionary Source="Styles/ColorResources.xaml"/>
                 <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/TextBoxStyle.xaml"/>
+                <ResourceDictionary Source="Styles/DatePickerStyle.xaml"/>
                 <ResourceDictionary Source="Styles/ComboBoxStyle.xaml"/>
                 <ResourceDictionary Source="Styles/ScrollviewStyle.xaml"/>
                 <ResourceDictionary Source="Styles/DataGridStyle.xaml"/>

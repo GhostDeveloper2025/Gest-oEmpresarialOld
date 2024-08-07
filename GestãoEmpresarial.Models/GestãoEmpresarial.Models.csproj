@@ -46,18 +46,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Atributos\ColumnHeaderAttribute.cs" />
+    <Compile Include="Atributos\DisplayFormatDataBRAttribute.cs" />
     <Compile Include="CategoriaModel.cs" />
     <Compile Include="ClienteModel.cs" />
     <Compile Include="CodigoModel.cs" />
     <Compile Include="ColaboradorModel.cs" />
     <Compile Include="EstoqueModel.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="RelatorioHistoricoVendasModel.cs" />
     <Compile Include="ItemOrdemServicoModel.cs" />
+    <Compile Include="RelatorioComissaoVendasModel.cs" />
+    <Compile Include="RelatorioProdutoMaisVendido.cs" />
     <Compile Include="ItemVendaModel.cs" />
     <Compile Include="OrdemServicoModel.cs" />
     <Compile Include="ProdutoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RelatorioComissaoModel.cs" />
     <Compile Include="VendaModel.cs" />
   </ItemGroup>
   <ItemGroup>

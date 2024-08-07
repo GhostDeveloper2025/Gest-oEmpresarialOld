@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace GestãoEmpresarial.Providers
 {
-    internal class ClienteProvider : MarkupExtensionGestaoEmpresarial, ISuggestionProvider
+    public class ClienteProvider : MarkupExtensionGestaoEmpresarial, ISuggestionProvider
     {
         public IEnumerable GetSuggestions(string filter)
         {

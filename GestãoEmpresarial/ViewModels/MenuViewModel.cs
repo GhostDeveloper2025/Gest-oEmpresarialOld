@@ -32,12 +32,12 @@ namespace GestãoEmpresarial.ViewModels
             Icon = PackIconKind.PlaylistPlus,
             Items = new TreeviewMenuCollection
             {
-                { "Cliente", PackIconKind.PersonAdd, DI.GetView(nameof(CadastroClienteViewModel)) },
-                { "Colaborador", PackIconKind.PersonChild, DI.GetView(nameof(CadastroColaboradorViewModel)) },
-                { "Categoria", PackIconKind.Tags, DI.GetView(nameof(CadastroCategoriaViewModel)) },
-                { "Produto", PackIconKind.BoxAdd, DI.GetView(nameof(CadastroProdutoViewModel)) },
-                { "OS", PackIconKind.HammerScrewdriver, DI.GetView(nameof(CadastroOrdemServicoViewModel)) },
-                { "Venda", PackIconKind.BoxAdd, DI.GetView(nameof(CadastroVendaViewModel)) },
+                { "Cliente", PackIconKind.PersonAdd, DI.GetCadastroView(nameof(CadastroClienteViewModel)) },
+                { "Colaborador", PackIconKind.PersonChild, DI.GetCadastroView(nameof(CadastroColaboradorViewModel)) },
+                { "Categoria", PackIconKind.Tags, DI.GetCadastroView(nameof(CadastroCategoriaViewModel)) },
+                { "Produto", PackIconKind.BoxAdd, DI.GetCadastroView(nameof(CadastroProdutoViewModel)) },
+                { "OS", PackIconKind.HammerScrewdriver, DI.GetCadastroView(nameof(CadastroOrdemServicoViewModel)) },
+                { "Venda", PackIconKind.BoxAdd, DI.GetCadastroView(nameof(CadastroVendaViewModel)) },
             }
         },
         new TreeviewMenu
@@ -60,13 +60,14 @@ namespace GestãoEmpresarial.ViewModels
          Icon = PackIconKind.ReportBox,
          Items = new TreeviewMenuCollection
          {
-             { "Comissão", PackIconKind.PersonAdd ,  () => null },
-             { "Venda de Produtos", PackIconKind.PersonAdd ,  () => null },
+             
+             { "Historico Vendas", PackIconKind.PersonAdd ,  () => DI.RelatoriosViews[nameof(RelatorioHistoricoVendasViewModel)]() },
+             { "Venda de Produtos", PackIconKind.PersonAdd ,  () => DI.RelatoriosViews[nameof(RelatorioProdutoMaisVendidoViewModel)]() },
+             { "Comissão", PackIconKind.PersonAdd ,  () => DI.RelatoriosViews[nameof(RelatorioComissaoViewModel)]() },
              { "Ordem Serviço", PackIconKind.PersonAdd ,  () => null },
          }
      }
         };
         }
-
     }
 }
