@@ -131,31 +131,31 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="6">
-            <StackPanel>
-                <Button x:Name="BtnPopupAdicionarProduto" 
-                        Margin="0,10,10,0"
-                        Style="{StaticResource ButtonGlobal}"
-                        Tag="{StaticResource color11}"
-                        Command="{Binding AdicionarItemVendaCommand}"
-                        VerticalAlignment="Bottom"
-                        HorizontalAlignment="Right">
+            <WrapPanel HorizontalAlignment="Right">
+                <Button Style="{StaticResource ButtonGlobal}"
+                        Command="{Binding AdicionarItemVendaCommand}">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Height="40" Width="40" Kind="AddCircle" Style="{StaticResource IconsButtonGlobal}"/>
                         <TextBlock Text="Adicionar" Style="{StaticResource ButtonText}"/>
                     </StackPanel>
                 </Button>
-            </StackPanel>
-            <StackPanel>
-                <TextBlock 
-                    HorizontalAlignment="Left" 
-                    VerticalAlignment="Center" 
-                    Foreground="#836EFB" FontSize="15" 
-                    FontFamily="Cambria Mat" 
-                    FontWeight="Medium">
-                    <Run Text="Número De Registros: " />
-                    <Run Text="{Binding ObjectoEditar.NumberOfRecords}" />
-                </TextBlock>
-            </StackPanel>
+                <Button Style="{StaticResource ButtonGlobal}"
+                    Click="Imprimir_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Height="40" Width="40" Kind="Printer" Style="{StaticResource IconsButtonGlobal}"/>
+                        <TextBlock Text="Imprimir" Style="{StaticResource ButtonText}"/>
+                    </StackPanel>
+                </Button>
+            </WrapPanel>
+            <TextBlock 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Center" 
+                Foreground="#836EFB" FontSize="15" 
+                FontFamily="Cambria Mat" 
+                FontWeight="Medium">
+                <Run Text="Número De Registros: " />
+                <Run Text="{Binding ObjectoEditar.NumberOfRecords}" />
+            </TextBlock>
         </StackPanel>
         <Grid Grid.Row="8">
             <DataGrid x:Name="DgItensModel"

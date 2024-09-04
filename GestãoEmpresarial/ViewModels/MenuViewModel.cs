@@ -29,15 +29,15 @@ namespace GestãoEmpresarial.ViewModels
         new TreeviewMenu
         {
             Header = "Cadastros",
-            Icon = PackIconKind.PlaylistPlus,
+            Icon = PackIconKind.FolderPlus,
             Items = new TreeviewMenuCollection
             {
-                { "Cliente", PackIconKind.PersonAdd, DI.GetCadastroView(nameof(CadastroClienteViewModel)) },
+                { "Cliente", PackIconKind.AccountMultiplePlus, DI.GetCadastroView(nameof(CadastroClienteViewModel)) },
                 { "Colaborador", PackIconKind.PersonChild, DI.GetCadastroView(nameof(CadastroColaboradorViewModel)) },
-                { "Categoria", PackIconKind.Tags, DI.GetCadastroView(nameof(CadastroCategoriaViewModel)) },
-                { "Produto", PackIconKind.BoxAdd, DI.GetCadastroView(nameof(CadastroProdutoViewModel)) },
+                { "Categoria", PackIconKind.TagMultiple, DI.GetCadastroView(nameof(CadastroCategoriaViewModel)) },
+                { "Produto", PackIconKind.PackageCheck, DI.GetCadastroView(nameof(CadastroProdutoViewModel)) },
                 { "OS", PackIconKind.HammerScrewdriver, DI.GetCadastroView(nameof(CadastroOrdemServicoViewModel)) },
-                { "Venda", PackIconKind.BoxAdd, DI.GetCadastroView(nameof(CadastroVendaViewModel)) },
+                { "Venda", PackIconKind.CartArrowRight, DI.GetCadastroView(nameof(CadastroVendaViewModel)) },
             }
         },
         new TreeviewMenu
@@ -46,12 +46,12 @@ namespace GestãoEmpresarial.ViewModels
             Icon = PackIconKind.FileSearch,
             Items = new TreeviewMenuCollection
             {
-                { "Cliente", PackIconKind.PersonAdd, DI.PesquisaViews[nameof(PesquisaClienteViewModel)] },
-                { "Colaborador", PackIconKind.PersonChild, DI.PesquisaViews[nameof(PesquisaColaboradorViewModel)] },
-                { "Categoria", PackIconKind.Tags, DI.PesquisaViews[nameof(PesquisaCategoriaViewModel)] },
-                { "Produto", PackIconKind.BoxAdd, DI.PesquisaViews[nameof(PesquisaProdutoViewModel)] },
-                { "OS", PackIconKind.HammerScrewdriver, DI.PesquisaViews[nameof(PesquisaOrdemServicoViewModel)] },
-                { "Venda", PackIconKind.BoxAdd, DI.PesquisaViews[nameof(PesquisaVendaViewModel)] },
+                { "Cliente", PackIconKind.AccountSearch, DI.PesquisaViews[nameof(PesquisaClienteViewModel)] },
+                { "Colaborador", PackIconKind.AccountSearch, DI.PesquisaViews[nameof(PesquisaColaboradorViewModel)] },
+                { "Categoria", PackIconKind.TagSearch, DI.PesquisaViews[nameof(PesquisaCategoriaViewModel)] },
+                { "Produto", PackIconKind.Package, DI.PesquisaViews[nameof(PesquisaProdutoViewModel)] },
+                { "OS", PackIconKind.HammerWrench, DI.PesquisaViews[nameof(PesquisaOrdemServicoViewModel)] },
+                { "Venda", PackIconKind.Cart, DI.PesquisaViews[nameof(PesquisaVendaViewModel)] },
             }
         },
         new TreeviewMenu

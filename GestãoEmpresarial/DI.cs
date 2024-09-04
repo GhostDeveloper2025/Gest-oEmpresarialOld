@@ -69,6 +69,11 @@ namespace GestãoEmpresarial
             return () => CadastrosViews[name](null);
         }
 
+        internal static UserControl GetRelatorioView(string v)
+        {
+            return RelatoriosViews[v]();
+        }
+
         public static Dictionary<string, Func<int?, UserControl>> CadastrosViews = new Dictionary<string, Func<int?, UserControl>>()
         {
             { nameof(CadastroClienteViewModel), (id) => GetCadastroView<CadastroClienteViewModel, RClienteDAL, ClienteValidar, CadastroClienteView>(id) },
@@ -103,9 +108,11 @@ namespace GestãoEmpresarial
 
         public static Dictionary<string, Func<UserControl>> RelatoriosViews = new Dictionary<string, Func<UserControl>>()
         {
-            { nameof(RelatorioProdutoMaisVendidoViewModel), () => new RelatorioProdutoMaisVendido(new RelatorioProdutoMaisVendidoViewModel(GetRepositorio<RRelatoriosDAL>())) },
+            { nameof(RelatorioProdutoMaisVendidoViewModel), () => new RelatorioProdutoMaisVendido(new RelatorioProdutoMaisVendidoViewModel(GetRepositorio<RRelatorioProdutoMaisVendidoDAL>())) },
             { nameof(RelatorioHistoricoVendasViewModel), () => new RelatorioHistoricoVenda(new RelatorioHistoricoVendasViewModel(GetRepositorio<RRelatorioHistoricoVendasDAL>())) },
             { nameof(RelatorioComissaoViewModel), () => new RelatorioComissao(new RelatorioComissaoViewModel(GetRepositorio<RRelatorioComissaoVendaDAL>())) },
+            { nameof(RelatorioReciboOrdemServicoViewModel), () => new RelatorioReciboOs(new RelatorioReciboOrdemServicoViewModel(GetRepositorio<RRelatorioReciboDAL>())) },
+            { nameof(RelatorioReciboVendaViewModel), () => new RelatorioReciboVenda(new RelatorioReciboVendaViewModel(GetRepositorio<RRelatorioReciboDAL>())) },
         };
     }
 }

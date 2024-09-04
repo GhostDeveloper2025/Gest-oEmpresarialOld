@@ -10,15 +10,18 @@
         FontFamily="{DynamicResource CustomFont4}"
         xmlns:local="clr-namespace:GestãoEmpresarial"
         xmlns:layout="clr-namespace:GestãoEmpresarial.Views.Layout"
-        mc:Ignorable="d"
+        mc:Ignorable="d" 
+        WindowState="Maximized"
         Title="MainWindow" Height="450" Width="800">
-    <DockPanel LastChildFill="True">
-        <StackPanel Background="{StaticResource color59}" Width="250">
-            <!--Painel De Informações:-->
-            <TextBlock Text="VERSÃO DO SOFTWARE"/>
-            <TextBlock Text="V1.0"/>
-            <layout:MenuView ></layout:MenuView>
-        </StackPanel>
+    <DockPanel >
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Background="{StaticResource color59}">
+                <!--Painel De Informações:-->
+                <TextBlock Text=" VERSÃO DO SOFTWARE" Foreground="{StaticResource color8}" />
+                <TextBlock Text=" V 1.0" Foreground="{StaticResource color20}"/>
+                <layout:MenuView  ></layout:MenuView>
+            </StackPanel>
+        </ScrollViewer>
         <Border DockPanel.Dock="Bottom"  Margin="10,10,10,10" Background="{StaticResource color59}" CornerRadius="10">
             <Grid  DockPanel.Dock="Bottom" Name="fContainer" Margin="10,10,10,10" Background="{StaticResource color59}" />
         </Border>

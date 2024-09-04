@@ -11,9 +11,9 @@ namespace GestãoEmpresarial.Repositorios
 {
     namespace GestãoEmpresarial.Repositorios
     {
-        public class RRelatoriosDAL : DatabaseConnection
+        public class RRelatorioProdutoMaisVendidoDAL : DatabaseConnection
         {
-            public RRelatoriosDAL(int idFuncionario) : base(idFuncionario)
+            public RRelatorioProdutoMaisVendidoDAL(int idFuncionario) : base(idFuncionario)
             {
             }
 

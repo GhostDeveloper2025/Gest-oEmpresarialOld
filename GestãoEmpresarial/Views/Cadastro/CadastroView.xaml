@@ -36,12 +36,12 @@
         <!-- Conteúdo do rodapé -->
         <StackPanel Grid.Row="2" VerticalAlignment="Bottom">
             <Button x:Name="BtnSalvar" 
-     Margin="10,10,0,10"
-     VerticalAlignment="Bottom"
-     HorizontalAlignment="Left"
-     Style="{StaticResource ButtonGlobal}"
-     Tag="{StaticResource color11}"
-     Command="{Binding SaveCommand}">
+                 Margin="10,10,0,10"
+                 VerticalAlignment="Bottom"
+                 HorizontalAlignment="Left"
+                 Style="{StaticResource ButtonGlobal}"
+                 Tag="{StaticResource color11}"
+                 Command="{Binding SaveCommand}">
                 <!-- Muda A Cor Do Icone -->
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Height="40" Width="40" Kind="ContentSaveCheck" Style="{StaticResource IconsButtonGlobal}"/>

@@ -27,16 +27,13 @@ namespace GestãoEmpresarial.Views.Layout
             InitializeComponent();
             DataContext = new MenuViewModel();
         }
-        //private void TreeViewItem_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        //{
-        //    var menu = ((FrameworkElement)sender).DataContext as TreeviewMenu;
-        //    Switcher.Switch(menu);
-        //}
-
-        private void WrapPanel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        
+        private void OnMenuItemClicked(object sender, MouseButtonEventArgs e)
         {
-            var menu = ((FrameworkElement)sender).DataContext as TreeviewMenu;
-            Switcher.Switch(menu);
+            if (sender is StackPanel panel && panel.DataContext is TreeviewMenu menu)
+            {
+                Switcher.Switch(menu); // Método para mudar para a tela desejada
+            }
         }
     }
 }

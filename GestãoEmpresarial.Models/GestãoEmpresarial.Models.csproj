@@ -61,6 +61,7 @@
     <Compile Include="OrdemServicoModel.cs" />
     <Compile Include="ProdutoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RelatorioReciboOsModel.cs" />
     <Compile Include="VendaModel.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -53,19 +53,21 @@ namespace GestãoEmpresarial.ViewModels
             }
         }
 
-        //public List<string> StatusList => ValoresEstaticos.Status.ToList();
         public ProdutoProvider ProdutoProviderItem { get; set; }
+
         public ICommand AdicionarItemOsCommand { get; set; }
+
         public ICommand ApagarItemOsCommand { get; set; }
 
         // Propriedades para obter listas de marcas e status da classe ValoresEstaticos,
         // convertidas em List<string> para facilitar a ligação a ComboBoxes.
         public Dictionary<int, string> MarcasList { get; internal set; }
+
         public Dictionary<int, string> StatusList { get; internal set; }
 
         public bool PodeEditar { get; internal set; }
-        public bool NovaOrdemServico { get; internal set; }
 
+        public bool NovaOrdemServico { get; internal set; }
 
         private void AtualizarItensOs(int idOs)
         {

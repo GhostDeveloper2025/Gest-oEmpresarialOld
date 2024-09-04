@@ -138,9 +138,8 @@
                    />
             </CheckBox>
         </StackPanel>
-        <StackPanel Grid.Row="4">
-            <StackPanel Orientation="Horizontal">
-                <TextBox x:Name="TxtObservacao" 
+        <StackPanel Grid.Row="4" Orientation="Horizontal">
+            <TextBox x:Name="TxtObservacao" 
                          Width="600" 
                          AcceptsReturn="True" 
                          TextWrapping="Wrap"  
@@ -152,50 +151,46 @@
                     UpdateSourceTrigger=PropertyChanged, 
                     Converter={utils:CapitalizeWordsConverter}}"
                          />
-                <TextBox x:Name="TxtBox" 
+            <TextBox x:Name="TxtBox" 
                          Width="100" 
                          materialDesign:HintAssist.Hint="Box" 
                          Text="{Binding ObjectoEditar.Box}" 
                          IsEnabled="{Binding PodeEditar}"
                          />
-            </StackPanel>
         </StackPanel>
-        <StackPanel Grid.Row="6">
-            <Grid Margin="0,15,0,0">
-                <TextBlock Text="   Seção Adicionar Itens" 
+        <StackPanel Grid.Row="6" Margin="0,15,0,0">
+            <TextBlock Text="   Seção Adicionar Itens" 
                            FontSize="22"  
                            Background="{StaticResource color60}"  
                            Foreground="{StaticResource color38}" 
                            Style="{StaticResource ButtonText}"
                            />
-            </Grid>
         </StackPanel>
-        <StackPanel Grid.Row="8">
-            <StackPanel Orientation="Horizontal">
-                <wpfcc:AutoCompleteTextBox 
+        <StackPanel Grid.Row="8" Orientation="Horizontal">
+            <wpfcc:AutoCompleteTextBox 
                     Width="250" 
                     materialDesign:HintAssist.Hint="Produto" 
                     DisplayMember="Nome" 
                     Provider="{Binding ProdutoProviderItem, Mode=OneWay}"
                     SelectedItem="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Produto, 
                     Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    <wpfcc:AutoCompleteTextBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Path=Nome}" />
-                                <TextBlock Text="{Binding Path=CodProduto}"/>
-                                <TextBlock Text="{Binding Path=ValorVenda}"/>
-                                <TextBlock Text="{Binding Path=Estoque.Quantidade}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </wpfcc:AutoCompleteTextBox.ItemTemplate>
-                </wpfcc:AutoCompleteTextBox>
+                <wpfcc:AutoCompleteTextBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Path=Nome}" />
+                            <TextBlock Text="{Binding Path=CodProduto}"/>
+                            <TextBlock Text="{Binding Path=ValorVenda}"/>
+                            <TextBlock Text="{Binding Path=Estoque.Quantidade}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </wpfcc:AutoCompleteTextBox.ItemTemplate>
+            </wpfcc:AutoCompleteTextBox>
 
-                <!-- 
+            <!-- 
     No binding do text, o "ElementName" significa o nome do objecto dentro do WPF.
     E depois no "Path", colocamos a propriedade(atributo) à qual queremos tirar os valores
 -->
-                <TextBox x:Name="TxtQtdEst"
+            <TextBox x:Name="TxtQtdEst"
                          Width="100" 
                          materialDesign:HintAssist.Hint="Disponível"
                          Foreground="{StaticResource color38}" 
@@ -203,26 +198,26 @@
                          Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Produto.Estoque.Quantidade}"
                          IsReadOnly="True" IsHitTestVisible="False"
                          />
-                <cc:MoedaTextBox x:Name="TxtValUnitario" 
+            <cc:MoedaTextBox x:Name="TxtValUnitario" 
                                  Width="100" 
                                  materialDesign:HintAssist.Hint="Val. Unitario"  
                                  Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.ValUnitario, 
                                  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  Emoeda="True"
                                  />
-                <cc:NumeroTextBox x:Name="TxtQtd" 
+            <cc:NumeroTextBox x:Name="TxtQtd" 
                                   Width="100" 
                                   materialDesign:HintAssist.Hint="Quantidade" 
                                   Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Quantidade,  
                     Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="9" EModea="True"
                                   />
-                <cc:NumeroTextBox x:Name="TxtDesconto" 
+            <cc:NumeroTextBox x:Name="TxtDesconto" 
                                   Width="100" 
                                   materialDesign:HintAssist.Hint="Desconto. %"  
                                   Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Desconto,  
                     Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EModea="True"
                                   />
-                <cc:MoedaTextBox x:Name="TxtTotalItens" Width="100"
+            <cc:MoedaTextBox x:Name="TxtTotalItens" Width="100"
                                  materialDesign:HintAssist.Hint="Total"
                                  Foreground="{StaticResource color38}"
                                  BorderBrush="{StaticResource color38}"
@@ -230,34 +225,32 @@
                     Converter={utils:CapitalizeWordsConverter}, 
                     Mode=OneWay}" IsReadOnly="True" IsHitTestVisible="False"
                                  />
-            </StackPanel>
         </StackPanel>
-        <StackPanel Grid.Row="10">
-            <StackPanel>
-                <Button x:Name="BtnPopupAdicionarProduto" Margin="0,10,10,0"
-                        Style="{StaticResource ButtonGlobal}"
-                        Tag="{StaticResource color11}"
-                        Command="{Binding AdicionarItemOsCommand}"
-                        VerticalAlignment="Bottom"
-                        HorizontalAlignment="Right">
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Height="40" Width="40" Kind="AddCircle" Style="{StaticResource IconsButtonGlobal}"/>
-                        <TextBlock Text="Adicionar" Style="{StaticResource ButtonText}"/>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
-        </StackPanel>
+        <WrapPanel Grid.Row="10" HorizontalAlignment="Right">
+            <Button Style="{StaticResource ButtonGlobal}"
+                    Command="{Binding AdicionarItemOsCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Height="40" Width="40" Kind="AddCircle" Style="{StaticResource IconsButtonGlobal}"/>
+                    <TextBlock Text="Adicionar" Style="{StaticResource ButtonText}"/>
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource ButtonGlobal}"
+                    Click="Imprimir_Click">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Height="40" Width="40" Kind="Printer" Style="{StaticResource IconsButtonGlobal}"/>
+                    <TextBlock Text="Imprimir" Style="{StaticResource ButtonText}"/>
+                </StackPanel>
+            </Button>
+        </WrapPanel>
         <StackPanel Grid.Row="12">
-            <StackPanel>
-                <TextBlock  
+            <TextBlock  
                     HorizontalAlignment="Left"  
                     VerticalAlignment="Center" 
                     Foreground="{StaticResource color2}" 
                     FontSize="15" FontFamily="{StaticResource CustomFont4}">
                     <Run Text="Número De Registros: " />
                     <Run Text="{Binding ObjectoEditar.NumberOfRecords}" />
-                </TextBlock>
-            </StackPanel>
+            </TextBlock>
         </StackPanel>
         <Grid Grid.Row="14">
             <DataGrid x:Name="DgItensOsModel"

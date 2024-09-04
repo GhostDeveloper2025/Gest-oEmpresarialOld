@@ -8,27 +8,24 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <Style x:Key="TreeViewItemStyle_ExpandAll" TargetType="{x:Type TreeViewItem}">
+        <Style x:Key="TreeViewItemStyle_ExpandAll" TargetType="{x:Type materialDesign:TreeListViewItem}">
             <Setter Property="IsExpanded" Value="True"/>
         </Style>
     </UserControl.Resources>
-    <Border >
-        <!--Painel Lateral-->
-        <!-- StackPanel Panel Left-->
-        <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-            <TreeView 
-                 Name="TrMenu"
-                 ItemsSource="{Binding Items}" 
-                 ItemContainerStyle="{StaticResource TreeViewItemStyle_ExpandAll}" >
-                <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate DataType="{x:Type localmodels:TreeviewMenu}" ItemsSource="{Binding Items}">
-                        <WrapPanel MouseLeftButtonUp="WrapPanel_MouseLeftButtonUp" >
-                            <materialDesign:PackIcon Kind="{Binding Icon}"  Margin="0,0,5,0"/>
-                            <TextBlock Text="{Binding Header}"  Margin="0,0,10,0"/>
-                        </WrapPanel>
-                    </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>
-            </TreeView>
-        </ScrollViewer>
-    </Border>
+    <Grid>
+        <materialDesign:TreeListView 
+            Name="TrMenu" ItemsSource="{Binding Items}"
+            HorizontalAlignment="Left" VerticalAlignment="Top" 
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            Width="250">
+            <ListView.ItemTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type localmodels:TreeviewMenu}" ItemsSource="{Binding Items}">
+                    <StackPanel Orientation="Horizontal" MouseDown="OnMenuItemClicked" HorizontalAlignment="Left">
+                        <materialDesign:PackIcon Kind="{Binding Icon}" Foreground="{StaticResource color11}" Margin="0,0,5,0" Width="25" Height="25" />
+                        <TextBlock Text="{Binding Header}" Foreground="{StaticResource color11}" Margin="0,0,10,0" Width="150" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+            </ListView.ItemTemplate>
+        </materialDesign:TreeListView>
+    </Grid>
 </UserControl>

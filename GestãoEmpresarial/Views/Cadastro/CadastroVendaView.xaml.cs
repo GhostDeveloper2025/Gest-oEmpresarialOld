@@ -1,6 +1,7 @@
 ﻿using GestãoEmpresarial.Models;
 using GestãoEmpresarial.Utils;
 using GestãoEmpresarial.ViewModels;
+using GestãoEmpresarial.Views.Relatorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,12 @@ namespace GestãoEmpresarial.Views.Cadastro
         {
             InitializeComponent();
             Methods.AddColumnToDataGrid(DgItensModel, typeof(ItemVendaModelObservavel));
+        }
+
+        private void Imprimir_Click(object sender, RoutedEventArgs e)
+        {
+            var uc = DI.GetRelatorioView(nameof(RelatorioReciboVendaViewModel));
+            Switcher.Imprimir(uc);
         }
     }
 }

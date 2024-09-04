@@ -61,6 +61,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -86,6 +87,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CustomControls\BotaoIcone.xaml.cs">
+      <DependentUpon>BotaoIcone.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\CelularTextBox.xaml.cs">
       <DependentUpon>CelularTextBox.xaml</DependentUpon>
     </Compile>
@@ -169,7 +173,8 @@
     <Compile Include="ViewModels\RelatorioComissaoViewModel.cs" />
     <Compile Include="ViewModels\RelatorioHistoricoVendasViewModel.cs" />
     <Compile Include="ViewModels\RelatorioProdutoMaisVendidoViewModel.cs" />
-    <Compile Include="ViewModels\RelatorioViewModel.cs" />
+    <Compile Include="ViewModels\RelatorioReciboOrdemServicoViewModel.cs" />
+    <Compile Include="ViewModels\RelatorioReciboVendaViewModel.cs" />
     <Compile Include="Views\Cadastro\CadastroCategoriaView.xaml.cs">
       <DependentUpon>CadastroCategoriaView.xaml</DependentUpon>
     </Compile>
@@ -209,6 +214,16 @@
     <Compile Include="Views\Relatorios\RelatorioProdutoMaisVendido.xaml.cs">
       <DependentUpon>RelatorioProdutoMaisVendido.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Relatorios\RelatorioReciboVenda.xaml.cs">
+      <DependentUpon>RelatorioReciboVenda.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Relatorios\RelatorioReciboOs.xaml.cs">
+      <DependentUpon>RelatorioReciboOs.xaml</DependentUpon>
+    </Compile>
+    <Page Include="CustomControls\BotaoIcone.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomControls\CelularTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -341,6 +356,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Relatorios\RelatorioReciboVenda.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Relatorios\RelatorioReciboOs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -360,11 +383,21 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Resource Include="Fonts\Afacad.ttf" />
-    <Resource Include="Fonts\Ibarra Real Nova.ttf" />
-    <Resource Include="Fonts\Philosopher.ttf" />
-    <Resource Include="Fonts\Sansita.ttf" />
-    <Resource Include="Fonts\STIX Two Text.ttf" />
+    <Resource Include="Fonts\Afacad.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\Ibarra Real Nova.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\Philosopher.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\Sansita.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\STIX Two Text.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -374,7 +407,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Styles\Logotipo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GestãoEmpresarial.Models\GestãoEmpresarial.Models.csproj">
       <Project>{ba925445-4a5c-44f1-b7bc-0f8f6b0c015f}</Project>

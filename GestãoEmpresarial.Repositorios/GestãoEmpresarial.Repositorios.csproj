@@ -108,7 +108,8 @@
     <Compile Include="ROsDAL.cs" />
     <Compile Include="RProdutoDAL.cs" />
     <Compile Include="RRelatorioComissaoVendaDAL.cs" />
-    <Compile Include="RRelatoriosDAL.cs" />
+    <Compile Include="RRelatorioProdutoMaisVendidoDAL.cs" />
+    <Compile Include="RRelatorioReciboDAL.cs" />
     <Compile Include="RVendasDAL.cs" />
   </ItemGroup>
   <ItemGroup>

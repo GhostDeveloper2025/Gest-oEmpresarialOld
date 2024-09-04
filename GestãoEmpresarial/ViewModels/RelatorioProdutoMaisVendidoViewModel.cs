@@ -11,12 +11,12 @@ namespace GestãoEmpresarial.ViewModels
 {
     public class RelatorioProdutoMaisVendidoViewModel : ObservableObject
     {
-        private readonly RRelatoriosDAL _relatoriosDAL;
+        private readonly RRelatorioProdutoMaisVendidoDAL _relatoriosDAL;
         private DateTime? _dataInicial;
         private DateTime? _dataFinal;
         private List<RelatorioProdutoMaisVendido> _listaRelatorioProdutoMaisVendido;
 
-        public RelatorioProdutoMaisVendidoViewModel(RRelatoriosDAL relatoriosDAL)
+        public RelatorioProdutoMaisVendidoViewModel(RRelatorioProdutoMaisVendidoDAL relatoriosDAL)
         {
             _relatoriosDAL = relatoriosDAL;
             ListaRelatorioProdutoMaisVendido = new List<RelatorioProdutoMaisVendido>(); // Inicialmente vazio

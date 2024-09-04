@@ -34,17 +34,8 @@ namespace GestãoEmpresarial.ViewModels
             ObjectoEditar = NovoObjectoEditar();
         }
 
-        public virtual ObjectoEditarView NovoObjectoEditar()
-        {
-            Type tipoEditar = typeof(ObjectoEditarView);
-            if (Id.HasValue)
-                return Activator.CreateInstance(tipoEditar, _repositorio.GetById(Id.Value), _validador) as ObjectoEditarView;
-            else
-                //criamos um novo model
-                return Activator.CreateInstance(tipoEditar, _validador) as ObjectoEditarView;
-        }
-
         public int? Id { get; set; }
+
         public DateTime DataCadastro { get; set; } = DateTime.Now;
 
         /// <summary>
@@ -56,6 +47,16 @@ namespace GestãoEmpresarial.ViewModels
         /// Esta propriedade é a que faz bind (vinculo) ao botão Salvar.
         /// </summary>
         public ICommand SaveCommand { get; set; }
+
+        public virtual ObjectoEditarView NovoObjectoEditar()
+        {
+            Type tipoEditar = typeof(ObjectoEditarView);
+            if (Id.HasValue)
+                return Activator.CreateInstance(tipoEditar, _repositorio.GetById(Id.Value), _validador) as ObjectoEditarView;
+            else
+                //criamos um novo model
+                return Activator.CreateInstance(tipoEditar, _validador) as ObjectoEditarView;
+        }
 
         public virtual int InserirObjectoBD()
         {

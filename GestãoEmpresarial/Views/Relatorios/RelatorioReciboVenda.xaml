@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="GestãoEmpresarial.Views.Relatorios.RelatorioReciboVenda"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GestãoEmpresarial.Views.Relatorios"
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="900">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Paragraph}">
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="Foreground" Value="Gray"/>
+        </Style>
+        <Style TargetType="{x:Type RichTextBox}">
+            <Setter Property="IsReadOnly" Value="True" />
+        </Style>
+    </UserControl.Resources>
+    <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Margin="5" Source="/Styles/Logotipo.png"></Image>
+            <RichTextBox Grid.Column="1">
+                <FlowDocument>
+                    <Paragraph FontSize="20">Avenida 24 de Outubro QD P85 LT 09 Nº312 St. dos Funcionários Goiana Go</Paragraph>
+                    <Paragraph FontWeight="Bold">CNPJ: 07.128.038 0001-93</Paragraph>
+                    <Paragraph>Fones: (62) 3945-0404 / (62) 3945-0408 / (62) 98242-3023</Paragraph>
+                    <Paragraph>Email: a_magalhaes1@hotmail.com</Paragraph>
+                </FlowDocument>
+            </RichTextBox>
+            <RichTextBox Grid.Column="2">
+                <FlowDocument>
+                    <Paragraph FontSize="40">Venda:</Paragraph>
+                    <Paragraph>
+                        <TextBlock Text="N°:"></TextBlock>
+                        <TextBlock Text="{Binding Cliente.Nome}"></TextBlock>
+                    </Paragraph>
+                    <Paragraph>
+                        <TextBlock Text="Data:"></TextBlock>
+                        <TextBlock Text="{Binding Ferramenta.Nome}"></TextBlock>
+                    </Paragraph>
+                    <Paragraph>
+                        <TextBlock Text="Situação:"></TextBlock>
+                        <TextBlock Text="{Binding Ferramenta.Marca}"></TextBlock>
+                    </Paragraph>
+                    <Paragraph>
+                        <TextBlock Text="Pagamento:"></TextBlock>
+                        <TextBlock Text="{Binding Ferramenta.Modelo}"></TextBlock>
+                    </Paragraph>
+                </FlowDocument>
+            </RichTextBox>
+        </Grid>
+        <WrapPanel>
+            <UniformGrid>
+                <RichTextBox IsReadOnly="true">
+                    <FlowDocument>
+                        <Paragraph FontSize="20">Cliente:</Paragraph>
+                        <Paragraph>
+                            <TextBlock Text="Nome:"></TextBlock>
+                            <TextBlock Text="{Binding Cliente.Nome}"></TextBlock>
+                        </Paragraph>
+                        <Paragraph>
+                            <TextBlock Text="Endereço:"></TextBlock>
+                            <TextBlock Text="{Binding Ferramenta.Nome}"></TextBlock>
+                        </Paragraph>
+                        <Paragraph>
+                            <TextBlock Text="Telefone:"></TextBlock>
+                            <TextBlock Text="{Binding Ferramenta.Marca}"></TextBlock>
+                        </Paragraph>
+                        <Paragraph>
+                            <TextBlock Text="E-mail:"></TextBlock>
+                            <TextBlock Text="{Binding Ferramenta.Modelo}"></TextBlock>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+                <RichTextBox IsReadOnly="true">
+                    <FlowDocument>
+                        <Paragraph FontSize="20">Vendedor:</Paragraph>
+                        <Paragraph>
+                            <TextBlock Text="Nome:"></TextBlock>
+                            <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
+                        </Paragraph>
+                        <Paragraph>
+                            <TextBlock Text="{Binding Ferramenta.Nome}"></TextBlock>
+                        </Paragraph>
+                        <Paragraph>
+                            <TextBlock Text="{Binding Ferramenta.Marca}"></TextBlock>
+                        </Paragraph>
+                        <Paragraph>
+                            <TextBlock Text="{Binding Ferramenta.Modelo}"></TextBlock>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </UniformGrid>
+        </WrapPanel>
+        <DataGrid></DataGrid>
+        <UniformGrid>
+            <TextBox>Total Produto: aaa</TextBox>
+            <TextBox>Total Venda: aaa</TextBox>
+            <TextBox>Desconto: aaa</TextBox>
+            <TextBox>Frete: aaa</TextBox>
+        </UniformGrid>
+    </StackPanel>
+</UserControl>

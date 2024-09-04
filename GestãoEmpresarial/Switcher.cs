@@ -35,5 +35,12 @@ namespace GestãoEmpresarial
         {
             pageSwitcher.Navigate(view);
         }
+
+        public static void Imprimir(UserControl uc)
+        {
+            PrintDialog printDlg = new PrintDialog();
+            printDlg.ShowDialog();
+            printDlg.PrintVisual(uc, "User Control Printing.");
+        }
     }
 }
