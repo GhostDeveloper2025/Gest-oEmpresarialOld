@@ -11,7 +11,7 @@
             <Setter Property="Margin" Value="0"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="TextAlignment" Value="Left"/>
-            <Setter Property="Foreground" Value="Gray"/>
+            <Setter Property="Foreground" Value="Black"/>
         </Style>
         <Style TargetType="{x:Type RichTextBox}">
             <Setter Property="IsReadOnly" Value="True" />
@@ -38,19 +38,19 @@
                     <Paragraph FontSize="40">Venda:</Paragraph>
                     <Paragraph>
                         <TextBlock Text="N°:"></TextBlock>
-                        <TextBlock Text="{Binding Cliente.Nome}"></TextBlock>
+                        <TextBlock Text="{Binding Relatorio.VendaModel.IdVenda}"></TextBlock>
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Text="Data:"></TextBlock>
-                        <TextBlock Text="{Binding Ferramenta.Nome}"></TextBlock>
+                        <TextBlock Text="{Binding Relatorio.VendaModel.DataVenda}"></TextBlock>
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Text="Situação:"></TextBlock>
-                        <TextBlock Text="{Binding Ferramenta.Marca}"></TextBlock>
+                        <TextBlock Text="{Binding NomeSituacao}"></TextBlock>
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Text="Pagamento:"></TextBlock>
-                        <TextBlock Text="{Binding Ferramenta.Modelo}"></TextBlock>
+                        <TextBlock Text="{Binding Relatorio.NomePagamento}"></TextBlock>
                     </Paragraph>
                 </FlowDocument>
             </RichTextBox>
@@ -65,16 +65,16 @@
                             <TextBlock Text="{Binding Cliente.Nome}"></TextBlock>
                         </Paragraph>
                         <Paragraph>
-                            <TextBlock Text="Endereço:"></TextBlock>
-                            <TextBlock Text="{Binding Ferramenta.Nome}"></TextBlock>
+                            <!--<TextBlock Text="Endereço:"></TextBlock>-->
+                            <TextBlock Text="{Binding Cliente.EnderecoCompleto}"></TextBlock>
                         </Paragraph>
                         <Paragraph>
                             <TextBlock Text="Telefone:"></TextBlock>
-                            <TextBlock Text="{Binding Ferramenta.Marca}"></TextBlock>
+                            <TextBlock Text="{Binding Cliente.Celular}"></TextBlock>
                         </Paragraph>
                         <Paragraph>
                             <TextBlock Text="E-mail:"></TextBlock>
-                            <TextBlock Text="{Binding Ferramenta.Modelo}"></TextBlock>
+                            <TextBlock Text="{Binding Cliente.Email}"></TextBlock>
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
@@ -83,27 +83,23 @@
                         <Paragraph FontSize="20">Vendedor:</Paragraph>
                         <Paragraph>
                             <TextBlock Text="Nome:"></TextBlock>
-                            <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
-                        </Paragraph>
-                        <Paragraph>
-                            <TextBlock Text="{Binding Ferramenta.Nome}"></TextBlock>
-                        </Paragraph>
-                        <Paragraph>
-                            <TextBlock Text="{Binding Ferramenta.Marca}"></TextBlock>
-                        </Paragraph>
-                        <Paragraph>
-                            <TextBlock Text="{Binding Ferramenta.Modelo}"></TextBlock>
+                            <TextBlock Text="{Binding Relatorio.NomeVendedor}"></TextBlock>
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
             </UniformGrid>
         </WrapPanel>
-        <DataGrid></DataGrid>
+        <DataGrid x:Name="DgItensOsModel" 
+      AutoGenerateColumns="False"
+      ItemsSource="{Binding ListItemsObservaveis}"  FontSize="10" Foreground="Red" RowHeight="20" >
+        </DataGrid>
+        
         <UniformGrid>
-            <TextBox>Total Produto: aaa</TextBox>
-            <TextBox>Total Venda: aaa</TextBox>
-            <TextBox>Desconto: aaa</TextBox>
-            <TextBox>Frete: aaa</TextBox>
+            <TextBox Text="{Binding SubTotalProdutos, Mode=OneWay}" ></TextBox>
+            <TextBox Text="{Binding TotalProdutos, Mode=OneWay}"></TextBox>
+            <TextBox Text="{Binding TotalVendas, Mode=OneWay}"></TextBox>
+            <TextBox Text="{Binding TotalDescontoProdutos, Mode=OneWay}"></TextBox>
+            <TextBox Text="{Binding ValorFretes, Mode=OneWay}"></TextBox>
         </UniformGrid>
     </StackPanel>
 </UserControl>

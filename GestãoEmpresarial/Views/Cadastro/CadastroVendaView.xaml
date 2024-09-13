@@ -184,7 +184,7 @@
             <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
                 <cc:MoedaTextBox x:Name="TxtValorFrete" 
                                  Width="90"
-                                 materialDesign:HintAssist.Hint="M. Obra"
+                                 materialDesign:HintAssist.Hint="Valor Frete"
                                  Text="{Binding ObjectoEditar.ValorFrete, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                  Emoeda="True"
                                  />

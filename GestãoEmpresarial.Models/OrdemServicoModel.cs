@@ -23,26 +23,9 @@ namespace GestãoEmpresarial.Models
         public ColaboradorModel Tecnico { get; set; }
         public ClienteModel Cliente { get; set; }
 
-        public int? IdResponsavel
-        {
-            get
-            {
-                if (Responsavel == null)
-                    return null;
-                else
-                    return Responsavel.IdFuncionario;
-            }
-        }
-        public int? IdTecnico
-        {
-            get
-            {
-                if (Tecnico == null)
-                    return null;
-                else
-                    return Tecnico.IdFuncionario;
-            }
-        }
+        public int IdCliente { get; set; }
+        public int? IdResponsavel { get; set; }
+        public int? IdTecnico { get; set; }
 
         public int IdOs { get; set; }
         public bool Finalizado { get; set; }

@@ -54,7 +54,7 @@ namespace GestãoEmpresarial.Repositorios
 
         public List<ItemVendaModel> List(string filtro)
         {
-            string query = @"select IdVenda, Desconto, IdItensVenda, Quantidade, ValUnitario, IdProduto from tb_itensvenda WHERE IdVenda = @IdVenda";
+            string query = @"select IdVenda, Desconto, IdItensVenda, Quantidade, ValUnitario, IdProduto, ValTotal from tb_itensvenda WHERE IdVenda = @IdVenda";
 
             List<ItemVendaModel> lista = new List<ItemVendaModel>();
             List<MySqlParameter> parametros = new List<MySqlParameter>();
@@ -67,12 +67,11 @@ namespace GestãoEmpresarial.Repositorios
                     var obj = new ItemVendaModel
                     {
                         IdVenda = DALHelper.GetInt32(reader, "IdVenda").Value,
-                        //Acao = DALHelper.GetString(reader, "Acao"),
                         Desconto = DALHelper.GetDecimal(reader, "Desconto"),
                         IdItensVenda = DALHelper.GetInt32(reader, "IdItensVenda").Value,
-                        //Produto = DALHelper.GetString(reader, "Box"),
                         Quantidade = DALHelper.GetInt32(reader, "Quantidade").Value,
                         ValUnitario = DALHelper.GetDecimal(reader, "ValUnitario"),
+                        CustoTotal = DALHelper.GetDecimal(reader, "ValTotal"),
                     };
 
                     int? idProduto = DALHelper.GetInt32(reader, "IdProduto");

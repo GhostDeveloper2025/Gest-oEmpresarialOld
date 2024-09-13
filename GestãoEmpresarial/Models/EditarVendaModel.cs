@@ -28,7 +28,7 @@ namespace GestãoEmpresarial.Models
         }
 
         public int IdVenda { get; set; }
-        public int Situacao { get; set; }
+        public bool Situacao { get; set; }
         public int IdCodigoTipoPagamento { get; set; }
         public DateTime DataVenda { get; set; }
         public DateTime? DataFinalizacao { get; set; }

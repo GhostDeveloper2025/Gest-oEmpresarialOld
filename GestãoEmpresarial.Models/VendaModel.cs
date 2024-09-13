@@ -22,7 +22,7 @@ namespace GestãoEmpresarial.Models
         // public ColaboradorModel Cadastrante { get; set; }
 
         public int IdVenda { get; set; }
-        public int Situacao { get; set; }
+        public bool Situacao { get; set; }
         public DateTime DataVenda { get; set; }
         public DateTime? DataFinalizacao { get; set; }
         public ColaboradorModel Cadastrante { get; set; }
@@ -32,5 +32,7 @@ namespace GestãoEmpresarial.Models
         public int IdFuncionario { get; set; }
 
         public ClienteModel Cliente { get; set; }
+        public int IdCliente { get; set; }
+        public int IdCadastrante { get; set; }
     }
 }

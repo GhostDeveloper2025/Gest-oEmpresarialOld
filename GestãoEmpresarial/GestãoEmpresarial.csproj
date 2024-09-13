@@ -138,7 +138,9 @@
     <Compile Include="Providers\ColaboradorTecnicoProvider.cs" />
     <Compile Include="Providers\ProdutoProvider.cs" />
     <Compile Include="Switcher.cs" />
+    <Compile Include="Utils\BooleanPTConverter.cs" />
     <Compile Include="Utils\CapitalizeWordsConverter.cs" />
+    <Compile Include="Utils\DataPTConverter.cs" />
     <Compile Include="Utils\DecimalConverter.cs" />
     <Compile Include="Utils\EnumDescriptionConverter.cs" />
     <Compile Include="Utils\MarkupExtensionGestaoEmpresarial.cs" />

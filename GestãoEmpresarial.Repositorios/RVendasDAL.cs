@@ -53,7 +53,7 @@ namespace GestãoEmpresarial.Repositorios
             AddParameter(lista, "@IdCliente", t.Cliente.Idcliente);
             AddParameter(lista, "@Situacao", t.Situacao);
 
-            if (t.Situacao == 1)
+            if (t.Situacao)
                 AddParameter(lista, "@DataFinalizacao", DateTime.Now);
             else
                 AddParameter(lista, "@DataFinalizacao", null);
@@ -89,30 +89,15 @@ namespace GestãoEmpresarial.Repositorios
             {
                 while (reader.Read())
                 {
-                    var obj = new VendaModel
-                    {
-                        IdVenda = reader.GetInt32("IdVenda"),
-                        DataVenda = reader.GetDateTime("DataVenda"),
-                        DataFinalizacao = DALHelper.GetDateTime(reader, "DataFinalizacao"),
-                        IdCodigoTipoPagamento = reader.GetInt32("IdCodigoTipoPagamento"),
-                        Situacao = reader.GetInt32("Situacao"),
-                    };
+                    var obj = Mapeador.Map(new VendaModel(), reader);
 
                     if (comItens)
                     {
                         obj.ListItensVenda = rItensVendaDAL.GetByIdVenda(obj.IdVenda);
                     }
 
-                    int? idCliente = DALHelper.GetInt32(reader, "IdCliente");
-                    if (idCliente.HasValue)
-                    {
-                        obj.Cliente = rClienteDAL.GetById(idCliente.Value);
-                    }
-                    int? idCadastrante = DALHelper.GetInt32(reader, "IdFuncionario");
-                    if (idCadastrante.HasValue)
-                    {
-                        obj.Cadastrante = rColaboradorDAL.GetById(idCadastrante.Value);
-                    }
+                    obj.Cliente = rClienteDAL.GetById(obj.IdCliente);
+                    obj.Cadastrante = rColaboradorDAL.GetById(obj.IdCadastrante);
 
                     lista.Add(obj);
                 }

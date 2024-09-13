@@ -95,6 +95,7 @@
   <ItemGroup>
     <Compile Include="DALHelper.cs" />
     <Compile Include="IDAL.cs" />
+    <Compile Include="Mapeador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RCategoriaDAL.cs" />
     <Compile Include="RClienteDAL.cs" />

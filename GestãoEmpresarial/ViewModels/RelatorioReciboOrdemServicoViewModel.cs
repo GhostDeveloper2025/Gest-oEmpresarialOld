@@ -13,25 +13,26 @@ namespace GestãoEmpresarial.ViewModels
 {
     public class RelatorioReciboOrdemServicoViewModel : ObservableObject
     {
-        //private readonly RRelatorioReciboDAL _relatorioReciboDAL;
-
-        public RelatorioReciboOrdemServicoViewModel(RRelatorioReciboDAL relatorioReciboDAL /*, ROsDAL ROsDAL, int id*/)
+        public RelatorioReciboOrdemServicoViewModel(RRelatorioReciboDAL relatorioReciboDAL, int idOs /*, ROsDAL ROsDAL, int id*/)
         {
             //_relatorioReciboDAL = relatorioReciboDAL;
 
             //1. obter objecto da BD e colocar no propriedade
             //2. a propriedade faz bind na view
             //3. a impressao acontece
+
+            Relatorio = relatorioReciboDAL.ObterReciboOrdemServico(idOs);
         }
 
-        //AQUI NUMA PROP
+        public RelatorioReciboOsModel Relatorio { get; set; }
 
-        //public ClienteModel Cliente { get; set; }
-
-        //public ProdutoModel Produto { get; set; }
-
-        public OrdemServicoModel OrdemServicoModel { get; set; } // precisa do Repositorio ROsDAL
-
-        // FAZER UMA PROP COM O FALTAR
+        public ObservableCollection<ItensOrdemServicoModelObservavel> ListItemsObservaveis
+        {
+            get
+            {
+                var listDeObservaveis = Relatorio.OsModel.ListItensOs.Select(a => ItensOrdemServicoModelObservavel.MapearItemOrdemServicoModel(a));
+                return new ObservableCollection<ItensOrdemServicoModelObservavel>(listDeObservaveis);
+            }
+        }
     }
 }

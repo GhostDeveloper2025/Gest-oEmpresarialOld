@@ -14,7 +14,10 @@ namespace GestãoEmpresarial.Models
             NomeTecnico = GetNome(model.Tecnico);
             //NomeResponsavel = GetNome(model.Responsavel);
             NomeCadastrante = GetNome(model.Cadastrante);
-            //Box = model.Box;
+            Box = model.Box;
+            Marca = model.Marca;
+            Modelo = model.Modelo;
+            Ferramenta = model.Ferramenta;
             Finalizado = model.Finalizado;
             Garantia = model.Garantia;
             DataEntrada = model.DataEntrada;
@@ -40,6 +43,18 @@ namespace GestãoEmpresarial.Models
         [DisplayName("Status")]
         public string Status { get; set; }
 
+        [DisplayName("Ferramenta")]
+        public string Ferramenta { get; set; }
+
+        [DisplayName("Marca")]
+        public int Marca { get; set; }
+
+        [DisplayName("Modelo")]
+        public string Modelo { get; set; }
+
+        [DisplayName("Box")]
+        public string Box { get; set; }
+
         public string NomeTecnico { get; set; }
 
         [DisplayName("Cadastrante")]
@@ -53,5 +68,8 @@ namespace GestãoEmpresarial.Models
         public DateTime DataEntrada { get; set; }
         [DisplayName("Data Finalização")]
         public DateTime? DataFinalizacao { get; set; }
+
+
+        
     }
 }

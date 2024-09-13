@@ -29,6 +29,7 @@ namespace GestãoEmpresarial.Models
         public int IdCategoria { get; set; }
 
         public EstoqueModel Estoque { get; set; }
+
         public CategoriaModel Categoria { get; set; } = new CategoriaModel();
         public ColaboradorModel Colaborador { get; set; }
     }

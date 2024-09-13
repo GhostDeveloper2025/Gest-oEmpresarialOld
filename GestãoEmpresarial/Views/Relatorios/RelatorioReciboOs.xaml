@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GestãoEmpresarial.Views.Relatorios"
+             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
              mc:Ignorable="d" 
                     d:DesignHeight="800" d:DesignWidth="900">
     <UserControl.Resources>
@@ -38,19 +39,19 @@
                     <Paragraph FontSize="40">O.S:</Paragraph>
                     <Paragraph>
                         <TextBlock Text="N°:"></TextBlock>
-                        <TextBlock Text="{Binding Cliente.Nome}"></TextBlock>
+                        <TextBlock Text="{Binding Relatorio.OsModel.IdOs}"></TextBlock>
                     </Paragraph>
                     <Paragraph>
-                        <TextBlock Text="Data:"></TextBlock>
-                        <TextBlock Text="{Binding Ferramenta.Nome}"></TextBlock>
+                        <TextBlock Text="Data Entrada:"></TextBlock>
+                        <TextBlock Text="{Binding Relatorio.OsModel.DataEntrada, Converter={utils:DataPTConverter}}"></TextBlock>
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Text="Data Entrega:"></TextBlock>
-                        <TextBlock Text="{Binding Ferramenta.Marca}"></TextBlock>
+                        <TextBlock Text="{Binding Relatorio.OsModel.DataFinalizacao, Converter={utils:DataPTConverter}}"></TextBlock>
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Text="Status:"></TextBlock>
-                        <TextBlock Text="{Binding Ferramenta.Modelo}"></TextBlock>
+                        <TextBlock Text="{Binding Relatorio.NomeStatus}"></TextBlock>
                     </Paragraph>
                 </FlowDocument>
             </RichTextBox>
@@ -62,23 +63,23 @@
                         <Paragraph FontSize="20">Cliente:</Paragraph>
                         <Paragraph>
                             <TextBlock Text="Nome:"></TextBlock>
-                            <TextBlock Text="{Binding Cliente.Nome}"></TextBlock>
+                            <TextBlock Text="{Binding Relatorio.NomeCliente}"></TextBlock>
                         </Paragraph>
                         <Paragraph>
                             <TextBlock Text="Ferramenta:"></TextBlock>
-                            <TextBlock Text="{Binding Ferramenta.Nome}"></TextBlock>
+                            <TextBlock Text="{Binding Relatorio.OsModel.Ferramenta}"></TextBlock>
                         </Paragraph>
                         <Paragraph>
                             <TextBlock Text="Marca:"></TextBlock>
-                            <TextBlock Text="{Binding Ferramenta.Marca}"></TextBlock>
+                            <TextBlock Text="{Binding Relatorio.NomeMarca}"></TextBlock>
                         </Paragraph>
                         <Paragraph>
                             <TextBlock Text="Modelo:"></TextBlock>
-                            <TextBlock Text="{Binding Ferramenta.Modelo}"></TextBlock>
+                            <TextBlock Text="{Binding Relatorio.OsModel.Modelo}"></TextBlock>
                         </Paragraph>
                         <Paragraph>
-                            <TextBlock Text="Obiservações:"></TextBlock>
-                            <TextBlock Text="{Binding Ferramenta.Modelo}"></TextBlock>
+                            <TextBlock Text="Observações:"></TextBlock>
+                            <TextBlock Text="{Binding Relatorio.OsModel.Obs}"></TextBlock>
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
@@ -87,92 +88,93 @@
                         <Paragraph FontSize="20">Detalhes:</Paragraph>
                         <Paragraph>
                             <TextBlock Text="Atendente:"></TextBlock>
-                            <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
+                            <TextBlock Text="{Binding Relatorio.NomeCadastrante}"></TextBlock>
                         </Paragraph>
                         <Paragraph>
                             <TextBlock Text="Técnico:"></TextBlock>
-                            <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
+                            <TextBlock Text="{Binding Relatorio.NomeTecnico}"></TextBlock>
                         </Paragraph>
                         <Paragraph>
                             <TextBlock Text="Resp.Orçamento:"></TextBlock>
-                            <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
+                            <TextBlock Text="{Binding Relatorio.NomeResponsavel}"></TextBlock>
                         </Paragraph>
                         <Paragraph>
                             <TextBlock Text="Garantia:"></TextBlock>
-                            <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
+                            <TextBlock Text="{Binding Relatorio.OsModel.Garantia, Converter={utils:BooleanPTConverter}}"></TextBlock>
                         </Paragraph>
                         <Paragraph>
                             <TextBlock Text="Box:"></TextBlock>
-                            <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
-                        </Paragraph>
-                        <Paragraph>
-                            <TextBlock Text="{Binding Ferramenta.Nome}"></TextBlock>
-                        </Paragraph>
-                        <Paragraph>
-                            <TextBlock Text="{Binding Ferramenta.Marca}"></TextBlock>
-                        </Paragraph>
-                        <Paragraph>
-                            <TextBlock Text="{Binding Ferramenta.Modelo}"></TextBlock>
+                            <TextBlock Text="{Binding Relatorio.OsModel.Box}"></TextBlock>
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
             </UniformGrid>
         </WrapPanel>
-        <DataGrid></DataGrid>
+        <DataGrid x:Name="DgItensOsModel" 
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding ListItemsObservaveis}">
+        </DataGrid>
         <UniformGrid>
-            <TextBox>Total Produto: aaa</TextBox>
-            <TextBox>Total OS: aaa</TextBox>
-            <TextBox>Desconto: aaa</TextBox>
-            <TextBox>Mão De Obra: aaa</TextBox>
+            <UniformGrid.Resources>
+                <Style TargetType="TextBox">
+                    <Setter Property="Foreground" Value="Black"></Setter>
+                </Style>
+            </UniformGrid.Resources>
+            <TextBox Text="{Binding Relatorio.TotalProduto, Mode=OneWay}"></TextBox>
+            <TextBox Text="{Binding Relatorio.TotalProduto, Mode=OneWay}"></TextBox>
+            <TextBox Text="{Binding Relatorio.Desconto, Mode=OneWay}"></TextBox>
+            <TextBox Text="{Binding Relatorio.MaoDeObra, Mode=OneWay}"></TextBox>
         </UniformGrid>
         <StackPanel></StackPanel>
         <RichTextBox >
             <FlowDocument>
                 <Paragraph>
-                    <TextBlock Text="N°:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
-                    <TextBlock Text="N°:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
-                    <TextBlock Text="N°:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
-                    <TextBlock Text="N°:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
+                    <TextBlock Text="N° Ordem Serviço:"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.OsModel.IdOs}"></TextBlock>
+                    <TextBlock Text="N° Ordem Serviço:"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.OsModel.IdOs}"></TextBlock>
+                    <TextBlock Text="N° Ordem Serviço:"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.OsModel.IdOs}"></TextBlock>
+                    <TextBlock Text="N° Ordem Serviço:"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.OsModel.IdOs}"></TextBlock>
+                    <TextBlock Text="N° Ordem Serviço:"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.OsModel.IdOs}"></TextBlock>
                 </Paragraph>
                 <Paragraph>
-                    <TextBlock Text="Nome:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
-                    <TextBlock Text="Nome:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
-                    <TextBlock Text="Nome:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
-                    <TextBlock Text="Nome:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
-                    <TextBlock Text="Nome:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
+                    <TextBlock Text="Nome Cliente:"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.NomeCliente}"></TextBlock>
+                    <TextBlock Text="Nome Cliente:"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.NomeCliente}"></TextBlock>
+                    <TextBlock Text="Nome Cliente:"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.NomeCliente}"></TextBlock>
+                    <TextBlock Text="Nome Cliente:"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.NomeCliente}"></TextBlock>
+                    <TextBlock Text="Nome Cliente:"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.NomeCliente}"></TextBlock>
                 </Paragraph>
                 <Paragraph>
                     <TextBlock Text="Ferramenta:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.OsModel.Ferramenta}"></TextBlock>
                     <TextBlock Text="Ferramenta:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.OsModel.Ferramenta}"></TextBlock>
                     <TextBlock Text="Ferramenta:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.OsModel.Ferramenta}"></TextBlock>
                     <TextBlock Text="Ferramenta:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.OsModel.Ferramenta}"></TextBlock>
                     <TextBlock Text="Ferramenta:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.OsModel.Ferramenta}"></TextBlock>
                 </Paragraph>
                 <Paragraph>
                     <TextBlock Text="Modelo:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.OsModel.Modelo}"></TextBlock>
                     <TextBlock Text="Modelo:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.OsModel.Modelo}"></TextBlock>
                     <TextBlock Text="Modelo:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.OsModel.Modelo}"></TextBlock>
                     <TextBlock Text="Modelo:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.OsModel.Modelo}"></TextBlock>
                     <TextBlock Text="Modelo:"></TextBlock>
-                    <TextBlock Text="{Binding Vendedor.Nome}"></TextBlock>
+                    <TextBlock Text="{Binding Relatorio.OsModel.Modelo}"></TextBlock>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>

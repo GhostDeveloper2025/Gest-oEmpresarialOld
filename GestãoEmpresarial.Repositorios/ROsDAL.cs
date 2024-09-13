@@ -103,51 +103,23 @@ namespace GestãoEmpresarial.Repositorios
             {
                 while (reader.Read())
                 {
-                    var obj = new OrdemServicoModel
-                    {
-                        IdOs = reader.GetInt32("IdOs"),
-                        DataEntrada = reader.GetDateTime("DataEntrada"),
-                        DataFinalizacao = DALHelper.GetDateTime(reader, "DataFinalizacao"),
-                        Ferramenta = DALHelper.GetString(reader, "Ferramenta"),
-                        Modelo = DALHelper.GetString(reader, "Modelo"),
-                        Obs = DALHelper.GetString(reader, "Obs"),
-                        TotalDescontoProduto = DALHelper.GetDecimal(reader, "DescontoProduto"),
-                        SubTotalProduto = DALHelper.GetDecimal(reader, "SubTotalProduto"),
-                        TotalProduto = DALHelper.GetDecimal(reader, "TotalProduto"),
-                        TotalOS = DALHelper.GetDecimal(reader, "TotalOS"),
-                        TotalMaoObra = DALHelper.GetDecimal(reader, "TotalMaoObra"),
-                        Box = DALHelper.GetString(reader, "Box"),
-                        Finalizado = DALHelper.GetBool(reader, "Finalizado"),
-                        Garantia = DALHelper.GetBool(reader, "Garantia"),
-                        Status = reader.GetInt32("idcodigostatus"),
-                        Marca = DALHelper.GetInt32(reader, "idcodigomarcasf").Value,
-                    };
-
+                    var obj = Mapeador.Map(new OrdemServicoModel(), reader);
                     if (comItens)
                     {
                         obj.ListItensOs = rItensOSDAL.GetByIdOs(obj.IdOs);
                     }
 
-                    int? idCliente = DALHelper.GetInt32(reader, "IdCliente");
-                    if (idCliente.HasValue)
+                    obj.Cliente = rClienteDAL.GetById(obj.IdCliente);
+                    obj.Cadastrante = rColaboradorDAL.GetById(obj.IdCadastrante);
+
+                    if (obj.IdResponsavel.HasValue)
                     {
-                        obj.Cliente = rClienteDAL.GetById(idCliente.Value);
+                        obj.Responsavel = rColaboradorDAL.GetById(obj.IdResponsavel.Value);
                     }
 
-                    int? idResponsavel = DALHelper.GetInt32(reader, "IdResponsavel");
-                    if (idResponsavel.HasValue)
+                    if (obj.IdTecnico.HasValue)
                     {
-                        obj.Responsavel = rColaboradorDAL.GetById(idResponsavel.Value);
-                    }
-                    int? IdTecnico = DALHelper.GetInt32(reader, "IdTecnico");
-                    if (IdTecnico.HasValue)
-                    {
-                        obj.Tecnico = rColaboradorDAL.GetById(IdTecnico.Value);
-                    }
-                    int? idCadastrante = DALHelper.GetInt32(reader, "IdCadastrante");
-                    if (idCadastrante.HasValue)
-                    {
-                        obj.Cadastrante = rColaboradorDAL.GetById(idCadastrante.Value);
+                        obj.Tecnico = rColaboradorDAL.GetById(obj.IdTecnico.Value);
                     }
 
                     lista.Add(obj);

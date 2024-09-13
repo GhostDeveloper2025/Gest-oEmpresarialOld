@@ -94,6 +94,8 @@ namespace GestãoEmpresarial
                                 GetRepositorio<RItensOSDAL>()
                             ) },
             { nameof(CadastroVendaViewModel), (id) => GetCadastroView<CadastroVendaViewModel, RVendasDAL, VendaValidar, CadastroVendaView>(id, GetRepositorio<RCodigosDAL>(), GetRepositorio<RItensVendaDAL>(), new ItemVendaValidar()) },
+            { nameof(RelatorioReciboOrdemServicoViewModel), (id) => new RelatorioReciboOs(new RelatorioReciboOrdemServicoViewModel(GetRepositorio<RRelatorioReciboDAL>(), id.Value)) },
+            { nameof(RelatorioReciboVendaViewModel), (id) => new RelatorioReciboVenda(new RelatorioReciboVendaViewModel(GetRepositorio<RRelatorioReciboDAL>(), GetRepositorio<RClienteDAL>(), id.Value)) },
         };
 
         public static Dictionary<string, Func<UserControl>> PesquisaViews = new Dictionary<string, Func<UserControl>>()
@@ -111,8 +113,6 @@ namespace GestãoEmpresarial
             { nameof(RelatorioProdutoMaisVendidoViewModel), () => new RelatorioProdutoMaisVendido(new RelatorioProdutoMaisVendidoViewModel(GetRepositorio<RRelatorioProdutoMaisVendidoDAL>())) },
             { nameof(RelatorioHistoricoVendasViewModel), () => new RelatorioHistoricoVenda(new RelatorioHistoricoVendasViewModel(GetRepositorio<RRelatorioHistoricoVendasDAL>())) },
             { nameof(RelatorioComissaoViewModel), () => new RelatorioComissao(new RelatorioComissaoViewModel(GetRepositorio<RRelatorioComissaoVendaDAL>())) },
-            { nameof(RelatorioReciboOrdemServicoViewModel), () => new RelatorioReciboOs(new RelatorioReciboOrdemServicoViewModel(GetRepositorio<RRelatorioReciboDAL>())) },
-            { nameof(RelatorioReciboVendaViewModel), () => new RelatorioReciboVenda(new RelatorioReciboVendaViewModel(GetRepositorio<RRelatorioReciboDAL>())) },
         };
     }
 }

@@ -60,6 +60,7 @@ namespace GestãoEmpresarial.Models
                 RaisePropertyChanged(nameof(TotalItem));
             }
         }
+        
 
         private decimal _valUnitario;
 

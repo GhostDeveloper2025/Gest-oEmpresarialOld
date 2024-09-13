@@ -26,8 +26,10 @@ namespace GestãoEmpresarial.Views.Cadastro
 
         private void Imprimir_Click(object sender, RoutedEventArgs e)
         {
-            var uc = DI.GetRelatorioView(nameof(RelatorioReciboOrdemServicoViewModel));
-            Switcher.Imprimir(uc);
+            int? id = ((CadastroOrdemServicoViewModel)DataContext).Id;
+            var func = DI.CadastrosViews[nameof(RelatorioReciboOrdemServicoViewModel)];
+            if (id.HasValue)
+                Switcher.Imprimir(func(id));
         }
     }
 }

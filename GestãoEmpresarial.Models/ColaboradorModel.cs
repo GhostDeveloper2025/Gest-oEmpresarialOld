@@ -18,9 +18,6 @@ namespace GestãoEmpresarial.Models
         [DisplayName("Id")]
         public int IdFuncionario { get; set; }
 
-        [DisplayName("Data Cadastro")]
-        public DateTime DataCadastro { get; set; }
-
         [DisplayName("Nome")]
         public string Nome { get; set; }
 
@@ -29,6 +26,9 @@ namespace GestãoEmpresarial.Models
 
         [DisplayName("Telefone")]
         public string Telefone { get; set; }
+
+        [DisplayName("Data Cadastro")]
+        public DateTime DataCadastro { get; set; }
 
         public string Email { get; set; }
         public string Senha { get; set; }

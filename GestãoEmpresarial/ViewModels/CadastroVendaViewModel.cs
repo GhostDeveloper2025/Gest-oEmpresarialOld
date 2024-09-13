@@ -92,12 +92,12 @@ namespace GestãoEmpresarial.ViewModels
 
         public override void ExecutarSalvar(object parameter)
         {
-            if (ObjectoEditar.Situacao != 1)
+            if (ObjectoEditar.Situacao != true)
             {
                 MessageBoxResult result = MessageBox.Show("Quer finalizar a venda já?", "Finalizar", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    ObjectoEditar.Situacao = 1;
+                    ObjectoEditar.Situacao = true;
                 }
             }
             base.ExecutarSalvar(parameter); // salvar ou atualizar
