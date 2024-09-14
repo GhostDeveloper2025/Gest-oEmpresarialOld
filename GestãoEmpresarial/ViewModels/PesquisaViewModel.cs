@@ -22,7 +22,11 @@ namespace GestãoEmpresarial.ViewModels
         /// Lista Filtrada - Binding só funcionar com property (propriedade) -> (get;set;)
         /// E o binding desta lista está na datagrid (da FiltroBaseView)
         /// </summary>
-        public ObservableCollection<TDataGridModel> ListaDaGrid { get; set; }
+        private List<TDataGridModel> _ListaDaGrid;
+        public List<TDataGridModel> ListaDaGrid
+        {
+            get => new List<TDataGridModel>(_ListaDaGrid);
+        }
 
         /// <summary>
         /// O objecto (do tipo generico que for escolhido no filho) que faz binding
@@ -51,6 +55,17 @@ namespace GestãoEmpresarial.ViewModels
             }
         }
 
+        private bool _estaPensando;
+        public bool EstaPensando
+        {
+            get { return _estaPensando; }
+            set
+            {
+                _estaPensando = value;
+                RaisePropertyChanged(nameof(EstaPensando));
+            }
+        }
+
         public ICommand PesquisarCommand { get; set; }
         public ICommand RemoverCommand { get; set; }
         public abstract int Id { get; }
@@ -64,7 +79,7 @@ namespace GestãoEmpresarial.ViewModels
             this.Repositorio = Repositorio;
             RemoverCommand = new RelayCommandWithParameter(ExecutarRemover, PodeExecutarRemover);
             PesquisarCommand = new RelayCommandWithParameter(ExecutarPesquisar, PodeExecutarPesquisar);
-            ListaDaGrid = new ObservableCollection<TDataGridModel>();
+            _ListaDaGrid = new List<TDataGridModel>();
         }
 
         public virtual bool PodeExecutarRemover(object parameter)
@@ -101,30 +116,35 @@ namespace GestãoEmpresarial.ViewModels
         /// metodo virtual que os filhos podem fazer override e ter a sua pesquisa especifica
         /// </summary>
         /// <param name="parameter"></param>
-        public void ExecutarPesquisar(object parameter)
+        public async void ExecutarPesquisar(object parameter)
         {
-            ListaDaGrid.Clear();
-            if (string.IsNullOrWhiteSpace(FiltroGlobal) == false)
-                FiltroGlobal = FiltroGlobal.Trim();
-
-            var listaDaBd = GetLista();
-            foreach (TObjectoBD item in listaDaBd)
+            EstaPensando = true;
+            await Task.Run(() =>
             {
-                if (typeof(TObjectoBD) != typeof(TDataGridModel))
+                _ListaDaGrid.Clear();
+                if (string.IsNullOrWhiteSpace(FiltroGlobal) == false)
+                    FiltroGlobal = FiltroGlobal.Trim();
+
+                var listaDaBd = GetLista();
+                foreach (TObjectoBD item in listaDaBd)
                 {
-                    var obj = GetDataGridModel(item);
-                    ListaDaGrid.Add(obj);
+                    if (typeof(TObjectoBD) != typeof(TDataGridModel))
+                    {
+                        var obj = GetDataGridModel(item);
+                        _ListaDaGrid.Add(obj);
+                    }
+                    else
+                    {
+                        var obj = (TDataGridModel)Convert.ChangeType(item, typeof(TDataGridModel));
+                        _ListaDaGrid.Add(obj);
+                    }
                 }
-                else
-                {
-                    var obj = (TDataGridModel)Convert.ChangeType(item, typeof(TDataGridModel));
-                    ListaDaGrid.Add(obj);
-                }
-            }
-            FiltroGlobal = null;
-            RaisePropertyChanged(nameof(FiltroGlobal));
-            // Atualize o NumberOfRecords com o novo valor
-            NumberOfRecords = ListaDaGrid.Count;
+                FiltroGlobal = null;
+                NumberOfRecords = _ListaDaGrid.Count;
+                RaisePropertyChanged(nameof(FiltroGlobal));
+                RaisePropertyChanged(nameof(ListaDaGrid));
+            });
+            EstaPensando = false;
         }
 
     }

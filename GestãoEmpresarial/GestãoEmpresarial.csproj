@@ -40,6 +40,9 @@
     <Reference Include="AutoCompleteTextBox, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoCompleteTextBox.1.7.2\lib\net48\AutoCompleteTextBox.dll</HintPath>
     </Reference>
+    <Reference Include="BusyIndicator, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BusyIndicators.2.1.2\lib\net46\BusyIndicator.dll</HintPath>
+    </Reference>
     <Reference Include="FluentValidation, Version=11.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.11.9.2\lib\netstandard2.0\FluentValidation.dll</HintPath>
     </Reference>

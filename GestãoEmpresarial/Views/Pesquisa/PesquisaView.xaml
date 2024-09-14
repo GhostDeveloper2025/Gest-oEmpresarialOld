@@ -4,13 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:busyIndicator="https://github.com/moh3ngolshani/BusyIndicator"
              xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel>
         <Grid Name="fContainer" DockPanel.Dock="Top">
         </Grid>
-        <!-- TextBlock para mostrar o número de registros -->
+
+            <!-- TextBlock para mostrar o número de registros -->
         <TextBlock DockPanel.Dock="Top" 
                     Margin="0,10,0,10" 
                     Foreground="#836EFB"
@@ -20,34 +22,39 @@
                  <Run Text="Número de Registros: " />
                  <Run Text="{Binding NumberOfRecords}" />
         </TextBlock>
-        <!--Gera as colunas com base no objecto recebido "AutoGenerateColumns"-->
-        <cc:DataGridAuto x:Name="DataGridGlobal"
+        <busyIndicator:BusyMask x:Name="BusyIndicator" 
+                        IsBusy="{Binding EstaPensando, Mode=TwoWay}" 
+                        IndicatorType="Dashes" 
+                        Background="#D8FFFFFF"
+                        BusyContent="Por favor aguarde...">
+            <!--Gera as colunas com base no objecto recebido "AutoGenerateColumns"-->
+            <cc:DataGridAuto x:Name="DataGridGlobal"
                   SelectedItem="{Binding ObjectoSelecionado, Mode=TwoWay}"
-                  ItemsSource="{Binding ListaDaGrid, Mode=TwoWay, 
-            UpdateSourceTrigger=PropertyChanged}">
-            <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Opções">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <WrapPanel>
-                                <Button Style="{StaticResource ButtonDataGrid}"
+                  ItemsSource="{Binding ListaDaGrid, Mode=OneWay}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Opções">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <WrapPanel>
+                                    <Button Style="{StaticResource ButtonDataGrid}"
                                         Tag="{StaticResource color13}"
                                         Cursor="Hand"
                                         Command="{Binding DataContext.RemoverCommand, ElementName=DataGridGlobal}" 
                                         CommandParameter="{Binding}">
-                                    <materialDesign:PackIcon  Kind="Trash" Style="{StaticResource IconButton}"/>
-                                </Button>
-                                <Button Style="{StaticResource ButtonDataGrid}"
+                                        <materialDesign:PackIcon  Kind="Trash" Style="{StaticResource IconButton}"/>
+                                    </Button>
+                                    <Button Style="{StaticResource ButtonDataGrid}"
                                         Tag="{StaticResource color4}"
                                         Cursor="Hand"
                                         Click="BtnEditar_Click">
-                                    <materialDesign:PackIcon  Kind="Edit" Style="{StaticResource IconButton}"/>
-                                </Button>
-                            </WrapPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </cc:DataGridAuto>
+                                        <materialDesign:PackIcon  Kind="Edit" Style="{StaticResource IconButton}"/>
+                                    </Button>
+                                </WrapPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </cc:DataGridAuto>
+        </busyIndicator:BusyMask>
     </DockPanel>
 </UserControl>

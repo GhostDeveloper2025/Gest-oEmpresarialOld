@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:busyIndicator="https://github.com/moh3ngolshani/BusyIndicator"
         Background="{DynamicResource color37 }"
         TextElement.FontWeight="Medium"
         TextElement.FontSize="18"
@@ -22,8 +23,15 @@
                 <layout:MenuView  ></layout:MenuView>
             </StackPanel>
         </ScrollViewer>
-        <Border DockPanel.Dock="Bottom"  Margin="10,10,10,10" Background="{StaticResource color59}" CornerRadius="10">
-            <Grid  DockPanel.Dock="Bottom" Name="fContainer" Margin="10,10,10,10" Background="{StaticResource color59}" />
-        </Border>
+
+        <busyIndicator:BusyMask x:Name="BusyIndicator"
+                                DockPanel.Dock="Bottom"
+                                BusyContent=""
+                                IndicatorType="Escalade" 
+                                Background="#D8FFFFFF">
+            <Border Margin="10,10,10,10" Background="{StaticResource color59}" CornerRadius="10">
+                <Grid Name="fContainer" Margin="10,10,10,10" Background="{StaticResource color59}" />
+            </Border>
+        </busyIndicator:BusyMask>
     </DockPanel>
 </Window>
