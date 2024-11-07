@@ -22,16 +22,14 @@
                 <TextBox x:Name="TxtNome"
                          Width="250" materialDesign:HintAssist.Hint="Nome" 
                          Text="{Binding ObjectoEditar.Nome, 
-                    UpdateSourceTrigger=PropertyChanged,  
-                    ValidatesOnDataErrors=True,
+                    UpdateSourceTrigger=PropertyChanged,
                     Converter={utils:CapitalizeWordsConverter}}"
                          />
                 <TextBox
                     Width="200"
                     materialDesign:HintAssist.Hint="Ocupação" 
                     Text="{Binding ObjectoEditar.Cargo, 
-                    UpdateSourceTrigger=PropertyChanged, 
-                    ValidatesOnDataErrors=True,
+                    UpdateSourceTrigger=PropertyChanged,
                     Converter={utils:CapitalizeWordsConverter}}"
                     />
                 <cc:CpfTextBox x:Name="TxtCpf" 
@@ -42,7 +40,7 @@
                 <TextBox 
                     Width="200"
                     materialDesign:HintAssist.Hint="Email" 
-                    Text="{Binding ObjectoEditar.Email, 
+                    Text="{Binding ObjectoEditar.Email,
                     UpdateSourceTrigger=PropertyChanged,  
                     Converter={utils:CapitalizeWordsConverter}}"
                     />
@@ -59,13 +57,13 @@
                              Width="90"  
                              Emoeda="True" 
                              materialDesign:HintAssist.Hint="Comissão" 
-                             Text="{Binding ObjectoEditar.Comissao,  
+                             Text="{Binding ObjectoEditar.Comissao,
                 Converter={utils:CapitalizeWordsConverter}}"
                              />
             <TextBox 
                 Width="120" 
                 materialDesign:HintAssist.Hint="Senha" 
-                Text="{Binding ObjectoEditar.Senha, 
+                Text="{Binding ObjectoEditar.Senha,
                 UpdateSourceTrigger=PropertyChanged}"
                 />
         </StackPanel>

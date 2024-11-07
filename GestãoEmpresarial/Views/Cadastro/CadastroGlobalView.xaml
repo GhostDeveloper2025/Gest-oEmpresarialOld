@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="GestãoEmpresarial.Views.Cadastro.CadastroView"
+﻿<UserControl x:Class="GestãoEmpresarial.Views.CadastroGlobalView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GestãoEmpresarial.Views.Cadastro"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:GestãoEmpresarial.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="1000" d:DesignWidth="1150">
+             d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
             <!-- Linha do topo -->
@@ -19,14 +19,23 @@
         <Grid Grid.Row="0">
             <DockPanel>
                 <TextBox 
-                 DockPanel.Dock="Left"
-                 IsReadOnly="True"  
-                 HorizontalAlignment="Left"          
-                 Text="{Binding Id}"/>
-                <TextBox 
-                 DockPanel.Dock="Right"
-                 HorizontalAlignment="Right"
-                 Text="{Binding DataCadastro, Mode=OneWay, StringFormat=dd/MM/yyyy hh:mm:ss}">
+             DockPanel.Dock="Left"
+             IsReadOnly="True"  
+             HorizontalAlignment="Left"          
+             Text="{Binding Id}"/>
+
+                <TextBox DockPanel.Dock="Right" 
+                         materialDesign:HintAssist.Hint="Data Finalização" 
+                         HorizontalAlignment="Right" IsEnabled="False" 
+                         Text="{Binding ObjectoEditar.DataFinalizacao, 
+                    Mode=OneWay, StringFormat=dd/MM/yyyy hh:mm:ss}">
+                </TextBox>
+
+                <TextBox DockPanel.Dock="Right" 
+                         materialDesign:HintAssist.Hint="Data Cadastro" 
+                         HorizontalAlignment="Right" IsEnabled="False" 
+                         Text="{Binding DataCadastro, 
+                    Mode=OneWay, StringFormat=dd/MM/yyyy hh:mm:ss}">
                 </TextBox>
             </DockPanel>
         </Grid>
@@ -36,12 +45,12 @@
         <!-- Conteúdo do rodapé -->
         <StackPanel Grid.Row="2" VerticalAlignment="Bottom">
             <Button x:Name="BtnSalvar" 
-                 Margin="10,10,0,10"
-                 VerticalAlignment="Bottom"
-                 HorizontalAlignment="Left"
-                 Style="{StaticResource ButtonGlobal}"
-                 Tag="{StaticResource color11}" 
-                 Command="{Binding SaveCommand}">
+             Margin="10,10,0,10"
+             VerticalAlignment="Bottom"
+             HorizontalAlignment="Left"
+             Style="{StaticResource ButtonGlobal}"
+             Tag="{StaticResource color11}" 
+             Command="{Binding SaveCommand}">
                 <!-- Muda A Cor Do Icone -->
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Height="40" Width="40" Kind="ContentSaveCheck" Style="{StaticResource IconsButtonGlobal}" />

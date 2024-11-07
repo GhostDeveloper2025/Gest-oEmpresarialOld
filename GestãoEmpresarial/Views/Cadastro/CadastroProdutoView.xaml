@@ -29,17 +29,16 @@
                 <TextBox 
                     Width="250"
                     materialDesign:HintAssist.Hint="Nome" 
-                    Text="{Binding ObjectoEditar.Nome,  
-                    ValidatesOnDataErrors=True,
+                    Text="{Binding ObjectoEditar.Nome,
                     UpdateSourceTrigger=PropertyChanged, 
-                    Converter={utils:DecimalConverter}, Mode=OneWay}"
+                    Converter={utils:CapitalizeWordsConverter}, Mode=TwoWay}"
                     />
                 <TextBox 
                     Width="150" 
                     materialDesign:HintAssist.Hint="Código Produto" 
-                    Text="{Binding ObjectoEditar.CodProduto,  
+                    Text="{Binding ObjectoEditar.CodProduto,
                     UpdateSourceTrigger=PropertyChanged, 
-                    Converter={utils:DecimalConverter}, Mode=OneWay}"
+                    Converter={utils:CapitalizeWordsConverter}, Mode=TwoWay}"
                     />
                 <ComboBox 
                     Width="150" 
@@ -48,7 +47,7 @@
                     materialDesign:ColorZoneAssist.Mode="SecondaryLight" 
                     DisplayMemberPath="Value" 
                     ItemsSource="{Binding MarcasList}"  
-                    SelectedValue="{Binding ObjectoEditar.IdMarca, 
+                    SelectedValue="{Binding ObjectoEditar.IdMarca,
                     UpdateSourceTrigger=PropertyChanged}"
                     />
                 <ComboBox 
@@ -58,7 +57,7 @@
                     materialDesign:ColorZoneAssist.Mode="SecondaryLight" 
                     DisplayMemberPath="Value" 
                     ItemsSource="{Binding CategoriasLista}" 
-                    SelectedValue="{Binding ObjectoEditar.IdCategoria, 
+                    SelectedValue="{Binding ObjectoEditar.IdCategoria,
                     UpdateSourceTrigger=PropertyChanged}"
                     />
             </StackPanel>
@@ -69,29 +68,29 @@
                     Width="90"
                     Emoeda="True"  
                     materialDesign:HintAssist.Hint="Valor Custo" 
-                    Text="{Binding ObjectoEditar.ValorCusto, 
+                    Text="{Binding ObjectoEditar.ValorCusto,
                     UpdateSourceTrigger=PropertyChanged}"
                     />
                 <cc:MoedaTextBox 
                     Width="90" 
                     Emoeda="True" 
                     materialDesign:HintAssist.Hint="Valor Venda" 
-                    Text="{Binding ObjectoEditar.ValorVenda, 
+                    Text="{Binding ObjectoEditar.ValorVenda,
                     UpdateSourceTrigger=PropertyChanged}"
                     />
                 <cc:NumeroTextBox 
                     Width="120" 
                     materialDesign:HintAssist.Hint="Quantidade" 
                     MaxLength="9" 
-                    Text="{Binding ObjectoEditar.EstoqueQuantidade, 
+                    Text="{Binding ObjectoEditar.EstoqueQuantidade,
                     UpdateSourceTrigger=PropertyChanged}"
                     />
                 <TextBox 
                     Width="120" 
                     materialDesign:HintAssist.Hint="Localização" 
-                    Text="{Binding ObjectoEditar.EstoqueLocalizacao,  
+                    Text="{Binding ObjectoEditar.EstoqueLocalizacao,
                     UpdateSourceTrigger=PropertyChanged, 
-                    Converter={utils:DecimalConverter}, Mode=OneWay}"
+                    Converter={utils:CapitalizeWordsConverter}, Mode=TwoWay}"
                     />
                 <TextBox 
                     Width="300" 
@@ -103,7 +102,7 @@
                     MaxLength="150" 
                     Text="{Binding ObjectoEditar.Descricao,  
                     UpdateSourceTrigger=PropertyChanged,  
-                    Converter={utils:DecimalConverter}, Mode=TwoWay}"
+                    Converter={utils:CapitalizeWordsConverter}, Mode=TwoWay}"
                     />
             </StackPanel>
         </StackPanel>

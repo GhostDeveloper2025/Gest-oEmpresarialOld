@@ -18,14 +18,12 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0">
-
             <wpfcc:AutoCompleteTextBox  
                 Width="250" 
                 materialDesign:HintAssist.Hint="Vendedor" 
                 DisplayMember="Nome"
-                Provider="{providers:ColaboradorProvider}" 
-                SelectedItem="{Binding ColaboradorSelecionado,  
-                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                Provider="{providers:ColaboradorVendedorProvider}" 
+                SelectedItem="{Binding ColaboradorSelecionado, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <wpfcc:AutoCompleteTextBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>

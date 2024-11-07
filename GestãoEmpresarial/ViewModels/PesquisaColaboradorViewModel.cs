@@ -1,5 +1,6 @@
 ﻿using GestãoEmpresarial.Interface;
 using GestãoEmpresarial.Models;
+using GestãoEmpresarial.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace GestãoEmpresarial.ViewModels
 {
-    internal class PesquisaColaboradorViewModel : PesquisaViewModel<ColaboradorModel, ColaboradorModel>
+    internal class PesquisaColaboradorViewModel : PesquisaViewModel<ColaboradorModel, ColaboradorModel, RColaboradorDAL>
     {
-        public PesquisaColaboradorViewModel(IDAL<ColaboradorModel> Repositorio) : base(Repositorio)
+        public PesquisaColaboradorViewModel(RColaboradorDAL Repositorio) : base(Repositorio)
         {
         }
 
@@ -21,6 +22,16 @@ namespace GestãoEmpresarial.ViewModels
         public override ColaboradorModel GetDataGridModel(ColaboradorModel item)
         {
             return item;
+        }
+
+        public override List<ColaboradorModel> GetLista()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool PodeExecutarPesquisar(object parameter)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace GestãoEmpresarial.Repositorios
             rItensVendaDAL = new RItensVendaDAL(idFuncionario);
         }
 
-        public RelatorioReciboOsModel ObterReciboOrdemServico(int idOs)
+        public async Task<RelatorioReciboOsModel> ObterReciboOrdemServicoAsync(int idOs)
         {
             string query = @"
                  SELECT a.*, resp.Nome AS NomeResponsavel, tecnico.Nome AS NomeTecnico, cadas.Nome AS NomeCadastrante, cli.Nome AS NomeCliente, codigof.NomeCodigo as NomeMarca, codigostatus.NomeCodigo as NomeStatus
@@ -39,10 +39,10 @@ namespace GestãoEmpresarial.Repositorios
 
             using (MySqlDataReader reader = ExecuteReader(query, parametros.ToArray()))
             {
-                while (reader.Read())
+                while (await reader.ReadAsync()) // Leitura assíncrona
                 {
                     var obj = Mapeador.Map(new OrdemServicoModel(), reader);
-                    obj.ListItensOs = rItensOSDAL.GetByIdOs(obj.IdOs);
+                    obj.ListItensOs = await rItensOSDAL.GetByIdOsAsync(obj.IdOs); // Usar await aqui
 
                     return new RelatorioReciboOsModel
                     {
@@ -60,7 +60,7 @@ namespace GestãoEmpresarial.Repositorios
             return null;
         }
 
-        public RelatorioReciboVendaModel ObterReciboVenda(int idVenda)
+        public async Task<RelatorioReciboVendaModel> ObterReciboVendaAsync(int idVenda)
         {
             string query = @"
                  SELECT a.*, vend.Nome AS NomeVendedor, codigoPaga.NomeCodigo as NomePagamento
@@ -74,10 +74,10 @@ namespace GestãoEmpresarial.Repositorios
 
             using (MySqlDataReader reader = ExecuteReader(query, parametros.ToArray()))
             {
-                while (reader.Read())
+                while (await reader.ReadAsync()) // Leitura assíncrona
                 {
                     var obj = Mapeador.Map(new VendaModel(), reader);
-                    obj.ListItensVenda = rItensVendaDAL.GetByIdVenda(obj.IdVenda);
+                    obj.ListItensVenda = await rItensVendaDAL.GetByIdVendaAsync(obj.IdVenda); // Usar await aqui
 
                     return new RelatorioReciboVendaModel
                     {
@@ -90,5 +90,18 @@ namespace GestãoEmpresarial.Repositorios
 
             return null;
         }
+
+        // Métodos síncronos para compatibilidade
+        public RelatorioReciboOsModel ObterReciboOrdemServico(int idOs)
+        {
+            return ObterReciboOrdemServicoAsync(idOs).GetAwaiter().GetResult();
+        }
+
+        public RelatorioReciboVendaModel ObterReciboVenda(int idVenda)
+        {
+            return ObterReciboVendaAsync(idVenda).GetAwaiter().GetResult();
+        }
     }
 }
+
+

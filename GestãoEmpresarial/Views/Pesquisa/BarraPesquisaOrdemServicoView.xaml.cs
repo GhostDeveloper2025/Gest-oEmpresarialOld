@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GestãoEmpresarial.CustomControls
+namespace GestãoEmpresarial.Views.Pesquisa
 {
     /// <summary>
-    /// Interação lógica para ValidarTextBox.xam
+    /// Interação lógica para BarraPesquisaOrdemServicoView.xam
     /// </summary>
-    public partial class ValidarTextBox : TextBox
+    public partial class BarraPesquisaOrdemServicoView : WrapPanel
     {
-        public ValidarTextBox()
+        public BarraPesquisaOrdemServicoView()
         {
             InitializeComponent();
         }

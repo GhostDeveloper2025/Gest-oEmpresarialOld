@@ -8,8 +8,10 @@
              xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
              mc:Ignorable="d"  
              d:DesignHeight="1000" d:DesignWidth="1150">
+    
     <!--#endregion-->
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -19,22 +21,20 @@
             <StackPanel Orientation="Horizontal">
                 <TextBox x:Name="TxtNome"  
                          Width="250" 
-                         materialDesign:HintAssist.Hint="Nome" 
+                         materialDesign:HintAssist.Hint="Nome"
                          Text="{Binding ObjectoEditar.Nome, 
-                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
-                    ValidatesOnDataErrors=True, 
+                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                     Converter={utils:CapitalizeWordsConverter}}">
                 </TextBox>
                 <TextBox x:Name="TxtDescricao"  
-                         Width="600"
+                         Width="600" 
                          AcceptsReturn="True" 
                          TextWrapping="Wrap"  
                          MaxLines="1" MaxLength="150"
                          VerticalAlignment="Stretch"
                          materialDesign:HintAssist.Hint="Descrição"  
                          Text="{Binding ObjectoEditar.Descricao, 
-                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
-                    ValidatesOnDataErrors=True,
+                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                     Converter={utils:CapitalizeWordsConverter}}">
                 </TextBox>
             </StackPanel>

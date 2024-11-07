@@ -23,6 +23,8 @@ namespace GestãoEmpresarial
         internal void Navigate(TreeviewMenu menu)
         {
             BusyIndicator.IsBusy = true;
+
+            //await Task.Delay(System.TimeSpan.FromSeconds(2)); // para utilizar este codigo que tem o tempo definido em 2 segundo tenho que add o async
             if (menu.GetView != null)
             {
                 UserControl view = menu.GetView();

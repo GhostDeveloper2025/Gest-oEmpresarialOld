@@ -11,12 +11,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="1000" d:DesignWidth="1150">
     <UserControl.Resources>
-        <!--<providers:ClienteProvider x:Key="ClienteProvider" />
-        <providers:ProdutoProvider x:Key="ProdutoProvider" />
-        <providers:ColaboradorProvider x:Key="ColaboradorProvider" />
-        <providers:ColaboradorResponsavelProvider x:Key="ColaboradorResponsavelProvider" />
-        <providers:ColaboradorTecnicoProvider x:Key="ColaboradorTecnicoProvider" />-->
-
         <Style TargetType="ComboBox" BasedOn="{StaticResource FormComboBox}"/>
         <!--Este recurso é utilizado para converter o texto em 
         cada palavra para que a primeira letra de cada palavra seja maiúscula.-->
@@ -45,8 +39,8 @@
             <wpfcc:AutoCompleteTextBox 
                     Width="250"
                     materialDesign:HintAssist.Hint="Cliente" 
-                    DisplayMember="Nome"  IsEnabled="{Binding NovaOrdemServico}" 
-                    Provider="{providers:ClienteProvider}" SelectedItem="{Binding ObjectoEditar.Cliente, 
+                    DisplayMember="Nome"  IsEnabled="{Binding NovaOrdemServico}"
+                    Provider="{providers:ClienteProvider}" SelectedItem="{Binding ObjectoEditar.Cliente,
                     Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}">
                 <wpfcc:AutoCompleteTextBox.ItemTemplate>
                     <DataTemplate>
@@ -58,11 +52,11 @@
             </wpfcc:AutoCompleteTextBox>
             <wpfcc:AutoCompleteTextBox  
                     Width="250" 
-                    materialDesign:HintAssist.Hint="Tecnico" 
+                    materialDesign:HintAssist.Hint="Responsavel" 
                     DisplayMember="Nome"
                     IsEnabled="{Binding PodeEditar}" 
-                    Provider="{providers:ColaboradorTecnicoProvider}" 
-                    SelectedItem="{Binding ObjectoEditar.Tecnico,  
+                    Provider="{providers:ColaboradorResponsavelProvider}" 
+                    SelectedItem="{Binding ObjectoEditar.Responsavel,
                     Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <wpfcc:AutoCompleteTextBox.ItemTemplate>
                     <DataTemplate>
@@ -77,7 +71,7 @@
                     materialDesign:HintAssist.Hint="Tecnico"  
                     DisplayMember="Nome"  IsEnabled="{Binding PodeEditar}"  
                     Provider="{providers:ColaboradorTecnicoProvider}"  
-                    SelectedItem="{Binding ObjectoEditar.Tecnico, 
+                    SelectedItem="{Binding ObjectoEditar.Tecnico,
                     Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <wpfcc:AutoCompleteTextBox.ItemTemplate>
                     <DataTemplate>

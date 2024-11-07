@@ -9,29 +9,68 @@ using System.Threading.Tasks;
 
 namespace GestãoEmpresarial.ViewModels
 {
-    internal class PesquisaOrdemServicoViewModel : PesquisaViewModel<OrdemServicoModel, DataGridOrdemServicoModel>
+    internal class PesquisaOrdemServicoViewModel : PesquisaViewModel<OrdemServicoModel, DataGridOrdemServicoModel, ROsDAL>
     {
         public Dictionary<int, string> StatusList { get; internal set; }
 
-        public override int Id => ObjectoSelecionado.IdOs;
-
+        public override int Id => ObjectoSelecionado?.IdOs ?? 0; // Verifica se ObjectoSelecionado não é nulo
         public override string NomeEditarView => nameof(CadastroOrdemServicoViewModel);
 
-        public PesquisaOrdemServicoViewModel(ROsDAL Repositorio, RCodigosDAL RepositorioCodigos) : base(Repositorio)
+        public string PesquisaNomeCliente { get; set; }
+        public string PesquisaNumeroOS { get; set; }
+        public string PesquisaStatus { get; set; }
+
+        private readonly RCodigosDAL _repositorioCodigos;
+
+        public PesquisaOrdemServicoViewModel(ROsDAL repositorio, RCodigosDAL repositorioCodigos)
+            : base(repositorio)
         {
+            _repositorioCodigos = repositorioCodigos;
             StatusList = new Dictionary<int, string>
             {
                 { 0, null }
             };
-            foreach (var codigo in RepositorioCodigos.GetListaStatus())
+
+            // Carregar os status de forma assíncrona
+            CarregarStatusAsync();
+        }
+
+        private async void CarregarStatusAsync()
+        {
+            var codigos = await _repositorioCodigos.GetListaStatusAsync();
+            foreach (var codigo in codigos)
             {
                 StatusList.Add(codigo.Id, codigo.Nome);
             }
+
+            // Notificar que a lista de status foi atualizada
+            RaisePropertyChanged(nameof(StatusList));
         }
 
         public override DataGridOrdemServicoModel GetDataGridModel(OrdemServicoModel item)
         {
             return new DataGridOrdemServicoModel(item, StatusList);
         }
+
+        public override List<OrdemServicoModel> GetLista()
+        {
+            int? idStatus = null;
+            if (int.TryParse(PesquisaStatus, out int idStatusAux))
+                idStatus = idStatusAux;
+
+            int? idOs = null;
+            if (int.TryParse(PesquisaNumeroOS, out int idOsAux))
+                idOs = idOsAux;
+
+            return Repositorio.ListAsync(PesquisaNomeCliente, idStatus, null, idOs).Result;
+        }
+
+        public override bool PodeExecutarPesquisar(object parameter)
+        {
+            return string.IsNullOrWhiteSpace(PesquisaNomeCliente) == false
+                 || string.IsNullOrWhiteSpace(PesquisaNumeroOS) == false
+                 || string.IsNullOrWhiteSpace(PesquisaStatus) == false;
+        }
     }
 }
+

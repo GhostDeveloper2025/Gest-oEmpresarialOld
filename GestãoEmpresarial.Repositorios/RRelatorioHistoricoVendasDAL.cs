@@ -16,7 +16,7 @@ namespace GestãoEmpresarial.Repositorios
         {
         }
 
-        public List<RelatorioHistoricoVendasModel> ObterHistoricoVendas(int? clienteId, int? idProduto, DateTime dataInicial, DateTime dataFinal)
+        public async Task<List<RelatorioHistoricoVendasModel>> ObterHistoricoVendasAsync(int? clienteId, int? idProduto, DateTime dataInicial, DateTime dataFinal)
         {
             List<MySqlParameter> parametros = new List<MySqlParameter>();
 
@@ -30,7 +30,7 @@ namespace GestãoEmpresarial.Repositorios
 
             using (MySqlDataReader reader = ExecuteReader("usp_relatorio_historico_venda", parametros.ToArray(), true))
             {
-                while (reader.Read())
+                while (await reader.ReadAsync()) // Leitura assíncrona
                 {
                     list.Add(new RelatorioHistoricoVendasModel()
                     {
@@ -57,8 +57,15 @@ namespace GestãoEmpresarial.Repositorios
 
             return list;
         }
+
+        // Método sincrono para compatibilidade
+        public List<RelatorioHistoricoVendasModel> ObterHistoricoVendas(int? clienteId, int? idProduto, DateTime dataInicial, DateTime dataFinal)
+        {
+            return ObterHistoricoVendasAsync(clienteId, idProduto, dataInicial, dataFinal).GetAwaiter().GetResult();
+        }
     }
 }
+
 
 
 

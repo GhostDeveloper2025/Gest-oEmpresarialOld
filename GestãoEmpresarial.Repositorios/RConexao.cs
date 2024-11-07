@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using MySql.Data.MySqlClient;
+using static Mysqlx.Expect.Open.Types;
 
 namespace GestãoEmpresarial.Repositorios
 {
@@ -65,9 +66,18 @@ namespace GestãoEmpresarial.Repositorios
             }
         }
 
-        public void AddParameter(List<MySqlParameter> parameters, string parameterName, object value)
+        internal void AddParameter(List<MySqlParameter> parameters, string parameterName, object value)
         {
             parameters.Add(new MySqlParameter { ParameterName = parameterName, Value = value ?? DBNull.Value });
+        }
+
+        public void AddParameterCondition(List<MySqlParameter> parametros, List<string> condicoes, string nomeColuna, object valorPesquisa)
+        {
+            if (valorPesquisa != null)
+            {
+                AddParameter(parametros, "@" + nomeColuna, valorPesquisa);
+                condicoes.Add(nomeColuna + " = @" + nomeColuna);
+            }
         }
     }
 }

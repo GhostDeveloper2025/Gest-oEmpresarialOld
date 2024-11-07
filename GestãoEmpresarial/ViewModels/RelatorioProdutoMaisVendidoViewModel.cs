@@ -1,6 +1,5 @@
 ﻿using GestãoEmpresarial.Models;
 using GestãoEmpresarial.Repositorios;
-using GestãoEmpresarial.Repositorios.GestãoEmpresarial.Repositorios;
 using MicroMvvm;
 using System;
 using System.Collections.Generic;

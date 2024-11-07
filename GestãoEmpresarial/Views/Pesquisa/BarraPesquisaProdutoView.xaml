@@ -1,0 +1,19 @@
+﻿<WrapPanel x:Class="GestãoEmpresarial.Views.Pesquisa.BarraPesquisaProdutoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GestãoEmpresarial.Views.Pesquisa"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <TextBox materialDesign:HintAssist.Hint="Nome" Text="{Binding PesquisaNome, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+    <TextBox materialDesign:HintAssist.Hint="Codigo Produto" Text="{Binding PesquisaCodigo, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+    <TextBox materialDesign:HintAssist.Hint="Localização" Text="{Binding PesquisaLocalizacao, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+    <ComboBox Width="250"
+              materialDesign:HintAssist.Hint="Marca" 
+              SelectedValuePath="Key" DisplayMemberPath="Value" 
+              materialDesign:ColorZoneAssist.Mode="SecondaryLight"
+              ItemsSource="{Binding MarcasList}" 
+              SelectedValue="{Binding PesquisaMarca, UpdateSourceTrigger=PropertyChanged}" />
+</WrapPanel>

@@ -16,10 +16,10 @@ namespace GestãoEmpresarial.Views.Pesquisa
     {
         private readonly IPesquisaViewModel _viewModel;
 
-        public PesquisaView(IPesquisaViewModel viewModel)
-            : this(viewModel, new PesquisaBarraView())
-        {
-        }
+        //public PesquisaView(IPesquisaViewModel viewModel)
+        //    : this(viewModel, new PesquisaBarraView())
+        //{
+        //}
 
         public PesquisaView(IPesquisaViewModel viewModel, UIElement barraPesquisa)
         {

@@ -28,34 +28,37 @@ namespace GestãoEmpresarial.ViewModels
         public CadastroVendaViewModel(int? id, VendaValidar validar, IDAL<VendaModel> repositorio, RCodigosDAL codigosDAL, RItensVendaDAL itensVendaDAL, ItemVendaValidar itemVendaValidar)
             : base(id, validar, repositorio)
         {
-            AdicionarItemVendaCommand = new RelayCommandWithParameter(ExecutarGuardarItemNaLista, CanExecuteAdicionarItem);
-            ApagarItemVendaCommand = new RelayCommandWithParameter(ExecutarApagarItemNaLista, CanExecuteApagarItem);
+            AdicionarItemVendaCommand = new RelayCommandWithParameterAsync(ExecutarGuardarItemNaListaAsync, CanExecuteAdicionarItem);
+            ApagarItemVendaCommand = new RelayCommandWithParameterAsync(ExecutarApagarItemNaListaAsync, CanExecuteApagarItem);
             ProdutoProviderItem = new ProdutoProvider();
 
             _itemVendaDal = itensVendaDAL;
             _codigosDal = codigosDAL;
             _itemValidador = itemVendaValidar;
 
-            //if (id.HasValue)
-            //{
-            //    itensVendaDAL.GetByIdVenda(id.Value);
-            //}
-            TiposPagamento = codigosDAL.GetListaTiposPagamentos().ToDictionary(b => b.Id, a => a.Nome);
+
+            // Chamada assíncrona ao inicializar
+            InitializeAsync(id).ConfigureAwait(false);
+
+        }
+
+        private async Task InitializeAsync(int? id)
+        {
+            TiposPagamento = (await _codigosDal.GetListaTiposPagamentosAsync()).ToDictionary(b => b.Id, a => a.Nome);
         }
 
         public bool CanExecuteApagarItem(object parameter)
         {
             return true;
-            //return _codigosDal.PodeApagarItem(ObjectoEditar.Status);
         }
 
-        public void ExecutarApagarItemNaLista(object tag)
+        public async Task ExecutarApagarItemNaListaAsync(object tag)
         {
             var item = (ItemVendaModelObservavel)tag;
             if (item.IdVenda > 0)
             {
                 var objBD = ItemVendaModelObservavel.MapearItemVendaModel(item);
-                _itemVendaDal.Delete(objBD);
+                await _itemVendaDal.DeleteAsync(objBD);  // Alterado para assíncrono
                 ProdutoProviderItem.ListaExclusoes.Remove(item.Produto.IdProduto);
             }
             ObjectoEditar.RemoverDaLista(item);
@@ -68,29 +71,31 @@ namespace GestãoEmpresarial.ViewModels
             return result.IsValid;
         }
 
-        public void ExecutarGuardarItemNaLista(object tag)
+        public async Task ExecutarGuardarItemNaListaAsync(object tag)
         {
-
             ProdutoProviderItem.ListaExclusoes.Add(ObjectoEditar.ItemVendaAdicionarPlanilha.Produto.IdProduto);
             ObjectoEditar.AdicionarNaLista();
+
+            // Adicione qualquer operação assíncrona aqui ou use Task.CompletedTask para evitar o aviso.
+            await Task.CompletedTask;
         }
 
         public ProdutoProvider ProdutoProviderItem { get; set; }
 
-        public override int InserirObjectoBD()
+        public override async Task<int> InserirObjectoBDAsync()
         {
-            int idOs = base.InserirObjectoBD();
-            AtualizarItensOs(idOs);
-            return idOs;
+            int idVenda = await base.InserirObjectoBDAsync();
+            await AtualizarItensVendaAsync(idVenda);
+            return idVenda;
         }
 
-        public override void AtualizarObjectoBD()
+        public override async Task AtualizarObjectoBDAsync()
         {
-            AtualizarItensOs(ObjectoEditar.IdVenda);
-            base.AtualizarObjectoBD();
+            await AtualizarItensVendaAsync(ObjectoEditar.IdVenda);
+            await base.AtualizarObjectoBDAsync();
         }
 
-        public override void ExecutarSalvar(object parameter)
+        public override async Task ExecutarSalvar(object parameter)
         {
             if (ObjectoEditar.Situacao != true)
             {
@@ -100,10 +105,10 @@ namespace GestãoEmpresarial.ViewModels
                     ObjectoEditar.Situacao = true;
                 }
             }
-            base.ExecutarSalvar(parameter); // salvar ou atualizar
+            await base.ExecutarSalvar(parameter); // Salvar ou atualizar
         }
 
-        private void AtualizarItensOs(int id)
+        private async Task AtualizarItensVendaAsync(int id)
         {
             foreach (var item in ObjectoEditar.ListItensVenda)
             {
@@ -111,13 +116,14 @@ namespace GestãoEmpresarial.ViewModels
                 objBD.IdVenda = id;
                 if (objBD.IdItensVenda > 0)
                 {
-                    _itemVendaDal.Update(objBD);
+                    await _itemVendaDal.UpdateAsync(objBD);  // Alterado para assíncrono
                 }
                 else
                 {
-                    _itemVendaDal.Insert(objBD);
+                    await _itemVendaDal.InsertAsync(objBD);  // Alterado para assíncrono
                 }
             }
         }
     }
 }
+

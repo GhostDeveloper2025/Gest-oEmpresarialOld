@@ -3,12 +3,12 @@
                     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                     >
     <!--#region Antigo...-->
-    <!--<Style x:Key="StyleTB" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+    <Style x:Key="StyleTB" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
         <Setter Property="FontSize" Value="15"></Setter>
         <Setter Property="Padding" Value="5"></Setter>
-        --><!--<Setter Property="FontWeight" Value="Medium"></Setter>-->
-        <!--<Setter Property="FontFamily" Value="{DynamicResource CustomFont4}" />-->
-        <!--<Setter Property="CharacterCasing" Value="Upper"></Setter>--><!--
+        <!--<Setter Property="FontWeight" Value="Medium"></Setter>-->
+        <Setter Property="FontFamily" Value="{DynamicResource CustomFont4}" />
+        <!--<Setter Property="CharacterCasing" Value="Upper"></Setter>-->
         <Setter Property="Background" Value="{StaticResource color45}"/>
         <Setter Property="Foreground" Value="{StaticResource FontsColor1}"/>
         <Setter Property="BorderBrush" Value="{StaticResource color49}"/>
@@ -16,9 +16,9 @@
         <Setter Property="Margin" Value="5"></Setter>
     </Style>
     <Style TargetType="TextBox" BasedOn="{StaticResource StyleTB}">
-    </Style>-->
+    </Style>
     <!--#endregion-->
-    <Style x:Key="StyleTB" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+    <!--<Style x:Key="StyleTB" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="Padding" Value="5"/>
         <Setter Property="Background" Value="{StaticResource color45}"/>
@@ -34,7 +34,7 @@
                              Foreground="{StaticResource color4}"
                                 FontSize="8pt" 
                                 FontFamily="{DynamicResource CustomFont4 }"
-                                Text="Obrigatório"/>
+                                Text="Obrigatório"/> --><!--Aqui é onde mostro a menssagem--><!--
                         <AdornedElementPlaceholder Name="adorner"/>
                     </DockPanel>
                 </ControlTemplate>
@@ -42,5 +42,5 @@
         </Setter>
     </Style>
     <Style TargetType="TextBox" BasedOn="{StaticResource StyleTB}">
-    </Style>
+    </Style>-->
 </ResourceDictionary>

@@ -12,9 +12,12 @@ namespace GestãoEmpresarial.Validations
     {
         public CategoriaValidar()
         {
-            RuleGenericaVazioFor(x => x.Nome);
-            RuleGenericaVazioFor(x => x.Descricao);
-            //RuleFor(x => x.Nome).NotEmpty().WithMessage("O campo `Nome` é Obrigatório. Favor Preencher!");
+            //RuleGenericaVazioFor(x => x.Nome); //Para usar este tenho que abilitar a BaseValidar
+            //RuleGenericaVazioFor(x => x.Descricao);
+
+            RuleFor(x => x.Nome).NotEmpty();
+            RuleFor(x => x.Descricao).NotEmpty();
+
             //RuleFor(x => x.Descricao).NotEmpty().WithMessage("O Campo Descrição Esta Em Branco");
         }
         

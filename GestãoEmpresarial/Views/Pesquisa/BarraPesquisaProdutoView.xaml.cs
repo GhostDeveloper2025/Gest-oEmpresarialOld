@@ -1,5 +1,4 @@
-﻿using MaterialDesignThemes.Wpf;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,20 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GestãoEmpresarial.CustomControls
+namespace GestãoEmpresarial.Views.Pesquisa
 {
     /// <summary>
-    /// Interação lógica para BotaoIcone.xam
+    /// Interação lógica para BarraPesquisaProdutoView.xam
     /// </summary>
-    public partial class BotaoIcone : StackPanel
+    public partial class BarraPesquisaProdutoView : WrapPanel
     {
-        public BotaoIcone()
+        public BarraPesquisaProdutoView()
         {
             InitializeComponent();
-            DataContext = this;
         }
-
-        public PackIconKind Icone { get; set; }
-        public string Texto { get; set; }
     }
 }

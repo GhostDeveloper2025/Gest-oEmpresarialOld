@@ -30,8 +30,8 @@ namespace GestãoEmpresarial.ViewModels
                         { "Colaborador", PackIconKind.PersonChild, DI.GetCadastroView(nameof(CadastroColaboradorViewModel)) },
                         { "Categoria", PackIconKind.TagMultiple, DI.GetCadastroView(nameof(CadastroCategoriaViewModel)) },
                         { "Produto", PackIconKind.PackageCheck, DI.GetCadastroView(nameof(CadastroProdutoViewModel)) },
-                        { "OS", PackIconKind.HammerScrewdriver, DI.GetCadastroView(nameof(CadastroOrdemServicoViewModel)) },
-                        { "Venda", PackIconKind.CartArrowRight, DI.GetCadastroView(nameof(CadastroVendaViewModel)) },
+                        { "OS", PackIconKind.HammerScrewdriver, DI.GetCadastroGlobalView(nameof(CadastroOrdemServicoViewModel)) },
+                        { "Venda", PackIconKind.CartArrowRight, DI.GetCadastroGlobalView(nameof(CadastroVendaViewModel)) },
                     }
                 },
                 new TreeviewMenu

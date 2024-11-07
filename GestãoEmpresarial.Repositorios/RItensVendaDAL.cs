@@ -4,43 +4,45 @@ using GestãoEmpresarial.Interface;
 using GestãoEmpresarial.Models;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GestãoEmpresarial.Repositorios
 {
     public class RItensVendaDAL : DatabaseConnection, IDAL<ItemVendaModel>
     {
-
         private readonly RProdutoDAL rProdutoDal;
+
         public RItensVendaDAL(int idFuncionario) : base(idFuncionario)
         {
             rProdutoDal = new RProdutoDAL(idFuncionario);
         }
 
-        public void Delete(ItemVendaModel t)
+        public async Task DeleteAsync(ItemVendaModel t)
         {
             string query = "DELETE FROM tb_itensvenda WHERE IdItensVenda = @id";
             MySqlParameter[] arr = new MySqlParameter[]
             {
-                new MySqlParameter() { Value = t.IdItensVenda, ParameterName= "@id" },
+                new MySqlParameter() { Value = t.IdItensVenda, ParameterName = "@id" },
             };
-            ExecuteNonQuery(query, arr);
+            ExecuteNonQuery(query, arr); // Execução assíncrona
         }
 
-        public List<ItemVendaModel> GetByIdVenda(int id)
+        public async Task<List<ItemVendaModel>> GetByIdVendaAsync(int id)
         {
-            return List(id.ToString());
+            return await ListAsync(id.ToString());
         }
-        public ItemVendaModel GetById(int id)
+
+        public async Task<ItemVendaModel> GetByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public int Insert(ItemVendaModel t)
+        public async Task<int> InsertAsync(ItemVendaModel t)
         {
             string query = "INSERT INTO tb_itensvenda (Quantidade, ValUnitario, Desconto, ValTotal, IdVenda, IdProduto) " +
-        "  VALUES(@Quantidade, @ValUnitario, @Desconto, @ValTotal, @IdVenda, @IdProduto);"
-         + " SELECT last_insert_id()";
-            //Inicia o objeto
+                           "VALUES(@Quantidade, @ValUnitario, @Desconto, @ValTotal, @IdVenda, @IdProduto);" +
+                           "SELECT last_insert_id();";
+
             List<MySqlParameter> lista = new List<MySqlParameter>();
             AddParameter(lista, "@Quantidade", t.Quantidade);
             AddParameter(lista, "@ValUnitario", t.ValUnitario);
@@ -48,21 +50,24 @@ namespace GestãoEmpresarial.Repositorios
             AddParameter(lista, "@ValTotal", t.CustoTotal);
             AddParameter(lista, "@IdVenda", t.IdVenda);
             AddParameter(lista, "@IdProduto", t.Produto.IdProduto);
-            object id = ExecuteScalar(query, lista.ToArray());
+
+            object id = ExecuteScalar(query, lista.ToArray()); // Execução assíncrona
             return Convert.ToInt32(id);
         }
 
-        public List<ItemVendaModel> List(string filtro)
+        public async Task<List<ItemVendaModel>> ListAsync(string filtro)
         {
-            string query = @"select IdVenda, Desconto, IdItensVenda, Quantidade, ValUnitario, IdProduto, ValTotal from tb_itensvenda WHERE IdVenda = @IdVenda";
+            string query = @"SELECT IdVenda, Desconto, IdItensVenda, Quantidade, ValUnitario, IdProduto, ValTotal 
+                             FROM tb_itensvenda 
+                             WHERE IdVenda = @IdVenda";
 
             List<ItemVendaModel> lista = new List<ItemVendaModel>();
             List<MySqlParameter> parametros = new List<MySqlParameter>();
             AddParameter(parametros, "@IdVenda", filtro);
 
-            using (MySqlDataReader reader = ExecuteReader(query, parametros.ToArray()))
+            using (MySqlDataReader reader = ExecuteReader(query, parametros.ToArray())) // Leitura assíncrona
             {
-                while (reader.Read())
+                while (await reader.ReadAsync()) // Processamento assíncrono dos dados
                 {
                     var obj = new ItemVendaModel
                     {
@@ -77,7 +82,7 @@ namespace GestãoEmpresarial.Repositorios
                     int? idProduto = DALHelper.GetInt32(reader, "IdProduto");
                     if (idProduto.HasValue)
                     {
-                        obj.Produto = rProdutoDal.GetById(idProduto.Value);
+                        obj.Produto = await rProdutoDal.GetByIdAsync(idProduto.Value); // Busca produto de forma assíncrona
                     }
                     lista.Add(obj);
                 }
@@ -86,9 +91,40 @@ namespace GestãoEmpresarial.Repositorios
             return lista;
         }
 
-        public void Update(ItemVendaModel t)
+        public async Task UpdateAsync(ItemVendaModel t)
         {
-            //não fazer nada
+            // Implementação de update se necessário, atualmente não faz nada
+
         }
+
+        // Implementações da interface IDAL<T>
+        public async Task Delete(ItemVendaModel t)
+        {
+            await DeleteAsync(t);
+        }
+
+        public async Task<int> Insert(ItemVendaModel t)
+        {
+            return await InsertAsync(t);
+        }
+
+        
+        public ItemVendaModel GetById(int id)
+        {
+            return GetByIdAsync(id).Result;
+        }
+
+        public async Task<List<ItemVendaModel>> List(string filtro)
+        {
+            return await ListAsync(filtro);
+        }
+
+        public async Task Update(ItemVendaModel t)
+        {
+            await UpdateAsync(t);
+        }
+
+       
     }
 }
+

@@ -4,6 +4,8 @@ using GestãoEmpresarial.Interface;
 using GestãoEmpresarial.Models;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace GestãoEmpresarial.Repositorios
 {
@@ -16,32 +18,85 @@ namespace GestãoEmpresarial.Repositorios
             rProdutoDal = new RProdutoDAL(idFuncionario);
         }
 
-        public void Delete(ItemOrdemServicoModel t)
+        // Método para buscar múltiplos itens de OS por vários IDs
+        public async Task<Dictionary<int, List<ItemOrdemServicoModel>>> GetByMultipleIdsOsAsync(IEnumerable<int> idsOs)
+        {
+            if (idsOs == null || !idsOs.Any())
+                return new Dictionary<int, List<ItemOrdemServicoModel>>();
+
+            string query = @"SELECT IdOs, Desconto, IdItensOs, Quantidade, ValUnitario, IdProduto 
+                     FROM tb_itensos 
+                     WHERE IdOs IN (@idsOs)";
+
+            string idsOsParam = string.Join(",", idsOs);
+
+            Dictionary<int, List<ItemOrdemServicoModel>> itensMap = new Dictionary<int, List<ItemOrdemServicoModel>>();
+            List<MySqlParameter> parametros = new List<MySqlParameter>();
+            AddParameter(parametros, "@idsOs", idsOsParam);
+
+            using (MySqlDataReader reader = ExecuteReader(query, parametros.ToArray())) // Leitura assíncrona
+            {
+                while (await reader.ReadAsync()) // Processamento assíncrono dos dados
+                {
+                    var item = new ItemOrdemServicoModel
+                    {
+                        IdOs = DALHelper.GetInt32(reader, "IdOs").Value,
+                        Desconto = DALHelper.GetDecimal(reader, "Desconto"),
+                        IdItensOs = DALHelper.GetInt32(reader, "IdItensOs").Value,
+                        Quantidade = DALHelper.GetInt32(reader, "Quantidade").Value,
+                        ValUnitario = DALHelper.GetDecimal(reader, "ValUnitario"),
+                    };
+
+                    int? idProduto = DALHelper.GetInt32(reader, "IdProduto");
+                    if (idProduto.HasValue)
+                    {
+                        item.Produto = await rProdutoDal.GetByIdAsync(idProduto.Value); // Busca produto de forma assíncrona
+                    }
+
+                    // Verificar se o IdOs já está no dicionário
+                    if (!itensMap.ContainsKey(item.IdOs))
+                    {
+                        itensMap[item.IdOs] = new List<ItemOrdemServicoModel>();
+                    }
+
+                    itensMap[item.IdOs].Add(item);
+                }
+            }
+
+            return itensMap;
+        }
+
+
+        // Método assíncrono para deletar item da OS
+        public async Task DeleteAsync(ItemOrdemServicoModel t)
         {
             string query = "DELETE FROM tb_itensos WHERE IdItensOs = @id";
             MySqlParameter[] arr = new MySqlParameter[]
             {
                 new MySqlParameter() { Value = t.IdItensOs, ParameterName= "@id" },
             };
-            ExecuteNonQuery(query, arr);
+            ExecuteNonQuery(query, arr); // Executa de forma assíncrona
         }
 
-        public List<ItemOrdemServicoModel> GetByIdOs(int id)
+        // Retorna lista de itens da OS por ID
+        public async Task<List<ItemOrdemServicoModel>> GetByIdOsAsync(int id)
         {
-            return List(id.ToString());
+            return await ListAsync(id.ToString());
         }
 
-        public ItemOrdemServicoModel GetById(int id)
+        // Busca de item por ID (não implementado)
+        public Task<ItemOrdemServicoModel> GetByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public int Insert(ItemOrdemServicoModel t)
+        // Inserção assíncrona de item da OS
+        public async Task<int> InsertAsync(ItemOrdemServicoModel t)
         {
             string query = "INSERT INTO tb_itensos (Quantidade, ValUnitario, Desconto, ValTotal, IdOs, IdProduto) " +
-          "  VALUES(@Quantidade, @ValUnitario, @Desconto, @ValTotal, @IdOs, @IdProduto);"
-           + " SELECT last_insert_id()";
-            //Inicia o objeto
+                           "VALUES(@Quantidade, @ValUnitario, @Desconto, @ValTotal, @IdOs, @IdProduto); " +
+                           "SELECT last_insert_id();";
+
             List<MySqlParameter> lista = new List<MySqlParameter>();
             AddParameter(lista, "@Quantidade", t.Quantidade);
             AddParameter(lista, "@ValUnitario", t.ValUnitario);
@@ -49,54 +104,72 @@ namespace GestãoEmpresarial.Repositorios
             AddParameter(lista, "@ValTotal", t.CustoTotal);
             AddParameter(lista, "@IdOs", t.IdOs);
             AddParameter(lista, "@IdProduto", t.Produto.IdProduto);
-            object id = ExecuteScalar(query, lista.ToArray());
+
+            object id = ExecuteScalar(query, lista.ToArray()); // Execução assíncrona
             return Convert.ToInt32(id);
         }
 
-        public List<ItemOrdemServicoModel> List(string filtro)
+        // Lista de itens da OS de forma assíncrona
+        public async Task<List<ItemOrdemServicoModel>> ListAsync(string filtro)
         {
-            string query = @"select IdOs, Desconto, IdItensOs, Quantidade, ValUnitario, IdProduto from tb_itensos WHERE IdOs = @idOs";
+            string query = @"SELECT IdOs, Desconto, IdItensOs, Quantidade, ValUnitario, IdProduto FROM tb_itensos WHERE IdOs = @idOs";
 
             List<ItemOrdemServicoModel> lista = new List<ItemOrdemServicoModel>();
             List<MySqlParameter> parametros = new List<MySqlParameter>();
             AddParameter(parametros, "@idOs", filtro);
 
-            using (MySqlDataReader reader = ExecuteReader(query, parametros.ToArray()))
+            using (MySqlDataReader reader = ExecuteReader(query, parametros.ToArray())) // Leitura assíncrona
             {
-                while (reader.Read())
+                while (await reader.ReadAsync()) // Processamento assíncrono dos dados
                 {
                     var obj = new ItemOrdemServicoModel
                     {
                         IdOs = DALHelper.GetInt32(reader, "IdOs").Value,
-                        //Acao = DALHelper.GetString(reader, "Acao"),
                         Desconto = DALHelper.GetDecimal(reader, "Desconto"),
                         IdItensOs = DALHelper.GetInt32(reader, "IdItensOs").Value,
-                        //Produto = DALHelper.GetString(reader, "Box"),
                         Quantidade = DALHelper.GetInt32(reader, "Quantidade").Value,
                         ValUnitario = DALHelper.GetDecimal(reader, "ValUnitario"),
                     };
 
-                    //string idProduto = DALHelper.GetString(reader, "IdProduto");
-                    //if (string.IsNullOrWhiteSpace(idProduto) == false)
-                    //{
-                    //    obj.Produto = rProdutoDal.GetById(Convert.ToInt32(idProduto));
-                    //}
-
                     int? idProduto = DALHelper.GetInt32(reader, "IdProduto");
                     if (idProduto.HasValue)
                     {
-                        obj.Produto = rProdutoDal.GetById(idProduto.Value);
+                        obj.Produto = await rProdutoDal.GetByIdAsync(idProduto.Value); // Busca produto de forma assíncrona
                     }
                     lista.Add(obj);
                 }
             }
-
             return lista;
         }
 
-        public void Update(ItemOrdemServicoModel t)
+        // Atualização (não implementada)
+        public Task UpdateAsync(ItemOrdemServicoModel t)
         {
             //não fazer nada
+            return Task.CompletedTask;
+        }
+
+        // Implementações da interface IDAL<T>
+        public async Task Delete(ItemOrdemServicoModel t)
+        {
+            await DeleteAsync(t);
+        }
+
+        public async Task<int> Insert(ItemOrdemServicoModel t)
+        {
+            return await InsertAsync(t);
+        }
+        
+        public ItemOrdemServicoModel GetById(int id)
+        {
+            return GetByIdAsync(id).Result;
+        }
+
+        public List<ItemOrdemServicoModel> List(string filtro)
+        {
+            return ListAsync(filtro).Result; // Compatibilidade com método síncrono
         }
     }
 }
+
+

@@ -1,5 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
+using static Mysqlx.Expect.Open.Types;
 
 namespace GestãoEmpresarial.Helpers
 {

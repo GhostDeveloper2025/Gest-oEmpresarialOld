@@ -12,50 +12,79 @@ namespace GestãoEmpresarial.ViewModels
 {
     public class RelatorioReciboVendaViewModel : ObservableObject
     {
+        private readonly RRelatorioReciboDAL _relatorioReciboDAL;
+        private readonly RClienteDAL _rClienteDAL;
+
         public RelatorioReciboVendaViewModel(RRelatorioReciboDAL relatorioReciboDAL, RClienteDAL rClienteDAL, int id)
         {
-            Relatorio = relatorioReciboDAL.ObterReciboVenda(id);
-            Cliente = rClienteDAL.GetById(Relatorio.VendaModel.IdCliente);
+            _relatorioReciboDAL = relatorioReciboDAL;
+            _rClienteDAL = rClienteDAL;
+
+            // Carregar os dados de forma assíncrona
+            CarregarDadosAsync(id);
         }
 
-        public ClienteModel Cliente { get; set; }
+        private async void CarregarDadosAsync(int id)
+        {
+            Relatorio = await _relatorioReciboDAL.ObterReciboVendaAsync(id);
+            Cliente = await _rClienteDAL.GetByIdAsync(Relatorio.VendaModel.IdCliente);
 
-        public RelatorioReciboVendaModel Relatorio { get; set; }
+            RaisePropertyChanged(nameof(Relatorio));
+            RaisePropertyChanged(nameof(Cliente));
+            RaisePropertyChanged(nameof(ListItemsObservaveis));
+            RaisePropertyChanged(nameof(TotalProdutos));
+            RaisePropertyChanged(nameof(SubTotalProdutos));
+            RaisePropertyChanged(nameof(TotalDescontoProdutos));
+            RaisePropertyChanged(nameof(TotalVendas));
+            RaisePropertyChanged(nameof(ValorFretes));
+            RaisePropertyChanged(nameof(NomeSituacao));
+        }
+
+        public ClienteModel Cliente { get; private set; }
+
+        public RelatorioReciboVendaModel Relatorio { get; private set; }
 
         public ObservableCollection<ItemVendaModelObservavel> ListItemsObservaveis
         {
             get
             {
-                var listDeObservaveis = Relatorio.VendaModel.ListItensVenda.Select(a => ItemVendaModelObservavel.MapearItemVendaModel(a));
-                return new ObservableCollection<ItemVendaModelObservavel>(listDeObservaveis);
+                return new ObservableCollection<ItemVendaModelObservavel>(
+                    Relatorio?.VendaModel?.ListItensVenda?.Select(a => ItemVendaModelObservavel.MapearItemVendaModel(a)) ?? Enumerable.Empty<ItemVendaModelObservavel>()
+                );
             }
         }
 
-        private decimal TotalProduto { get { return ListItemsObservaveis.Sum(x => x.TotalItem); } } //total valor com desconto
+        private decimal TotalProduto => ListItemsObservaveis.Sum(x => x.TotalItem);
 
-        public decimal SubTotalProduto { get { return Relatorio.VendaModel.ListItensVenda.Sum(x => x.CustoTotal); } }
+        private decimal SubTotalProduto => Relatorio?.VendaModel?.ListItensVenda?.Sum(x => x.CustoTotal) ?? 0;
 
-        public decimal TotalDescontoProduto { get { return Math.Round(Relatorio.VendaModel.ListItensVenda.Sum(x => x.Desconto), 2); } }
+        private decimal TotalDescontoProduto => Math.Round(Relatorio?.VendaModel?.ListItensVenda?.Sum(x => x.Desconto) ?? 0, 2);
 
-        public decimal TotalVenda { get { return TotalProduto + Relatorio.VendaModel.ValorFrete; } }
-        public string TotalProdutos { get { return "Total Produto: " + TotalProduto.ToString("C"); } }
-        public string SubTotalProdutos { get { return "Subtotal  Produto: " + SubTotalProduto.ToString("C"); } }
-        public string TotalVendas { get { return "Total TotalVenda: " + TotalVenda.ToString("C"); } }
-        public string TotalDescontoProdutos { get { return "Total Desconto Produto: " + (TotalDescontoProduto / 100).ToString("P2"); } }
+        private decimal TotalVenda => TotalProduto + (Relatorio?.VendaModel?.ValorFrete ?? 0);
 
-        public string ValorFretes
+        public string TotalProdutos => FormatarValor("Total Produto", TotalProduto);
+
+        public string SubTotalProdutos => FormatarValor("Subtotal Produto", SubTotalProduto);
+
+        public string TotalVendas => FormatarValor("Total Venda", TotalVenda);
+
+        public string TotalDescontoProdutos => FormatarValorPercentual("Total Desconto Produto", TotalDescontoProduto);
+
+        public string ValorFretes => FormatarValor("Frete", Relatorio?.VendaModel?.ValorFrete ?? 0);
+
+        public string NomeSituacao => Relatorio?.VendaModel?.Situacao == true ? "FINALIZADO" : "VENDA SALVA";
+
+        // Função de formatação de valores monetários
+        private string FormatarValor(string descricao, decimal valor)
         {
-            get { return "Frete: " + Relatorio.VendaModel.ValorFrete.ToString("C"); }
+            return $"{descricao}: {valor:C}";
         }
-        public string NomeSituacao
+
+        // Função de formatação de valores percentuais
+        private string FormatarValorPercentual(string descricao, decimal valor)
         {
-            get
-            {
-                if (Relatorio.VendaModel.Situacao)
-                    return "FINALIZADO";
-                else
-                    return "VENDA SALVA";
-            }
+            return $"{descricao}: {(valor / 100):P2}";
         }
     }
 }
+

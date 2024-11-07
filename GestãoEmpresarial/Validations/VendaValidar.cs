@@ -15,7 +15,6 @@ namespace GestãoEmpresarial.Validations
         public VendaValidar()
         {
             RCodigosDAL codigos = new RCodigosDAL(LoginViewModel.colaborador.IdFuncionario);
-            var prontoParaConsertoId = codigos.GetStatusProntoParaConserto().Id;
             RuleFor(x => x.Cliente.Idcliente).NotEmpty().When(a => a.Cliente != null);
             RuleFor(x => x.Cliente).NotEmpty();
             RuleFor(x => x.IdCodigoTipoPagamento).NotEmpty();

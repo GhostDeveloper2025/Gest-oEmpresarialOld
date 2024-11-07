@@ -11,13 +11,8 @@ using System.Threading.Tasks;
 
 namespace GestãoEmpresarial.Providers
 {
-    internal class ColaboradorTecnicoProvider : MarkupExtensionGestaoEmpresarial, ISuggestionProvider
+    internal class ColaboradorTecnicoProvider : ColaboradorProvider
     {
-        public IEnumerable GetSuggestions(string filter)
-        {
-            var repo = new RColaboradorDAL(LoginViewModel.colaborador.IdFuncionario);
-            var list = repo.List(filter).Take(20); // Limita a 20 registros
-            return list.Where(a => a.Cargo.ToUpper() == "TECNICO");
-        }
+        protected override string TipoColaborador => "TECNICO";
     }
 }

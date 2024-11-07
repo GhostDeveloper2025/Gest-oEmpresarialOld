@@ -10,27 +10,50 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//public interface ISuggestionProvider
+//{
+//    Task<IEnumerable> GetSuggestions(string filter); // Certifique-se de que a assinatura é esta
+//}
+
 namespace GestãoEmpresarial.Providers
 {
     internal class ProdutoProvider : MarkupExtensionGestaoEmpresarial, ISuggestionProvider
     {
         public List<int> ListaExclusoes { get; private set; } = new List<int>();
 
-        public IEnumerable GetSuggestions(string filter)
+        public async Task<IEnumerable<ProdutoModel>> GetSuggestionsAsync(string filter)
         {
             var repo = new RProdutoDAL(LoginViewModel.colaborador.IdFuncionario);
-            var list = repo.List(filter).Take(50); // Limita a 50 registros
-            List<ProdutoModel> listaAux = new List<ProdutoModel>();
-            foreach (var item in list)
+
+            try
             {
-                if (ListaExclusoes.Any(a => Equals(a, item.IdProduto)))
-                    continue;
-                else
-                {
-                    listaAux.Add(item);
-                }
+                // Busca os produtos filtrados no banco de dados
+                var list = await repo.ListAsync(filter, null, null, null);
+
+                // Limita a 50 registros e filtra a lista de exclusões
+                var listaFiltrada = list
+                    .Where(item => !ListaExclusoes.Contains(item.IdProduto))
+                    .Take(50)
+                    .ToList();
+
+                return listaFiltrada;
             }
-            return listaAux;
+            catch (Exception ex)
+            {
+                // Log de erro ou tratamento da exceção, se necessário
+                Console.WriteLine($"Erro ao obter sugestões de produtos: {ex.Message}");
+                return Enumerable.Empty<ProdutoModel>(); // Retorna uma lista vazia em caso de erro
+            }
+        }
+
+        // Método síncrono exigido pela interface ISuggestionProvider
+        IEnumerable ISuggestionProvider.GetSuggestions(string filter)
+        {
+            // Como ISuggestionProvider requer um método síncrono, usamos o `Result` para aguardar a execução do método assíncrono
+            return GetSuggestionsAsync(filter).Result;
         }
     }
 }
+
+
+

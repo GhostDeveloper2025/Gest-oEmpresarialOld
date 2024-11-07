@@ -1,7 +1,7 @@
 ﻿using GestãoEmpresarial.Repositorios;
-using GestãoEmpresarial.Repositorios.GestãoEmpresarial.Repositorios;
 using GestãoEmpresarial.Validations;
 using GestãoEmpresarial.ViewModels;
+using GestãoEmpresarial.Views;
 using GestãoEmpresarial.Views.Cadastro;
 using GestãoEmpresarial.Views.Pesquisa;
 using GestãoEmpresarial.Views.Relatorios;
@@ -26,7 +26,17 @@ namespace GestãoEmpresarial
         {
             return Activator.CreateInstance(typeof(TRepositorio), LoginViewModel.colaborador.IdFuncionario) as TRepositorio;
         }
-
+        /// <summary>
+        /// Retorna a tela completa (CadastroView), pronta para ser exibida e manipulada
+        /// com todos os dados e validações configurados.
+        /// </summary>
+        /// <typeparam name="TViewModel"></typeparam>
+        /// <typeparam name="TRepositorio"></typeparam>
+        /// <typeparam name="TValidar"></typeparam>
+        /// <typeparam name="TView"></typeparam>
+        /// <param name="id"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
         private static CadastroView GetCadastroView<TViewModel, TRepositorio, TValidar, TView>(int? id, params object[] args)
             where TRepositorio : class
             where TViewModel : ICadastroViewModel
@@ -46,8 +56,54 @@ namespace GestãoEmpresarial
             var viewModel = Activator.CreateInstance(typeof(TViewModel), listArgs.ToArray()) as ICadastroViewModel;
             return new CadastroView(viewModel, view);
         }
-
-        private static PesquisaView GetPesquisaView<TViewModel, TRepositorio>(params object[] args)
+        /// <summary>
+        /// Retorna a tela completa (CadastrosVendaOsView), pronta para ser exibida e manipulada
+        /// com todos os dados e validações configurados.
+        /// </summary>
+        /// <typeparam name="TViewModel"></typeparam>
+        /// <typeparam name="TRepositorio"></typeparam>
+        /// <typeparam name="TValidar"></typeparam>
+        /// <typeparam name="TView"></typeparam>
+        /// <param name="id"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        private static CadastroGlobalView GetCadastroGlobalView<TViewModel, TRepositorio, TValidar, TView>(int? id, params object[] args)
+           where TRepositorio : class
+           where TViewModel : ICadastroViewModel
+           where TView : UIElement
+        {
+            var repositorio = GetRepositorio<TRepositorio>();
+            var validar = Activator.CreateInstance<TValidar>();
+            var view = Activator.CreateInstance<TView>();
+            List<object> listArgs = new List<object>()
+            {
+                id, validar, repositorio
+            };
+            foreach (var item in args)
+            {
+                listArgs.Add(item);
+            }
+            var viewModel = Activator.CreateInstance(typeof(TViewModel), listArgs.ToArray()) as ICadastroViewModel;
+            return new CadastroGlobalView(viewModel, view);
+        }
+        //Gera e devolve as Views de cadastro correta para Vendas ou Ordem de Serviço com base no nome fornecido.
+        public static Func<UserControl> GetCadastroGlobalView(string name)
+        {
+            return () => CadastrosViews[name](null);
+        }
+        ///
+        /// <summary>
+        /// Retorna a tela completa (PesquisaView), pronta para ser exibida e manipulada
+        /// com todos os dados e validações configurados.
+        /// </summary>
+        /// <typeparam name="TViewModel"></typeparam>
+        /// <typeparam name="TRepositorio"></typeparam>
+        /// <typeparam name="TValidar"></typeparam>
+        /// <typeparam name="TView"></typeparam>
+        /// <param name="id"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        private static PesquisaView GetPesquisaView<TViewModel, TRepositorio>(UIElement barraPesquisa, params object[] args)
             where TRepositorio : class
             where TViewModel : IPesquisaViewModel
         {
@@ -61,7 +117,7 @@ namespace GestãoEmpresarial
                 listArgs.Add(item);
             }
             var viewModel = Activator.CreateInstance(typeof(TViewModel), listArgs.ToArray()) as IPesquisaViewModel;
-            return new PesquisaView(viewModel);
+            return new PesquisaView(viewModel, barraPesquisa);
         }
 
         public static Func<UserControl> GetCadastroView(string name)
@@ -86,26 +142,26 @@ namespace GestãoEmpresarial
                                 GetRepositorio<RCategoriaDAL>(),
                                 GetRepositorio<REstoqueDAL>()
                             ) },
-            { nameof(CadastroOrdemServicoViewModel), (id) => GetCadastroView<CadastroOrdemServicoViewModel, ROsDAL, OrdemServicoValidar, CadastroOrdemServicoView>
+            { nameof(CadastroOrdemServicoViewModel), (id) => GetCadastroGlobalView<CadastroOrdemServicoViewModel, ROsDAL, OrdemServicoValidar, CadastroOrdemServicoView>
                             (
                                 id,
                                 new ItemOrdemServicoValidar(),
                                 GetRepositorio<RCodigosDAL>(),
                                 GetRepositorio<RItensOSDAL>()
                             ) },
-            { nameof(CadastroVendaViewModel), (id) => GetCadastroView<CadastroVendaViewModel, RVendasDAL, VendaValidar, CadastroVendaView>(id, GetRepositorio<RCodigosDAL>(), GetRepositorio<RItensVendaDAL>(), new ItemVendaValidar()) },
+            { nameof(CadastroVendaViewModel), (id) => GetCadastroGlobalView<CadastroVendaViewModel, RVendasDAL, VendaValidar, CadastroVendaView>(id, GetRepositorio<RCodigosDAL>(), GetRepositorio<RItensVendaDAL>(), new ItemVendaValidar()) },
             { nameof(RelatorioReciboOrdemServicoViewModel), (id) => new RelatorioReciboOs(new RelatorioReciboOrdemServicoViewModel(GetRepositorio<RRelatorioReciboDAL>(), id.Value)) },
             { nameof(RelatorioReciboVendaViewModel), (id) => new RelatorioReciboVenda(new RelatorioReciboVendaViewModel(GetRepositorio<RRelatorioReciboDAL>(), GetRepositorio<RClienteDAL>(), id.Value)) },
         };
 
         public static Dictionary<string, Func<UserControl>> PesquisaViews = new Dictionary<string, Func<UserControl>>()
         {
-            { nameof(PesquisaClienteViewModel), () => GetPesquisaView<PesquisaClienteViewModel, RClienteDAL>() },
-            { nameof(PesquisaColaboradorViewModel), () => GetPesquisaView<PesquisaColaboradorViewModel, RColaboradorDAL>() },
-            { nameof(PesquisaCategoriaViewModel), () => GetPesquisaView<PesquisaCategoriaViewModel, RCategoriaDAL>() },
-            { nameof(PesquisaProdutoViewModel), () => GetPesquisaView<PesquisaProdutoViewModel, RProdutoDAL>() },
-            { nameof(PesquisaOrdemServicoViewModel), () => GetPesquisaView<PesquisaOrdemServicoViewModel, ROsDAL>(GetRepositorio<RCodigosDAL>()) },
-            { nameof(PesquisaVendaViewModel), () => GetPesquisaView<PesquisaVendaViewModel, RVendasDAL>(GetRepositorio<RCodigosDAL>()) },
+            { nameof(PesquisaClienteViewModel), () => GetPesquisaView<PesquisaClienteViewModel, RClienteDAL>(new BarraPesquisaClienteView()) },
+            { nameof(PesquisaColaboradorViewModel), () => GetPesquisaView<PesquisaColaboradorViewModel, RColaboradorDAL>(new PesquisaBarraView()) },
+            { nameof(PesquisaCategoriaViewModel), () => GetPesquisaView<PesquisaCategoriaViewModel, RCategoriaDAL>(new PesquisaBarraView()) },
+            { nameof(PesquisaProdutoViewModel), () => GetPesquisaView<PesquisaProdutoViewModel, RProdutoDAL>(new BarraPesquisaProdutoView(), GetRepositorio<RCodigosDAL>()) },
+            { nameof(PesquisaOrdemServicoViewModel), () => GetPesquisaView<PesquisaOrdemServicoViewModel, ROsDAL>(new BarraPesquisaOrdemServicoView(), GetRepositorio<RCodigosDAL>()) },
+            { nameof(PesquisaVendaViewModel), () => GetPesquisaView<PesquisaVendaViewModel, RVendasDAL>(new BarraPesquisaVendaView(), GetRepositorio<RCodigosDAL>()) },
         };
 
         public static Dictionary<string, Func<UserControl>> RelatoriosViews = new Dictionary<string, Func<UserControl>>()

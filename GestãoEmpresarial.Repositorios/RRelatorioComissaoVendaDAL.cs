@@ -14,7 +14,7 @@ namespace GestãoEmpresarial.Repositorios
         {
         }
 
-        public List<RelatorioComissaoVendasModel> ObterComissaoVendas(int? idColaborador, DateTime? dataInicial, DateTime? dataFinal)
+        public async Task<List<RelatorioComissaoVendasModel>> ObterComissaoVendasAsync(int? idColaborador, DateTime? dataInicial, DateTime? dataFinal)
         {
             List<MySqlParameter> parametros = new List<MySqlParameter>();
 
@@ -27,17 +27,17 @@ namespace GestãoEmpresarial.Repositorios
 
             using (MySqlDataReader reader = ExecuteReader("usp_Comecao_Venda", parametros.ToArray(), true))
             {
-                while (reader.Read())
+                while (await reader.ReadAsync()) // Leitura assíncrona
                 {
                     list.Add(new RelatorioComissaoVendasModel()
                     {
                         NumVenda = reader.GetInt32("num_venda"),
-                        DataInicial = reader.GetDateTime("data_Venda"),
+                        DataInicial = reader.GetDateTime("data_venda"),
                         DataFinalizacao = reader.GetDateTime("data_finalizacao"),
                         VendedorId = reader.GetInt32("vendedor_id"),
                         VendedorCpf = reader.GetString("vendedor_cpf"),
                         VendedorNome = reader.GetString("vendedor_nome"),
-                        Situacao = reader.GetString("situacao"),
+                        Situacao = reader.GetInt32("situacao"),
                         TotalVenda = reader.GetDecimal("totalvenda"),
                         PercComissao = reader.GetDecimal("perc_comissao"),
                         ValComissao = reader.GetDecimal("val_comissao")
@@ -47,6 +47,13 @@ namespace GestãoEmpresarial.Repositorios
 
             return list;
         }
+
+        // Para manter a interface original, se necessário
+        public List<RelatorioComissaoVendasModel> ObterComissaoVendas(int? idColaborador, DateTime? dataInicial, DateTime? dataFinal)
+        {
+            return ObterComissaoVendasAsync(idColaborador, dataInicial, dataFinal).GetAwaiter().GetResult();
+        }
     }
 }
+
 

@@ -12,13 +12,8 @@ using System.Windows.Markup;
 
 namespace GestãoEmpresarial.Providers
 {
-    internal class ColaboradorResponsavelProvider : MarkupExtensionGestaoEmpresarial,  ISuggestionProvider
+    internal class ColaboradorResponsavelProvider : ColaboradorProvider
     {
-        public IEnumerable GetSuggestions(string filter)
-        {
-            var repo = new RColaboradorDAL(LoginViewModel.colaborador.IdFuncionario);
-            var list = repo.List(filter).Take(20); // Limita a 20 registros
-            return list.Where(a => a.Cargo == "Responsavel");
-        }
+        protected override string TipoColaborador => "RESPONSAVEL";
     }
 }

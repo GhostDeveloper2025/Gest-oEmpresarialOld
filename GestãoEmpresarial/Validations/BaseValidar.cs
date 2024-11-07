@@ -13,9 +13,9 @@ namespace GestãoEmpresarial.Validations
 {
     public class BaseValidar<T> : AbstractValidator<T>
     {
-        public IRuleBuilderOptions<T, TProperty> RuleGenericaVazioFor<TProperty>(Expression<Func<T, TProperty>> expression)
-        {
-            return base.RuleFor<TProperty>(expression).NotEmpty().WithMessage("O Campo é obrigatório!");
-        }
+        //public IRuleBuilderOptions<T, TProperty> RuleGenericaVazioFor<TProperty>(Expression<Func<T, TProperty>> expression)
+        //{
+        //    return base.RuleFor<TProperty>(expression).NotEmpty().WithMessage("O Campo é obrigatório!");
+        //}
     }
 }

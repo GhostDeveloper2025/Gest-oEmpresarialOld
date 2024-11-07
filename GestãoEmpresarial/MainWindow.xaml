@@ -27,8 +27,8 @@
         <busyIndicator:BusyMask x:Name="BusyIndicator"
                                 DockPanel.Dock="Bottom"
                                 BusyContent=""
-                                IndicatorType="Escalade" 
-                                Background="#D8FFFFFF">
+                                IndicatorType="BouncingDot" 
+                                Background="Transparent">
             <Border Margin="10,10,10,10" Background="{StaticResource color59}" CornerRadius="10">
                 <Grid Name="fContainer" Margin="10,10,10,10" Background="{StaticResource color59}" />
             </Border>

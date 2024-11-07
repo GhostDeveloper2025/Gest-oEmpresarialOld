@@ -5,19 +5,21 @@ using GestãoEmpresarial.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using static Mysqlx.Expect.Open.Types;
 
 namespace GestãoEmpresarial.Repositorios
 {
     public class RProdutoDAL : DatabaseConnection, IDAL<ProdutoModel>
     {
         private const string SelectQuery = "SELECT a.IdProduto, a.Nome AS NomeProduto"
-                + ", CodProduto, a.Descricao AS DescricaoProduto, IdMarcaF, ValorCusto, ValorVenda"
-                + ", DataCadastro, a.IdCategoria, IdFuncionario"
-            + " , IdEstoque, Localizacao, Quantidade"
-            + " , c.Nome AS NomeCategoria, c.Descricao AS DescricaoCategoria"
+                + " , CodProduto, a.Descricao AS DescricaoProduto, IdMarcaF, ValorCusto, ValorVenda"
+                + " , DataCadastro, a.IdCategoria, IdFuncionario"
+                + " , IdEstoque, Localizacao, Quantidade"
+                + " , c.Nome AS NomeCategoria, c.Descricao AS DescricaoCategoria"
                 + " FROM tb_produto a"
-            + " INNER JOIN tb_estoque b ON a.IdProduto = b.IdProduto "
-            + " INNER JOIN tb_categoria c on c.IdCategoria = a.IdCategoria";
+                + " INNER JOIN tb_estoque b ON a.IdProduto = b.IdProduto "
+                + " INNER JOIN tb_categoria c ON c.IdCategoria = a.IdCategoria";
 
         private readonly REstoqueDAL restoque;
         private readonly RColaboradorDAL colaboradorDAL;
@@ -30,32 +32,38 @@ namespace GestãoEmpresarial.Repositorios
             rCategoriaDAL = new RCategoriaDAL(idfuncionario);
         }
 
-        public void Delete(ProdutoModel t)
+        // Método assíncrono para deletar um produto e atualizar o estoque
+        public async Task DeleteAsync(ProdutoModel t)
         {
-            restoque.Delete(t.IdProduto);
+            await restoque.DeleteByIdProdutoAsync(t.IdProduto); // Remover produto do estoque
 
-            string query = "Update tb_produto SET Apagado = 1 WHERE IdProduto = @id";
+            string query = "UPDATE tb_produto SET Apagado = 1 WHERE IdProduto = @id";
             MySqlParameter[] arr = new MySqlParameter[]
             {
-                new MySqlParameter() { Value = t.IdProduto, ParameterName= "@id" },
+                new MySqlParameter() { Value = t.IdProduto, ParameterName = "@id" },
             };
-            ExecuteNonQuery(query, arr);
+            ExecuteNonQuery(query, arr); // Executa a query de forma assíncrona
         }
 
-        public ProdutoModel GetById(int id)
+        // Busca um produto por Id de forma assíncrona
+        public async Task<ProdutoModel> GetByIdAsync(int id)
         {
-            string query = SelectQuery + " where a.IdProduto = @filtro";
-            var obj = GetLista(query, id.ToString()).FirstOrDefault();
+            var parametros = new List<MySqlParameter>();
+            AddParameter(parametros, "@filtro", id);
+
+            string query = SelectQuery + " WHERE a.IdProduto = @filtro";
+            var obj = (await GetListaAsync(query, parametros)).FirstOrDefault();
             return obj;
         }
 
-        public int Insert(ProdutoModel t)
+        // Inserção assíncrona de um novo produto
+        public async Task<int> InsertAsync(ProdutoModel t)
         {
             string query = "INSERT INTO tb_produto (Nome, CodProduto, Descricao, IdMarcaF, ValorCusto, ValorVenda, DataCadastro, IdCategoria, IdFuncionario) " +
-            " VALUES(@Nome,@CodProduto,@Descricao,@Marca,@ValorCusto,@ValorVenda,NOW(),@IdCategoria,@IdFuncionario);"
-            + " SELECT LAST_INSERT_ID();";
+                           "VALUES(@Nome, @CodProduto, @Descricao, @Marca, @ValorCusto, @ValorVenda, NOW(), @IdCategoria, @IdFuncionario); " +
+                           "SELECT LAST_INSERT_ID();";
+
             List<MySqlParameter> lista = new List<MySqlParameter>();
-            //lAcessoDados.LimparParametro();// Limpar parâmetro salvar 
             AddParameter(lista, "@Nome", t.Nome);
             AddParameter(lista, "@CodProduto", t.CodProduto);
             AddParameter(lista, "@Descricao", t.Descricao);
@@ -64,28 +72,56 @@ namespace GestãoEmpresarial.Repositorios
             AddParameter(lista, "@ValorVenda", t.ValorVenda);
             AddParameter(lista, "@IdCategoria", t.IdCategoria);
             AddParameter(lista, "@IdFuncionario", idFuncionario);
+
             object id = ExecuteScalar(query, lista.ToArray());
             return Convert.ToInt32(id);
         }
 
-        public List<ProdutoModel> List(string filtro)
+        // Lista produtos com filtro de forma assíncrona, limitando a 200 resultados
+        public async Task<List<ProdutoModel>> ListAsync(string pesquisaNome, string pesquisaCodigo, string pesquisaLocalizacao, string pesquisaMarca)
         {
-            string query = SelectQuery
-                + " WHERE a.Nome LIKE CONCAT(@filtro, '%') OR IdFuncionario = @filtro OR CodProduto = @filtro OR IdMarcaF = @filtro"
-                + " ORDER BY a.Nome ASC" // ASC para ordenação ascendente (A-Z)
-                + " LIMIT 200"; // Adicionando LIMIT 200 para limitar o número de registros
+            List<MySqlParameter> parametros = new List<MySqlParameter>();
 
-            return GetLista(query, filtro);
+            var conditions = new List<string>();
+            AddParameterCondition(parametros, conditions, "CodProduto", pesquisaCodigo);
+            AddParameterCondition(parametros, conditions, "localizacao", pesquisaLocalizacao);
+            AddParameterCondition(parametros, conditions, "IdMarcaF", pesquisaMarca);
+
+            if (string.IsNullOrWhiteSpace(pesquisaNome) == false)
+            {
+                AddParameter(parametros, "@Nome", pesquisaNome);
+                conditions.Add("a.Nome LIKE CONCAT(@Nome, '%')");
+            }
+
+            string conditionsJoin = string.Join(" OR ", conditions);
+            string query = SelectQuery + " WHERE " + conditionsJoin + " ORDER BY a.Nome ASC LIMIT 200";
+
+            return await GetListaAsync(query, parametros);
         }
-
-        private List<ProdutoModel> GetLista(string query, string filtro)
+        //Este codigo Foi Uma melhoria que o Chat GPT me ajudou a Criar
+        /// <summary>
+        /// *   Coleta de IDs de colaboradores: A lógica agora coleta todos os IDs de colaboradores antes de entrar no loop,
+        ///       evitando múltiplas chamadas assíncronas.
+        ///     
+        ///  *   Chamada única para obter colaboradores: Uma vez que todos os IDs foram coletados, uma única chamada é feita
+        ///        para obter todos os colaboradores correspondentes.
+        ///        
+        ///  *   Atribuição de colaboradores: Depois de obter a lista de colaboradores, a lógica atribui cada colaborador ao
+        ///       respectivo produto.
+        ///       
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        private async Task<List<ProdutoModel>> GetListaAsync(string query, List<MySqlParameter> lista)
         {
             List<ProdutoModel> list = new List<ProdutoModel>();
-            List<MySqlParameter> lista = new List<MySqlParameter>();
-            AddParameter(lista, "@filtro", filtro);
+
             using (MySqlDataReader reader = ExecuteReader(query, lista.ToArray()))
             {
-                while (reader.Read())
+                // Coletar todos os IDs de colaboradores
+                var idsColaboradores = new HashSet<int>();
+
+                while (await reader.ReadAsync())
                 {
                     var obj = new ProdutoModel()
                     {
@@ -111,34 +147,49 @@ namespace GestãoEmpresarial.Repositorios
                     obj.IdProduto = reader.GetInt32("IdProduto");
                     obj.Estoque.IdEstoque = DALHelper.GetInt32(reader, "IdEstoque").GetValueOrDefault();
                     obj.Estoque.Quantidade = reader.GetInt32("Quantidade");
-                    //obj.IdCategoria = reader.GetInt32("IdCategoria");
 
-                    obj.Colaborador = colaboradorDAL.GetById(obj.IdCadastrante);
+                    // Adicionar ID do colaborador à lista
+                    idsColaboradores.Add(obj.IdCadastrante);
+
                     list.Add(obj);
                 }
+
+                // Buscar todos os colaboradores em uma única chamada
+                var colaboradores = await colaboradorDAL.GetByIdsAsync(idsColaboradores.ToList());
+
+                // Atribuir os colaboradores aos produtos
+                foreach (var produto in list)
+                {
+                    // Use a propriedade IdFuncionario em vez de Id
+                    produto.Colaborador = colaboradores.FirstOrDefault(c => c.IdFuncionario == produto.IdCadastrante);
+                }
+
             }
             return list;
         }
 
-
-        public void Update(ProdutoModel t)
+        public async Task UpdateAsync(ProdutoModel t)
         {
-            string query = "UPDATE tb_produto SET Nome = @Nome, CodProduto = @CodProduto"
-                + " , Descricao = @Descricao, IdMarcaF = @Marca, ValorCusto = @ValorCusto, ValorVenda = @ValorVenda "
-                + " , IdCategoria = @IdCategoria"
-                + " WHERE IdProduto = @Id";
-            //Inicia o objeto
+            string query = "UPDATE tb_produto SET Nome = @Nome, CodProduto = @CodProduto, Descricao = @Descricao, " +
+                           "IdMarcaF = @Marca, ValorCusto = @ValorCusto, ValorVenda = @ValorVenda, IdCategoria = @IdCategoria " +
+                           "WHERE IdProduto = @Id;";
+
             List<MySqlParameter> lista = new List<MySqlParameter>();
-            //lAcessoDados.LimparParametro();// Limpar parâmetro salvar 
             AddParameter(lista, "@Nome", t.Nome);
             AddParameter(lista, "@CodProduto", t.CodProduto);
             AddParameter(lista, "@Descricao", t.Descricao);
             AddParameter(lista, "@Marca", t.IdMarca);
             AddParameter(lista, "@ValorCusto", t.ValorCusto);
             AddParameter(lista, "@ValorVenda", t.ValorVenda);
-            AddParameter(lista, "@Id", t.IdProduto);
             AddParameter(lista, "@IdCategoria", t.IdCategoria);
+            AddParameter(lista, "@Id", t.IdProduto);
+
             ExecuteNonQuery(query, lista.ToArray());
+        }
+
+        public ProdutoModel GetById(int id)
+        {
+            return GetByIdAsync(id).Result;
         }
     }
 }

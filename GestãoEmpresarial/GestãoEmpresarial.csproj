@@ -90,9 +90,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CustomControls\BotaoIcone.xaml.cs">
-      <DependentUpon>BotaoIcone.xaml</DependentUpon>
-    </Compile>
     <Compile Include="CustomControls\CelularTextBox.xaml.cs">
       <DependentUpon>CelularTextBox.xaml</DependentUpon>
     </Compile>
@@ -115,9 +112,6 @@
     <Compile Include="CustomControls\TelefoneTextBox.xaml.cs">
       <DependentUpon>TelefoneTextBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomControls\ValidarTextBox.xaml.cs">
-      <DependentUpon>ValidarTextBox.xaml</DependentUpon>
-    </Compile>
     <Compile Include="DI.cs" />
     <Compile Include="Models\DataGridClienteModel.cs" />
     <Compile Include="Models\DataGridOrdemServicoModel.cs" />
@@ -139,6 +133,7 @@
     <Compile Include="Providers\ColaboradorProvider.cs" />
     <Compile Include="Providers\ColaboradorResponsavelProvider.cs" />
     <Compile Include="Providers\ColaboradorTecnicoProvider.cs" />
+    <Compile Include="Providers\ColaboradorVendedorProvider.cs" />
     <Compile Include="Providers\ProdutoProvider.cs" />
     <Compile Include="Switcher.cs" />
     <Compile Include="Utils\BooleanPTConverter.cs" />
@@ -180,6 +175,9 @@
     <Compile Include="ViewModels\RelatorioProdutoMaisVendidoViewModel.cs" />
     <Compile Include="ViewModels\RelatorioReciboOrdemServicoViewModel.cs" />
     <Compile Include="ViewModels\RelatorioReciboVendaViewModel.cs" />
+    <Compile Include="Views\Cadastro\CadastroGlobalView.xaml.cs">
+      <DependentUpon>CadastroGlobalView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Cadastro\CadastroCategoriaView.xaml.cs">
       <DependentUpon>CadastroCategoriaView.xaml</DependentUpon>
     </Compile>
@@ -204,6 +202,18 @@
     <Compile Include="Views\Layout\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Pesquisa\BarraPesquisaClienteView.xaml.cs">
+      <DependentUpon>BarraPesquisaClienteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pesquisa\BarraPesquisaOrdemServicoView.xaml.cs">
+      <DependentUpon>BarraPesquisaOrdemServicoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pesquisa\BarraPesquisaProdutoView.xaml.cs">
+      <DependentUpon>BarraPesquisaProdutoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pesquisa\BarraPesquisaVendaView.xaml.cs">
+      <DependentUpon>BarraPesquisaVendaView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pesquisa\PesquisaBarraView.xaml.cs">
       <DependentUpon>PesquisaBarraView.xaml</DependentUpon>
     </Compile>
@@ -225,10 +235,6 @@
     <Compile Include="Views\Relatorios\RelatorioReciboOs.xaml.cs">
       <DependentUpon>RelatorioReciboOs.xaml</DependentUpon>
     </Compile>
-    <Page Include="CustomControls\BotaoIcone.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="CustomControls\CelularTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -254,10 +260,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomControls\TelefoneTextBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\ValidarTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -309,6 +311,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Cadastro\CadastroGlobalView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Cadastro\CadastroCategoriaView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -338,6 +344,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Layout\MenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pesquisa\BarraPesquisaClienteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pesquisa\BarraPesquisaOrdemServicoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pesquisa\BarraPesquisaProdutoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pesquisa\BarraPesquisaVendaView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -24,8 +24,7 @@
             <TextBox x:Name="TxtNome" 
                      Width="250" 
                      materialDesign:HintAssist.Hint="Nome" 
-                     Text="{Binding ObjectoEditar.Nome,  
-                ValidatesOnDataErrors=True,
+                     Text="{Binding ObjectoEditar.Nome,
                 UpdateSourceTrigger=PropertyChanged,
                 Converter={utils:CapitalizeWordsConverter}}"
                      />
@@ -56,8 +55,7 @@
                      Width="50" 
                      materialDesign:HintAssist.Hint="UF" 
                      Text="{Binding ObjectoEditar.UF, 
-                UpdateSourceTrigger=PropertyChanged,  
-                ValidatesOnDataErrors=True,
+                UpdateSourceTrigger=PropertyChanged,
                 Converter={utils:CapitalizeWordsConverter}}"
                      />
             <TextBox x:Name="TxtLocalidade"
@@ -83,19 +81,18 @@
             <TextBox x:Name="TxtBairro" 
                      Width="200" 
                      materialDesign:HintAssist.Hint="Bairro" 
-                     Text="{Binding ObjectoEditar.Bairro, 
-                ValidatesOnDataErrors=True,
+                     Text="{Binding ObjectoEditar.Bairro,
                 UpdateSourceTrigger=PropertyChanged, 
                 Converter={utils:CapitalizeWordsConverter}}"
                      />
             <cc:CelularTextBox
                 Width="120"
-                Text="{Binding ObjectoEditar.Celular, 
+                Text="{Binding ObjectoEditar.Celular,
                 UpdateSourceTrigger=PropertyChanged}"
                 />
             <cc:TelefoneTextBox 
                 Width="120" 
-                Text="{Binding ObjectoEditar.Telefone, 
+                Text="{Binding ObjectoEditar.Telefone,
                 UpdateSourceTrigger=PropertyChanged}"
                 />
             <TextBox 
