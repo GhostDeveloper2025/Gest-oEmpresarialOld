@@ -13,6 +13,9 @@ namespace GestãoEmpresarial.Repositorios
 
         public DatabaseConnection(int idFuncionario)
         {
+            if (idFuncionario < 0)
+                throw new ArgumentOutOfRangeException(nameof(idFuncionario));
+
             this.idFuncionario = idFuncionario;
         }
 

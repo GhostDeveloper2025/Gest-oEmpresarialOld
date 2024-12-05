@@ -13,7 +13,7 @@ namespace GestãoEmpresarial.ViewModels
     {
         public Dictionary<int, string> TipoPagamentoList { get; internal set; }
 
-        public override int Id => ObjectoSelecionado?.IdVenda ?? 0; // Garantir que ObjectoSelecionado não seja nulo
+        public override int Id => ObjectoSelecionado?.IdVenda ?? 0;
         public override string NomeEditarView => nameof(CadastroVendaViewModel);
 
         public string PesquisaNomeCliente { get; set; }
@@ -26,12 +26,7 @@ namespace GestãoEmpresarial.ViewModels
             : base(repositorio)
         {
             _repositorioCodigos = repositorioCodigos;
-            TipoPagamentoList = new Dictionary<int, string>
-            {
-                { 0, null }
-            };
-
-            // Carregar os tipos de pagamento de forma assíncrona
+            TipoPagamentoList = new Dictionary<int, string> { { 0, null } };
             CarregarTiposPagamentosAsync();
         }
 
@@ -43,7 +38,6 @@ namespace GestãoEmpresarial.ViewModels
                 TipoPagamentoList.Add(codigo.Id, codigo.Nome);
             }
 
-            // Notificar que a lista de tipos de pagamento foi atualizada, caso seja necessário algum binding
             RaisePropertyChanged(nameof(TipoPagamentoList));
         }
 
@@ -54,22 +48,28 @@ namespace GestãoEmpresarial.ViewModels
 
         public override List<VendaModel> GetLista()
         {
-            int? idVenda = null;
-            if (int.TryParse(PesquisaNumeroVenda, out int idVendaAux))
-                idVenda = idVendaAux;
+            int? idVenda = int.TryParse(PesquisaNumeroVenda, out int idVendaAux) ? idVendaAux : (int?)null;
+            int? idTipoPagamento = int.TryParse(PesquisaTipoPagamento, out int idTipoPagamentoAux) ? idTipoPagamentoAux : (int?)null;
 
-            int? idCodigo = null;
-            if (int.TryParse(PesquisaTipoPagamento, out int idCodigoAux))
-                idCodigo = idCodigoAux;
+            var lista = Repositorio.ListAsync(PesquisaNomeCliente, idTipoPagamento, idVenda).Result;
 
-            return Repositorio.ListAsync(PesquisaNomeCliente, idCodigo, idVendaAux).Result;
+            PesquisaNomeCliente = null;
+            RaisePropertyChanged(nameof(PesquisaNomeCliente));
+
+            PesquisaNumeroVenda = null;
+            RaisePropertyChanged(nameof(PesquisaNumeroVenda));
+
+            PesquisaTipoPagamento = null;
+            RaisePropertyChanged(nameof(PesquisaTipoPagamento));
+
+            return lista;
         }
 
         public override bool PodeExecutarPesquisar(object parameter)
         {
-            return string.IsNullOrWhiteSpace(PesquisaNomeCliente) == false
-                  || string.IsNullOrWhiteSpace(PesquisaNumeroVenda) == false
-                  || string.IsNullOrWhiteSpace(PesquisaTipoPagamento) == false;
+            return !string.IsNullOrWhiteSpace(PesquisaNomeCliente)
+                   || !string.IsNullOrWhiteSpace(PesquisaNumeroVenda)
+                   || !string.IsNullOrWhiteSpace(PesquisaTipoPagamento);
         }
     }
 }

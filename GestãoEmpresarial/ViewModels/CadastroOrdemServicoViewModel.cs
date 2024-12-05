@@ -40,25 +40,30 @@ namespace GestãoEmpresarial.ViewModels
 
         private async Task InitializeAsync(int? id)
         {
-            // Se houver um ID, busque os itens
-            // if (id.HasValue)
-            // {
-            //    await _itensOsDal.GetByIdOsAsync(id.Value);
-            // }
-
+            // Carrega a lista de marcas de ferramentas
             MarcasList = (await _codigosDal.GetListaMarcasFerramentaAsync()).ToDictionary(b => b.Id, a => a.Nome);
-            NovaOrdemServico = ObjectoEditar.Status == 0; // Se estiver diferente de 0 é pq já tem um status associado
+
+            // Define se é uma nova ordem de serviço ou uma já existente
+            NovaOrdemServico = ObjectoEditar.Status == 0;
 
             if (NovaOrdemServico)
             {
+                // Para uma nova ordem de serviço, define o status inicial
                 var statusInicial = await _codigosDal.GetStatusAbertaAsync();
                 ObjectoEditar.Status = statusInicial.Id;
                 StatusList = new Dictionary<int, string>() { { statusInicial.Id, statusInicial.Nome } };
             }
             else
             {
-                PodeEditar = await _ordemServicoRepositorio.PodeEditarAsync(ObjectoEditar.Status);  // Use o campo _repositorio
+                // Para uma ordem de serviço existente, verifica se pode editar e carrega os status seguintes
+                PodeEditar = await _ordemServicoRepositorio.PodeEditarAsync(ObjectoEditar.Status);
                 StatusList = (await _codigosDal.ListaStatusSeguintesAsync(ObjectoEditar.Status)).ToDictionary(b => b.Id, a => a.Nome);
+
+                // Adiciona produtos já existentes na ordem de serviço à lista de exclusão
+                foreach (var item in ObjectoEditar.ListItensOs)
+                {
+                    ProdutoProviderItem.ListaExclusoes.Add(item.Produto.IdProduto);
+                }
             }
         }
 

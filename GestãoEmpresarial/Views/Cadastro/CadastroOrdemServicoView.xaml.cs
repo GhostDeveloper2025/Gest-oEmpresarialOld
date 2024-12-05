@@ -24,12 +24,12 @@ namespace GestãoEmpresarial.Views.Cadastro
             Methods.AddColumnToDataGrid(DgItensOsModel, typeof(ItensOrdemServicoModelObservavel));
         }
 
-        private void Imprimir_Click(object sender, RoutedEventArgs e)
-        {
-            int? id = ((CadastroOrdemServicoViewModel)DataContext).Id;
-            var func = DI.CadastrosViews[nameof(RelatorioReciboOrdemServicoViewModel)];
-            if (id.HasValue)
-                Switcher.Imprimir(func(id));
-        }
+        //private void Imprimir_Click(object sender, RoutedEventArgs e)
+        //{
+        //    int? id = ((CadastroOrdemServicoViewModel)DataContext).Id;
+        //    var func = DI.CadastrosViews[nameof(RelatorioReciboOrdemServicoViewModel)];
+        //    if (id.HasValue)
+        //        Switcher.Imprimir(func(id));
+        //}
     }
 }

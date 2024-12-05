@@ -12,17 +12,10 @@
         <WrapPanel DockPanel.Dock="Top" HorizontalAlignment="Right">
             <Grid Name="fContainer" >
             </Grid>
-            <Button x:Name="btnBuscar" Style="{StaticResource SearchButtonStyle}"
-                    Height="30" Width="30" 
-                    Margin="0,0,10,0"
-                    HorizontalAlignment="Right"                        
-                    Tag="{StaticResource color7}"
-                    Command="{Binding PesquisarCommand, UpdateSourceTrigger=PropertyChanged}">
-                <!-- Muda A Cor Do Icone... -->
-                <StackPanel Orientation="Horizontal">
-                    <materialDesign:PackIcon  Height="30" Width="30" Kind="ArrowRight"/>
-                </StackPanel>
-            </Button>
+            <ToggleButton x:Name="TgbBuscar" 
+                          Style="{StaticResource CustomToggleButtonStyle}" 
+                          Command="{Binding PesquisarCommand, UpdateSourceTrigger=PropertyChanged}" 
+                          Checked="ToggleButton_Checked"/>
         </WrapPanel>
 
             <!-- TextBlock para mostrar o número de registros -->
@@ -69,5 +62,6 @@
                 </DataGrid.Columns>
             </cc:DataGridAuto>
         </busyIndicator:BusyMask>
+        
     </DockPanel>
 </UserControl>

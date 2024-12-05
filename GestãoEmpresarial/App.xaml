@@ -45,7 +45,6 @@
                 <!--include your primary palette... -->
                 <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />-->
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
-
                 <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />-->
                 <!--#endregion-->
@@ -59,7 +58,6 @@
              visual e o comportamento de vários elementos na interface do usuário 
              da aplicação.
          -->
-                <ResourceDictionary Source="Styles/UIControls.xaml"/>
                 <ResourceDictionary Source="Styles/ColorResources.xaml"/>
                 <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/TextBoxStyle.xaml"/>
@@ -68,6 +66,7 @@
                 <ResourceDictionary Source="Styles/ScrollviewStyle.xaml"/>
                 <ResourceDictionary Source="Styles/DataGridStyle.xaml"/>
                 <ResourceDictionary Source="Styles/AutocompleteStyle.xaml"/>
+                <ResourceDictionary Source="Styles/ToolTipStyle.xaml"/>
                 <!--#endregion-->
             </ResourceDictionary.MergedDictionaries>
             <!--#endregion-->

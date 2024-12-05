@@ -17,7 +17,7 @@ public class DataGridVendaModel
         }
         TipoPagamento = tipoPagamento;
 
-        NomeCadastrante = GetNome(model.Cadastrante);
+        NomeVendedor = GetNome(model.Vendedor);
         DataVenda = model.DataVenda;
         DataFinalizacao = model.DataFinalizacao;
     }
@@ -40,8 +40,9 @@ public class DataGridVendaModel
 
     public string TipoPagamento { get; set; }
 
-    [DisplayName("Cadastrante")]
-    public string NomeCadastrante { get; set; }
+    [DisplayName("Vendedor")]
+    // public string NomeCadastrante { get; set; }
+    public string NomeVendedor { get; set; }
 
     public bool Finalizado { get; set; }
 

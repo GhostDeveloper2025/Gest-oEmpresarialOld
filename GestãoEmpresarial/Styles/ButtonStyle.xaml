@@ -189,4 +189,34 @@ Sendo que Nao É aqui que se define As Cores... -->
         </Style.Triggers>
     </Style>
     <!--#endregion-->
+
+    <!--#region  Estilo personalizado para ToggleButton... -->
+    <!--Estilo personalizado para ToggleButton-->
+    <Style x:Key="CustomToggleButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource MaterialDesignActionToggleButton}">
+        <Setter Property="Foreground" Value="{StaticResource plainTextColor7}" />
+        <Setter Property="Background" Value="{StaticResource color45}" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="ToolTip" Value="Clique Para Fazer A Busca" />
+        <Setter Property="Content">
+            <Setter.Value>
+                <materialDesign:PackIcon Height="30" Width="30" Kind="ArrowRightBoldCircleOutline"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="materialDesign:ToggleButtonAssist.OnContent">
+            <Setter.Value>
+                <materialDesign:PackIcon Height="30" Width="30" Kind="CheckboxMarkedCircleOutline"/>
+            </Setter.Value>
+        </Setter>
+
+        <!--Trigger para mudar a cor ao passar o mouse-->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource panelActiveColor4}"/>
+                <Setter Property="Foreground" Value="{StaticResource color20}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--#endregion-->
 </ResourceDictionary>

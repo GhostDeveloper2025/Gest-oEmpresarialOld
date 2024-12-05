@@ -1,4 +1,5 @@
-﻿using GestãoEmpresarial.Interface;
+﻿using FluentValidation;
+using GestãoEmpresarial.Interface;
 using GestãoEmpresarial.Models;
 using GestãoEmpresarial.Providers;
 using GestãoEmpresarial.Repositorios;
@@ -6,6 +7,7 @@ using GestãoEmpresarial.Validations;
 using MicroMvvm;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +47,12 @@ namespace GestãoEmpresarial.ViewModels
         private async Task InitializeAsync(int? id)
         {
             TiposPagamento = (await _codigosDal.GetListaTiposPagamentosAsync()).ToDictionary(b => b.Id, a => a.Nome);
+
+            // Adiciona produtos já existentes na ordem de serviço à lista de exclusão
+            foreach (var item in ObjectoEditar.ListItensVenda)
+            {
+                ProdutoProviderItem.ListaExclusoes.Add(item.Produto.IdProduto);
+            }
         }
 
         public bool CanExecuteApagarItem(object parameter)
@@ -66,18 +74,42 @@ namespace GestãoEmpresarial.ViewModels
 
         public bool CanExecuteAdicionarItem(object parameter)
         {
-            var objBD = ItemVendaModelObservavel.MapearItemVendaModel(ObjectoEditar.ItemVendaAdicionarPlanilha);
-            var result = _itemValidador.Validate(objBD);
-            return result.IsValid;
+            return true;
         }
 
         public async Task ExecutarGuardarItemNaListaAsync(object tag)
         {
+            // Mapeia o modelo de validação
+            var objBD = ItemVendaModelObservavel.MapearItemVendaModel(ObjectoEditar.ItemVendaAdicionarPlanilha);
+
+            // Realiza a validação
+            var result = _itemValidador.Validate(objBD);
+
+            if (!result.IsValid)
+            {
+                // Exibe as mensagens de erro
+                string erros = string.Join("\n", result.Errors.Select(e => e.ErrorMessage));
+                MessageBox.Show($"Não foi possível adicionar o item:\n{erros}", "Erro de Validação", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Verifica manualmente o estoque
+            var estoqueDisponivel = ObjectoEditar.ItemVendaAdicionarPlanilha.Produto?.Estoque?.Quantidade ?? 0;
+            if (ObjectoEditar.ItemVendaAdicionarPlanilha.Quantidade > estoqueDisponivel)
+            {
+                MessageBox.Show(
+                    $"A quantidade solicitada ({ObjectoEditar.ItemVendaAdicionarPlanilha.Quantidade}) excede o estoque disponível ({estoqueDisponivel}).",
+                    "Estoque Insuficiente",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
+            }
+
+            // Adiciona o item à lista
             ProdutoProviderItem.ListaExclusoes.Add(ObjectoEditar.ItemVendaAdicionarPlanilha.Produto.IdProduto);
             ObjectoEditar.AdicionarNaLista();
 
-            // Adicione qualquer operação assíncrona aqui ou use Task.CompletedTask para evitar o aviso.
-            await Task.CompletedTask;
+            await Task.CompletedTask; // Task dummy para manter o método assíncrono
         }
 
         public ProdutoProvider ProdutoProviderItem { get; set; }
@@ -86,6 +118,8 @@ namespace GestãoEmpresarial.ViewModels
         {
             int idVenda = await base.InserirObjectoBDAsync();
             await AtualizarItensVendaAsync(idVenda);
+            ObjectoEditar.IdVenda = idVenda;
+            await base.AtualizarObjectoBDAsync();
             return idVenda;
         }
 
@@ -97,16 +131,26 @@ namespace GestãoEmpresarial.ViewModels
 
         public override async Task ExecutarSalvar(object parameter)
         {
+            // Verifique se ObjectoEditar é o tipo EditarVendaModel e se a lista de itens está vazia
+            if (ObjectoEditar is EditarVendaModel editarVendaModel && !editarVendaModel.ListItensVenda.Any())
+            {
+                MessageBox.Show("Não é possível salvar a venda sem produtos adicionados.", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Verificação de situação da venda
             if (ObjectoEditar.Situacao != true)
             {
-                MessageBoxResult result = MessageBox.Show("Quer finalizar a venda já?", "Finalizar", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Quer finalizar a venda?", "Finalizar", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     ObjectoEditar.Situacao = true;
                 }
             }
+
             await base.ExecutarSalvar(parameter); // Salvar ou atualizar
         }
+
 
         private async Task AtualizarItensVendaAsync(int id)
         {

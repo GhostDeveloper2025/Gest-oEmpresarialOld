@@ -14,10 +14,10 @@ namespace GestãoEmpresarial.Validations
     {
         public VendaValidar()
         {
-            RCodigosDAL codigos = new RCodigosDAL(LoginViewModel.colaborador.IdFuncionario);
+            RCodigosDAL codigos = DI.GetRepositorio<RCodigosDAL>();
             RuleFor(x => x.Cliente.Idcliente).NotEmpty().When(a => a.Cliente != null);
             RuleFor(x => x.Cliente).NotEmpty();
-            RuleFor(x => x.IdCodigoTipoPagamento).NotEmpty();
+            RuleFor(x => x.IdCodigoTipoPagamento).NotEmpty().WithMessage("Selecione um tipo de Pagamento!");
         }
     }
 }

@@ -26,7 +26,24 @@ namespace GestãoEmpresarial.ViewModels
 
         public override List<ClienteModel> GetLista()
         {
-            return Repositorio.ListAsync(null, PesquisaCPF, PesquisaCNPJ, PesquisaCelular, PesquisaNome).Result;
+            // Remove a formatação do CPF e do CNPJ antes da busca
+            string pesquisaCpfSemFormatacao = PesquisaCPF?.Replace(".", "").Replace("-", "");
+            string pesquisaCnpjSemFormatacao = PesquisaCNPJ?.Replace(".", "").Replace("/", "").Replace("-", "");
+            var lista = Repositorio.ListAsync(null, pesquisaCpfSemFormatacao, pesquisaCnpjSemFormatacao, PesquisaCelular, PesquisaNome).Result;
+
+            PesquisaCelular = null;
+            RaisePropertyChanged(nameof(PesquisaCelular));
+
+            PesquisaCPF = null;
+            RaisePropertyChanged(nameof(PesquisaCPF));
+
+            PesquisaCNPJ = null;
+            RaisePropertyChanged(nameof(PesquisaCNPJ));
+
+            PesquisaNome = null;
+            RaisePropertyChanged(nameof(PesquisaNome));
+
+            return lista;
         }
 
         public override bool PodeExecutarPesquisar(object parameter)

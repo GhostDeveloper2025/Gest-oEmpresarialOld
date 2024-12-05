@@ -21,14 +21,15 @@ namespace GestãoEmpresarial.Providers
     {
         public List<int> ListaExclusoes { get; private set; } = new List<int>();
 
+        // Novo pesquisar exclusivo provider
         public async Task<IEnumerable<ProdutoModel>> GetSuggestionsAsync(string filter)
         {
-            var repo = new RProdutoDAL(LoginViewModel.colaborador.IdFuncionario);
+            var repo = DI.GetRepositorio<RProdutoDAL>();
 
             try
             {
-                // Busca os produtos filtrados no banco de dados
-                var list = await repo.ListAsync(filter, null, null, null);
+                // Usando o método específico para autocomplete, que busca por nome e código
+                var list = await repo.ListForAutoCompleteAsync(filter);
 
                 // Limita a 50 registros e filtra a lista de exclusões
                 var listaFiltrada = list
@@ -40,7 +41,6 @@ namespace GestãoEmpresarial.Providers
             }
             catch (Exception ex)
             {
-                // Log de erro ou tratamento da exceção, se necessário
                 Console.WriteLine($"Erro ao obter sugestões de produtos: {ex.Message}");
                 return Enumerable.Empty<ProdutoModel>(); // Retorna uma lista vazia em caso de erro
             }

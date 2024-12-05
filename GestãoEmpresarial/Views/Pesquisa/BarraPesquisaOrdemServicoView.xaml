@@ -4,13 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
+             xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
              xmlns:local="clr-namespace:GestãoEmpresarial.Views.Pesquisa"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <TextBox materialDesign:HintAssist.Hint="Nome Cliente" Text="{Binding PesquisaNomeCliente, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-    <TextBox materialDesign:HintAssist.Hint="N° Os" Text="{Binding PesquisaNumeroOS, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+    <WrapPanel.Resources>
+        <Style TargetType="ComboBox" BasedOn="{StaticResource FormComboBox}"/>
+        <!--Este recurso é utilizado para converter o texto em 
+        cada palavra para que a primeira letra de cada palavra seja maiúscula.-->
+    </WrapPanel.Resources>
+
+    <cc:NumeroTextBox materialDesign:HintAssist.Hint="N° Os" Text="{Binding PesquisaNumeroOS, UpdateSourceTrigger=PropertyChanged}" ToolTip="Digite O N° Os!"></cc:NumeroTextBox>
+    <TextBox materialDesign:HintAssist.Hint="Nome" Text="{Binding PesquisaNomeCliente, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" ToolTip="Digite O Nome!"></TextBox>
     <ComboBox x:Name="CbxStatus" 
-                  Width="250" 
+                  Width="250" ToolTip="Status. OS!"
                   Tag="Buscar" HorizontalAlignment="Left"
                   materialDesign:HintAssist.Hint="Status. OS" 
                   SelectedValuePath="Key" DisplayMemberPath="Value" 

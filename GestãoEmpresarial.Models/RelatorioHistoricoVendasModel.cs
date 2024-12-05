@@ -25,7 +25,7 @@ namespace GestãoEmpresarial.Models
         public int VendedorId { get; set; }
         public string VendedorCpf { get; set; }
         public string VendedorNome { get; set; }
-        public string Situacao { get; set; }
+        public int Situacao { get; set; }
         public decimal TotalProdutos { get; set; }
         public decimal TotalDesconto { get; set; }
         public decimal Subtotal { get; set; }

@@ -106,19 +106,7 @@ namespace GestãoEmpresarial.Repositorios
             {
                 while (await reader.ReadAsync()) // Usando ReadAsync para leitura assíncrona
                 {
-                    var obj = new ColaboradorModel()
-                    {
-                        DataCadastro = DALHelper.GetDateTime(reader, "DataCadastro").GetValueOrDefault(),
-                        IdFuncionario = reader.GetInt32("IdFuncionario"),
-                        Nome = DALHelper.GetString(reader, "Nome"),
-                        CPF = DALHelper.GetString(reader, "CPF"),
-                        Telefone = DALHelper.GetString(reader, "Telefone"),
-                        Email = DALHelper.GetString(reader, "Email"),
-                        Senha = DALHelper.GetString(reader, "Senha"),
-                        Cargo = DALHelper.GetString(reader, "Cargo"),
-                        Comissao = DALHelper.GetDecimal(reader, "Comissao"),
-                        Ativo = DALHelper.GetBool(reader, "Ativo"),
-                    };
+                    var obj = Mapeador.Map(new ColaboradorModel(), reader);
                     list.Add(obj);
                 }
             }

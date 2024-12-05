@@ -14,7 +14,7 @@ namespace GestãoEmpresarial.ViewModels
         public override int Id => ObjectoSelecionado.IdCategoria;
 
         public override string NomeEditarView => nameof(CadastroCategoriaViewModel);
-
+        public string FiltroGlobal { get; set; }
         public override CategoriaModel GetDataGridModel(CategoriaModel item)
         {
             return item;
@@ -22,12 +22,17 @@ namespace GestãoEmpresarial.ViewModels
 
         public override List<CategoriaModel> GetLista()
         {
-            throw new System.NotImplementedException();
+            var lista = Repositorio.ListAsync(FiltroGlobal).Result;
+
+            FiltroGlobal = null;
+            RaisePropertyChanged(nameof(FiltroGlobal));
+            return lista;
         }
 
         public override bool PodeExecutarPesquisar(object parameter)
         {
-            throw new System.NotImplementedException();
+            return string.IsNullOrWhiteSpace(FiltroGlobal) == false;
         }
+
     }
 }

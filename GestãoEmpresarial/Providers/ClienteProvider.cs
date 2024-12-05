@@ -17,7 +17,7 @@ namespace GestãoEmpresarial.Providers
     {
         public async Task<IEnumerable> GetSuggestionsAsync(string filter)
         {
-            var repo = new RClienteDAL(LoginViewModel.colaborador.IdFuncionario);
+            var repo = DI.GetRepositorio<RClienteDAL>();
 
             try
             {

@@ -6,8 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace GestãoEmpresarial
 {
@@ -18,6 +22,7 @@ namespace GestãoEmpresarial
     internal class Switcher
     {
         public static MainWindow pageSwitcher;
+        public static LayoutView layoutSwitcher;
 
         /// <summary>
         /// É um construtor (metodo) estático, para inicializar as variaveis necessárias.
@@ -28,12 +33,19 @@ namespace GestãoEmpresarial
 
         public static void Switch(TreeviewMenu menu)
         {
-            pageSwitcher.Navigate(menu);
+            layoutSwitcher.Navigate(menu);
         }
 
         public static void Switch(UserControl view)
         {
+            layoutSwitcher.Navigate(view);
+            Focus(view);
+        }
+
+        public static void SwitchPagina(UserControl view)
+        {
             pageSwitcher.Navigate(view);
+            Focus(view);
         }
 
         public static void Imprimir(UserControl uc)
@@ -41,6 +53,21 @@ namespace GestãoEmpresarial
             PrintDialog printDlg = new PrintDialog();
             printDlg.ShowDialog();
             printDlg.PrintVisual(uc, "User Control Printing.");
+        }
+
+        public static void Focus(UIElement element)
+        {
+            if (!element.Focus())
+            {
+                element.Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(delegate ()
+                {
+                    if (element.Focusable == true)
+                    {
+                        element.Focus();
+                        Keyboard.Focus(element);
+                    }
+                }));
+            }
         }
     }
 }

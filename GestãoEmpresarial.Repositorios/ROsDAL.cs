@@ -99,20 +99,26 @@ namespace GestãoEmpresarial.Repositorios
         {
             var parametros = new List<MySqlParameter>();
             var conditions = new List<string>();
+
             AddParameterCondition(parametros, conditions, "IdOS", idOs);
             AddParameterCondition(parametros, conditions, "DataEntrada", dataEntrada);
-            AddParameterCondition(parametros, conditions, "idcodigostatus", idStatus);
 
-            if (string.IsNullOrWhiteSpace(nomeCliente) == false)
+            // Adiciona a condição de status apenas se idStatus não for nulo
+            if (idStatus.HasValue)
+            {
+                AddParameterCondition(parametros, conditions, "idcodigostatus", idStatus);
+            }
+
+            if (!string.IsNullOrWhiteSpace(nomeCliente))
             {
                 AddParameter(parametros, "@nomeCliente", nomeCliente);
                 conditions.Add("Idcliente IN (SELECT idcliente FROM tb_cliente WHERE nome LIKE CONCAT(@nomeCliente, '%'))");
             }
 
-            string conditionsJoin = string.Join(" OR ", conditions);
+            string conditionsJoin = string.Join(" AND ", conditions); // Usar "AND" para combinar condições
             string query = $@"SELECT IdOs, DataEntrada, DataFinalizacao, IdCadastrante, IdCliente, Finalizado, Ferramenta, Modelo, Obs, IdTecnico,
-                 IdResponsavel, TotalMaoObra, Box, Garantia, SubTotalProduto, DescontoProduto, TotalProduto, TotalOS, idcodigostatus, idcodigomarcasf
-                 FROM tb_os WHERE {conditionsJoin} LIMIT 200";  // Adicionando LIMIT 200 para limitar o número de registros
+     IdResponsavel, TotalMaoObra, Box, Garantia, SubTotalProduto, DescontoProduto, TotalProduto, TotalOS, idcodigostatus, idcodigomarcasf
+     FROM tb_os WHERE {conditionsJoin} LIMIT 200";
 
             List<OrdemServicoModel> lista = new List<OrdemServicoModel>();
             using (MySqlDataReader reader = ExecuteReader(query, parametros.ToArray()))

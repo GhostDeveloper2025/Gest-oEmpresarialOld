@@ -56,9 +56,7 @@
                           SelectedValue="{Binding ObjectoEditar.IdCodigoTipoPagamento,  
                     UpdateSourceTrigger=PropertyChanged}"
                           />
-            <TextBox 
-                 Text="{Binding ObjectoEditar.DataFinalizacao, Mode=OneWay, StringFormat=dd/MM/yyyy hh:mm:ss}">
-            </TextBox>
+            
         </StackPanel>
         <StackPanel Grid.Row="2">
             <Grid Margin="0,15,0,0">
@@ -139,13 +137,7 @@
                         <TextBlock Text="Adicionar" Style="{StaticResource ButtonText}"/>
                     </StackPanel>
                 </Button>
-                <Button Style="{StaticResource ButtonGlobal}"
-                    Click="Imprimir_Click">
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Height="40" Width="40" Kind="Printer" Style="{StaticResource IconsButtonGlobal}"/>
-                        <TextBlock Text="Imprimir" Style="{StaticResource ButtonText}"/>
-                    </StackPanel>
-                </Button>
+                
             </WrapPanel>
             <TextBlock 
                 HorizontalAlignment="Left" 

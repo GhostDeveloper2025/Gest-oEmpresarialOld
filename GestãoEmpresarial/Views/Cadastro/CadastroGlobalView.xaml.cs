@@ -28,5 +28,13 @@ namespace GestãoEmpresarial.Views
             fContainer.Children.Clear();
             fContainer.Children.Add(view);
         }
+
+        private void Imprimir_Click(object sender, RoutedEventArgs e)
+        {
+            int? id = ((CadastroVendaViewModel)DataContext).Id;
+            var func = DI.CadastrosViews[nameof(RelatorioReciboVendaViewModel)];
+            if (id.HasValue)
+                Switcher.Imprimir(func(id));
+        }
     }
 }

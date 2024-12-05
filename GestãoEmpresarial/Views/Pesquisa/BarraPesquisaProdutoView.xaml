@@ -4,13 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
              xmlns:local="clr-namespace:GestãoEmpresarial.Views.Pesquisa"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <TextBox materialDesign:HintAssist.Hint="Nome" Text="{Binding PesquisaNome, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-    <TextBox materialDesign:HintAssist.Hint="Codigo Produto" Text="{Binding PesquisaCodigo, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-    <TextBox materialDesign:HintAssist.Hint="Localização" Text="{Binding PesquisaLocalizacao, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-    <ComboBox Width="250"
+    <WrapPanel.Resources>
+        <Style TargetType="ComboBox" BasedOn="{StaticResource FormComboBox}"/>
+        <!--Este recurso é utilizado para converter o texto em 
+        cada palavra para que a primeira letra de cada palavra seja maiúscula.-->
+    </WrapPanel.Resources>
+    <TextBox materialDesign:HintAssist.Hint="Nome" Text="{Binding PesquisaNome, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" ToolTip="Digite O Nome!"></TextBox>
+    <TextBox materialDesign:HintAssist.Hint="Codigo Produto" Text="{Binding PesquisaCodigo, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" ToolTip="Digite O Codigo Produto!"></TextBox>
+    <TextBox materialDesign:HintAssist.Hint="Localização" Text="{Binding PesquisaLocalizacao, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" ToolTip="Digite A Localização!"></TextBox>
+    <ComboBox Width="250" ToolTip="Marcas!"
               materialDesign:HintAssist.Hint="Marca" 
               SelectedValuePath="Key" DisplayMemberPath="Value" 
               materialDesign:ColorZoneAssist.Mode="SecondaryLight"

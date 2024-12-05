@@ -3,6 +3,8 @@ using GestãoEmpresarial.Validations;
 using GestãoEmpresarial.ViewModels;
 using GestãoEmpresarial.Views;
 using GestãoEmpresarial.Views.Cadastro;
+using GestãoEmpresarial.Views.Layout;
+using GestãoEmpresarial.Views.Login;
 using GestãoEmpresarial.Views.Pesquisa;
 using GestãoEmpresarial.Views.Relatorios;
 using System;
@@ -21,10 +23,10 @@ namespace GestãoEmpresarial
     /// </summary>
     internal static class DI
     {
-        private static TRepositorio GetRepositorio<TRepositorio>()
+        internal static TRepositorio GetRepositorio<TRepositorio>()
         where TRepositorio : class
         {
-            return Activator.CreateInstance(typeof(TRepositorio), LoginViewModel.colaborador.IdFuncionario) as TRepositorio;
+            return Activator.CreateInstance(typeof(TRepositorio), LoginViewModel.Instancia.colaborador.IdFuncionario) as TRepositorio;
         }
         /// <summary>
         /// Retorna a tela completa (CadastroView), pronta para ser exibida e manipulada
@@ -129,6 +131,12 @@ namespace GestãoEmpresarial
         {
             return RelatoriosViews[v]();
         }
+
+        public static Dictionary<string, Func<UserControl>> PaginasView = new Dictionary<string, Func<UserControl>>
+        {
+            { nameof(LayoutView), () => new LayoutView()  },
+            { nameof(LoginView),  () => new LoginView()  }
+        };
 
         public static Dictionary<string, Func<int?, UserControl>> CadastrosViews = new Dictionary<string, Func<int?, UserControl>>()
         {

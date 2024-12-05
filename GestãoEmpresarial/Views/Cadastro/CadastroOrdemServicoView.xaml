@@ -228,13 +228,7 @@
                     <TextBlock Text="Adicionar" Style="{StaticResource ButtonText}"/>
                 </StackPanel>
             </Button>
-            <Button Style="{StaticResource ButtonGlobal}"
-                    Click="Imprimir_Click">
-                <StackPanel Orientation="Horizontal">
-                    <materialDesign:PackIcon Height="40" Width="40" Kind="Printer" Style="{StaticResource IconsButtonGlobal}"/>
-                    <TextBlock Text="Imprimir" Style="{StaticResource ButtonText}"/>
-                </StackPanel>
-            </Button>
+           
         </WrapPanel>
         <StackPanel Grid.Row="12">
             <TextBlock  

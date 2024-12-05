@@ -103,6 +103,7 @@
     <Compile Include="RColaboradorDAL.cs" />
     <Compile Include="RConexao.cs" />
     <Compile Include="REstoqueDAL.cs" />
+    <Compile Include="RLoginDAL.cs" />
     <Compile Include="RRelatorioHistoricoVendasDAL.cs" />
     <Compile Include="RItensOSDAL.cs" />
     <Compile Include="RItensVendaDAL.cs" />

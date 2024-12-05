@@ -76,29 +76,52 @@ namespace GestãoEmpresarial.Repositorios
             object id = ExecuteScalar(query, lista.ToArray());
             return Convert.ToInt32(id);
         }
+        //Nova Pesquisa Separando Buscas Normais Dos Providers
+        private string GetSearchConditions(string nome, string codigo, string localizacao, string marca, List<MySqlParameter> parametros, bool isAutoComplete = false)
+        {
+            var conditions = new List<string>();
 
-        // Lista produtos com filtro de forma assíncrona, limitando a 200 resultados
+            if (isAutoComplete)
+            {
+                AddParameter(parametros, "@Filter", nome);
+                conditions.Add("(a.Nome LIKE CONCAT(@Filter, '%') OR a.CodProduto LIKE CONCAT(@Filter, '%'))");
+            }
+            else
+            {
+                AddParameterCondition(parametros, conditions, "CodProduto", codigo);
+                AddParameterCondition(parametros, conditions, "localizacao", localizacao);
+                AddParameterCondition(parametros, conditions, "IdMarcaF", marca);
+
+                if (!string.IsNullOrWhiteSpace(nome))
+                {
+                    AddParameter(parametros, "@Nome", nome);
+                    conditions.Add("a.Nome LIKE CONCAT(@Nome, '%')");
+                }
+            }
+
+            return string.Join(" OR ", conditions);
+        }
+
+        // Métodos ListAsync e ListForAutoCompleteAsync que usam o GetSearchConditions
+
         public async Task<List<ProdutoModel>> ListAsync(string pesquisaNome, string pesquisaCodigo, string pesquisaLocalizacao, string pesquisaMarca)
         {
             List<MySqlParameter> parametros = new List<MySqlParameter>();
-
-            var conditions = new List<string>();
-            AddParameterCondition(parametros, conditions, "CodProduto", pesquisaCodigo);
-            AddParameterCondition(parametros, conditions, "localizacao", pesquisaLocalizacao);
-            AddParameterCondition(parametros, conditions, "IdMarcaF", pesquisaMarca);
-
-            if (string.IsNullOrWhiteSpace(pesquisaNome) == false)
-            {
-                AddParameter(parametros, "@Nome", pesquisaNome);
-                conditions.Add("a.Nome LIKE CONCAT(@Nome, '%')");
-            }
-
-            string conditionsJoin = string.Join(" OR ", conditions);
+            string conditionsJoin = GetSearchConditions(pesquisaNome, pesquisaCodigo, pesquisaLocalizacao, pesquisaMarca, parametros);
             string query = SelectQuery + " WHERE " + conditionsJoin + " ORDER BY a.Nome ASC LIMIT 200";
 
             return await GetListaAsync(query, parametros);
         }
-        //Este codigo Foi Uma melhoria que o Chat GPT me ajudou a Criar
+
+        public async Task<List<ProdutoModel>> ListForAutoCompleteAsync(string filter)
+        {
+            List<MySqlParameter> parametros = new List<MySqlParameter>();
+            string conditionsJoin = GetSearchConditions(filter, null, null, null, parametros, isAutoComplete: true);
+            string query = SelectQuery + " WHERE " + conditionsJoin + " ORDER BY a.Nome ASC LIMIT 50";
+
+            return await GetListaAsync(query, parametros);
+        }
+
         /// <summary>
         /// *   Coleta de IDs de colaboradores: A lógica agora coleta todos os IDs de colaboradores antes de entrar no loop,
         ///       evitando múltiplas chamadas assíncronas.

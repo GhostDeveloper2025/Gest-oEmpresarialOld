@@ -51,7 +51,6 @@ namespace GestãoEmpresarial.ViewModels
         {
             return new DataGridOrdemServicoModel(item, StatusList);
         }
-
         public override List<OrdemServicoModel> GetLista()
         {
             int? idStatus = null;
@@ -62,15 +61,29 @@ namespace GestãoEmpresarial.ViewModels
             if (int.TryParse(PesquisaNumeroOS, out int idOsAux))
                 idOs = idOsAux;
 
-            return Repositorio.ListAsync(PesquisaNomeCliente, idStatus, null, idOs).Result;
+            // Executa a consulta com os filtros aplicados
+            var lista = Repositorio.ListAsync(PesquisaNomeCliente, idStatus, null, idOs).Result;
+
+            // Limpa os campos de pesquisa após a consulta
+            PesquisaNomeCliente = null;
+            RaisePropertyChanged(nameof(PesquisaNomeCliente));
+
+            PesquisaNumeroOS = null;
+            RaisePropertyChanged(nameof(PesquisaNumeroOS));
+
+            PesquisaStatus = null;
+            RaisePropertyChanged(nameof(PesquisaStatus));
+
+            return lista;
         }
 
         public override bool PodeExecutarPesquisar(object parameter)
         {
-            return string.IsNullOrWhiteSpace(PesquisaNomeCliente) == false
-                 || string.IsNullOrWhiteSpace(PesquisaNumeroOS) == false
-                 || string.IsNullOrWhiteSpace(PesquisaStatus) == false;
+            return !string.IsNullOrWhiteSpace(PesquisaNomeCliente)
+                || !string.IsNullOrWhiteSpace(PesquisaNumeroOS)
+                || !string.IsNullOrWhiteSpace(PesquisaStatus);
         }
+
     }
 }
 

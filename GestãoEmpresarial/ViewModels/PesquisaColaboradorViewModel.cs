@@ -18,7 +18,7 @@ namespace GestãoEmpresarial.ViewModels
         public override int Id => ObjectoSelecionado.IdFuncionario;
 
         public override string NomeEditarView => nameof(CadastroColaboradorViewModel);
-
+        public string FiltroGlobal { get; set; }
         public override ColaboradorModel GetDataGridModel(ColaboradorModel item)
         {
             return item;
@@ -26,12 +26,19 @@ namespace GestãoEmpresarial.ViewModels
 
         public override List<ColaboradorModel> GetLista()
         {
-            throw new NotImplementedException();
+            var lista = Repositorio.ListAsync(FiltroGlobal).Result;
+
+            FiltroGlobal = null;
+            RaisePropertyChanged(nameof(FiltroGlobal));
+            return lista;
         }
 
         public override bool PodeExecutarPesquisar(object parameter)
         {
-            throw new NotImplementedException();
+            return string.IsNullOrWhiteSpace(FiltroGlobal) == false;
         }
+
+
+
     }
 }

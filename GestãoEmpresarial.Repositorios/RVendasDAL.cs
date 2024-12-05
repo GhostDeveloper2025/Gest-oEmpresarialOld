@@ -68,22 +68,26 @@ namespace GestãoEmpresarial.Repositorios
             return await GetListaAsync(false, nomeCliente, idCodigoTipoPagamento, IdVenda);
         }
 
-        public async Task<List<VendaModel>> GetListaAsync(bool comItens, string nomeCliente, int? idCodigoTipoPagamento, int? IdVenda)
+        public async Task<List<VendaModel>> GetListaAsync(bool comItens, string nomeCliente, int? idCodigoTipoPagamento, int? idVenda)
         {
             var parametros = new List<MySqlParameter>();
             var conditions = new List<string>();
-            AddParameterCondition(parametros, conditions, "IdVenda", IdVenda);
-            AddParameterCondition(parametros, conditions, "IdCodigoTipoPagamento", idCodigoTipoPagamento);
+            AddParameterCondition(parametros, conditions, "IdVenda", idVenda);
 
-            if (string.IsNullOrWhiteSpace(nomeCliente) == false)
+            if (idCodigoTipoPagamento.HasValue)
             {
-                AddParameter(parametros, "@nomeCliente", nomeCliente);
-                conditions.Add("Idcliente IN (SELECT idcliente FROM tb_cliente WHERE nome LIKE CONCAT(@nomeCliente, '%'))");
+                AddParameterCondition(parametros, conditions, "IdCodigoTipoPagamento", idCodigoTipoPagamento);
             }
 
-            string conditionsJoin = string.Join(" OR ", conditions);
-            string query = $@"SELECT IdVenda, DataVenda, DataFinalizacao, Situacao, ValorFrete, Idcliente, IdFuncionario, IdCodigoTipoPagamento
-                FROM tb_venda WHERE {conditionsJoin} LIMIT 200"; // Limitar o número de registros
+            if (!string.IsNullOrWhiteSpace(nomeCliente))
+            {
+                AddParameter(parametros, "@nomeCliente", nomeCliente);
+                conditions.Add("IdCliente IN (SELECT IdCliente FROM tb_cliente WHERE nome LIKE CONCAT(@nomeCliente, '%'))");
+            }
+
+            string conditionsJoin = conditions.Count > 0 ? string.Join(" AND ", conditions) : "1=1";
+            string query = $@"SELECT IdVenda, DataVenda, DataFinalizacao, Situacao, ValorFrete, IdCliente, IdFuncionario, IdCodigoTipoPagamento
+                      FROM tb_venda WHERE {conditionsJoin} LIMIT 200";
 
             List<VendaModel> lista = new List<VendaModel>();
             using (MySqlDataReader reader = ExecuteReader(query, parametros.ToArray()))
@@ -91,25 +95,22 @@ namespace GestãoEmpresarial.Repositorios
                 var idsClientes = new HashSet<int>();
                 var idsColaboradores = new HashSet<int>();
 
-                // Coletar IDs de clientes e colaboradores
                 while (await reader.ReadAsync())
                 {
                     var obj = Mapeador.Map(new VendaModel(), reader);
                     lista.Add(obj);
-
                     idsClientes.Add(obj.IdCliente);
                     idsColaboradores.Add(obj.IdFuncionario);
                 }
 
-                // Buscar clientes e colaboradores em uma única chamada
                 var clientes = await rClienteDAL.GetByIdsAsync(idsClientes.ToList());
                 var colaboradores = await rColaboradorDAL.GetByIdsAsync(idsColaboradores.ToList());
 
-                // Atribuir clientes e colaboradores a cada venda
                 foreach (var venda in lista)
                 {
                     venda.Cliente = clientes.FirstOrDefault(c => c.Idcliente == venda.IdCliente);
-                    venda.Cadastrante = colaboradores.FirstOrDefault(c => c.IdFuncionario == venda.IdCadastrante);
+                    // venda.Cadastrante = colaboradores.FirstOrDefault(c => c.IdFuncionario == venda.IdFuncionario);
+                    venda.Vendedor = colaboradores.FirstOrDefault(c => c.IdFuncionario == venda.IdFuncionario);
 
                     if (comItens)
                     {
@@ -123,17 +124,12 @@ namespace GestãoEmpresarial.Repositorios
 
         public async Task UpdateAsync(VendaModel t)
         {
-            string query = "UPDATE tb_venda " +
-                           "SET DataFinalizacao = CASE WHEN Situacao = 0 AND @Situacao = 1 THEN NOW() ELSE DataFinalizacao END, " +
-                           "ValorFrete = @ValorFrete, Situacao = @Situacao, IdCodigoTipoPagamento = @IdCodigoTipoPagamento " +
-                           "WHERE IdVenda = @Id";
-
             List<MySqlParameter> lista = new List<MySqlParameter>();
-            AddParameter(lista, "@id", t.IdVenda);
-            AddParameter(lista, "@Situacao", t.Situacao);
-            AddParameter(lista, "@ValorFrete", t.ValorFrete);
-            AddParameter(lista, "@IdCodigoTipoPagamento", t.IdCodigoTipoPagamento);
-            ExecuteNonQuery(query, lista.ToArray()); // Execução assíncrona
+            AddParameter(lista, "id", t.IdVenda);
+            AddParameter(lista, "sitcao", t.Situacao);
+            AddParameter(lista, "valorFrete", t.ValorFrete);
+            AddParameter(lista, "idCodigoTipoPagamento", t.IdCodigoTipoPagamento);
+            ExecuteNonQuery("usp_upd_venda", lista.ToArray(), true); // Execução assíncrona
         }
 
         public VendaModel GetById(int id)
@@ -141,5 +137,6 @@ namespace GestãoEmpresarial.Repositorios
             return GetByIdAsync(id).Result;
         }
     }
+
 }
 

@@ -25,7 +25,7 @@ namespace GestãoEmpresarial.Models
         public bool Situacao { get; set; }
         public DateTime DataVenda { get; set; }
         public DateTime? DataFinalizacao { get; set; }
-        public ColaboradorModel Cadastrante { get; set; }
+        public ColaboradorModel Vendedor { get; set; }
 
         public decimal ValorFrete { get; set; }
         public int IdCodigoTipoPagamento { get; set; }
@@ -33,6 +33,5 @@ namespace GestãoEmpresarial.Models
 
         public ClienteModel Cliente { get; set; }
         public int IdCliente { get; set; }
-        public int IdCadastrante { get; set; }
     }
 }

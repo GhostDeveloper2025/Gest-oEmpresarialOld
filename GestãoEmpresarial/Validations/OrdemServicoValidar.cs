@@ -15,7 +15,7 @@ namespace GestãoEmpresarial.Validations
         //Cada regra é independente (ou seja, cada regra tem de ser verdade)        
         public OrdemServicoValidar()
         {
-            RCodigosDAL codigos = new RCodigosDAL(LoginViewModel.colaborador.IdFuncionario);
+            RCodigosDAL codigos = DI.GetRepositorio<RCodigosDAL>();
             //var prontoParaConsertoId = codigos.GetStatusProntoParaConsertoAsync().Result.Id;
             var orcamentoConcluidoId = codigos.GetStatusOrcamentoConcluidoAsync().Result.Id;
 

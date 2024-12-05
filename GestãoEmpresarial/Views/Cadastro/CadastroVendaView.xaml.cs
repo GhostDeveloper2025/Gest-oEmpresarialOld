@@ -30,12 +30,12 @@ namespace GestãoEmpresarial.Views.Cadastro
             Methods.AddColumnToDataGrid(DgItensModel, typeof(ItemVendaModelObservavel));
         }
 
-        private void Imprimir_Click(object sender, RoutedEventArgs e)
-        {
-            int? id = ((CadastroVendaViewModel)DataContext).Id;
-            var func = DI.CadastrosViews[nameof(RelatorioReciboVendaViewModel)];
-            if (id.HasValue)
-                Switcher.Imprimir(func(id));
-        }
+        //private void Imprimir_Click(object sender, RoutedEventArgs e)
+        //{
+        //    int? id = ((CadastroVendaViewModel)DataContext).Id;
+        //    var func = DI.CadastrosViews[nameof(RelatorioReciboVendaViewModel)];
+        //    if (id.HasValue)
+        //        Switcher.Imprimir(func(id));
+        //}
     }
 }

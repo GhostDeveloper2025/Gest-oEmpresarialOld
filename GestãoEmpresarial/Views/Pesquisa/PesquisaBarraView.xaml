@@ -10,7 +10,5 @@
              mc:Ignorable="d" 
              HorizontalAlignment="Right"
              d:DesignHeight="450" d:DesignWidth="800">
-    <TextBox MinWidth="100"
-             Text="{Binding FiltroGlobal, UpdateSourceTrigger=PropertyChanged,  
-                    Converter={utils:CapitalizeWordsConverter}}"/>
+    <TextBox materialDesign:HintAssist.Hint="Nome" Text="{Binding FiltroGlobal, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" ToolTip="Digite O Nome!"/>
 </WrapPanel>

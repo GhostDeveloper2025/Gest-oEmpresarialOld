@@ -12,6 +12,21 @@ namespace GestãoEmpresarial.Repositorios
 {
     internal class Mapeador
     {
+        internal static ColaboradorModel Map(ColaboradorModel model, MySqlDataReader reader)
+        {
+            model.DataCadastro = DALHelper.GetDateTime(reader, "DataCadastro").GetValueOrDefault();
+            model.IdFuncionario = reader.GetInt32("IdFuncionario");
+            model.Nome = DALHelper.GetString(reader, "Nome");
+            model.CPF = DALHelper.GetString(reader, "CPF");
+            model.Telefone = DALHelper.GetString(reader, "Telefone");
+            model.Email = DALHelper.GetString(reader, "Email");
+            model.Senha = DALHelper.GetString(reader, "Senha");
+            model.Cargo = DALHelper.GetString(reader, "Cargo");
+            model.Comissao = DALHelper.GetDecimal(reader, "Comissao");
+            model.Ativo = DALHelper.GetBool(reader, "Ativo");
+            return model;
+        }
+
         internal static VendaModel Map(VendaModel model, MySqlDataReader reader)
         {
             model.IdVenda = reader.GetInt32("IdVenda");
@@ -21,7 +36,7 @@ namespace GestãoEmpresarial.Repositorios
             model.Situacao = DALHelper.GetBool(reader, "Situacao");
             model.ValorFrete = DALHelper.GetDecimal(reader, "ValorFrete");
             model.IdCliente = DALHelper.GetInt32(reader, "IdCliente").Value;
-            model.IdCadastrante = DALHelper.GetInt32(reader, "IdFuncionario").Value;
+            model.IdFuncionario = DALHelper.GetInt32(reader, "IdFuncionario").Value;
 
             return model;
         }

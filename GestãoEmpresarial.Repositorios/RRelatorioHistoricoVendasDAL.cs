@@ -44,7 +44,7 @@ namespace GestãoEmpresarial.Repositorios
                         VendedorId = reader.GetInt32("vendedor_id"),
                         VendedorCpf = reader.GetString("vendedor_cpf"),
                         VendedorNome = reader.GetString("vendedor_nome"),
-                        Situacao = reader.GetString("situacao"),
+                        Situacao = reader.GetInt32("situacao"),
                         TotalProdutos = reader.GetDecimal("totalprodutos"),
                         TotalDesconto = reader.GetDecimal("totaldesconto"),
                         Subtotal = reader.GetDecimal("subtotal"),

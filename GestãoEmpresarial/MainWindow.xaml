@@ -4,34 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:busyIndicator="https://github.com/moh3ngolshani/BusyIndicator"
         Background="{DynamicResource color37 }"
         TextElement.FontWeight="Medium"
         TextElement.FontSize="18"
         FontFamily="{DynamicResource CustomFont4}"
-        xmlns:local="clr-namespace:GestãoEmpresarial"
-        xmlns:layout="clr-namespace:GestãoEmpresarial.Views.Layout"
         mc:Ignorable="d" 
         WindowState="Maximized"
         Title="MainWindow" Height="450" Width="800">
-    <DockPanel >
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel Background="{StaticResource color59}">
-                <!--Painel De Informações:-->
-                <TextBlock Text=" VERSÃO DO SOFTWARE" Foreground="{StaticResource color8}" />
-                <TextBlock Text=" V 1.0" Foreground="{StaticResource color20}"/>
-                <layout:MenuView  ></layout:MenuView>
-            </StackPanel>
-        </ScrollViewer>
-
-        <busyIndicator:BusyMask x:Name="BusyIndicator"
-                                DockPanel.Dock="Bottom"
-                                BusyContent=""
-                                IndicatorType="BouncingDot" 
-                                Background="Transparent">
-            <Border Margin="10,10,10,10" Background="{StaticResource color59}" CornerRadius="10">
-                <Grid Name="fContainer" Margin="10,10,10,10" Background="{StaticResource color59}" />
-            </Border>
-        </busyIndicator:BusyMask>
-    </DockPanel>
+    <Grid Name="PaginaPrincipal"></Grid>
 </Window>
