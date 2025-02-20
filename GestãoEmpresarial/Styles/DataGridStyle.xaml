@@ -2,71 +2,69 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls">
 
-    <!-- Estilo para o DataGrid -->
-    <Style TargetType="{x:Type DataGrid}" x:Key="DataGridStyle">
-        <Setter Property="Background" Value="{StaticResource color45}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource color45}"/>
-        <Setter Property="IsReadOnly" Value="True"/>
+    <!--  Estilo para o DataGrid  -->
+    <Style x:Key="DataGridStyle" TargetType="{x:Type DataGrid}">
+        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="IsReadOnly" Value="True" />
         <Setter Property="SelectionUnit" Value="FullRow" />
-        <!-- Remove a coluna de cabeçalho de linhas -->
-        <Setter Property="RowHeaderWidth" Value="0"/>
-        <Setter Property="RowHeight" Value="35"/>
-        <Setter Property="FontSize" Value="15"/>
+        <!--  Remove a coluna de cabeçalho de linhas  -->
+        <Setter Property="RowHeaderWidth" Value="0" />
+        <Setter Property="RowHeight" Value="35" />
+        <Setter Property="FontSize" Value="15" />
         <!--<Setter Property="FontWeight" Value="Medium"/>-->
         <Setter Property="FontFamily" Value="{DynamicResource CustomFont4}" />
-        <Setter Property="Foreground" Value="{StaticResource color50}"/>
-        <!-- Remove todas as linhas do grid -->
-        <Setter Property="GridLinesVisibility" Value="None"/>
+        <Setter Property="Foreground" Value="{StaticResource FontColor6}" />
+        <!--  Remove todas as linhas do grid  -->
+        <Setter Property="GridLinesVisibility" Value="None" />
     </Style>
-    <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource DataGridStyle}">
-    </Style>
-    <Style TargetType="{x:Type cc:DataGridAuto}" BasedOn="{StaticResource DataGridStyle}">
-    </Style>
-    <!-- Estilo para as células do DataGrid -->
+    <Style BasedOn="{StaticResource DataGridStyle}" TargetType="{x:Type DataGrid}" />
+    <Style BasedOn="{StaticResource DataGridStyle}" TargetType="{x:Type cc:DataGridAuto}" />
+    <!--  Estilo para as células do DataGrid  -->
     <Style TargetType="{x:Type DataGridCell}">
-        <Setter Property="Background" Value="{StaticResource color45}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource color45}"/>
-        <Setter Property="Margin" Value="0,0,30,0"/>
+        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="Margin" Value="0,0,30,0" />
 
-        <!-- Centraliza verticalmente -->
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <!-- Aumenta a espessura da borda inferior -->
-        <Setter Property="BorderThickness" Value="0,0,0,2"/>
-        <!-- Estilo para mudar a cor da fonte ao clicar selecionar -->
+        <!--  Centraliza verticalmente  -->
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <!--  Aumenta a espessura da borda inferior  -->
+        <Setter Property="BorderThickness" Value="0,0,0,2" />
+        <!--  Estilo para mudar a cor da fonte ao clicar selecionar  -->
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource FontsColor2}"/>
+                <Setter Property="Foreground" Value="{StaticResource FontColor6}" />
             </Trigger>
         </Style.Triggers>
     </Style>
-    <!-- Estilo para Mudar a cor da linha ao passar o mouse -->
+    <!--  Estilo para Mudar a cor da linha ao passar o mouse  -->
     <Style TargetType="{x:Type DataGridRow}">
-        <Setter Property="Background" Value="{StaticResource color45}"/>
+        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
         <Style.Triggers>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsMouseOver" Value="True" />
                     <Condition Property="IsSelected" Value="False" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{StaticResource color47}"/>
+                <Setter Property="Background" Value="{StaticResource PrimaryColor8}" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsSelected" Value="True" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{StaticResource color48}"/>
+                <Setter Property="Background" Value="{StaticResource SecondaryColor5}" />
             </MultiTrigger>
         </Style.Triggers>
     </Style>
-    <!-- Estilo para o cabeçalho de coluna -->
+    <!--  Estilo para o cabeçalho de coluna  -->
     <Style TargetType="{x:Type DataGridColumnHeader}">
-        <Setter Property="Background" Value="{StaticResource color45}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource color45}"/>
-        <Setter Property="Height" Value="40"/>
-        <Setter Property="Margin" Value="0,0,30,0"/>
-        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Margin" Value="0,0,30,0" />
+        <Setter Property="FontSize" Value="15" />
         <!--<Setter Property="FontWeight" Value="Medium"/>-->
         <Setter Property="FontFamily" Value="{DynamicResource CustomFont4}" />
-        <Setter Property="Foreground" Value="{StaticResource color49}"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryColor3}" />
     </Style>
 </ResourceDictionary>

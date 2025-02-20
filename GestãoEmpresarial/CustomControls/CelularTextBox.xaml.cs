@@ -31,32 +31,26 @@ namespace GestãoEmpresarial.CustomControls
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var textBox = sender as TextBox;
-            if (textBox != null)
+            Methods.FormatTelefoneCelular(ref textBox);
+        }
+
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (e.Key == Key.Back && textBox.CaretIndex > 0)
             {
-                string phoneNumber = textBox.Text;
+                int caretIndex = textBox.CaretIndex;
 
-                // Remove caracteres não numéricos
-                phoneNumber = Regex.Replace(phoneNumber, @"[^0-9]", "");
+                // Remove o caractere anterior ao cursor, independentemente de ser um dígito ou um caractere de formatação
+                textBox.Text = textBox.Text.Remove(caretIndex - 1, 1);
 
-                // Garante que o comprimento máximo do número de celular seja respeitado
-                if (phoneNumber.Length > 11)
-                {
-                    phoneNumber = phoneNumber.Substring(0, 11);
-                }
+                // Atualiza a posição do cursor
+                textBox.CaretIndex = caretIndex - 1;
 
-                // Insere caracteres no formato desejado
-                if (phoneNumber.Length >= 3)
-                {
-                    phoneNumber = $"({phoneNumber.Substring(0, 2)}) {phoneNumber.Substring(2)}";
-                }
-                if (phoneNumber.Length >= 10)
-                {
-                    phoneNumber = $"{phoneNumber.Substring(0, 9)}-{phoneNumber.Substring(9)}";
-                }
-
-                textBox.Text = phoneNumber;
-                textBox.SelectionStart = phoneNumber.Length; // Mantém o cursor no final
+                // Marca o evento como manipulado para evitar que outros manipuladores de eventos do teclado sejam chamados
+                e.Handled = true;
             }
         }
+
     }
 }

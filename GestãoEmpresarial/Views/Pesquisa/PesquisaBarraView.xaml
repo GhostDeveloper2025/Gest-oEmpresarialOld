@@ -10,5 +10,8 @@
              mc:Ignorable="d" 
              HorizontalAlignment="Right"
              d:DesignHeight="450" d:DesignWidth="800">
-    <TextBox materialDesign:HintAssist.Hint="Nome" Text="{Binding FiltroGlobal, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" ToolTip="Digite O Nome!"/>
+    <TextBox materialDesign:HintAssist.Hint="Nome" 
+             Text="{Binding FiltroGlobal, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" 
+             ToolTip="Digite O Nome!" utils:FocusExtension.IsFocused="{Binding IsTextBoxFocused, Mode=TwoWay}" 
+             utils:EnterKeyBehavior.EnterCommand="{Binding PesquisarCommand}"/>
 </WrapPanel>

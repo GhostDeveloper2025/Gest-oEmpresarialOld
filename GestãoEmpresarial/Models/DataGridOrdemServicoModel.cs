@@ -19,6 +19,7 @@ namespace GestãoEmpresarial.Models
             Modelo = model.Modelo;
             Ferramenta = model.Ferramenta;
             Finalizado = model.Finalizado;
+            TotalOS = model.TotalOS;
             Garantia = model.Garantia;
             DataEntrada = model.DataEntrada;
             DataFinalizacao = model.DataFinalizacao;
@@ -62,14 +63,16 @@ namespace GestãoEmpresarial.Models
 
         //public string Box { get; set; }
         public bool Finalizado { get; set; }
-
+        [DisplayName("Total OS")]
+        public decimal TotalOS { get; set; }
         public bool Garantia { get; set; }
         [DisplayName("Data Entrada")]
         public DateTime DataEntrada { get; set; }
         [DisplayName("Data Finalização")]
         public DateTime? DataFinalizacao { get; set; }
-
-
         
+
+
+
     }
 }

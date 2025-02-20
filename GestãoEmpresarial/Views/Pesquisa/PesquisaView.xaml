@@ -1,60 +1,58 @@
-﻿<UserControl x:Class="GestãoEmpresarial.Views.Pesquisa.PesquisaView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:busyIndicator="https://github.com/moh3ngolshani/BusyIndicator"
-             xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+﻿<UserControl
+    x:Class="GestãoEmpresarial.Views.Pesquisa.PesquisaView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:busyIndicator="https://github.com/moh3ngolshani/BusyIndicator"
+    xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
     <DockPanel>
-        <WrapPanel DockPanel.Dock="Top" HorizontalAlignment="Right">
-            <Grid Name="fContainer" >
-            </Grid>
-            <ToggleButton x:Name="TgbBuscar" 
-                          Style="{StaticResource CustomToggleButtonStyle}" 
-                          Command="{Binding PesquisarCommand, UpdateSourceTrigger=PropertyChanged}" 
-                          Checked="ToggleButton_Checked"/>
+        <WrapPanel HorizontalAlignment="Right" DockPanel.Dock="Top">
+            <Grid Name="fContainer" />
+            <ToggleButton
+                x:Name="TgbBuscar"
+                Checked="ToggleButton_Checked"
+                Command="{Binding PesquisarCommand, UpdateSourceTrigger=PropertyChanged}"
+                Style="{StaticResource ToggleButtonPesquisarStyle}" />
         </WrapPanel>
 
-            <!-- TextBlock para mostrar o número de registros -->
-        <TextBlock DockPanel.Dock="Top" 
-                    Margin="0,10,0,10" 
-                    Foreground="#836EFB"
-                    FontSize="15" 
-                    FontFamily="Cambria Mat" 
-                    FontWeight="Medium">
-                 <Run Text="Número de Registros: " />
-                 <Run Text="{Binding NumberOfRecords}" />
+        <!--  TextBlock para mostrar o número de registros  -->
+        <TextBlock
+            Margin="0,10,0,10"
+            DockPanel.Dock="Top"
+            FontFamily="{StaticResource CustomFont4}"
+            FontSize="15"
+            Foreground="{StaticResource PrimaryColor11}">
+            <Run Text="Número de Registros: " />
+            <Run Text="{Binding NumberOfRecords}" />
         </TextBlock>
-        <busyIndicator:BusyMask x:Name="BusyIndicator" 
-                        IsBusy="{Binding EstaPensando, Mode=TwoWay}" 
-                        IndicatorType="Swirl" 
-                        Background="Transparent" Foreground="{StaticResource color21}"
-                        BusyContent="Por favor aguarde...">
-            <!--Gera as colunas com base no objecto recebido "AutoGenerateColumns"-->
-            <cc:DataGridAuto x:Name="DataGridGlobal"
-                  SelectedItem="{Binding ObjectoSelecionado, Mode=TwoWay}"
-                  ItemsSource="{Binding ListaDaGrid, Mode=OneWay}">
+        <busyIndicator:BusyMask
+            x:Name="BusyIndicator"
+            Background="{StaticResource PrimaryColor2}"
+            BusyContent="Por favor aguarde..."
+            Foreground="{StaticResource PrimaryColor12}"
+            IndicatorType="Swirl"
+            IsBusy="{Binding EstaPensando, Mode=TwoWay}">
+            <!--  Gera as colunas com base no objecto recebido "AutoGenerateColumns"  -->
+            <cc:DataGridAuto
+                x:Name="DataGridGlobal"
+                ItemsSource="{Binding ListaDaGrid, Mode=OneWay}"
+                SelectedItem="{Binding ObjectoSelecionado, Mode=TwoWay}">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Opções">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <WrapPanel>
-                                    <Button Style="{StaticResource ButtonDataGrid}"
-                                        Tag="{StaticResource color13}"
-                                        Cursor="Hand"
-                                        Command="{Binding DataContext.RemoverCommand, ElementName=DataGridGlobal}" 
-                                        CommandParameter="{Binding}">
-                                        <materialDesign:PackIcon  Kind="Trash" Style="{StaticResource IconButton}"/>
-                                    </Button>
-                                    <Button Style="{StaticResource ButtonDataGrid}"
-                                        Tag="{StaticResource color4}"
-                                        Cursor="Hand"
-                                        Click="BtnEditar_Click">
-                                        <materialDesign:PackIcon  Kind="Edit" Style="{StaticResource IconButton}"/>
-                                    </Button>
+                                    <Button
+                                        Command="{Binding DataContext.RemoverCommand, ElementName=DataGridGlobal}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource ButtonDataGridStyle}" />
+
+                                    <Button Click="BtnEditar_Click" Style="{StaticResource ButtonDataGridStyleEditar}" />
                                 </WrapPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -62,6 +60,6 @@
                 </DataGrid.Columns>
             </cc:DataGridAuto>
         </busyIndicator:BusyMask>
-        
+
     </DockPanel>
 </UserControl>

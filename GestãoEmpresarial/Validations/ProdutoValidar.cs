@@ -18,7 +18,7 @@ namespace GestãoEmpresarial.Validations
             RuleFor(x => x.ValorVenda).NotEmpty();
             RuleFor(x => x.Estoque.Localizacao).NotEmpty();
             ////if (LoginViewModel.colaborador.Cargo != "chefe")
-            RuleFor(x => x.Estoque.Quantidade).GreaterThan(0);
+            //RuleFor(x => x.Estoque.Quantidade).GreaterThan(0);
         }
     }
 }

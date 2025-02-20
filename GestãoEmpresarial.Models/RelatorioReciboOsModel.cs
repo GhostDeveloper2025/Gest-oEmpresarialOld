@@ -14,6 +14,8 @@ namespace GestãoEmpresarial.Models
         public string NomeResponsavel { get; set; }
         public string NomeTecnico { get; set; }
         public string NomeCliente { get; set; }
+        public string CelularCliente { get; set; }
+        public string CnpjCliente { get; set; }
         public string NomeMarca { get; set; }
         public string NomeStatus { get; set; }
         public string NomeCadastrante { get; set; }

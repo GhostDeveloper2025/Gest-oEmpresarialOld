@@ -1,22 +1,25 @@
 ﻿<UserControl x:Class="GestãoEmpresarial.Views.Cadastro.CadastroProdutoView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
-             xmlns:wpfcc="http://wpfcontrols.com/"
-             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
              xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:providers="clr-namespace:GestãoEmpresarial.Providers"
-             mc:Ignorable="d" 
-             d:DesignHeight="1000" d:DesignWidth="1150">
+             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
+             xmlns:wpfcc="http://wpfcontrols.com/"
+             d:DesignHeight="1000"
+             d:DesignWidth="1150"
+             mc:Ignorable="d">
     <UserControl.Resources>
-        <Style TargetType="ComboBox" BasedOn="{StaticResource FormComboBox}"/>
-        <!--Este recurso é utilizado para converter o texto em 
-    cada palavra para que a primeira letra de cada palavra seja maiúscula.-->
+        <Style BasedOn="{StaticResource FormComboBox}" TargetType="ComboBox" />
+        <!--
+            Este recurso é utilizado para converter o texto em
+            cada palavra para que a primeira letra de cada palavra seja maiúscula.
+        -->
     </UserControl.Resources>
-    <!--#region Conteúdo do topo... -->
+    <!--#region Conteúdo do topo...-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -26,84 +29,60 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
             <StackPanel Orientation="Horizontal">
-                <TextBox 
-                    Width="250"
-                    materialDesign:HintAssist.Hint="Nome" 
-                    Text="{Binding ObjectoEditar.Nome,
-                    UpdateSourceTrigger=PropertyChanged, 
-                    Converter={utils:CapitalizeWordsConverter}, Mode=TwoWay}"
-                    />
-                <TextBox 
-                    Width="150" 
-                    materialDesign:HintAssist.Hint="Código Produto" 
-                    Text="{Binding ObjectoEditar.CodProduto,
-                    UpdateSourceTrigger=PropertyChanged, 
-                    Converter={utils:CapitalizeWordsConverter}, Mode=TwoWay}"
-                    />
-                <ComboBox 
-                    Width="150" 
-                    materialDesign:HintAssist.Hint="Marcas" 
-                    Tag="Buscar" SelectedValuePath="Key" 
-                    materialDesign:ColorZoneAssist.Mode="SecondaryLight" 
-                    DisplayMemberPath="Value" 
-                    ItemsSource="{Binding MarcasList}"  
-                    SelectedValue="{Binding ObjectoEditar.IdMarca,
-                    UpdateSourceTrigger=PropertyChanged}"
-                    />
-                <ComboBox 
-                    Width="200" 
-                    materialDesign:HintAssist.Hint="Categorias" 
-                    SelectedValuePath="Key" 
-                    materialDesign:ColorZoneAssist.Mode="SecondaryLight" 
-                    DisplayMemberPath="Value" 
-                    ItemsSource="{Binding CategoriasLista}" 
-                    SelectedValue="{Binding ObjectoEditar.IdCategoria,
-                    UpdateSourceTrigger=PropertyChanged}"
-                    />
+                <TextBox Width="250"
+                         materialDesign:HintAssist.Hint="Nome"
+                         utils:FocusExtension.IsFocused="{Binding IsTextBoxFocused, Mode=TwoWay}"
+                         MaxLength="100"
+                         Text="{Binding ObjectoEditar.Nome, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}, Mode=TwoWay}" />
+                <TextBox Width="150"
+                         materialDesign:HintAssist.Hint="Código Produto"
+                         MaxLength="50"
+                         Text="{Binding ObjectoEditar.CodProduto, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}, Mode=TwoWay}" />
+                <ComboBox Width="150"
+                          materialDesign:ColorZoneAssist.Mode="SecondaryLight"
+                          materialDesign:HintAssist.Hint="Marcas"
+                          DisplayMemberPath="Value"
+                          ItemsSource="{Binding MarcasList}"
+                          SelectedValue="{Binding ObjectoEditar.IdMarca, UpdateSourceTrigger=PropertyChanged}"
+                          SelectedValuePath="Key"
+                          Tag="Buscar" />
+                <ComboBox Width="200"
+                          materialDesign:ColorZoneAssist.Mode="SecondaryLight"
+                          materialDesign:HintAssist.Hint="Categorias"
+                          DisplayMemberPath="Value"
+                          ItemsSource="{Binding CategoriasLista}"
+                          SelectedValue="{Binding ObjectoEditar.IdCategoria, UpdateSourceTrigger=PropertyChanged}"
+                          SelectedValuePath="Key" />
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="2">
             <StackPanel Orientation="Horizontal">
-                <cc:MoedaTextBox  
-                    Width="90"
-                    Emoeda="True"  
-                    materialDesign:HintAssist.Hint="Valor Custo" 
-                    Text="{Binding ObjectoEditar.ValorCusto,
-                    UpdateSourceTrigger=PropertyChanged}"
-                    />
-                <cc:MoedaTextBox 
-                    Width="90" 
-                    Emoeda="True" 
-                    materialDesign:HintAssist.Hint="Valor Venda" 
-                    Text="{Binding ObjectoEditar.ValorVenda,
-                    UpdateSourceTrigger=PropertyChanged}"
-                    />
-                <cc:NumeroTextBox 
-                    Width="120" 
-                    materialDesign:HintAssist.Hint="Quantidade" 
-                    MaxLength="9" 
-                    Text="{Binding ObjectoEditar.EstoqueQuantidade,
-                    UpdateSourceTrigger=PropertyChanged}"
-                    />
-                <TextBox 
-                    Width="120" 
-                    materialDesign:HintAssist.Hint="Localização" 
-                    Text="{Binding ObjectoEditar.EstoqueLocalizacao,
-                    UpdateSourceTrigger=PropertyChanged, 
-                    Converter={utils:CapitalizeWordsConverter}, Mode=TwoWay}"
-                    />
-                <TextBox 
-                    Width="300" 
-                    AcceptsReturn="True"  
-                    VerticalAlignment="Stretch" 
-                    materialDesign:HintAssist.Hint="Descrição" 
-                    TextWrapping="Wrap"  
-                    MaxLines="1" 
-                    MaxLength="150" 
-                    Text="{Binding ObjectoEditar.Descricao,  
-                    UpdateSourceTrigger=PropertyChanged,  
-                    Converter={utils:CapitalizeWordsConverter}, Mode=TwoWay}"
-                    />
+                <cc:MoedaTextBox Width="90"
+                                 materialDesign:HintAssist.Hint="Valor Custo"
+                                 Emoeda="True"
+                                 MaxLength="15"
+                                 Text="{Binding ObjectoEditar.ValorCusto, UpdateSourceTrigger=PropertyChanged}" />
+                <cc:MoedaTextBox Width="100"
+                                 materialDesign:HintAssist.Hint="Valor Venda"
+                                 Emoeda="True"
+                                 MaxLength="15"
+                                 Text="{Binding ObjectoEditar.ValorVenda, UpdateSourceTrigger=PropertyChanged}" />
+                <cc:NumeroTextBox Width="120"
+                                  materialDesign:HintAssist.Hint="Quantidade"
+                                  MaxLength="10"
+                                  Text="{Binding ObjectoEditar.EstoqueQuantidade, Converter={utils:DecimalConverter}, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Width="120"
+                         materialDesign:HintAssist.Hint="Localização"
+                         MaxLength="10"
+                         Text="{Binding ObjectoEditar.EstoqueLocalizacao, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}, Mode=TwoWay}" />
+                <TextBox Width="300"
+                         VerticalAlignment="Stretch"
+                         materialDesign:HintAssist.Hint="Descrição"
+                         AcceptsReturn="True"
+                         MaxLength="150"
+                         MaxLines="1"
+                         Text="{Binding ObjectoEditar.Descricao, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}, Mode=TwoWay}"
+                         TextWrapping="Wrap" />
             </StackPanel>
         </StackPanel>
     </Grid>

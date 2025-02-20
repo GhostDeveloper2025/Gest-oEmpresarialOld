@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace GestãoEmpresarial.ViewModels
 {
@@ -20,7 +21,29 @@ namespace GestãoEmpresarial.ViewModels
         /// <summary>
         /// Propriedade que faz bind para saber se pode editar ou inserir
         /// </summary>
-        private readonly bool _podeInserir;
+        private bool _podeInserir;
+        public bool PodeInserir
+        {
+            get => _podeInserir;
+            set
+            {
+                _podeInserir = value;
+                RaisePropertyChanged(nameof(PodeInserir)); // Notifica a UI
+            }
+        }
+
+        /// <summary>
+        /// Este Id é comum e tem um bind na tela comum.
+        /// Como tal tem ser notificado explicitamente.
+        /// </summary>
+        private int? _id;
+        public int? Id { get => _id;
+            set
+            {
+                _id = value;
+                RaisePropertyChanged(nameof(Id)); // Notifica a UI
+            }
+        }
 
         private readonly AbstractValidator<ObjectBD> _validador;
         protected readonly IDAL<ObjectBD> _repositorio;
@@ -37,8 +60,6 @@ namespace GestãoEmpresarial.ViewModels
             SaveCommand = new RelayCommandWithParameterAsync(ExecutarSalvar, PodeExecutarSalvar);
             ObjectoEditar = NovoObjectoEditar();
         }
-
-        public int? Id { get; set; }
 
         public DateTime DataCadastro { get; set; } = DateTime.Now;
         public DateTime DataFinalizacao { get; set; }
@@ -138,7 +159,7 @@ namespace GestãoEmpresarial.ViewModels
                 var text = "Atualizado";
                 if (_podeInserir)
                 {
-                    await InserirObjectoBDAsync();
+                    Id = await InserirObjectoBDAsync();
                     text = "Adicionado";
                 }
                 else
@@ -146,17 +167,23 @@ namespace GestãoEmpresarial.ViewModels
                     await AtualizarObjectoBDAsync();
                 }
 
-                MessageBox.Show($"Registro {text} com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+                ApresentarDialogSucesso(text);
 
-                // Limpa os campos
                 Id = null; // obrigamos a limpar
+                PodeInserir = true; // Garante que a próxima operação será de inserção
                 ObjectoEditar = NovoObjectoEditar();
                 RaisePropertyChanged(nameof(ObjectoEditar));
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Registro Não Pode Ser Salvo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        protected virtual void ApresentarDialogSucesso(string text)
+        {
+            MessageBox.Show($"Registro {text} com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

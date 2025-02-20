@@ -57,26 +57,34 @@ namespace GestãoEmpresarial.Utils
         }
 
         //metodo para usar moeda na textebox no formato en-US para nao conflitar
-        public static void Moeda(ref TextBox text)
+        public static void Moeda(TextBox text)
         {
-            string n = string.Empty;
-            double v = 0;
             try
             {
-                n = text.Text.Replace(".", "").Replace(",", "");
-                if (n.Equals(""))
-                    n = "";
-                n = n.PadLeft(3, '0');
-                if (n.Length > 3 & n.Substring(0, 1) == "0")
-                    n = n.Substring(1, n.Length - 1);
-                v = Convert.ToDouble(n) / 100;
-                //text.Text = string.Format("{0:N}", v);
-                text.Text = string.Format(CultureInfo.GetCultureInfo("en-US"), "{0:N}", v);
+                string input = text.Text
+                    .Replace(".", "")
+                    .Replace(",", "")
+                    .Trim();
+
+                if (string.IsNullOrEmpty(input))
+                {
+                    text.Text = "0.00";
+                    text.SelectionStart = text.Text.Length;
+                    return;
+                }
+
+                // Converte para decimal para evitar imprecisões
+                decimal value = decimal.Parse(input) / 100;
+
+                // Aplica o formato no estilo en-US
+                text.Text = value.ToString("N2", CultureInfo.GetCultureInfo("en-US"));
+
+                // Garante que o cursor fique no final do texto
                 text.SelectionStart = text.Text.Length;
             }
             catch
             {
-
+                // Lida com erros de forma silenciosa (não recomendado para produção)
             }
         }
 
@@ -180,36 +188,6 @@ namespace GestãoEmpresarial.Utils
         }
 
         //Método para formatar Telefone
-        public static void FormatTelefoneFixo(ref TextBox text)
-        {
-            if (text != null)
-            {
-                string phoneNumber = text.Text;
-
-                // Remove caracteres não numéricos
-                phoneNumber = Regex.Replace(phoneNumber, @"[^0-9]", "");
-
-                // Garante que o comprimento máximo do número de telefone seja respeitado
-                if (phoneNumber.Length > 10)
-                {
-                    phoneNumber = phoneNumber.Substring(0, 10);
-                }
-
-                // Insere caracteres no formato desejado
-                if (phoneNumber.Length >= 2)
-                {
-                    phoneNumber = $"({phoneNumber.Substring(0, 2)}) {phoneNumber.Substring(2)}";
-                }
-                if (phoneNumber.Length >= 9)
-                {
-                    phoneNumber = $"{phoneNumber.Substring(0, 9)}-{phoneNumber.Substring(9)}";
-                }
-
-                text.Text = phoneNumber;
-                text.SelectionStart = phoneNumber.Length; // Mantém o cursor no final
-            }
-        }
-
         //public static void FormatTelefoneFixo(ref TextBox text)
         //{
         //    if (text != null)
@@ -228,16 +206,89 @@ namespace GestãoEmpresarial.Utils
         //        // Insere caracteres no formato desejado
         //        if (phoneNumber.Length >= 2)
         //        {
-        //            phoneNumber = $"{phoneNumber.Substring(0, 2)} {phoneNumber.Substring(2)}";
+        //            phoneNumber = $"({phoneNumber.Substring(0, 2)}) {phoneNumber.Substring(2)}";
         //        }
-        //        if (phoneNumber.Length >= 8)
+        //        if (phoneNumber.Length >= 9)
         //        {
-        //            phoneNumber = $"{phoneNumber.Substring(0, 8)}-{phoneNumber.Substring(8)}";
+        //            phoneNumber = $"{phoneNumber.Substring(0, 9)}-{phoneNumber.Substring(9)}";
         //        }
 
         //        text.Text = phoneNumber;
         //        text.SelectionStart = phoneNumber.Length; // Mantém o cursor no final
         //    }
         //}
+
+        //Novo Testes
+        public static void FormatTelefoneFixo(TextBox textBox)
+        {
+            if (textBox != null)
+            {
+                string phoneNumber = textBox.Text;
+
+                // Remove caracteres não numéricos
+                phoneNumber = Regex.Replace(phoneNumber, @"[^0-9]", "");
+
+                // Garante que o comprimento máximo do número de telefone seja respeitado
+                if (phoneNumber.Length > 10)
+                {
+                    phoneNumber = phoneNumber.Substring(0, 10);
+                }
+
+                // Insere caracteres no formato desejado
+                StringBuilder formattedPhoneNumber = new StringBuilder();
+                if (phoneNumber.Length >= 2)
+                {
+                    formattedPhoneNumber.Append($"({phoneNumber.Substring(0, 2)}) ");
+                    if (phoneNumber.Length > 2)
+                    {
+                        formattedPhoneNumber.Append(phoneNumber.Substring(2));
+                    }
+                }
+                else
+                {
+                    formattedPhoneNumber.Append(phoneNumber);
+                }
+
+                if (formattedPhoneNumber.Length >= 9)
+                {
+                    formattedPhoneNumber.Insert(9, "-");
+                }
+
+                textBox.Text = formattedPhoneNumber.ToString();
+                textBox.SelectionStart = textBox.Text.Length; // Mantém o cursor no final
+            }
+        }
+
+
+        //Método para formatar Celular
+        public static void FormatTelefoneCelular(ref TextBox text)
+        {
+            if (text != null)
+            {
+                string phoneNumber = text.Text;
+
+                // Remove caracteres não numéricos
+                phoneNumber = Regex.Replace(phoneNumber, @"[^0-9]", "");
+
+                // Garante que o comprimento máximo do número de telefone seja respeitado (11 dígitos)
+                if (phoneNumber.Length > 11)
+                {
+                    phoneNumber = phoneNumber.Substring(0, 11);
+                }
+
+                // Insere caracteres no formato desejado
+                if (phoneNumber.Length >= 2)
+                {
+                    phoneNumber = $"({phoneNumber.Substring(0, 2)}) {phoneNumber.Substring(2)}";
+                }
+                if (phoneNumber.Length >= 10)
+                {
+                    phoneNumber = $"{phoneNumber.Substring(0, 10)}-{phoneNumber.Substring(10)}";
+                }
+
+                text.Text = phoneNumber;
+                text.SelectionStart = phoneNumber.Length; // Mantém o cursor no final
+            }
+        }
     }
 }

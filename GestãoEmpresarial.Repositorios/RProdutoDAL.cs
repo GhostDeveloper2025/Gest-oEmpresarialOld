@@ -77,14 +77,42 @@ namespace GestãoEmpresarial.Repositorios
             return Convert.ToInt32(id);
         }
         //Nova Pesquisa Separando Buscas Normais Dos Providers
+        //private string GetSearchConditions(string nome, string codigo, string localizacao, string marca, List<MySqlParameter> parametros, bool isAutoComplete = false)
+        //{
+        //    var conditions = new List<string>();
+
+        //    if (isAutoComplete)
+        //    {
+        //        AddParameter(parametros, "@Filter", nome);
+        //        conditions.Add("(a.Nome LIKE CONCAT(@Filter, '%') OR a.CodProduto LIKE CONCAT(@Filter, '%'))");
+        //    }
+        //    else
+        //    {
+        //        AddParameterCondition(parametros, conditions, "CodProduto", codigo);
+        //        AddParameterCondition(parametros, conditions, "localizacao", localizacao);
+        //        AddParameterCondition(parametros, conditions, "IdMarcaF", marca);
+
+        //        if (!string.IsNullOrWhiteSpace(nome))
+        //        {
+        //            AddParameter(parametros, "@Nome", nome);
+        //            conditions.Add("a.Nome LIKE CONCAT(@Nome, '%')");
+        //        }
+        //    }
+
+        //    return string.Join(" OR ", conditions);
+        //}
+
+
+
+        // Este faz a pesquisa em qualquer parte do texto
         private string GetSearchConditions(string nome, string codigo, string localizacao, string marca, List<MySqlParameter> parametros, bool isAutoComplete = false)
         {
             var conditions = new List<string>();
 
             if (isAutoComplete)
             {
-                AddParameter(parametros, "@Filter", nome);
-                conditions.Add("(a.Nome LIKE CONCAT(@Filter, '%') OR a.CodProduto LIKE CONCAT(@Filter, '%'))");
+                AddParameter(parametros, "@Filter", $"%{nome}%");
+                conditions.Add("(a.Nome LIKE @Filter OR a.CodProduto LIKE @Filter)");
             }
             else
             {
@@ -94,13 +122,14 @@ namespace GestãoEmpresarial.Repositorios
 
                 if (!string.IsNullOrWhiteSpace(nome))
                 {
-                    AddParameter(parametros, "@Nome", nome);
-                    conditions.Add("a.Nome LIKE CONCAT(@Nome, '%')");
+                    AddParameter(parametros, "@Nome", $"%{nome}%");
+                    conditions.Add("a.Nome LIKE @Nome");
                 }
             }
 
             return string.Join(" OR ", conditions);
         }
+
 
         // Métodos ListAsync e ListForAutoCompleteAsync que usam o GetSearchConditions
 

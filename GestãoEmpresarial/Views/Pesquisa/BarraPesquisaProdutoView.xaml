@@ -13,10 +13,18 @@
         <!--Este recurso é utilizado para converter o texto em 
         cada palavra para que a primeira letra de cada palavra seja maiúscula.-->
     </WrapPanel.Resources>
-    <TextBox materialDesign:HintAssist.Hint="Nome" Text="{Binding PesquisaNome, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" ToolTip="Digite O Nome!"></TextBox>
-    <TextBox materialDesign:HintAssist.Hint="Codigo Produto" Text="{Binding PesquisaCodigo, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" ToolTip="Digite O Codigo Produto!"></TextBox>
-    <TextBox materialDesign:HintAssist.Hint="Localização" Text="{Binding PesquisaLocalizacao, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" ToolTip="Digite A Localização!"></TextBox>
+    <TextBox materialDesign:HintAssist.Hint="Nome" 
+             Text="{Binding PesquisaNome, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" 
+             ToolTip="Digite O Nome!" utils:FocusExtension.IsFocused="{Binding IsTextBoxFocused, Mode=TwoWay}" 
+             utils:EnterKeyBehavior.EnterCommand="{Binding PesquisarCommand}"></TextBox>
+    <TextBox materialDesign:HintAssist.Hint="Codigo Produto" 
+             Text="{Binding PesquisaCodigo, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" 
+             ToolTip="Digite O Codigo Produto!" utils:EnterKeyBehavior.EnterCommand="{Binding PesquisarCommand}"></TextBox>
+    <TextBox materialDesign:HintAssist.Hint="Localização" 
+             Text="{Binding PesquisaLocalizacao, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" 
+             ToolTip="Digite A Localização!" utils:EnterKeyBehavior.EnterCommand="{Binding PesquisarCommand}"></TextBox>
     <ComboBox Width="250" ToolTip="Marcas!"
+              utils:EnterKeyBehavior.EnterCommand="{Binding PesquisarCommand}"
               materialDesign:HintAssist.Hint="Marca" 
               SelectedValuePath="Key" DisplayMemberPath="Value" 
               materialDesign:ColorZoneAssist.Mode="SecondaryLight"

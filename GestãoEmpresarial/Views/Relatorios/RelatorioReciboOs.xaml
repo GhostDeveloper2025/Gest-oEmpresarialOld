@@ -1,18 +1,19 @@
 ﻿<UserControl x:Class="GestãoEmpresarial.Views.Relatorios.RelatorioReciboOs"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:GestãoEmpresarial.Views.Relatorios"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
-             mc:Ignorable="d" 
-                    d:DesignHeight="800" d:DesignWidth="900">
+             d:DesignHeight="800"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
     <UserControl.Resources>
         <Style TargetType="{x:Type Paragraph}">
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="TextAlignment" Value="Left"/>
-            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextAlignment" Value="Left" />
+            <Setter Property="Foreground" Value="Black" />
         </Style>
         <Style TargetType="{x:Type RichTextBox}">
             <Setter Property="IsReadOnly" Value="True" />
@@ -21,162 +22,307 @@
     <StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Margin="5" Source="/Styles/Logotipo.png"></Image>
-            <RichTextBox Grid.Column="1">
+            <Image Grid.Column="0" Source="/Styles/FM.png" />
+            <RichTextBox Grid.Column="1"
+                         Background="{StaticResource PrimaryColor13}"
+                         BorderThickness="0">
                 <FlowDocument>
-                    <Paragraph FontSize="20">Avenida 24 de Outubro QD P85 LT 09 Nº312 St. dos Funcionários Goiana Go</Paragraph>
-                    <Paragraph FontWeight="Bold">CNPJ: 07.128.038 0001-93</Paragraph>
-                    <Paragraph>Fones: (62) 3945-0404 / (62) 3945-0408 / (62) 98242-3023</Paragraph>
-                    <Paragraph>Email: a_magalhaes1@hotmail.com</Paragraph>
+                    <Paragraph />
+                    <Paragraph Margin="5,5,0,5"
+                               FontFamily="{StaticResource CustomFont3}"
+                               FontSize="20">
+                        Forte Maquinas Ferramentas Eletricas!
+                    </Paragraph>
+                    <Paragraph Margin="5,5,0,5" FontFamily="{StaticResource CustomFont3}">CNPJ: 13.436.516 0001-25</Paragraph>
+                    <Paragraph Margin="5,5,0,5" FontFamily="{StaticResource CustomFont3}">Rua Presidente Rodrigues Alves N° 1.355 Jardim Presidente Goiana Go</Paragraph>
+                    <Paragraph Margin="5,5,0,5" FontFamily="{StaticResource CustomFont3}">Fones: (62) 3258-4646 / (62) 3289-0694</Paragraph>
+                    <Paragraph Margin="5,5,0,5" FontFamily="{StaticResource CustomFont3}">Fones: (62) 3288-7174</Paragraph>
+                    <Paragraph Margin="5,5,0,5" FontFamily="{StaticResource CustomFont3}">Email: fortemaquinas1@hotmail.com</Paragraph>
                 </FlowDocument>
             </RichTextBox>
-            <RichTextBox Grid.Column="2" >
-                <FlowDocument >
-                    <Paragraph FontSize="40">O.S:</Paragraph>
-                    <Paragraph>
-                        <TextBlock Text="N°:"></TextBlock>
-                        <TextBlock Text="{Binding Relatorio.OsModel.IdOs}"></TextBlock>
+            <RichTextBox Grid.Column="2"
+                         Background="{StaticResource PrimaryColor13}"
+                         BorderThickness="0">
+                <FlowDocument>
+                    <Paragraph Margin="5,10,0,5"
+                               FontFamily="{StaticResource CustomFont3}"
+                               FontSize="40"
+                               Foreground="{StaticResource FontColor5}">
+                        O.S:
                     </Paragraph>
                     <Paragraph>
-                        <TextBlock Text="Data Entrada:"></TextBlock>
-                        <TextBlock Text="{Binding Relatorio.OsModel.DataEntrada, Converter={utils:DataPTConverter}}"></TextBlock>
+                        <TextBlock Margin="0,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Foreground="{StaticResource FontColor5}"
+                                   Text="N°:" />
+                        <TextBlock Margin="0,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Foreground="{StaticResource FontColor5}"
+                                   Text="{Binding Relatorio.OsModel.IdOs}" />
                     </Paragraph>
                     <Paragraph>
-                        <TextBlock Text="Data Entrega:"></TextBlock>
-                        <TextBlock Text="{Binding Relatorio.OsModel.DataFinalizacao, Converter={utils:DataPTConverter}}"></TextBlock>
+                        <TextBlock Margin="0,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="Data Entrada:" />
+                        <TextBlock Margin="0,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="{Binding Relatorio.OsModel.DataEntrada, Converter={utils:DataPTConverter}}" />
                     </Paragraph>
                     <Paragraph>
-                        <TextBlock Text="Status:"></TextBlock>
-                        <TextBlock Text="{Binding Relatorio.NomeStatus}"></TextBlock>
+                        <TextBlock Margin="0,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="Data Entrega:" />
+                        <TextBlock Margin="0,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="{Binding Relatorio.OsModel.DataFinalizacao, Converter={utils:DataPTConverter}}" />
+                    </Paragraph>
+                    <Paragraph>
+                        <TextBlock Margin="0,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="Status:" />
+                        <TextBlock Margin="0,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="{Binding Relatorio.NomeStatus}" />
                     </Paragraph>
                 </FlowDocument>
             </RichTextBox>
         </Grid>
-        <WrapPanel>
-            <UniformGrid Height="280">
-                <RichTextBox IsReadOnly="true">
-                    <FlowDocument>
-                        <Paragraph FontSize="20">Cliente:</Paragraph>
-                        <Paragraph>
-                            <TextBlock Text="Nome:"></TextBlock>
-                            <TextBlock Text="{Binding Relatorio.NomeCliente}"></TextBlock>
-                        </Paragraph>
-                        <Paragraph>
-                            <TextBlock Text="Ferramenta:"></TextBlock>
-                            <TextBlock Text="{Binding Relatorio.OsModel.Ferramenta}"></TextBlock>
-                        </Paragraph>
-                        <Paragraph>
-                            <TextBlock Text="Marca:"></TextBlock>
-                            <TextBlock Text="{Binding Relatorio.NomeMarca}"></TextBlock>
-                        </Paragraph>
-                        <Paragraph>
-                            <TextBlock Text="Modelo:"></TextBlock>
-                            <TextBlock Text="{Binding Relatorio.OsModel.Modelo}"></TextBlock>
-                        </Paragraph>
-                        <Paragraph>
-                            <TextBlock Text="Observações:"></TextBlock>
-                            <TextBlock Text="{Binding Relatorio.OsModel.Obs}"></TextBlock>
-                        </Paragraph>
-                    </FlowDocument>
-                </RichTextBox>
-                <RichTextBox IsReadOnly="true">
-                    <FlowDocument>
-                        <Paragraph FontSize="20">Detalhes:</Paragraph>
-                        <Paragraph>
-                            <TextBlock Text="Atendente:"></TextBlock>
-                            <TextBlock Text="{Binding Relatorio.NomeCadastrante}"></TextBlock>
-                        </Paragraph>
-                        <Paragraph>
-                            <TextBlock Text="Técnico:"></TextBlock>
-                            <TextBlock Text="{Binding Relatorio.NomeTecnico}"></TextBlock>
-                        </Paragraph>
-                        <Paragraph>
-                            <TextBlock Text="Resp.Orçamento:"></TextBlock>
-                            <TextBlock Text="{Binding Relatorio.NomeResponsavel}"></TextBlock>
-                        </Paragraph>
-                        <Paragraph>
-                            <TextBlock Text="Garantia:"></TextBlock>
-                            <TextBlock Text="{Binding Relatorio.OsModel.Garantia, Converter={utils:BooleanPTConverter}}"></TextBlock>
-                        </Paragraph>
-                        <Paragraph>
-                            <TextBlock Text="Box:"></TextBlock>
-                            <TextBlock Text="{Binding Relatorio.OsModel.Box}"></TextBlock>
-                        </Paragraph>
-                    </FlowDocument>
-                </RichTextBox>
-            </UniformGrid>
-        </WrapPanel>
-        <DataGrid x:Name="DgItensOsModel" 
-                  AutoGenerateColumns="False"
-                  ItemsSource="{Binding ListItemsObservaveis}">
-        </DataGrid>
-        <UniformGrid>
-            <UniformGrid.Resources>
-                <Style TargetType="TextBox">
-                    <Setter Property="Foreground" Value="Black"></Setter>
-                </Style>
-            </UniformGrid.Resources>
-            <TextBox Text="{Binding Relatorio.TotalProduto, Mode=OneWay}"></TextBox>
-            <TextBox Text="{Binding Relatorio.TotalProduto, Mode=OneWay}"></TextBox>
-            <TextBox Text="{Binding Relatorio.Desconto, Mode=OneWay}"></TextBox>
-            <TextBox Text="{Binding Relatorio.MaoDeObra, Mode=OneWay}"></TextBox>
-        </UniformGrid>
-        <StackPanel></StackPanel>
-        <RichTextBox >
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="450" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <RichTextBox Grid.Column="0"
+                         Background="{StaticResource PrimaryColor15}"
+                         BorderThickness="0"
+                         IsReadOnly="true">
+                <FlowDocument>
+                    <Paragraph Margin="10,5,0,0"
+                               FontFamily="{StaticResource CustomFont3}"
+                               FontSize="20">
+                        Cliente:
+                    </Paragraph>
+                    <Paragraph>
+                        <TextBlock Margin="10,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="Nome:" />
+                        <TextBlock Margin="5,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="{Binding Relatorio.NomeCliente}" />
+                    </Paragraph>
+                    <Paragraph>
+                        <TextBlock Margin="10,5,0,0"
+                        FontFamily="{StaticResource CustomFont3}"
+                        Text="Celular:" />
+                        <TextBlock Margin="5,5,0,0"
+                        FontFamily="{StaticResource CustomFont3}"
+                        Text="{Binding Relatorio.CelularCliente}"
+                        TextWrapping="Wrap" />
+
+                        <TextBlock Margin="10,5,0,0"
+                                    FontFamily="{StaticResource CustomFont3}"
+                                    Text="Cnpj:" />
+                        <TextBlock Margin="5,5,0,0"
+                                    FontFamily="{StaticResource CustomFont3}"
+                                    Text="{Binding Relatorio.CnpjCliente}"
+                                    TextWrapping="Wrap" />
+
+                    </Paragraph>
+                    <Paragraph>
+                        <TextBlock Margin="10,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="Ferramenta:" />
+                        <TextBlock Margin="5,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="{Binding Relatorio.OsModel.Ferramenta}" />
+                    </Paragraph>
+                    <Paragraph>
+                        <TextBlock Margin="10,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="Marca:" />
+                        <TextBlock Margin="5,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="{Binding Relatorio.NomeMarca}" />
+                    </Paragraph>
+                    <Paragraph>
+                        <TextBlock Margin="10,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="Modelo:" />
+                        <TextBlock Margin="5,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="{Binding Relatorio.OsModel.Modelo}" />
+                    </Paragraph>
+                    <Paragraph>
+                        <TextBlock Margin="10,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="Observações:" />
+                        <TextBlock Margin="5,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="{Binding Relatorio.OsModel.Obs}"
+                                   TextWrapping="Wrap" />
+
+                    </Paragraph>
+
+
+                </FlowDocument>
+            </RichTextBox>
+            <RichTextBox Grid.Column="2"
+                         Background="{StaticResource PrimaryColor15}"
+                         BorderThickness="0"
+                         IsReadOnly="true">
+                <FlowDocument>
+                    <Paragraph Margin="5,5,0,0"
+                               FontFamily="{StaticResource CustomFont3}"
+                               FontSize="20">
+                        Detalhes:
+                    </Paragraph>
+                    <Paragraph>
+                        <TextBlock Margin="5,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="Atendente:" />
+                        <TextBlock Margin="5,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="{Binding Relatorio.NomeCadastrante}" />
+                    </Paragraph>
+                    <Paragraph>
+                        <TextBlock Margin="5,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="Técnico:" />
+                        <TextBlock Margin="5,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="{Binding Relatorio.NomeTecnico}" />
+                    </Paragraph>
+                    <Paragraph>
+                        <TextBlock Margin="5,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="Resp.Orçamento:" />
+                        <TextBlock Margin="5,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="{Binding Relatorio.NomeResponsavel}" />
+                    </Paragraph>
+                    <Paragraph>
+                        <TextBlock Margin="5,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="Garantia:" />
+                        <TextBlock Margin="5,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="{Binding Relatorio.OsModel.Garantia, Converter={utils:BooleanPTConverter}}" />
+                    </Paragraph>
+                    <Paragraph>
+                        <TextBlock Margin="5,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="Box:" />
+                        <TextBlock Margin="5,5,0,0"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="{Binding Relatorio.OsModel.Box}" />
+                    </Paragraph>
+                </FlowDocument>
+            </RichTextBox>
+        </Grid>
+
+        <RichTextBox BorderThickness="0" IsReadOnly="true">
             <FlowDocument>
-                <Paragraph>
-                    <TextBlock Text="N° Ordem Serviço:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.OsModel.IdOs}"></TextBlock>
-                    <TextBlock Text="N° Ordem Serviço:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.OsModel.IdOs}"></TextBlock>
-                    <TextBlock Text="N° Ordem Serviço:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.OsModel.IdOs}"></TextBlock>
-                    <TextBlock Text="N° Ordem Serviço:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.OsModel.IdOs}"></TextBlock>
-                    <TextBlock Text="N° Ordem Serviço:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.OsModel.IdOs}"></TextBlock>
-                </Paragraph>
-                <Paragraph>
-                    <TextBlock Text="Nome Cliente:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.NomeCliente}"></TextBlock>
-                    <TextBlock Text="Nome Cliente:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.NomeCliente}"></TextBlock>
-                    <TextBlock Text="Nome Cliente:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.NomeCliente}"></TextBlock>
-                    <TextBlock Text="Nome Cliente:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.NomeCliente}"></TextBlock>
-                    <TextBlock Text="Nome Cliente:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.NomeCliente}"></TextBlock>
-                </Paragraph>
-                <Paragraph>
-                    <TextBlock Text="Ferramenta:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.OsModel.Ferramenta}"></TextBlock>
-                    <TextBlock Text="Ferramenta:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.OsModel.Ferramenta}"></TextBlock>
-                    <TextBlock Text="Ferramenta:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.OsModel.Ferramenta}"></TextBlock>
-                    <TextBlock Text="Ferramenta:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.OsModel.Ferramenta}"></TextBlock>
-                    <TextBlock Text="Ferramenta:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.OsModel.Ferramenta}"></TextBlock>
-                </Paragraph>
-                <Paragraph>
-                    <TextBlock Text="Modelo:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.OsModel.Modelo}"></TextBlock>
-                    <TextBlock Text="Modelo:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.OsModel.Modelo}"></TextBlock>
-                    <TextBlock Text="Modelo:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.OsModel.Modelo}"></TextBlock>
-                    <TextBlock Text="Modelo:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.OsModel.Modelo}"></TextBlock>
-                    <TextBlock Text="Modelo:"></TextBlock>
-                    <TextBlock Text="{Binding Relatorio.OsModel.Modelo}"></TextBlock>
+                <Paragraph Margin="10,5,0,0">
+                    <DataGrid x:Name="DgItensOsModel" 
+                              AutoGenerateColumns="False"
+                              ItemsSource="{Binding ListItemsObservaveis}" >
+                        <!-- Estilizando os cabeçalhos -->
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="Height" Value="40" />
+                                <Setter Property="Margin" Value="0,0,30,0" />
+                                <Setter Property="Background" Value="Transparent"/>
+                                <!-- Remove fundo do cabeçalho -->
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <!-- Remove borda -->
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="Foreground" Value="Black" />
+                            </Style>
+                        </DataGrid.Resources>
+                    </DataGrid>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
+
+        <Grid>
+            <StackPanel Grid.Row="4"
+                        Grid.ColumnSpan="4"
+                        Margin="10,5,5,5"
+                        Orientation="Horizontal">
+                <TextBox Foreground="{StaticResource PrimaryColor14}" Text="{Binding Relatorio.TotalProduto, Mode=OneWay}" />
+                <TextBox Foreground="{StaticResource PrimaryColor14}" Text="{Binding Relatorio.Desconto, Mode=OneWay}" />
+                <TextBox Foreground="{StaticResource PrimaryColor14}" Text="{Binding Relatorio.MaoDeObra, Mode=OneWay}" />
+                <TextBox Foreground="{StaticResource PrimaryColor14}" Text="{Binding Relatorio.TotalOS, Mode=OneWay}" />
+            </StackPanel>
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <RichTextBox Grid.Column="0"
+                         Margin="15,20,0,0"
+                         BorderBrush="{StaticResource PrimaryColor14}"
+                         BorderThickness="2"
+                         IsReadOnly="true">
+                <FlowDocument>
+                    <Paragraph>
+                        <TextBlock Margin="15,5,5,5"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="N° OS:" />
+                        <TextBlock Margin="0,5,5,5"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="{Binding Relatorio.OsModel.IdOs}" />
+                    </Paragraph>
+                    <Paragraph>
+                        <TextBlock Margin="15,5,5,5"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="Cliente:" />
+                        <TextBlock Margin="0,5,5,5"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="{Binding Relatorio.NomeCliente}" />
+                    </Paragraph>
+                </FlowDocument>
+            </RichTextBox>
+
+            <RichTextBox Grid.Column="2"
+                         Margin="0,20,0,0"
+                         BorderBrush="{StaticResource PrimaryColor14}"
+                         BorderThickness="2"
+                         IsReadOnly="true">
+                <FlowDocument>
+                    <Paragraph>
+                        <TextBlock Margin="5,5,5,5"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="N° OS:" />
+                        <TextBlock Margin="0,5,5,5"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="{Binding Relatorio.OsModel.IdOs}" />
+                    </Paragraph>
+                    <Paragraph>
+                        <TextBlock Margin="5,5,5,5"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="Cliente:" />
+                        <TextBlock Margin="0,5,5,5"
+                                   FontFamily="{StaticResource CustomFont3}"
+                                   Text="{Binding Relatorio.NomeCliente}" />
+                    </Paragraph>
+                </FlowDocument>
+            </RichTextBox>
+        </Grid>
     </StackPanel>
 </UserControl>

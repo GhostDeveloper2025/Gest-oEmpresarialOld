@@ -33,5 +33,6 @@ namespace GestãoEmpresarial.Models
 
         public ClienteModel Cliente { get; set; }
         public int IdCliente { get; set; }
+
     }
 }

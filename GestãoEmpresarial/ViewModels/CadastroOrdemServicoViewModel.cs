@@ -3,6 +3,7 @@ using GestãoEmpresarial.Models;
 using GestãoEmpresarial.Providers;
 using GestãoEmpresarial.Repositorios;
 using GestãoEmpresarial.Validations;
+using MaterialDesignThemes.Wpf;
 using MicroMvvm;
 using System;
 using System.Collections;
@@ -150,6 +151,11 @@ namespace GestãoEmpresarial.ViewModels
 
             // Adicione qualquer operação assíncrona aqui ou use Task.CompletedTask para evitar o aviso.
             await Task.CompletedTask;
+        }
+
+        protected override void ApresentarDialogSucesso(string text)
+        {
+            new Views.Cadastro.DialogImprimir(this).ShowDialog();
         }
     }
 }

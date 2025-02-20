@@ -15,15 +15,19 @@
         cada palavra para que a primeira letra de cada palavra seja maiúscula.-->
     </WrapPanel.Resources>
 
-    <cc:NumeroTextBox materialDesign:HintAssist.Hint="N° Os" Text="{Binding PesquisaNumeroOS, UpdateSourceTrigger=PropertyChanged}" ToolTip="Digite O N° Os!"></cc:NumeroTextBox>
-    <TextBox materialDesign:HintAssist.Hint="Nome" Text="{Binding PesquisaNomeCliente, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" ToolTip="Digite O Nome!"></TextBox>
+    <cc:NumeroTextBox materialDesign:HintAssist.Hint="N° Os" 
+                      Text="{Binding PesquisaNumeroOS, UpdateSourceTrigger=PropertyChanged}" 
+                      ToolTip="Digite O N° Os!" utils:FocusExtension.IsFocused="{Binding IsTextBoxFocused, Mode=TwoWay}" 
+                      utils:EnterKeyBehavior.EnterCommand="{Binding PesquisarCommand}"></cc:NumeroTextBox>
+    <TextBox materialDesign:HintAssist.Hint="Nome" 
+             Text="{Binding PesquisaNomeCliente, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" 
+             ToolTip="Digite O Nome!" utils:EnterKeyBehavior.EnterCommand="{Binding PesquisarCommand}"></TextBox>
     <ComboBox x:Name="CbxStatus" 
-                  Width="250" ToolTip="Status. OS!"
-                  Tag="Buscar" HorizontalAlignment="Left"
-                  materialDesign:HintAssist.Hint="Status. OS" 
-                  SelectedValuePath="Key" DisplayMemberPath="Value" 
-                  materialDesign:ColorZoneAssist.Mode="SecondaryLight"
-                  ItemsSource="{Binding StatusList}" 
-                  SelectedValue="{Binding PesquisaStatus, UpdateSourceTrigger=PropertyChanged}"
+              utils:EnterKeyBehavior.EnterCommand="{Binding PesquisarCommand}"
+              materialDesign:HintAssist.Hint="Status. OS" 
+              SelectedValuePath="Key" DisplayMemberPath="Value" 
+              materialDesign:ColorZoneAssist.Mode="SecondaryLight"
+              ItemsSource="{Binding StatusList}" 
+              SelectedValue="{Binding PesquisaStatus, UpdateSourceTrigger=PropertyChanged}"
                   />
 </WrapPanel>

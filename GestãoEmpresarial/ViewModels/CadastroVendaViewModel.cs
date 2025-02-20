@@ -4,6 +4,7 @@ using GestãoEmpresarial.Models;
 using GestãoEmpresarial.Providers;
 using GestãoEmpresarial.Repositorios;
 using GestãoEmpresarial.Validations;
+using MaterialDesignThemes.Wpf;
 using MicroMvvm;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,6 @@ namespace GestãoEmpresarial.ViewModels
             _itemVendaDal = itensVendaDAL;
             _codigosDal = codigosDAL;
             _itemValidador = itemVendaValidar;
-
 
             // Chamada assíncrona ao inicializar
             InitializeAsync(id).ConfigureAwait(false);
@@ -167,6 +167,11 @@ namespace GestãoEmpresarial.ViewModels
                     await _itemVendaDal.InsertAsync(objBD);  // Alterado para assíncrono
                 }
             }
+        }
+
+        protected override void ApresentarDialogSucesso(string text)
+        {
+            new Views.Cadastro.DialogImprimir(this).ShowDialog();
         }
     }
 }

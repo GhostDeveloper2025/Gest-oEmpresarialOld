@@ -1,21 +1,24 @@
 ﻿<UserControl x:Class="GestãoEmpresarial.Views.Cadastro.CadastroOrdemServicoView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:wpfcc="http://wpfcontrols.com/"
-             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
              xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:providers="clr-namespace:GestãoEmpresarial.Providers"
-             mc:Ignorable="d" 
-             d:DesignHeight="1000" d:DesignWidth="1150">
+             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
+             xmlns:wpfcc="http://wpfcontrols.com/"
+             d:DesignHeight="1000"
+             d:DesignWidth="1150"
+             mc:Ignorable="d">
     <UserControl.Resources>
-        <Style TargetType="ComboBox" BasedOn="{StaticResource FormComboBox}"/>
-        <!--Este recurso é utilizado para converter o texto em 
-        cada palavra para que a primeira letra de cada palavra seja maiúscula.-->
+        <Style BasedOn="{StaticResource FormComboBox}" TargetType="ComboBox" />
+        <!--
+            Este recurso é utilizado para converter o texto em
+            cada palavra para que a primeira letra de cada palavra seja maiúscula.
+        -->
     </UserControl.Resources>
-    <!--#region Todo O Codigo... -->
+    <!--#region Todo O Codigo...-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -36,43 +39,28 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <wpfcc:AutoCompleteTextBox 
-                    Width="250"
-                    materialDesign:HintAssist.Hint="Cliente" 
-                    DisplayMember="Nome"  IsEnabled="{Binding NovaOrdemServico}"
-                    Provider="{providers:ClienteProvider}" SelectedItem="{Binding ObjectoEditar.Cliente,
-                    Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}">
+            <wpfcc:AutoCompleteTextBox Width="250"
+                                       materialDesign:HintAssist.Hint="Cliente"
+                                       DisplayMember="Nome"
+                                       IsEnabled="{Binding NovaOrdemServico}"
+                                       Provider="{providers:ClienteProvider}"
+                                       SelectedItem="{Binding ObjectoEditar.Cliente, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <wpfcc:AutoCompleteTextBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            <TextBlock Text="{Binding Path=Nome}"/>
+                            <TextBlock Text="{Binding Path=Nome}" />
+                            <TextBlock Text="{Binding Path=Celular}" />
+                            <TextBlock Text="{Binding Path=Telefone}" />
                         </StackPanel>
                     </DataTemplate>
                 </wpfcc:AutoCompleteTextBox.ItemTemplate>
             </wpfcc:AutoCompleteTextBox>
-            <wpfcc:AutoCompleteTextBox  
-                    Width="250" 
-                    materialDesign:HintAssist.Hint="Responsavel" 
-                    DisplayMember="Nome"
-                    IsEnabled="{Binding PodeEditar}" 
-                    Provider="{providers:ColaboradorResponsavelProvider}" 
-                    SelectedItem="{Binding ObjectoEditar.Responsavel,
-                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <wpfcc:AutoCompleteTextBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Path=Nome}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </wpfcc:AutoCompleteTextBox.ItemTemplate>
-            </wpfcc:AutoCompleteTextBox>
-            <wpfcc:AutoCompleteTextBox 
-                    Width="250" 
-                    materialDesign:HintAssist.Hint="Tecnico"  
-                    DisplayMember="Nome"  IsEnabled="{Binding PodeEditar}"  
-                    Provider="{providers:ColaboradorTecnicoProvider}"  
-                    SelectedItem="{Binding ObjectoEditar.Tecnico,
-                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <wpfcc:AutoCompleteTextBox Width="250"
+                                       materialDesign:HintAssist.Hint="Responsavel"
+                                       DisplayMember="Nome"
+                                       IsEnabled="{Binding PodeEditar}"
+                                       Provider="{providers:ColaboradorResponsavelProvider}"
+                                       SelectedItem="{Binding ObjectoEditar.Responsavel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <wpfcc:AutoCompleteTextBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
@@ -81,181 +69,175 @@
                     </DataTemplate>
                 </wpfcc:AutoCompleteTextBox.ItemTemplate>
             </wpfcc:AutoCompleteTextBox>
-            <ComboBox x:Name="CbxStatus" 
-                          Width="250" 
-                          Tag="Buscar" HorizontalAlignment="Left"
-                          materialDesign:HintAssist.Hint="Status. OS" 
-                          SelectedValuePath="Key" DisplayMemberPath="Value" 
-                          materialDesign:ColorZoneAssist.Mode="SecondaryLight"
-                          ItemsSource="{Binding StatusList}" 
-                          SelectedValue="{Binding ObjectoEditar.Status, 
-                    UpdateSourceTrigger=PropertyChanged}"
-                          />
+            <wpfcc:AutoCompleteTextBox Width="250"
+                                       materialDesign:HintAssist.Hint="Tecnico"
+                                       DisplayMember="Nome"
+                                       IsEnabled="{Binding PodeEditar}"
+                                       Provider="{providers:ColaboradorTecnicoProvider}"
+                                       SelectedItem="{Binding ObjectoEditar.Tecnico, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <wpfcc:AutoCompleteTextBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Path=Nome}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </wpfcc:AutoCompleteTextBox.ItemTemplate>
+            </wpfcc:AutoCompleteTextBox>
+            <ComboBox x:Name="CbxStatus"
+                      Width="250"
+                      HorizontalAlignment="Left"
+                      materialDesign:ColorZoneAssist.Mode="SecondaryLight"
+                      materialDesign:HintAssist.Hint="Status. OS"
+                      DisplayMemberPath="Value"
+                      ItemsSource="{Binding StatusList}"
+                      SelectedValue="{Binding ObjectoEditar.Status, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedValuePath="Key"
+                      Tag="Buscar" />
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <TextBox x:Name="TxtFerramenta" 
-                         Width="250" 
-                         materialDesign:HintAssist.Hint="Ferramenta" 
-                         IsEnabled="{Binding NovaOrdemServico}" 
-                         Text="{Binding ObjectoEditar.Ferramenta, 
-                    UpdateSourceTrigger=PropertyChanged,  
-                    Converter={utils:CapitalizeWordsConverter}}"
-                         />
-            <ComboBox x:Name="CbxMarca" Width="250"
-                          Tag="Buscar" HorizontalAlignment="Left" 
-                          materialDesign:HintAssist.Hint="Marca" 
-                          SelectedValuePath="Key" DisplayMemberPath="Value" 
-                          materialDesign:ColorZoneAssist.Mode="SecondaryLight"
-                          IsEnabled="{Binding NovaOrdemServico}" 
-                          ItemsSource="{Binding MarcasList}" 
-                          SelectedValue="{Binding ObjectoEditar.Marca, 
-                    UpdateSourceTrigger=PropertyChanged}"
-                          />
-            <TextBox x:Name="TxtModelo" 
-                         Width="250" 
-                         materialDesign:HintAssist.Hint="Modelo" 
-                         IsEnabled="{Binding NovaOrdemServico}"
-                         Text="{Binding ObjectoEditar.Modelo, 
-                    UpdateSourceTrigger=PropertyChanged,  
-                    Converter={utils:CapitalizeWordsConverter}}"
-                         />
-            <CheckBox 
-                    VerticalAlignment="Center"  
-                    Margin="15,10,0,0"  Background="{StaticResource color40}"  
-                    IsChecked="{Binding ObjectoEditar.Garantia}"  
-                    IsEnabled="{Binding NovaOrdemServico}">
-                <TextBlock Text="  É Garantia? " 
-                               FontSize="20" 
-                               HorizontalAlignment="Left"
-                               Foreground="{StaticResource color20}" 
-                   Style="{StaticResource ButtonText}"
-                   />
+            <TextBox x:Name="TxtFerramenta"
+                     Width="250"
+                     materialDesign:HintAssist.Hint="Ferramenta"
+                     IsEnabled="{Binding NovaOrdemServico}"
+                     MaxLength="100"
+                     Text="{Binding ObjectoEditar.Ferramenta, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" />
+            <ComboBox x:Name="CbxMarca"
+                      Width="250"
+                      HorizontalAlignment="Left"
+                      materialDesign:ColorZoneAssist.Mode="SecondaryLight"
+                      materialDesign:HintAssist.Hint="Marca"
+                      DisplayMemberPath="Value"
+                      IsEnabled="{Binding NovaOrdemServico}"
+                      ItemsSource="{Binding MarcasList}"
+                      SelectedValue="{Binding ObjectoEditar.Marca, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedValuePath="Key"
+                      Tag="Buscar" />
+            <TextBox x:Name="TxtModelo"
+                     Width="250"
+                     materialDesign:HintAssist.Hint="Modelo"
+                     IsEnabled="{Binding NovaOrdemServico}"
+                     MaxLength="100"
+                     Text="{Binding ObjectoEditar.Modelo, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" />
+            <CheckBox Margin="15,10,0,0"
+                      VerticalAlignment="Center"
+                      Background="{StaticResource PrimaryColor9}"
+                      IsChecked="{Binding ObjectoEditar.Garantia}"
+                      IsEnabled="{Binding NovaOrdemServico}">
+                <TextBlock HorizontalAlignment="Left"
+                           FontFamily="{StaticResource CustomFont4}"
+                           FontSize="20"
+                           Foreground="{StaticResource PrimaryColor5}"
+                           Text="  É Garantia? " />
             </CheckBox>
         </StackPanel>
         <StackPanel Grid.Row="4" Orientation="Horizontal">
-            <TextBox x:Name="TxtObservacao" 
-                         Width="600" 
-                         AcceptsReturn="True" 
-                         TextWrapping="Wrap"  
-                         MaxLines="1" MaxLength="150" 
-                         VerticalAlignment="Stretch"
-                         Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="6" 
-                         materialDesign:HintAssist.Hint="Observação" 
-                         Text="{Binding ObjectoEditar.Obs, 
-                    UpdateSourceTrigger=PropertyChanged, 
-                    Converter={utils:CapitalizeWordsConverter}}"
-                         />
-            <TextBox x:Name="TxtBox" 
-                         Width="100" 
-                         materialDesign:HintAssist.Hint="Box" 
-                         Text="{Binding ObjectoEditar.Box}" 
-                         IsEnabled="{Binding PodeEditar}"
-                         />
+            <TextBox x:Name="TxtObservacao"
+                     Grid.Row="4"
+                     Grid.Column="2"
+                     Grid.ColumnSpan="6"
+                     Width="600"
+                     VerticalAlignment="Stretch"
+                     materialDesign:HintAssist.Hint="Observação"
+                     AcceptsReturn="True"
+                     MaxLength="150"
+                     MaxLines="1"
+                     Text="{Binding ObjectoEditar.Obs, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}"
+                     TextWrapping="Wrap" />
+            <TextBox x:Name="TxtBox"
+                     Width="100"
+                     materialDesign:HintAssist.Hint="Box"
+                     IsEnabled="{Binding PodeEditar}"
+                     MaxLength="10"
+                     Text="{Binding ObjectoEditar.Box}" />
         </StackPanel>
         <StackPanel Grid.Row="6" Margin="0,15,0,0">
-            <TextBlock Text="   Seção Adicionar Itens" 
-                           FontSize="22"  
-                           Background="{StaticResource color60}"  
-                           Foreground="{StaticResource color38}" 
-                           Style="{StaticResource ButtonText}"
-                           />
+            <TextBlock Background="{StaticResource PrimaryColor10}"
+                       FontFamily="{StaticResource CustomFont4}"
+                       FontSize="22"
+                       Foreground="{StaticResource PrimaryColor7}"
+                       Text="   Seção Adicionar Itens" />
         </StackPanel>
         <StackPanel Grid.Row="8" Orientation="Horizontal">
-            <wpfcc:AutoCompleteTextBox 
-                    Width="250" 
-                    materialDesign:HintAssist.Hint="Produto" 
-                    DisplayMember="Nome" 
-                    Provider="{Binding ProdutoProviderItem, Mode=OneWay}"
-                    SelectedItem="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Produto, 
-                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <wpfcc:AutoCompleteTextBox Width="250"
+                                       materialDesign:HintAssist.Hint="Produto"
+                                       DisplayMember="Nome"
+                                       Provider="{Binding ProdutoProviderItem, Mode=OneWay}"
+                                       SelectedItem="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Produto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <wpfcc:AutoCompleteTextBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
                             <TextBlock Text="{Binding Path=Nome}" />
-                            <TextBlock Text="{Binding Path=CodProduto}"/>
-                            <TextBlock Text="{Binding Path=ValorVenda}"/>
-                            <TextBlock Text="{Binding Path=Estoque.Quantidade}"/>
+                            <TextBlock Text="{Binding Path=CodProduto}" />
+                            <TextBlock Text="{Binding Path=ValorVenda}" />
+                            <TextBlock Text="{Binding Path=Estoque.Quantidade}" />
                         </StackPanel>
                     </DataTemplate>
                 </wpfcc:AutoCompleteTextBox.ItemTemplate>
             </wpfcc:AutoCompleteTextBox>
 
-            <!-- 
-    No binding do text, o "ElementName" significa o nome do objecto dentro do WPF.
-    E depois no "Path", colocamos a propriedade(atributo) à qual queremos tirar os valores
--->
+            <!--
+                No binding do text, o "ElementName" significa o nome do objecto dentro do WPF.
+                E depois no "Path", colocamos a propriedade(atributo) à qual queremos tirar os valores
+            -->
             <TextBox x:Name="TxtQtdEst"
-                         Width="100" 
-                         materialDesign:HintAssist.Hint="Disponível"
-                         Foreground="{StaticResource color38}" 
-                         BorderBrush="{StaticResource color38}"
-                         Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Produto.Estoque.Quantidade}"
-                         IsReadOnly="True" IsHitTestVisible="False"
-                         />
-            <cc:MoedaTextBox x:Name="TxtValUnitario" 
-                                 Width="100" 
-                                 materialDesign:HintAssist.Hint="Val. Unitario"  
-                                 Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.ValUnitario, 
-                                 Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 Emoeda="True"
-                                 />
-            <cc:NumeroTextBox x:Name="TxtQtd" 
-                                  Width="100" 
-                                  materialDesign:HintAssist.Hint="Quantidade" 
-                                  Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Quantidade,  
-                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="9" EModea="True"
-                                  />
-            <cc:NumeroTextBox x:Name="TxtDesconto" 
-                                  Width="100" 
-                                  materialDesign:HintAssist.Hint="Desconto. %"  
-                                  Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Desconto,  
-                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EModea="True"
-                                  />
-            <cc:MoedaTextBox x:Name="TxtTotalItens" Width="100"
-                                 materialDesign:HintAssist.Hint="Total"
-                                 Foreground="{StaticResource color38}"
-                                 BorderBrush="{StaticResource color38}"
-                                 Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.TotalItem,
-                    Converter={utils:CapitalizeWordsConverter}, 
-                    Mode=OneWay}" IsReadOnly="True" IsHitTestVisible="False"
-                                 />
+                     Width="100"
+                     materialDesign:HintAssist.Hint="Disponível"
+                     BorderBrush="{StaticResource PrimaryColor7}"
+                     Foreground="{StaticResource PrimaryColor7}"
+                     IsHitTestVisible="False"
+                     IsReadOnly="True"
+                     Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Produto.Estoque.Quantidade}" />
+            <cc:MoedaTextBox x:Name="TxtValUnitario"
+                             Width="100"
+                             materialDesign:HintAssist.Hint="Val. Unitario"
+                             Emoeda="True"
+                             MaxLength="15"
+                             Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.ValUnitario, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <cc:NumeroTextBox x:Name="TxtQtd"
+                              Width="100"
+                              materialDesign:HintAssist.Hint="Quantidade"
+                              MaxLength="10"
+                              Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Quantidade, Converter={utils:DecimalConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <cc:NumeroTextBox x:Name="TxtDesconto"
+                              Width="100"
+                              materialDesign:HintAssist.Hint="Desconto. %"
+                              MaxLength="10"
+                              Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Desconto, Converter={utils:DecimalConverterSimples}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <cc:MoedaTextBox x:Name="TxtTotalItens"
+                             Width="100"
+                             materialDesign:HintAssist.Hint="Total"
+                             BorderBrush="{StaticResource PrimaryColor7}"
+                             Foreground="{StaticResource PrimaryColor7}"
+                             IsHitTestVisible="False"
+                             IsReadOnly="True"
+                             Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.TotalItem, Converter={utils:DecimalConverter}, Mode=OneWay}" />
         </StackPanel>
         <WrapPanel Grid.Row="10" HorizontalAlignment="Right">
-            <Button Style="{StaticResource ButtonGlobal}"
-                    Command="{Binding AdicionarItemOsCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <materialDesign:PackIcon Height="40" Width="40" Kind="AddCircle" Style="{StaticResource IconsButtonGlobal}"/>
-                    <TextBlock Text="Adicionar" Style="{StaticResource ButtonText}"/>
-                </StackPanel>
-            </Button>
-           
+            <Button Command="{Binding AdicionarItemOsCommand}" Style="{StaticResource ButonAdicionarStyle}" />
         </WrapPanel>
         <StackPanel Grid.Row="12">
-            <TextBlock  
-                    HorizontalAlignment="Left"  
-                    VerticalAlignment="Center" 
-                    Foreground="{StaticResource color2}" 
-                    FontSize="15" FontFamily="{StaticResource CustomFont4}">
-                    <Run Text="Número De Registros: " />
-                    <Run Text="{Binding ObjectoEditar.NumberOfRecords}" />
+            <TextBlock HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       FontFamily="{StaticResource CustomFont4}"
+                       FontSize="15"
+                       Foreground="{StaticResource PrimaryColor11}">
+                <Run Text="Número De Registros: " />
+                <Run Text="{Binding ObjectoEditar.NumberOfRecords}" />
             </TextBlock>
         </StackPanel>
         <Grid Grid.Row="14">
             <DataGrid x:Name="DgItensOsModel"
-                      IsReadOnly="True" AutoGenerateColumns="False"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
                       ItemsSource="{Binding ObjectoEditar.ListItensOs}">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Opções">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <WrapPanel Margin="0,0,15,0">
-                                    <Button Style="{StaticResource ButtonDataGrid}"
-                                             Tag="{StaticResource color13}"
-                                             Cursor="Hand"
-                                             Command="{Binding DataContext.ApagarItemOsCommand, ElementName=DgItensOsModel}" 
-                                             CommandParameter="{Binding}">
-                                        <materialDesign:PackIcon  Kind="Trash" Style="{StaticResource IconButton}"/>
-                                    </Button>
+                                    <Button Command="{Binding DataContext.ApagarItemOsCommand, ElementName=DgItensOsModel}"
+                                            CommandParameter="{Binding}"
+                                            Style="{StaticResource ButtonDataGridStyle}" />
                                 </WrapPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -264,44 +246,45 @@
             </DataGrid>
         </Grid>
         <StackPanel Grid.Row="16">
-            <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
+            <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                 <cc:MoedaTextBox x:Name="TxtMaoObra"
                                  Width="90"
                                  materialDesign:HintAssist.Hint="M. Obra"
-                                 Text="{Binding ObjectoEditar.TotalMaoObra, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                  Emoeda="True"
-                                 />
-                <TextBox x:Name="TxtSubTotal" 
-                         Width="150" 
-                         Foreground="{StaticResource color38}" 
-                         BorderBrush="{StaticResource color38}"
+                                 MaxLength="15"
+                                 Text="{Binding ObjectoEditar.TotalMaoObra, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox x:Name="TxtSubTotal"
+                         Width="150"
                          materialDesign:HintAssist.Hint="SubTotal Produto"
-                         Text="{Binding ObjectoEditar.SubTotalProduto, Mode=OneWay}"
-                         IsReadOnly="True" IsHitTestVisible="False">
-                </TextBox>
+                         BorderBrush="{StaticResource PrimaryColor7}"
+                         Foreground="{StaticResource PrimaryColor7}"
+                         IsHitTestVisible="False"
+                         IsReadOnly="True"
+                         Text="{Binding ObjectoEditar.SubTotalProduto, Mode=OneWay}" />
                 <TextBox x:Name="TxtTotalDesc"
                          Width="150"
-                         Foreground="{StaticResource color38}"  
-                         BorderBrush="{StaticResource color38}" 
                          materialDesign:HintAssist.Hint="Total Desconto"
-                         Text="{Binding ObjectoEditar.TotalDescontoProduto, Mode=OneWay}" 
-                         IsReadOnly="True" IsHitTestVisible="False">
-                </TextBox>
-                <TextBox x:Name="TxtTotal" Width="150"
-                         Foreground="{StaticResource color38}"
-                         BorderBrush="{StaticResource color38}"
+                         BorderBrush="{StaticResource PrimaryColor7}"
+                         Foreground="{StaticResource PrimaryColor7}"
+                         IsHitTestVisible="False"
+                         IsReadOnly="True"
+                         Text="{Binding ObjectoEditar.TotalDescontoProduto, Mode=OneWay}" />
+                <TextBox x:Name="TxtTotal"
+                         Width="150"
                          materialDesign:HintAssist.Hint="Total Produto"
-                         Text="{Binding ObjectoEditar.TotalProduto, Mode=OneWay}"
-                         IsReadOnly="True" IsHitTestVisible="False">
-                </TextBox>
-                <cc:MoedaTextBox x:Name="TxtTotalOs" 
-                                 Width="150" 
-                                 Foreground="{StaticResource color38}" 
-                                 BorderBrush="{StaticResource color38}"
+                         BorderBrush="{StaticResource PrimaryColor7}"
+                         Foreground="{StaticResource PrimaryColor7}"
+                         IsHitTestVisible="False"
+                         IsReadOnly="True"
+                         Text="{Binding ObjectoEditar.TotalProduto, Mode=OneWay}" />
+                <cc:MoedaTextBox x:Name="TxtTotalOs"
+                                 Width="150"
                                  materialDesign:HintAssist.Hint="Total OS"
-                                 Text="{Binding ObjectoEditar.TotalOS, Converter={utils:CapitalizeWordsConverter}, Mode=OneWay}" 
-                                 IsReadOnly="True" IsHitTestVisible="False">
-                </cc:MoedaTextBox>
+                                 BorderBrush="{StaticResource PrimaryColor7}"
+                                 Foreground="{StaticResource PrimaryColor7}"
+                                 IsHitTestVisible="False"
+                                 IsReadOnly="True"
+                                 Text="{Binding ObjectoEditar.TotalOS, Converter={utils:CapitalizeWordsConverter}, Mode=OneWay}" />
             </StackPanel>
         </StackPanel>
     </Grid>

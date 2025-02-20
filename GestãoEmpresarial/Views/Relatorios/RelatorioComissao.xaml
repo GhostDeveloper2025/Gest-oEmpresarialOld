@@ -6,6 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GestãoEmpresarial.Views.Relatorios"
              xmlns:providers="clr-namespace:GestãoEmpresarial.Providers"
+             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
              xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
              xmlns:wpfcc="http://wpfcontrols.com/"
              mc:Ignorable="d" 
@@ -32,18 +33,20 @@
                     </DataTemplate>
                 </wpfcc:AutoCompleteTextBox.ItemTemplate>
             </wpfcc:AutoCompleteTextBox>
-            <DatePicker materialDesign:HintAssist.Hint="Data Inicial"
-    SelectedDate="{Binding DataInicial, Mode=TwoWay}" />
 
-            <DatePicker materialDesign:HintAssist.Hint="Data Final"
-                SelectedDate="{Binding DataFinal, Mode=TwoWay}" />
-
-            <Button Content="Buscar" Command="{Binding BuscarComissaoCommand}" />
+            <DatePicker materialDesign:HintAssist.Hint="Data Inicial" SelectedDate="{Binding DataInicial, Mode=TwoWay}" />
+            <DatePicker materialDesign:HintAssist.Hint="Data Final" SelectedDate="{Binding DataFinal, Mode=TwoWay}" />
+            
+            <ToggleButton x:Name="TgbBuscar"
+                          Style="{StaticResource ToggleButtonPesquisarStyle}"
+                          Command="{Binding BuscarComissaoCommand}"
+                          Checked="ToggleButton_Checked"/>
         </StackPanel>
+        
         <cc:DataGridAuto Grid.Row="1" ItemsSource="{Binding ListaComissaoVendas, Mode=OneWay}" />
         <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <TextBox materialDesign:HintAssist.Hint="Total Vendido" IsReadOnly="True" Text="{Binding TotalVendido, Mode=OneWay}" />
-            <TextBox materialDesign:HintAssist.Hint="Total Comissão" IsReadOnly="True" Text="{Binding TotalComissao, Mode=OneWay}" />
+            <cc:MoedaTextBox materialDesign:HintAssist.Hint="Total Vendido" IsReadOnly="True" Text="{Binding TotalVendido, Mode=OneWay, Converter={utils:DecimalConverter}}"/>
+            <cc:MoedaTextBox materialDesign:HintAssist.Hint="Total Comissão" IsReadOnly="True" Text="{Binding TotalComissao, Mode=OneWay, Converter={utils:DecimalConverter}}" />
         </StackPanel>
     </Grid>
 </UserControl>

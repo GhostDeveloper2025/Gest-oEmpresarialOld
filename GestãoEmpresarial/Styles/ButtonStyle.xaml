@@ -2,221 +2,391 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
-    <!--Icones Botoes -->
-    <!--#region Icones Botoes... -->
-    <!-- Corresponde a cor do icone dos botoes salvar e add... -->
-    <Style x:Key="IconsButtonGlobal" TargetType="materialDesign:PackIcon">
-        <Setter Property="Foreground" Value="{StaticResource color49}"/>
-        <Setter Property="Width" Value="22"/>
-        <Setter Property="Height" Value="22"/>
-        <Setter Property="Margin" Value="10,0,20,0"/>
-    </Style>
-    <!--#endregion-->
-
-    <!--#region IconButton Este Controle É Responssavel Pela Cor Dos Icones... -->
-    <!-- IconButton Este Controle É Responssavel Pela Cor Dos Icones Minimizar, Fechar E Do Data Grid 
-Sendo que Nao É aqui que se define As Cores... -->
-    <Style x:Key="IconButton"  TargetType="materialDesign:PackIcon">
-        <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
-        <!--<Setter Property="Foreground" Value="{StaticResource color1}"/>-->
-        <Setter Property="Width" Value="20"/>
-        <Setter Property="Height" Value="20"/>
-    </Style>
-    <!--#endregion-->
-
-    <!--Icons Screen... -->
-    <!--#region IconScreen Corresponde Aos Icones Da Tela De Cadastros... -->
-    <!-- Este IconScreen Corresponde Aos Icones Da Tela De Cadastros E Pesquisas... -->
-    <Style x:Key="IconScreen"  TargetType="materialDesign:PackIcon">
-        <Setter Property="Foreground" Value="{StaticResource color49}"/>
-        <Setter Property="Width" Value="22"/>
-        <Setter Property="Height" Value="22"/>
-        <Setter Property="Margin" Value="10,0,20,0"/>
-    </Style>
-    <!--#endregion-->
-
-    <!--#region Esta relacionado ao sbumenu icons Com MaterialDesign... -->
-    <!-- Esta relacionado ao sbumenu icons Com MaterialDesign... -->
-    <Style x:Key="IconMenu" TargetType="materialDesign:PackIcon">
-        <Setter Property="Width" Value="22"/>
-        <Setter Property="Height" Value="22"/>
-        <Setter Property="Margin" Value="10,0,20,0"/>
-    </Style>
-    <!--#endregion-->
-
-    <!--#region Textos Botoes Salvar E Add... -->
-    <!-- Textos Botoes Salvar E Add... -->
-    <Style x:Key="ButtonText" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="{StaticResource CustomFont4}"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-    </Style>
-    <!--#endregion-->
-
-    <!-- Meus botoes -->
-    <Style x:Key="ButtonGlobal" TargetType="Button">
-        <Setter Property="Height" Value="50"/>
-        <Setter Property="Width" Value="160"/>
-        <Setter Property="Margin" Value="5,0,0,5"/>
-        <!--<Setter Property="Tag" Value="{StaticResource color49}"/>-->
-        <Setter Property="Background" Value="{StaticResource color45}"/>
-        <Setter Property="Foreground" Value="{StaticResource plainTextColor7}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource color45}"/>
+    <!--  Botao Salvar  -->
+    <Style x:Key="ButonSalvarStyle" TargetType="Button">
+        <Setter Property="Height" Value="50" />
+        <Setter Property="Width" Value="160" />
+        <Setter Property="Margin" Value="5,0,0,5" />
+        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryColor3}" />
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="ToolTip" Value="Clique Para Salvar!" />
+        <Setter Property="FontFamily" Value="{StaticResource CustomFont4}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border Background="{TemplateBinding Background}"
-             CornerRadius="5"
-             BorderBrush="{TemplateBinding BorderBrush}">
-                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="5">
+                        <Grid>
+                            <!--  Define duas colunas no Grid  -->
+                            <Grid.ColumnDefinitions>
+                                <!--  Largura para o ícone  -->
+                                <ColumnDefinition Width="50" />
+                                <!--  Espaço restante para o texto  -->
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!--  Ícone na primeira coluna  -->
+                            <materialDesign:PackIcon Grid.Column="0"
+                                                     Width="40"
+                                                     Height="40"
+                                                     Margin="5,0,5,0"
+                                                     HorizontalAlignment="Left"
+                                                     VerticalAlignment="Center"
+                                                     Kind="ContentSaveCheck" />
+
+                            <!--  Texto na segunda coluna  -->
+                            <TextBlock Grid.Column="1"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontFamily="{TemplateBinding FontFamily}"
+                                       FontSize="16"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Text="Salvar" />
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
-        <Setter Property="Content">
-            <Setter.Value>
-                <StackPanel Orientation="Horizontal">
-                    <materialDesign:PackIcon Height="40" Width="40" Kind="FileExport" Style="{StaticResource IconsButtonGlobal}"/>
-                    <TextBlock Text="Salvar" Style="{StaticResource ButtonText}"/>
-                </StackPanel>
-            </Setter.Value>
-        </Setter>
-
-
+        <!--  Trigger para mudar a cor ao passar o mouse  -->
         <Style.Triggers>
-            <!--Estilo De Botao hover-->
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Margin" Value="0,0,0,5"/>
-                <!--Muda A Cor Da Fonte Ao Passar O Mouse-->
-                <Setter Property="Background" Value="{StaticResource panelActiveColor12}"/>
-                <!--Muda A Cor Da Fonte AO Passar O Mouse-->
-                <Setter Property="Foreground" Value="{StaticResource titleColor10}"/>
-                <Setter Property="BorderBrush" Value="{Binding Path=Tag, RelativeSource={RelativeSource Self}}"/>
+                <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
+                <Setter Property="Background" Value="{StaticResource SecondaryColor2}" />
+                <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
+                <Setter Property="Foreground" Value="{StaticResource PrimaryColor4}" />
             </Trigger>
         </Style.Triggers>
-
     </Style>
 
-    <!--#region CloseMinimizeButtonStyle (Botoes da janela Fechar e Minimizar)... -->
-    <!-- CloseMinimizeButtonStyle (Botoes da janela Fechar e Minimizar)
-           Este Controle Cria O Estilo Redondo E Inicia Com A Cor
-           Pré Definida E Muda A Cor ao Passar O Mouse... -->
-    <Style x:Key="CloseMinimizeButtonStyle" TargetType="Button">
-        <!--Normal button style-->
-        <Setter Property="Width" Value="25"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <!--Cor: Do Botao Fechar E Minimizar-->
-        <Setter Property="Foreground" Value="{StaticResource plainTextColor3}"/>
+    <!--  Botao Imprimir  -->
+    <Style x:Key="ButonImprimirStyle" TargetType="Button">
+        <Setter Property="Height" Value="50" />
+        <Setter Property="Width" Value="160" />
+        <Setter Property="Margin" Value="15,0,0,5" />
+        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryColor3}" />
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="ToolTip" Value="Clique Para Imprimir!" />
+        <Setter Property="FontFamily" Value="{StaticResource CustomFont4}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border Background="{TemplateBinding Background}"
-               CornerRadius="9">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="5">
+                        <Grid>
+                            <!--  Define duas colunas no Grid  -->
+                            <Grid.ColumnDefinitions>
+                                <!--  Largura para o ícone  -->
+                                <ColumnDefinition Width="50" />
+                                <!--  Espaço restante para o texto  -->
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!--  Ícone na primeira coluna  -->
+                            <materialDesign:PackIcon Grid.Column="0"
+                                                     Width="40"
+                                                     Height="40"
+                                                     Margin="5,0,5,0"
+                                                     HorizontalAlignment="Left"
+                                                     VerticalAlignment="Center"
+                                                     Kind="PrinterWireless" />
+
+                            <!--  Texto na segunda coluna  -->
+                            <TextBlock Grid.Column="1"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontFamily="{TemplateBinding FontFamily}"
+                                       FontSize="16"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Text="Imprimir!" />
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <!--  Trigger para mudar a cor ao passar o mouse  -->
         <Style.Triggers>
-            <!--Button Style on hover-->
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource panelActiveColor4}"/>
-                <Setter Property="Foreground" Value="{StaticResource panelActiveColor1}"/>
+                <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
+                <Setter Property="Background" Value="{StaticResource SecondaryColor2}" />
+                <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
+                <Setter Property="Foreground" Value="{StaticResource PrimaryColor4}" />
             </Trigger>
         </Style.Triggers>
     </Style>
-    <!--#endregion-->
 
-    <!--#region  SearchButtonStyle... -->
-    <!-- SearchButtonStyle (Botao De Pesquisar. Sendo Um Controle Redondo)
-           Este Controle Cria O Estilo Redondo E Inicia Com A Cor
-           Pré Definida E Muda A Cor ao Passar O Mouse...-->
-    <Style x:Key="SearchButtonStyle" TargetType="Button">
-        <!--Normal button style-->
-        <Setter Property="Width" Value="25"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <!--Cor: Do Botao Fechar E Minimizar-->
-        <Setter Property="Foreground" Value="{StaticResource color10}"/>
+    <!--  Botao Login  -->
+    <Style x:Key="ButonLoginStyle" TargetType="Button">
+        <Setter Property="Height" Value="50" />
+        <Setter Property="Width" Value="200" />
+        <Setter Property="Margin" Value="5,10,0,5" />
+        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryColor3}" />
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="ToolTip" Value="Clique Para Entrar!" />
+        <Setter Property="FontFamily" Value="{StaticResource CustomFont4}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border Background="{TemplateBinding Background}"
-                CornerRadius="9">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="5">
+                        <Grid>
+                            <!--  Define duas colunas no Grid  -->
+                            <Grid.ColumnDefinitions>
+                                <!--  Largura para o ícone  -->
+                                <ColumnDefinition Width="50" />
+                                <!--  Espaço restante para o texto  -->
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!--  Ícone na primeira coluna  -->
+                            <materialDesign:PackIcon Grid.Column="0"
+                                                     Width="40"
+                                                     Height="40"
+                                                     Margin="5,0,5,0"
+                                                     HorizontalAlignment="Left"
+                                                     VerticalAlignment="Center"
+                                                     Kind="AccountArrowRight" />
+
+                            <!--  Texto na segunda coluna  -->
+                            <TextBlock Grid.Column="1"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontFamily="{TemplateBinding FontFamily}"
+                                       FontSize="16"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Text="Iniciar Sessão!" />
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <!--  Trigger para mudar a cor ao passar o mouse  -->
         <Style.Triggers>
-            <!--Button Style on hover-->
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource panelActiveColor4}"/>
-                <Setter Property="Foreground" Value="{StaticResource plainTextColor8}"/>
+                <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
+                <Setter Property="Background" Value="{StaticResource SecondaryColor2}" />
+                <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
+                <Setter Property="Foreground" Value="{StaticResource PrimaryColor4}" />
             </Trigger>
         </Style.Triggers>
     </Style>
-    <!--#endregion-->
 
-    <!--#region ButtonDataGrid...  -->
-    <!-- ButtonDataGrid Botoes do DataGrid (Botos De Exclusao e Ediçao Do DataGrid)  
-           Este Controle  Inicia Com A Cor
-           Pré Definida E Muda A Cor ao Passar O Mouse...-->
-    <Style x:Key="ButtonDataGrid" TargetType="Button">
-        <!--Normal button style-->
-        <Setter Property="Width" Value="25"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <!--Cor: Do Botao Fechar E Minimizar-->
-        <Setter Property="Foreground" Value="{StaticResource plainTextColor5}"/>
+    <!--  Botao Adicionar  -->
+    <Style x:Key="ButonAdicionarStyle" TargetType="Button">
+        <Setter Property="Height" Value="50" />
+        <Setter Property="Width" Value="160" />
+        <Setter Property="Margin" Value="5,0,0,15" />
+        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryColor3}" />
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="ToolTip" Value="Clique Para Adicionar Um Item!" />
+        <Setter Property="FontFamily" Value="{StaticResource CustomFont4}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border Background="{TemplateBinding Background}"
-                CornerRadius="9">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="5">
+                        <Grid>
+                            <!--  Define duas colunas no Grid  -->
+                            <Grid.ColumnDefinitions>
+                                <!--  Largura para o ícone  -->
+                                <ColumnDefinition Width="50" />
+                                <!--  Espaço restante para o texto  -->
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!--  Ícone na primeira coluna  -->
+                            <materialDesign:PackIcon Grid.Column="0"
+                                                     Width="40"
+                                                     Height="40"
+                                                     Margin="5,0,5,0"
+                                                     HorizontalAlignment="Left"
+                                                     VerticalAlignment="Center"
+                                                     Kind="AddBox" />
+
+                            <!--  Texto na segunda coluna  -->
+                            <TextBlock Grid.Column="1"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontFamily="{TemplateBinding FontFamily}"
+                                       FontSize="16"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Text="Adicionar" />
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <!--  Trigger para mudar a cor ao passar o mouse  -->
         <Style.Triggers>
-            <!--Button Style on hover-->
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource panelActiveColor4}"/>
-                <Setter Property="Foreground" Value="{StaticResource color12}"/>
-                <!-- muda a cor do icone do data grida so que muda a cors dos 2 icones-->
+                <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
+                <Setter Property="Background" Value="{StaticResource SecondaryColor2}" />
+                <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
+                <Setter Property="Foreground" Value="{StaticResource PrimaryColor4}" />
             </Trigger>
-
         </Style.Triggers>
     </Style>
-    <!--#endregion-->
 
-    <!--#region  Estilo personalizado para ToggleButton... -->
-    <!--Estilo personalizado para ToggleButton-->
-    <Style x:Key="CustomToggleButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource MaterialDesignActionToggleButton}">
-        <Setter Property="Foreground" Value="{StaticResource plainTextColor7}" />
-        <Setter Property="Background" Value="{StaticResource color45}" />
+    <!--  ToggleButton Pesquisar  -->
+    <Style x:Key="ToggleButtonPesquisarStyle"
+           BasedOn="{StaticResource MaterialDesignActionToggleButton}"
+           TargetType="ToggleButton">
+        <Setter Property="Foreground" Value="{StaticResource PrimaryColor3}" />
+        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
         <Setter Property="Height" Value="30" />
         <Setter Property="Width" Value="30" />
         <Setter Property="Margin" Value="10" />
         <Setter Property="ToolTip" Value="Clique Para Fazer A Busca" />
         <Setter Property="Content">
             <Setter.Value>
-                <materialDesign:PackIcon Height="30" Width="30" Kind="ArrowRightBoldCircleOutline"/>
+                <materialDesign:PackIcon Width="30"
+                                         Height="30"
+                                         Kind="ArrowRightBoldCircleOutline" />
             </Setter.Value>
         </Setter>
         <Setter Property="materialDesign:ToggleButtonAssist.OnContent">
             <Setter.Value>
-                <materialDesign:PackIcon Height="30" Width="30" Kind="CheckboxMarkedCircleOutline"/>
+                <materialDesign:PackIcon Width="30"
+                                         Height="30"
+                                         Kind="CheckboxMarkedCircleOutline" />
             </Setter.Value>
         </Setter>
 
-        <!--Trigger para mudar a cor ao passar o mouse-->
+        <!--  Trigger para mudar a cor ao passar o mouse  -->
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource panelActiveColor4}"/>
-                <Setter Property="Foreground" Value="{StaticResource color20}" />
+                <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
+                <Setter Property="Foreground" Value="{StaticResource PrimaryColor5}" />
             </Trigger>
         </Style.Triggers>
     </Style>
-    <!--#endregion-->
+
+    <!--  Botao DataGrid  -->
+    <Style x:Key="ButtonDataGridStyle" TargetType="Button">
+        <!--  Normal button style  -->
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Background" Value="Transparent" />
+        <!--  Cor: Do Botao Fechar E Minimizar  -->
+        <Setter Property="Foreground" Value="{StaticResource FontColor2}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="9">
+                        <materialDesign:PackIcon Width="20"
+                                                 Height="20"
+                                                 Margin="5,0,5,0"
+                                                 HorizontalAlignment="Left"
+                                                 VerticalAlignment="Center"
+                                                 Cursor="Hand"
+                                                 Kind="Trash" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!--  Trigger para mudar a cor ao passar o mouse  -->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
+                <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
+                <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
+                <Setter Property="Foreground" Value="{StaticResource PrimaryColor6}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Botao DataGrid Icone Editar  -->
+    <Style x:Key="ButtonDataGridStyleEditar" TargetType="Button">
+        <!--  Normal button style  -->
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
+        <!--  Cor: Do Botao Fechar E Minimizar  -->
+        <Setter Property="Foreground" Value="{StaticResource SecondaryColor9}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="9">
+                        <materialDesign:PackIcon Width="20"
+                                                 Height="20"
+                                                 Margin="5,0,5,0"
+                                                 HorizontalAlignment="Left"
+                                                 VerticalAlignment="Center"
+                                                 Cursor="Hand"
+                                                 Kind="Edit" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!--  Trigger para mudar a cor ao passar o mouse  -->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
+                <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
+                <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
+                <Setter Property="Foreground" Value="{StaticResource PrimaryColor6}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Botao Fechar  -->
+    <Style x:Key="ButonFecharStyle" TargetType="Button">
+        <Setter Property="Height" Value="20" />
+        <Setter Property="Width" Value="20" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryColor5}" />
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="ToolTip" Value="Clique Para Fechar!" />
+        <Setter Property="FontFamily" Value="{StaticResource CustomFont4}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="5">
+                        <Viewbox>
+                            <materialDesign:PackIcon HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                     Foreground="{TemplateBinding Foreground}"
+                                                     Kind="Close" />
+                        </Viewbox>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <!--  Trigger para mudar a cor ao passar o mouse  -->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource SecondaryColor2}" />
+                <Setter Property="Foreground" Value="{StaticResource PrimaryColor4}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>

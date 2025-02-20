@@ -9,9 +9,14 @@
              xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <TextBox materialDesign:HintAssist.Hint="Nome" Text="{Binding PesquisaNome, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" ToolTip="Digite O Nome!"></TextBox>
-    <cc:CelularTextBox Text="{Binding PesquisaCelular, UpdateSourceTrigger=PropertyChanged}" ToolTip="Digite O Celular!"></cc:CelularTextBox>
-    <cc:CpfTextBox Text="{Binding PesquisaCPF, UpdateSourceTrigger=PropertyChanged}" ToolTip="Digite O CPF!"></cc:CpfTextBox>
-    <cc:CnpjTextBox Text="{Binding PesquisaCNPJ, UpdateSourceTrigger=PropertyChanged}" ToolTip="Digite O CNPJ!"></cc:CnpjTextBox>
+    <TextBox materialDesign:HintAssist.Hint="Nome" Text="{Binding PesquisaNome, 
+        UpdateSourceTrigger=PropertyChanged, 
+        Converter={utils:CapitalizeWordsConverter}}" 
+             utils:FocusExtension.IsFocused="{Binding IsTextBoxFocused, Mode=TwoWay}"
+             utils:EnterKeyBehavior.EnterCommand="{Binding PesquisarCommand}"
+             ToolTip="Digite O Nome!"></TextBox>
+    <cc:CelularTextBox Text="{Binding PesquisaCelular, UpdateSourceTrigger=PropertyChanged}" ToolTip="Digite O Celular!" utils:EnterKeyBehavior.EnterCommand="{Binding PesquisarCommand}"></cc:CelularTextBox>
+    <cc:CpfTextBox Text="{Binding PesquisaCPF, UpdateSourceTrigger=PropertyChanged}" ToolTip="Digite O CPF!" utils:EnterKeyBehavior.EnterCommand="{Binding PesquisarCommand}"></cc:CpfTextBox>
+    <cc:CnpjTextBox Text="{Binding PesquisaCNPJ, UpdateSourceTrigger=PropertyChanged}" ToolTip="Digite O CNPJ!" utils:EnterKeyBehavior.EnterCommand="{Binding PesquisarCommand}"></cc:CnpjTextBox>
     
 </WrapPanel>

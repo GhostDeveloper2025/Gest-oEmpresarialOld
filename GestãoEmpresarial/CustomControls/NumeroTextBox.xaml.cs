@@ -26,15 +26,15 @@ namespace GestãoEmpresarial.CustomControls
             InitializeComponent();
         }
 
-        public static readonly DependencyProperty dependencyProperty =
-            DependencyProperty.Register("EModea", typeof(bool), typeof(NumeroTextBox),
-                new PropertyMetadata(false));
+        //public static readonly DependencyProperty dependencyProperty =
+        //    DependencyProperty.Register("EModea", typeof(bool), typeof(NumeroTextBox),
+        //        new PropertyMetadata(false));
 
-        public bool EModea
-        {
-            get => (bool)GetValue(dependencyProperty);
-            set => SetValue(dependencyProperty, value);
-        }
+        //public bool EModea
+        //{
+        //    get => (bool)GetValue(dependencyProperty);
+        //    set => SetValue(dependencyProperty, value);
+        //}
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {

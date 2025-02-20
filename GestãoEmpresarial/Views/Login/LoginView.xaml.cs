@@ -48,5 +48,14 @@ namespace GestãoEmpresarial.Views.Login
                 }
             }
         }
+        //private void TextBox_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    if (sender is TextBox textBox)
+        //    {
+        //        textBox.Focus();
+        //        Keyboard.Focus(textBox);
+        //    }
+        //}
+
     }
 }

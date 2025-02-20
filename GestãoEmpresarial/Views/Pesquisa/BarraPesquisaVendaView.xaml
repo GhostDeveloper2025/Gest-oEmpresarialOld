@@ -15,11 +15,17 @@
         cada palavra para que a primeira letra de cada palavra seja maiúscula.-->
     </WrapPanel.Resources>
 
-    <cc:NumeroTextBox materialDesign:HintAssist.Hint="N° Venda" Text="{Binding PesquisaNumeroVenda, UpdateSourceTrigger=PropertyChanged}" ToolTip="Digite O N° Venda!"></cc:NumeroTextBox>
-    <TextBox materialDesign:HintAssist.Hint="Nome" Text="{Binding PesquisaNomeCliente, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" ToolTip="Digite O Nome!"></TextBox>
+    <cc:NumeroTextBox materialDesign:HintAssist.Hint="N° Venda" 
+                      Text="{Binding PesquisaNumeroVenda, UpdateSourceTrigger=PropertyChanged}" 
+                      ToolTip="Digite O N° Venda!" 
+                      utils:FocusExtension.IsFocused="{Binding IsTextBoxFocused, Mode=TwoWay}" 
+                      utils:EnterKeyBehavior.EnterCommand="{Binding PesquisarCommand}"></cc:NumeroTextBox>
+    <TextBox materialDesign:HintAssist.Hint="Nome" 
+             Text="{Binding PesquisaNomeCliente, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" 
+             ToolTip="Digite O Nome!" utils:EnterKeyBehavior.EnterCommand="{Binding PesquisarCommand}"></TextBox>
     <ComboBox x:Name="CbxStatus" 
               Width="250" 
-              Tag="Buscar" 
+              Tag="Buscar" utils:EnterKeyBehavior.EnterCommand="{Binding PesquisarCommand}"
               HorizontalAlignment="Left" ToolTip="Tipos De Pagamento!"
               materialDesign:HintAssist.Hint="Tipos De Pagamento"
               SelectedValuePath="Key" DisplayMemberPath="Value" 

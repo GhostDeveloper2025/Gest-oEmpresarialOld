@@ -19,11 +19,6 @@ namespace GestãoEmpresarial.Views.Pesquisa
 
         private DispatcherTimer _toggleTimer;
 
-        //public PesquisaView(IPesquisaViewModel viewModel)
-        //    : this(viewModel, new PesquisaBarraView())
-        //{
-        //}
-
         public PesquisaView(IPesquisaViewModel viewModel, UIElement barraPesquisa)
         {
             InitializeComponent();
@@ -38,7 +33,6 @@ namespace GestãoEmpresarial.Views.Pesquisa
         private void BtnEditar_Click(object sender, RoutedEventArgs e)
         {
             var func = DI.CadastrosViews[_viewModel.NomeEditarView];
-            //Switcher.Switch(EditViewType, new[] { DataGridGlobal.SelectedItem });
             Switcher.Switch(func(_viewModel.Id));
         }
 

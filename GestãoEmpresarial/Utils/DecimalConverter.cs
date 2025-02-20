@@ -11,46 +11,40 @@ namespace GestãoEmpresarial.Utils
 {
     public class DecimalConverter : MarkupExtensionGestaoEmpresarial, IValueConverter
     {
+        // Cultura opcional para formatação
+        public string CultureName { get; set; } = "en-US"; // Padrão: Inglês (EUA)
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is decimal valor)
+            if (value is decimal decimalValue)
             {
-                return valor.ToString("N", culture); // Formato monetário (por exemplo, 100,00)
+                var targetCulture = CultureInfo.GetCultureInfo(CultureName);
+                return decimalValue.ToString("N2", targetCulture); // Formata com 2 casas decimais
             }
-            return value;
+
+            return value?.ToString() ?? string.Empty; // Retorna como string se não for decimal
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            // Converte o valor de volta para decimal (ou o tipo que você estiver usando)
-            if (decimal.TryParse(value as string, NumberStyles.Currency, culture, out decimal result))
+            if (string.IsNullOrEmpty(value?.ToString()))
+            {
+                return 0m; // Retorna 0 se a string estiver vazia
+            }
+
+            var targetCulture = CultureInfo.GetCultureInfo(CultureName);
+
+            if (decimal.TryParse(value.ToString(), NumberStyles.Currency, targetCulture, out decimal result))
             {
                 return result;
             }
-            return value;
+
+            throw new FormatException("O valor informado não está em um formato decimal válido.");
         }
 
-        //
-
-        //public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        //{
-        //    if (value is decimal amount)
-        //    {
-        //        return string.Format(culture, "{0:N}", amount); // Formata o valor como moeda
-        //    }
-        //    return value;
-        //}
-
-        //public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        //{
-        //    if (value is string text)
-        //    {
-        //        decimal result;
-        //        if (decimal.TryParse(text, NumberStyles.Currency, culture, out result))
-        //        {
-        //            return result;
-        //        }
-        //    }
-        //    return value;
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            return this;
+        }
     }
 }

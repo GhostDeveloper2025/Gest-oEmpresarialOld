@@ -21,18 +21,61 @@ namespace GestãoEmpresarial.Repositorios
             rItensVendaDAL = new RItensVendaDAL(idFuncionario);
         }
 
+        //public async Task<RelatorioReciboOsModel> ObterReciboOrdemServicoAsync(int idOs)
+        //{
+        //    string query = @"
+        //         SELECT a.*, resp.Nome AS NomeResponsavel, tecnico.Nome AS NomeTecnico, cadas.Nome AS NomeCadastrante, cli.Nome AS NomeCliente, codigof.NomeCodigo as NomeMarca, codigostatus.NomeCodigo as NomeStatus
+        //            FROM dbnew.tb_os a
+        //            INNER JOIN dbnew.tb_cliente cli on a.IdCliente = cli.IdCliente
+        //            INNER JOIN dbnew.tb_funcionario cadas on a.IdCadastrante = cadas.IdFuncionario
+        //            INNER JOIN dbnew.uvw_codigos codigof on a.idcodigomarcasf = codigof.IdCodigo
+        //            INNER JOIN dbnew.uvw_codigos codigostatus on a.idcodigostatus = codigostatus.IdCodigo
+        //            LEFT JOIN dbnew.tb_funcionario tecnico on a.IdTecnico = tecnico.IdFuncionario
+        //            LEFT JOIN dbnew.tb_funcionario resp on a.IdResponsavel = resp.IdFuncionario
+        //            where idos = @idOs;";
+
+        //    List<MySqlParameter> parametros = new List<MySqlParameter>();
+        //    AddParameter(parametros, "@idOs", idOs);
+
+        //    using (MySqlDataReader reader = ExecuteReader(query, parametros.ToArray()))
+        //    {
+        //        while (await reader.ReadAsync()) // Leitura assíncrona
+        //        {
+        //            var obj = Mapeador.Map(new OrdemServicoModel(), reader);
+        //            obj.ListItensOs = await rItensOSDAL.GetByIdOsAsync(obj.IdOs); // Usar await aqui
+
+        //            return new RelatorioReciboOsModel
+        //            {
+        //                OsModel = obj,
+        //                NomeCadastrante = DALHelper.GetString(reader, "NomeCadastrante"),
+        //                NomeCliente = DALHelper.GetString(reader, "NomeCliente"),
+        //                NomeMarca = DALHelper.GetString(reader, "NomeMarca"),
+        //                NomeResponsavel = DALHelper.GetString(reader, "NomeResponsavel"),
+        //                NomeStatus = DALHelper.GetString(reader, "NomeStatus"),
+        //                NomeTecnico = DALHelper.GetString(reader, "NomeTecnico"),
+        //            };
+        //        }
+        //    }
+
+        //    return null;
+        //}
+
+
+        // Aqui trago os registro para mostrar no recibo ordemserviço e relatorios (novo codigo)
         public async Task<RelatorioReciboOsModel> ObterReciboOrdemServicoAsync(int idOs)
         {
             string query = @"
-                 SELECT a.*, resp.Nome AS NomeResponsavel, tecnico.Nome AS NomeTecnico, cadas.Nome AS NomeCadastrante, cli.Nome AS NomeCliente, codigof.NomeCodigo as NomeMarca, codigostatus.NomeCodigo as NomeStatus
-                    FROM dbnew.tb_os a
-                    INNER JOIN dbnew.tb_cliente cli on a.IdCliente = cli.IdCliente
-                    INNER JOIN dbnew.tb_funcionario cadas on a.IdCadastrante = cadas.IdFuncionario
-                    INNER JOIN dbnew.uvw_codigos codigof on a.idcodigomarcasf = codigof.IdCodigo
-                    INNER JOIN dbnew.uvw_codigos codigostatus on a.idcodigostatus = codigostatus.IdCodigo
-                    LEFT JOIN dbnew.tb_funcionario tecnico on a.IdTecnico = tecnico.IdFuncionario
-                    LEFT JOIN dbnew.tb_funcionario resp on a.IdResponsavel = resp.IdFuncionario
-                    where idos = @idOs;";
+         SELECT a.*, resp.Nome AS NomeResponsavel, tecnico.Nome AS NomeTecnico, 
+                cadas.Nome AS NomeCadastrante, cli.Nome AS NomeCliente, cli.Celular AS CelularCliente, cli.Cnpj AS CnpjCliente,
+                codigof.NomeCodigo as NomeMarca, codigostatus.NomeCodigo as NomeStatus
+            FROM dbnew.tb_os a
+            INNER JOIN dbnew.tb_cliente cli on a.IdCliente = cli.IdCliente
+            INNER JOIN dbnew.tb_funcionario cadas on a.IdCadastrante = cadas.IdFuncionario
+            INNER JOIN dbnew.uvw_codigos codigof on a.idcodigomarcasf = codigof.IdCodigo
+            INNER JOIN dbnew.uvw_codigos codigostatus on a.idcodigostatus = codigostatus.IdCodigo
+            LEFT JOIN dbnew.tb_funcionario tecnico on a.IdTecnico = tecnico.IdFuncionario
+            LEFT JOIN dbnew.tb_funcionario resp on a.IdResponsavel = resp.IdFuncionario
+            WHERE a.IdOs = @idOs;";
 
             List<MySqlParameter> parametros = new List<MySqlParameter>();
             AddParameter(parametros, "@idOs", idOs);
@@ -49,6 +92,8 @@ namespace GestãoEmpresarial.Repositorios
                         OsModel = obj,
                         NomeCadastrante = DALHelper.GetString(reader, "NomeCadastrante"),
                         NomeCliente = DALHelper.GetString(reader, "NomeCliente"),
+                        CelularCliente = DALHelper.GetString(reader, "CelularCliente"), // Adicionando CelularCliente
+                        CnpjCliente = DALHelper.GetString(reader, "CnpjCliente"), // Adicionando CNPJ
                         NomeMarca = DALHelper.GetString(reader, "NomeMarca"),
                         NomeResponsavel = DALHelper.GetString(reader, "NomeResponsavel"),
                         NomeStatus = DALHelper.GetString(reader, "NomeStatus"),
@@ -59,6 +104,7 @@ namespace GestãoEmpresarial.Repositorios
 
             return null;
         }
+
 
         public async Task<RelatorioReciboVendaModel> ObterReciboVendaAsync(int idVenda)
         {

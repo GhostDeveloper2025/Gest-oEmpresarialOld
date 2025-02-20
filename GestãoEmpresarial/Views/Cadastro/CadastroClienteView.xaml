@@ -1,15 +1,16 @@
 ﻿<UserControl x:Class="GestãoEmpresarial.Views.Cadastro.CadastroClienteView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
              xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="1000" d:DesignWidth="1150">
-    <!--#region  Grid Pai Onde Vai Todo O Codigo... -->
-    <Grid >
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
+             d:DesignHeight="1000"
+             d:DesignWidth="1150"
+             mc:Ignorable="d">
+    <!--#region  Grid Pai Onde Vai Todo O Codigo...-->
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="10" />
@@ -20,96 +21,74 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <TextBox x:Name="TxtNome" 
-                     Width="250" 
-                     materialDesign:HintAssist.Hint="Nome" 
-                     Text="{Binding ObjectoEditar.Nome,
-                UpdateSourceTrigger=PropertyChanged,
-                Converter={utils:CapitalizeWordsConverter}}"
-                     />
-            <cc:CpfTextBox 
-                Width="130"
-                Text="{Binding ObjectoEditar.CPF,
-                UpdateSourceTrigger=PropertyChanged}"
-                />
-            <cc:CnpjTextBox 
-                Width="160" 
-                Text="{Binding ObjectoEditar.CNPJ,
-                UpdateSourceTrigger=PropertyChanged}"
-                            />
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBox x:Name="TxtNome"
+                     Width="250"
+                     materialDesign:HintAssist.Hint="Nome"
+                     utils:FocusExtension.IsFocused="{Binding IsTextBoxFocused, Mode=TwoWay}"
+                     MaxLength="100"
+                     Text="{Binding ObjectoEditar.Nome, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" />
+            <cc:CpfTextBox Width="130"
+                           MaxLength="14"
+                           Text="{Binding ObjectoEditar.CPF, UpdateSourceTrigger=PropertyChanged}" />
+            <cc:CnpjTextBox Width="160"
+                            MaxLength="18"
+                            Text="{Binding ObjectoEditar.CNPJ, UpdateSourceTrigger=PropertyChanged}" />
             <cc:CepTextBox x:Name="TxtCep"
-                Width="110" KeyUp="TxtCep_KeyUp"
-                Text="{Binding ObjectoEditar.Cep,  
-                UpdateSourceTrigger=PropertyChanged}"
-                />
+                           Width="110"
+                           KeyUp="TxtCep_KeyUp"
+                           MaxLength="10"
+                           Text="{Binding ObjectoEditar.Cep, UpdateSourceTrigger=PropertyChanged}" />
             <ProgressBar x:Name="progressBar"
                          Margin="20,20,10,0"
-                         Style="{StaticResource MaterialDesignCircularProgressBar}"
                          IsIndeterminate="True"
-                         Visibility="Hidden"
-                         />
+                         Style="{StaticResource MaterialDesignCircularProgressBar}"
+                         Visibility="Hidden" />
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="2">
-            <TextBox x:Name="TxtUF" 
-                     Width="50" 
-                     materialDesign:HintAssist.Hint="UF" 
-                     Text="{Binding ObjectoEditar.UF, 
-                UpdateSourceTrigger=PropertyChanged,
-                Converter={utils:CapitalizeWordsConverter}}"
-                     />
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <TextBox x:Name="TxtUF"
+                     Width="50"
+                     materialDesign:HintAssist.Hint="UF"
+                     MaxLength="2"
+                     Text="{Binding ObjectoEditar.UF, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" />
             <TextBox x:Name="TxtLocalidade"
-                Width="200" 
-                materialDesign:HintAssist.Hint="Cidade" 
-                Text="{Binding ObjectoEditar.Localidade,
-                UpdateSourceTrigger=PropertyChanged, 
-                Converter={utils:CapitalizeWordsConverter}}"
-                />
+                     Width="200"
+                     materialDesign:HintAssist.Hint="Cidade"
+                     MaxLength="100"
+                     Text="{Binding ObjectoEditar.Localidade, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" />
             <TextBox x:Name="TxtLogradouro"
-                Width="250"  
-                materialDesign:HintAssist.Hint="Rua" 
-                Text="{Binding ObjectoEditar.Logradouro,  
-                Converter={utils:CapitalizeWordsConverter}}"
-                />
-            <TextBox 
-                Width="80" materialDesign:HintAssist.Hint="Numero"
-                Text="{Binding ObjectoEditar.Numero, 
-                UpdateSourceTrigger=PropertyChanged}"
-                />
+                     Width="250"
+                     materialDesign:HintAssist.Hint="Rua"
+                     MaxLength="100"
+                     Text="{Binding ObjectoEditar.Logradouro, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" />
+            <TextBox Width="80"
+                     materialDesign:HintAssist.Hint="Numero"
+                     MaxLength="5"
+                     Text="{Binding ObjectoEditar.Numero, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="4">
-            <TextBox x:Name="TxtBairro" 
-                     Width="200" 
-                     materialDesign:HintAssist.Hint="Bairro" 
-                     Text="{Binding ObjectoEditar.Bairro,
-                UpdateSourceTrigger=PropertyChanged, 
-                Converter={utils:CapitalizeWordsConverter}}"
-                     />
-            <cc:CelularTextBox
-                Width="120"
-                Text="{Binding ObjectoEditar.Celular,
-                UpdateSourceTrigger=PropertyChanged}"
-                />
-            <cc:TelefoneTextBox 
-                Width="120" 
-                Text="{Binding ObjectoEditar.Telefone,
-                UpdateSourceTrigger=PropertyChanged}"
-                />
-            <TextBox 
-                Width="200"
-                materialDesign:HintAssist.Hint="Email"
-                Text="{Binding ObjectoEditar.Email, 
-                UpdateSourceTrigger=PropertyChanged, 
-                Converter={utils:CapitalizeWordsConverter}}"
-                />
+        <StackPanel Grid.Row="4" Orientation="Horizontal">
+            <TextBox x:Name="TxtBairro"
+                     Width="200"
+                     materialDesign:HintAssist.Hint="Bairro"
+                     MaxLength="50"
+                     Text="{Binding ObjectoEditar.Bairro, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" />
+            <cc:CelularTextBox Width="120"
+                               MaxLength="15"
+                               Text="{Binding ObjectoEditar.Celular, UpdateSourceTrigger=PropertyChanged}" />
+            <cc:TelefoneTextBox Width="120"
+                                MaxLength="15"
+                                Text="{Binding ObjectoEditar.Telefone, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Width="200"
+                     materialDesign:HintAssist.Hint="Email"
+                     MaxLength="50"
+                     Text="{Binding ObjectoEditar.Email, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" />
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="6">
-            <cc:MoedaTextBox
-                Width="150" Emoeda="True"
-                materialDesign:HintAssist.Hint="Limite de Credito"
-                Text="{Binding ObjectoEditar.LimiteCredito,
-                UpdateSourceTrigger=PropertyChanged}"
-                />
+        <StackPanel Grid.Row="6" Orientation="Horizontal">
+            <cc:MoedaTextBox Width="150"
+                             materialDesign:HintAssist.Hint="Limite de Credito"
+                             Emoeda="True"
+                             MaxLength="15"
+                             Text="{Binding ObjectoEditar.LimiteCredito, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
     </Grid>
     <!--#endregion-->

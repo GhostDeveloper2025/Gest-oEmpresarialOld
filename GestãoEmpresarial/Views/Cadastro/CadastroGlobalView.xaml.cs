@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GestãoEmpresarial.Views
+namespace GestãoEmpresarial.Views.Cadastro
 {
     /// <summary>
     /// Interação lógica para CadastroGlobalView.xam
@@ -29,12 +29,34 @@ namespace GestãoEmpresarial.Views
             fContainer.Children.Add(view);
         }
 
-        private void Imprimir_Click(object sender, RoutedEventArgs e)
-        {
-            int? id = ((CadastroVendaViewModel)DataContext).Id;
-            var func = DI.CadastrosViews[nameof(RelatorioReciboVendaViewModel)];
-            if (id.HasValue)
-                Switcher.Imprimir(func(id));
-        }
+        //private void Imprimir_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (DataContext is CadastroVendaViewModel vendaViewModel)
+        //    {
+        //        // Impressão para Venda
+        //        int? id = vendaViewModel.Id;
+        //        var func = DI.CadastrosViews[nameof(RelatorioReciboVendaViewModel)];
+        //        if (id.HasValue)
+        //            Switcher.Imprimir(func(id));
+        //    }
+        //    else if (DataContext is CadastroOrdemServicoViewModel ordemServicoViewModel)
+        //    {
+        //        // Impressão para Ordem de Serviço
+        //        int? id = ordemServicoViewModel.Id;
+        //        var func = DI.CadastrosViews[nameof(RelatorioReciboOrdemServicoViewModel)];
+        //        if (id.HasValue)
+        //            Switcher.Imprimir(func(id));
+        //    }
+        //    else
+        //    {
+        //        // Exibe uma mensagem caso o DataContext não seja reconhecido
+        //        MessageBox.Show(
+        //            "O tipo de contexto atual não suporta a funcionalidade de impressão.",
+        //            "Erro de Impressão",
+        //            MessageBoxButton.OK,
+        //            MessageBoxImage.Warning);
+        //    }
+
+        //}
     }
 }

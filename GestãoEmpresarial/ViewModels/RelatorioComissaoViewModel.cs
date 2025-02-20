@@ -84,5 +84,6 @@ namespace GestãoEmpresarial.ViewModels
             RaisePropertyChanged(nameof(TotalComissao));
             RaisePropertyChanged(nameof(TotalVendido));
         }
+
     }
 }

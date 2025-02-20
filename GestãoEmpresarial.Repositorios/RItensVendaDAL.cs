@@ -19,12 +19,11 @@ namespace GestãoEmpresarial.Repositorios
 
         public async Task DeleteAsync(ItemVendaModel t)
         {
-            string query = "DELETE FROM tb_itensvenda WHERE IdItensVenda = @id";
             MySqlParameter[] arr = new MySqlParameter[]
             {
-                new MySqlParameter() { Value = t.IdItensVenda, ParameterName = "@id" },
+                new MySqlParameter() { Value = t.IdItensVenda, ParameterName = "id" },
             };
-            ExecuteNonQuery(query, arr); // Execução assíncrona
+            ExecuteNonQuery("usp_del_venda_item", arr, true); // Execução assíncrona
         }
 
         public async Task<List<ItemVendaModel>> GetByIdVendaAsync(int id)

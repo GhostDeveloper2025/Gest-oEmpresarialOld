@@ -26,7 +26,7 @@ namespace GestãoEmpresarial.Views.Relatorios
         public RelatorioReciboVenda(RelatorioReciboVendaViewModel viewModel)
         {
             InitializeComponent();
-            Methods.AddColumnToDataGrid(DgItensOsModel, typeof(ItemVendaModelObservavel));
+            Methods.AddColumnToDataGrid(DgItensModel, typeof(ItemVendaModelObservavel));
             DataContext = viewModel;
         }
     }

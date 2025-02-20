@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace GestãoEmpresarial.Views.Relatorios
 {
@@ -21,10 +22,26 @@ namespace GestãoEmpresarial.Views.Relatorios
     /// </summary>
     public partial class RelatorioHistoricoVenda : UserControl
     {
+        private DispatcherTimer _toggleTimer;
         public RelatorioHistoricoVenda(RelatorioHistoricoVendasViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
+        }
+
+        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            // Configura o timer para desmarcar o botão após 3 segundos
+            _toggleTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(3) // Define o tempo em segundos
+            };
+            _toggleTimer.Tick += (s, args) =>
+            {
+                TgbBuscar.IsChecked = false; // Volta ao estado inicial
+                _toggleTimer.Stop(); // Para o timer
+            };
+            _toggleTimer.Start(); // Inicia o timer
         }
     }
 }

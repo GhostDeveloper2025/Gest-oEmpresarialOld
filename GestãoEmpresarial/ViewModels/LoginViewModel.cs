@@ -13,7 +13,25 @@ namespace GestãoEmpresarial.ViewModels
 {
     public sealed class LoginViewModel : ObservableObject
     {
+        // Campo privado que armazena o estado de foco do TextBox.
+        // Inicializa como true para que o TextBox receba foco assim que a View for carregada.
+        private bool _isTextBoxFocused = true;
+
+        // Propriedade pública que permite o binding com a View (XAML). Neste Caso Para adicionar um foco no TextBox
+        // Essa propriedade é observada pela View, e qualquer mudança nela reflete no controle associado.
+        public bool IsTextBoxFocused
+        {
+            get => _isTextBoxFocused;
+            set
+            {
+                _isTextBoxFocused = value;
+                RaisePropertyChanged(nameof(IsTextBoxFocused));
+            }
+        }
+
         private static readonly LoginViewModel _viewModel = new LoginViewModel();
+        private bool _estaAutenticando;
+        private double _progressoLogin;
 
         private LoginViewModel()
         {
@@ -21,52 +39,79 @@ namespace GestãoEmpresarial.ViewModels
             Usuario = "ROOT@GMAIL.COM";
             Senha = "0000";
 #endif
-            LoginCommand = new RelayCommand(Autenticar, PodeAutenticar);
+            LoginCommand = new RelayCommand(ExecutarLoginAsync, PodeAutenticar);
         }
 
-        //static LoginViewModel() { } // construtor estatico 
-
-        public static LoginViewModel Instancia
-        {
-            get
-            {
-                return _viewModel;
-            }
-        }
+        public static LoginViewModel Instancia => _viewModel;
 
         public string Usuario { get; set; }
-
         public string Senha { get; set; }
-
         public string Erro { get; set; }
 
-        public ICommand LoginCommand { get; set; }
-
-        public bool PodeAutenticar()
+        public bool EstaAutenticando
         {
-            return !string.IsNullOrWhiteSpace(Usuario) && !string.IsNullOrWhiteSpace(Senha);
+            get => _estaAutenticando;
+            set
+            {
+                if (_estaAutenticando != value)
+                {
+                    _estaAutenticando = value;
+                    RaisePropertyChanged(nameof(EstaAutenticando));
+                }
+            }
         }
 
-        public void Autenticar()
+        public double ProgressoLogin
         {
-            var repo = new RLoginDAL();
-            colaborador = repo.AutenticaoValida(Usuario, Senha);
-            if (colaborador != null)
+            get => _progressoLogin;
+            set
             {
-                Erro = null;
-                // vai a bd e ve se existe o colaborador
-                // colaborador = resultado da bd
-                var func = DI.PaginasView[nameof(LayoutView)];
-                Switcher.SwitchPagina(func());
+                if (_progressoLogin != value)
+                {
+                    _progressoLogin = value;
+                    RaisePropertyChanged(nameof(ProgressoLogin));
+                }
             }
-            else
+        }
+
+        public ICommand LoginCommand { get; }
+
+        public bool PodeAutenticar() => !string.IsNullOrWhiteSpace(Usuario) && !string.IsNullOrWhiteSpace(Senha);
+
+        public async void ExecutarLoginAsync()
+        {
+            EstaAutenticando = true;
+            ProgressoLogin = 0;
+
+            try
             {
-                Erro = "Email ou senha erradas!";
+                var repo = new RLoginDAL();
+                colaborador = await Task.Run(() => repo.AutenticaoValida(Usuario, Senha));
+
+                if (colaborador != null)
+                {
+                    Erro = null;
+                    // Redirecionar para outra página
+                    var func = DI.PaginasView[nameof(LayoutView)];
+                    Switcher.SwitchPagina(func());
+                }
+                else
+                {
+                    Erro = "Email ou senha errados!";
+                }
+            }
+            catch (Exception ex)
+            {
+                Erro = $"Erro durante o login: {ex.Message}";
+            }
+            finally
+            {
+                EstaAutenticando = false;
+                ProgressoLogin = 1;
                 RaisePropertyChanged(nameof(Erro));
             }
         }
 
-        // este objecto (que é uma propriedade), é sempre único em toda a aplicação
         public ColaboradorModel colaborador { get; private set; }
     }
 }

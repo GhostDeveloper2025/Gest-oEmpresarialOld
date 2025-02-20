@@ -1,17 +1,18 @@
 ﻿<UserControl x:Class="GestãoEmpresarial.Views.Cadastro.CadastroCategoriaView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
              xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
-             mc:Ignorable="d"  
-             d:DesignHeight="1000" d:DesignWidth="1150">
-    
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
+             d:DesignHeight="1000"
+             d:DesignWidth="1150"
+             mc:Ignorable="d">
+
     <!--#endregion-->
     <Grid>
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -19,24 +20,20 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
             <StackPanel Orientation="Horizontal">
-                <TextBox x:Name="TxtNome"  
-                         Width="250" 
+                <TextBox x:Name="TxtNome"
+                         Width="250"
                          materialDesign:HintAssist.Hint="Nome"
-                         Text="{Binding ObjectoEditar.Nome, 
-                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
-                    Converter={utils:CapitalizeWordsConverter}}">
-                </TextBox>
-                <TextBox x:Name="TxtDescricao"  
-                         Width="600" 
-                         AcceptsReturn="True" 
-                         TextWrapping="Wrap"  
-                         MaxLines="1" MaxLength="150"
+                         utils:FocusExtension.IsFocused="{Binding IsTextBoxFocused, Mode=TwoWay}"
+                         Text="{Binding ObjectoEditar.Nome, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" />
+                <TextBox x:Name="TxtDescricao"
+                         Width="600"
                          VerticalAlignment="Stretch"
-                         materialDesign:HintAssist.Hint="Descrição"  
-                         Text="{Binding ObjectoEditar.Descricao, 
-                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
-                    Converter={utils:CapitalizeWordsConverter}}">
-                </TextBox>
+                         materialDesign:HintAssist.Hint="Descrição"
+                         AcceptsReturn="True"
+                         MaxLength="150"
+                         MaxLines="1"
+                         Text="{Binding ObjectoEditar.Descricao, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}"
+                         TextWrapping="Wrap" />
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -49,7 +49,9 @@ namespace GestãoEmpresarial.CustomControls
 
             if (Emoeda)
             {
-                Methods.Moeda(ref textBox);
+                //Methods.Moeda(ref textBox);
+
+                Methods.Moeda(this);
             }
         }
     }

@@ -19,6 +19,7 @@ namespace GestãoEmpresarial.Models
         public decimal Desconto { get; set; }
 
         public decimal CustoTotal { get; set; }
+
         //public decimal DescontoValor { get { return Desconto <= 0 ? 0 : CustoTotal * Desconto / 100; } }
 
         //public decimal TotalItem { get { return Math.Round(CustoTotal - DescontoValor, 2); } }

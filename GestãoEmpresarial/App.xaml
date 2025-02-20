@@ -2,12 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:util="clr-namespace:GestãoEmpresarial.Utils"
+             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <!--#region  Custon Fontes-->
-            <!-- Fonte Custon-->
+            <!--  Fonte Custon  -->
             <FontFamily x:Key="CustomFont">/GestãoEmpresarial;component/Fonts/Philosopher.ttf#Philosopher</FontFamily>
             <FontFamily x:Key="CustomFont1">/GestãoEmpresarial;component/Fonts/Afacad.ttf#Afacad</FontFamily>
             <FontFamily x:Key="CustomFont2">/GestãoEmpresarial;component/Fonts/Ibarra Real Nova.ttf#Ibarra Real Nova</FontFamily>
@@ -16,57 +16,62 @@
             <!--#endregion-->
 
             <!--#region  Converters-->
-            <!-- Converters -->
+            <!--  Converters  -->
+
+            <utils:BooleanToIndeterminateConverter x:Key="BooleanToIndeterminateConverter" />
             <!--<util:DecimalConverter x:Key="DecimalConverter"/>
             <util:EnumDescriptionConverter x:Key="EnumConverter"/>
             <util:CapitalizeWordsConverter  x:Key="CapitalizeWordsConverter "/>-->
             <!--#endregion-->
 
-            <!--#region MergedDictionaries recursos compartilhados... -->
-            <!--É utilizado para incluir dicionários de recursos adicionais. Podendo conter estilos, temas ou outros recursos compartilhados.-->
+            <!--#region MergedDictionaries recursos compartilhados...-->
+            <!--  É utilizado para incluir dicionários de recursos adicionais. Podendo conter estilos, temas ou outros recursos compartilhados.  -->
             <ResourceDictionary.MergedDictionaries>
                 <!--#region My Default Custom Theme Dark...-->
-                <!-- My Default Custom Theme... -->
+                <!--  My Default Custom Theme...  -->
                 <!--<materialDesign:CustomColorTheme BaseTheme="Dark" PrimaryColor="Purple" SecondaryColor="LightBlue" />-->
                 <!--#endregion-->
-                <ResourceDictionary Source="pack://application:,,,/BusyIndicator;component/Theme/Default.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/BusyIndicator;component/Theme/Default.xaml" />
 
                 <!--#region My Custom Them Light...-->
-                <!-- My Custom Them... -->
-                <materialDesign:CustomColorTheme BaseTheme="Dark" PrimaryColor="#6D2FFF" SecondaryColor="#141724" />
+                <!--  My Custom Them...  -->
+                <materialDesign:CustomColorTheme BaseTheme="Dark"
+                                                 PrimaryColor="#6D2FFF"
+                                                 SecondaryColor="#141724" />
                 <!--#endregion-->
 
-                <!--#region Default Theme... -->
-                <!-- Default Theme... -->
+                <!--#region Default Theme...-->
+                <!--  Default Theme...  -->
                 <!--<materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="Blue" SecondaryColor="DeepOrange" />-->
                 <!--#endregion-->
 
-                <!--#region include your primary palette... -->
-                <!--include your primary palette... -->
+                <!--#region include your primary palette...-->
+                <!--  include your primary palette...  -->
                 <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />-->
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
                 <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />-->
                 <!--#endregion-->
 
-                <!--#region Importam diferentes dicionários de recursos... -->
-                <!-- 
-             As linhas a seguir importam diferentes dicionários de recursos
-             contendo estilos para controles de interface do usuário, botões, 
-             caixas de texto, listas suspensas, visões de rolagem, grades de dados 
-             e controles de autocompletar. Esses estilos aprimoram a aparência 
-             visual e o comportamento de vários elementos na interface do usuário 
-             da aplicação.
-         -->
-                <ResourceDictionary Source="Styles/ColorResources.xaml"/>
-                <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
-                <ResourceDictionary Source="Styles/TextBoxStyle.xaml"/>
-                <ResourceDictionary Source="Styles/DatePickerStyle.xaml"/>
-                <ResourceDictionary Source="Styles/ComboBoxStyle.xaml"/>
-                <ResourceDictionary Source="Styles/ScrollviewStyle.xaml"/>
-                <ResourceDictionary Source="Styles/DataGridStyle.xaml"/>
-                <ResourceDictionary Source="Styles/AutocompleteStyle.xaml"/>
-                <ResourceDictionary Source="Styles/ToolTipStyle.xaml"/>
+                <!--#region Importam diferentes dicionários de recursos...-->
+                <!--
+                    As linhas a seguir importam diferentes dicionários de recursos
+                    contendo estilos para controles de interface do usuário, botões,
+                    caixas de texto, listas suspensas, visões de rolagem, grades de dados
+                    e controles de autocompletar. Esses estilos aprimoram a aparência
+                    visual e o comportamento de vários elementos na interface do usuário
+                    da aplicação.
+                -->
+                <ResourceDictionary Source="Styles/ColorResources.xaml" />
+                <ResourceDictionary Source="Styles/ButtonStyle.xaml" />
+                <ResourceDictionary Source="Styles/TextBoxStyle.xaml" />
+                <ResourceDictionary Source="Styles/PasswordBoxStyle.xaml" />
+                <ResourceDictionary Source="Styles/DatePickerStyle.xaml" />
+                <ResourceDictionary Source="Styles/ComboBoxStyle.xaml" />
+                <ResourceDictionary Source="Styles/ScrollviewStyle.xaml" />
+                <ResourceDictionary Source="Styles/DataGridStyle.xaml" />
+                <ResourceDictionary Source="Styles/AutocompleteStyle.xaml" />
+                <ResourceDictionary Source="Styles/ToolTipStyle.xaml" />
                 <!--#endregion-->
             </ResourceDictionary.MergedDictionaries>
             <!--#endregion-->

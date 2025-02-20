@@ -1,31 +1,55 @@
 ﻿<UserControl x:Class="GestãoEmpresarial.Views.Layout.MenuView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-		     xmlns:localmodels="clr-namespace:GestãoEmpresarial.Models"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:GestãoEmpresarial.Views.Layout"
+             xmlns:localmodels="clr-namespace:GestãoEmpresarial.Models"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             mc:Ignorable="d">
     <UserControl.Resources>
         <Style x:Key="TreeViewItemStyle_ExpandAll" TargetType="{x:Type materialDesign:TreeListViewItem}">
-            <Setter Property="IsExpanded" Value="True"/>
+            <Setter Property="IsExpanded" Value="True" />
         </Style>
     </UserControl.Resources>
-    <Grid>
-        <materialDesign:TreeListView 
-            Name="TrMenu" ItemsSource="{Binding Items}"
-            HorizontalAlignment="Left" VerticalAlignment="Top" 
-            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-            Width="250">
+    <StackPanel>
+        <!--  Seção do cabeçalho com imagem e texto  -->
+        <StackPanel Width="100"
+                    Margin="10,10,10,10"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+            <!--  Imagem do usuário  -->
+            <Border Width="50"
+                    Height="50"
+                    Background="{DynamicResource SecondaryColor1}"
+                    CornerRadius="40">
+                <Image Width="50"
+                       Height="50"
+                       ClipToBounds="True"
+                       Source="/Styles/Usuario.png"
+                       Stretch="UniformToFill" />
+            </Border>
+            <!--  Textos ao lado da imagem  -->
+        </StackPanel>
+        <TextBlock Grid.Row="0"
+                   Margin="10,10,10,10"
+                   FontFamily="{StaticResource CustomFont2}"
+                   FontSize="12"
+                   Foreground="{StaticResource FontColor7}"
+                   Text="{Binding MenuCabecalho}" />
+        <materialDesign:TreeListView Name="TrMenu"
+                                     Width="250"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Top"
+                                     ItemsSource="{Binding Items}"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type localmodels:TreeviewMenu}" ItemsSource="{Binding Items}">
-                    <StackPanel Orientation="Horizontal" MouseDown="OnMenuItemClicked" HorizontalAlignment="Left" ToolTip="{Binding Header}">
-                        <materialDesign:PackIcon Kind="{Binding Icon}" Foreground="{StaticResource color64}" Margin="0,0,5,0" Width="25" Height="25" />
-                        <TextBlock Text="{Binding Header}" Foreground="{StaticResource color64}" Margin="0,0,10,0" Width="150" VerticalAlignment="Center"/>
-                    </StackPanel>
+                    <local:TituloModelo MouseDown="OnMenuItemClicked" />
                 </HierarchicalDataTemplate>
             </ListView.ItemTemplate>
         </materialDesign:TreeListView>
-    </Grid>
+    </StackPanel>
 </UserControl>

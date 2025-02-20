@@ -16,6 +16,8 @@ namespace GestãoEmpresarial.ViewModels
     {
         public ObservableCollection<TreeviewMenu> Items { get; set; }
 
+        public string MenuCabecalho { get { return $"Bem Vindo {LoginViewModel.Instancia.colaborador.Nome}! ";  } }
+
         public MenuViewModel()
         {
             Items = new ObservableCollection<TreeviewMenu>()

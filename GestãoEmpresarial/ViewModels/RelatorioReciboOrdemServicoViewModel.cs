@@ -21,6 +21,7 @@ namespace GestãoEmpresarial.ViewModels
             //3. a impressao acontece
 
             Relatorio = relatorioReciboDAL.ObterReciboOrdemServico(idOs);
+            RaisePropertyChanged(nameof(ListItemsObservaveis));
         }
 
         public RelatorioReciboOsModel Relatorio { get; set; }

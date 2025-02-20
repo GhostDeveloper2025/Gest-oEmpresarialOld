@@ -31,17 +31,5 @@ namespace GestãoEmpresarial.Models
             };
             Add(obj);
         }
-
-        //public void Add(string header, PackIconKind icon, Type screen, object[] parameters)
-        //{
-        //    var obj = new TreeviewMenu()
-        //    {
-        //        Header = header, 
-        //        Icon = icon,
-        //        Screen  = screen,
-        //        ScreenParameters = parameters
-        //    };
-        //    Add(obj);
-        //}
     }
 }

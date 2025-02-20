@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 public class DataGridVendaModel
 {
@@ -31,7 +32,7 @@ public class DataGridVendaModel
     {
         return model?.Nome;
     }
-
+   
     [DisplayName("N° Venda")]
     public int IdVenda { get; set; }
 
