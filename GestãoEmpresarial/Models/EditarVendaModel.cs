@@ -35,6 +35,8 @@ namespace GestãoEmpresarial.Models
 
         public ClienteModel Cliente { get; set; }
 
+        public bool Cancelada { get; set; } // Nova propriedade
+
         public ItemVendaModelObservavel ItemVendaAdicionarPlanilha { get; set; }
         public ObservableCollection<ItemVendaModelObservavel> ListItensVenda { get; set; }
 
@@ -88,13 +90,46 @@ namespace GestãoEmpresarial.Models
         }
 
         //total valor sem desconto
-        public decimal SubTotalProduto { get { return ListItensVenda.Sum(x => x.CustoTotal); } }
+        //public decimal SubTotalProduto { get { return ListItensVenda.Sum(x => x.CustoTotal); } }
 
-        public decimal TotalVenda { get { return TotalProduto + ValorFrete; } }
+        //public decimal TotalVenda { get { return TotalProduto + ValorFrete; } }
 
-        public decimal TotalDescontoProduto { get { return Math.Round(ListItensVenda.Sum(x => x.DescontoValor), 2); } }
+        //public decimal TotalDescontoProduto { get { return Math.Round(ListItensVenda.Sum(x => x.DescontoValor), 2); } }
 
-        public decimal TotalProduto { get { return ListItensVenda.Sum(x => x.TotalItem); } } //total valor com desconto
+        //public decimal TotalProduto { get { return ListItensVenda.Sum(x => x.TotalItem); } } //total valor com desconto
+
+        // Na classe EditarVendaModel, modifique as propriedades de cálculo:
+
+        public decimal SubTotalProduto
+        {
+            get
+            {
+                return Math.Round(ListItensVenda.Sum(x => x.CustoTotal), 2, MidpointRounding.AwayFromZero);
+            }
+        }
+        public decimal TotalDescontoProduto
+        {
+            get
+            {
+                return Math.Round(ListItensVenda.Sum(x => x.DescontoValor), 2, MidpointRounding.AwayFromZero);
+            }
+        }
+
+        public decimal TotalProduto
+        {
+            get
+            {
+                return Math.Round(ListItensVenda.Sum(x => x.TotalItem), 2, MidpointRounding.AwayFromZero);
+            }
+        }
+
+        public decimal TotalVenda
+        {
+            get
+            {
+                return Math.Round(TotalProduto + ValorFrete, 2, MidpointRounding.AwayFromZero);
+            }
+        }
 
         public override VendaModel DevolveObjectoBD()
         {
@@ -107,6 +142,7 @@ namespace GestãoEmpresarial.Models
                 ValorFrete = ValorFrete,
                 IdCodigoTipoPagamento = IdCodigoTipoPagamento,
                 DataVenda = DataVenda,
+                Cancelada = Cancelada, // Mapeia a nova propriedade
             };
         }
 
@@ -120,6 +156,7 @@ namespace GestãoEmpresarial.Models
             Cliente = obj.Cliente;
             ValorFrete = obj.ValorFrete;
             IdCodigoTipoPagamento = obj.IdCodigoTipoPagamento;
+            Cancelada = obj.Cancelada; // Mapeia a nova propriedade
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using GestãoEmpresarial.Models;
+using GestãoEmpresarial.Themes;
+using GestãoEmpresarial.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -29,32 +31,30 @@ namespace GestãoEmpresarial.Views.Layout
                 Foreground = System.Windows.Media.Brushes.White,
                 HorizontalAlignment = HorizontalAlignment.Center,
             };
+
+            DataContext = new LayoutViewModel();
         }
 
-        internal void Navigate(TreeviewMenu menu)
-        {
-            BusyIndicator.IsBusy = true;
 
-            //await Task.Delay(System.TimeSpan.FromSeconds(2)); // para utilizar este codigo que tem o tempo definido em 2 segundo tenho que add o async
+        internal void Navigate(NavigationMenu menu)
+        {
             if (menu.GetView != null)
             {
-                DataContext = menu;
-                UserControl view = menu.GetView();
-                Navigate(view);
+                if (DataContext is LayoutViewModel vm)
+                {
+                    vm.CurrentView = menu.GetView();
+                    vm.Header = menu.Header; 
+                    vm.Icon = menu.Icon;
+                }
             }
-            BusyIndicator.IsBusy = false;
         }
 
         internal void Navigate(UserControl view)
         {
-            BusyIndicator.IsBusy = true;
-
-            fContainer.Children.Clear();
-            fContainer.Children.Add(view);
-
-            //só coloca focus depois da thread atual terminar, para ocorrer tem de ser focusable
-            Focus(view);
-            BusyIndicator.IsBusy = false;
+            if (DataContext is LayoutViewModel vm)
+            {
+                vm.CurrentView = view;
+            }
         }
 
         public static void Focus(UIElement element)
@@ -71,5 +71,6 @@ namespace GestãoEmpresarial.Views.Layout
                 }));
             }
         }
+
     }
 }

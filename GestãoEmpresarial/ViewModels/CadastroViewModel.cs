@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace GestãoEmpresarial.ViewModels
 {
@@ -37,13 +36,18 @@ namespace GestãoEmpresarial.ViewModels
         /// Como tal tem ser notificado explicitamente.
         /// </summary>
         private int? _id;
-        public int? Id { get => _id;
+        public int? Id
+        {
+            get => _id;
             set
             {
                 _id = value;
                 RaisePropertyChanged(nameof(Id)); // Notifica a UI
             }
         }
+
+        public bool ApenasVisualizar { get; protected set; }
+        public bool PodeClicar { get { return !ApenasVisualizar; } }
 
         private readonly AbstractValidator<ObjectBD> _validador;
         protected readonly IDAL<ObjectBD> _repositorio;
@@ -54,6 +58,7 @@ namespace GestãoEmpresarial.ViewModels
             _repositorio = repositorio;
             _podeInserir = id.HasValue == false;
             Id = id;
+            ApenasVisualizar = false;
 
             //SaveCommand = new RelayCommandWithParameter(ExecutarSalvar, PodeExecutarSalvar);
             // Usando o novo comando assíncrono

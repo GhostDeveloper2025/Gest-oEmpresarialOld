@@ -32,7 +32,7 @@ namespace GestãoEmpresarial
         {
         }
 
-        public static void Switch(TreeviewMenu menu)
+        public static void Switch(NavigationMenu menu)
         {
             layoutSwitcher.Navigate(menu);
         }
@@ -48,35 +48,6 @@ namespace GestãoEmpresarial
             pageSwitcher.Navigate(view);
             Focus(view);
         }
-
-        //public static void Imprimir(UserControl uc)
-        //{
-        //    PrintDialog printDlg = new PrintDialog();
-        //    if (printDlg.ShowDialog() == true)
-        //    {
-        //        // Measure the UserControl to its desired size
-        //        uc.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
-        //        uc.Arrange(new Rect(uc.DesiredSize));
-
-        //        // Clone the UserControl and create a visual for printing
-        //        UserControl printableUserControl = uc; // CloneUserControl(uc);
-
-        //        // Scale the visual to fit within the printable area
-        //        Size printableSize = new Size(printDlg.PrintableAreaWidth, printDlg.PrintableAreaHeight);
-        //        double scaleX = printableSize.Width / printableUserControl.ActualWidth;
-        //        double scaleY = printableSize.Height / printableUserControl.ActualHeight;
-        //        double scale = Math.Min(scaleX, scaleY);
-
-        //        printableUserControl.LayoutTransform = new ScaleTransform(scale, scale);
-
-        //        // Measure and arrange the scaled UserControl
-        //        printableUserControl.Measure(printableSize);
-        //        printableUserControl.Arrange(new Rect(printableSize));
-        //        printDlg.PrintVisual(printableUserControl, "User Control Printing.");
-        //    }
-        //}
-
-
 
         // Ficou aceitavel
         public static void Imprimir(UserControl uc)

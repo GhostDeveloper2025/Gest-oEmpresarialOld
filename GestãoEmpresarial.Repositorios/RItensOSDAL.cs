@@ -66,18 +66,25 @@ namespace GestãoEmpresarial.Repositorios
             return itensMap;
         }
 
-
-        // Método assíncrono para deletar item da OS
         public async Task DeleteAsync(ItemOrdemServicoModel t)
+        {
+            MySqlParameter[] arr = new MySqlParameter[]
+            {
+        new MySqlParameter() { Value = t.IdOs, ParameterName = "Os_id" },
+            };
+            ExecuteNonQuery("usp_cancel_Os", arr, true); // Execução assíncrona
+        }
+
+        public async Task DeleteItemlAsync(ItemOrdemServicoModel t)
         {
             string query = "DELETE FROM tb_itensos WHERE IdItensOs = @id";
             MySqlParameter[] arr = new MySqlParameter[]
             {
                 new MySqlParameter() { Value = t.IdItensOs, ParameterName= "@id" },
             };
-            ExecuteNonQuery(query, arr); // Executa de forma assíncrona
-        }
+            ExecuteNonQuery("usp_Del_Os_item", arr, true); // Execução assíncrona
 
+        }
         // Retorna lista de itens da OS por ID
         public async Task<List<ItemOrdemServicoModel>> GetByIdOsAsync(int id)
         {

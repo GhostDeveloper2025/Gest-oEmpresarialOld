@@ -2,16 +2,56 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        Title="MainWindow"
-        Width="800"
-        Height="450"
-        Background="{DynamicResource SecondaryColor1}"
-        FontFamily="{DynamicResource CustomFont4}"
+        Topmost="False"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="False"
+        ShowInTaskbar="True"
+        Loaded="Window_Loaded"
+        Closing="MainWindow_Closing"
         TextElement.FontSize="18"
         TextElement.FontWeight="Medium"
-        WindowState="Maximized"
+        Width="800"
+        Height="450"
+        Background="{DynamicResource PrimaryBackgroundColor}"
+        FontFamily="{DynamicResource CustomFont4}"
         mc:Ignorable="d">
-    <Grid Name="PaginaPrincipal" />
+
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="1" Height="40" Background="{DynamicResource PrimaryBarraTitloColor}">
+
+            <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                <fa:IconImage Icon="Shop"
+                              Margin="10,0,0,0"
+                              Width="20" 
+                              Height="20" 
+                              Foreground="{DynamicResource PrimaryIconeBarraTitloColor}"
+                              VerticalAlignment="Center"/>
+                <TextBlock Margin="10,0,0,0" 
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Left" 
+                           Text="Gestão Empresarial!" 
+                           FontFamily="{StaticResource CustomFont4}" 
+                           Foreground="{DynamicResource PrimaryTextBarraTitloColor}"/>
+            </StackPanel>
+
+            <WrapPanel HorizontalAlignment="Right">
+                <Button HorizontalAlignment="Right" Style="{StaticResource BotaoMinimizarStyle}" Click="Minimize_Click"/>
+                <Button HorizontalAlignment="Right" Style="{StaticResource ButonFecharStyle}" Click="Close_Click"/>
+            </WrapPanel>
+        </DockPanel>
+        <Grid Name="PaginaPrincipal" Grid.Row="2">
+
+        </Grid>
+    </Grid>
+
 </Window>

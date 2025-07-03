@@ -66,7 +66,7 @@ namespace GestãoEmpresarial.Repositorios
         {
             string query = @"
          SELECT a.*, resp.Nome AS NomeResponsavel, tecnico.Nome AS NomeTecnico, 
-                cadas.Nome AS NomeCadastrante, cli.Nome AS NomeCliente, cli.Celular AS CelularCliente, cli.Cnpj AS CnpjCliente,
+                cadas.Nome AS NomeCadastrante, cli.Nome AS NomeCliente, cli.Celular AS CelularCliente, cli.Cnpj AS CnpjCliente, cli.Cpf AS CpfCliente,
                 codigof.NomeCodigo as NomeMarca, codigostatus.NomeCodigo as NomeStatus
             FROM dbnew.tb_os a
             INNER JOIN dbnew.tb_cliente cli on a.IdCliente = cli.IdCliente
@@ -94,6 +94,7 @@ namespace GestãoEmpresarial.Repositorios
                         NomeCliente = DALHelper.GetString(reader, "NomeCliente"),
                         CelularCliente = DALHelper.GetString(reader, "CelularCliente"), // Adicionando CelularCliente
                         CnpjCliente = DALHelper.GetString(reader, "CnpjCliente"), // Adicionando CNPJ
+                        CpfCliente = DALHelper.GetString(reader, "CpfCliente"),
                         NomeMarca = DALHelper.GetString(reader, "NomeMarca"),
                         NomeResponsavel = DALHelper.GetString(reader, "NomeResponsavel"),
                         NomeStatus = DALHelper.GetString(reader, "NomeStatus"),

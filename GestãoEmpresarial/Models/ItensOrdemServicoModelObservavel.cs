@@ -109,11 +109,19 @@ namespace GestãoEmpresarial.Models
             get { return _produto; }
             set
             {
-                _produto = value;
-                if (_produto != null && ValUnitario == 0)
-                    ValUnitario = _produto.ValorVenda;
-                RaisePropertyChanged(nameof(Produto));
+                if (_produto != value)
+                {
+                    _produto = value;
+                    if (_produto != null)
+                    {
+                        ValUnitario = _produto.ValorVenda;
+                    }
+                    RaisePropertyChanged(nameof(Produto));
+                    RaisePropertyChanged(nameof(NomeProduto));
+                    RaisePropertyChanged(nameof(CodigoProduto));
+                }
             }
+
         }
     }
 }

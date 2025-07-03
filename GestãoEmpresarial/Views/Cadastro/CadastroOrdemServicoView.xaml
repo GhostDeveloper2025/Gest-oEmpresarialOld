@@ -12,7 +12,8 @@
              d:DesignWidth="1150"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <Style BasedOn="{StaticResource FormComboBox}" TargetType="ComboBox" />
+        <Style BasedOn="{StaticResource FormComboBox}"
+               TargetType="ComboBox" />
         <!--
             Este recurso é utilizado para converter o texto em
             cada palavra para que a primeira letra de cada palavra seja maiúscula.
@@ -38,11 +39,12 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal">
             <wpfcc:AutoCompleteTextBox Width="250"
                                        materialDesign:HintAssist.Hint="Cliente"
                                        DisplayMember="Nome"
-                                       IsEnabled="{Binding NovaOrdemServico}"
+                                       IsEnabled="{Binding ApenasVisualizar, Converter={utils:InverterBooleanConverter}}"
                                        Provider="{providers:ClienteProvider}"
                                        SelectedItem="{Binding ObjectoEditar.Cliente, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <wpfcc:AutoCompleteTextBox.ItemTemplate>
@@ -58,7 +60,7 @@
             <wpfcc:AutoCompleteTextBox Width="250"
                                        materialDesign:HintAssist.Hint="Responsavel"
                                        DisplayMember="Nome"
-                                       IsEnabled="{Binding PodeEditar}"
+                                       IsEnabled="{Binding ApenasVisualizar, Converter={utils:InverterBooleanConverter}}"
                                        Provider="{providers:ColaboradorResponsavelProvider}"
                                        SelectedItem="{Binding ObjectoEditar.Responsavel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <wpfcc:AutoCompleteTextBox.ItemTemplate>
@@ -72,7 +74,7 @@
             <wpfcc:AutoCompleteTextBox Width="250"
                                        materialDesign:HintAssist.Hint="Tecnico"
                                        DisplayMember="Nome"
-                                       IsEnabled="{Binding PodeEditar}"
+                                       IsEnabled="{Binding ApenasVisualizar, Converter={utils:InverterBooleanConverter}}"
                                        Provider="{providers:ColaboradorTecnicoProvider}"
                                        SelectedItem="{Binding ObjectoEditar.Tecnico, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <wpfcc:AutoCompleteTextBox.ItemTemplate>
@@ -86,28 +88,28 @@
             <ComboBox x:Name="CbxStatus"
                       Width="250"
                       HorizontalAlignment="Left"
-                      materialDesign:ColorZoneAssist.Mode="SecondaryLight"
                       materialDesign:HintAssist.Hint="Status. OS"
                       DisplayMemberPath="Value"
+                      IsEnabled="{Binding ApenasVisualizar, Converter={utils:InverterBooleanConverter}}"
                       ItemsSource="{Binding StatusList}"
                       SelectedValue="{Binding ObjectoEditar.Status, UpdateSourceTrigger=PropertyChanged}"
                       SelectedValuePath="Key"
                       Tag="Buscar" />
         </StackPanel>
-        <StackPanel Grid.Row="2" Orientation="Horizontal">
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal">
             <TextBox x:Name="TxtFerramenta"
                      Width="250"
                      materialDesign:HintAssist.Hint="Ferramenta"
-                     IsEnabled="{Binding NovaOrdemServico}"
+                     IsReadOnly="{Binding ApenasVisualizar}"
                      MaxLength="100"
                      Text="{Binding ObjectoEditar.Ferramenta, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" />
             <ComboBox x:Name="CbxMarca"
                       Width="250"
                       HorizontalAlignment="Left"
-                      materialDesign:ColorZoneAssist.Mode="SecondaryLight"
                       materialDesign:HintAssist.Hint="Marca"
                       DisplayMemberPath="Value"
-                      IsEnabled="{Binding NovaOrdemServico}"
+                      IsEnabled="{Binding ApenasVisualizar, Converter={utils:InverterBooleanConverter}}"
                       ItemsSource="{Binding MarcasList}"
                       SelectedValue="{Binding ObjectoEditar.Marca, UpdateSourceTrigger=PropertyChanged}"
                       SelectedValuePath="Key"
@@ -115,30 +117,30 @@
             <TextBox x:Name="TxtModelo"
                      Width="250"
                      materialDesign:HintAssist.Hint="Modelo"
-                     IsEnabled="{Binding NovaOrdemServico}"
+                     IsReadOnly="{Binding ApenasVisualizar}"
                      MaxLength="100"
                      Text="{Binding ObjectoEditar.Modelo, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" />
             <CheckBox Margin="15,10,0,0"
                       VerticalAlignment="Center"
-                      Background="{StaticResource PrimaryColor9}"
+                      Background="{DynamicResource PrimaryTextColor}"
                       IsChecked="{Binding ObjectoEditar.Garantia}"
                       IsEnabled="{Binding NovaOrdemServico}">
                 <TextBlock HorizontalAlignment="Left"
-                           FontFamily="{StaticResource CustomFont4}"
+                           FontFamily="{DynamicResource CustomFont4}"
                            FontSize="20"
-                           Foreground="{StaticResource PrimaryColor5}"
+                           Foreground="{DynamicResource PrimaryTextColor}"
                            Text="  É Garantia? " />
             </CheckBox>
+
         </StackPanel>
-        <StackPanel Grid.Row="4" Orientation="Horizontal">
+        <StackPanel Grid.Row="4"
+                    Orientation="Horizontal">
             <TextBox x:Name="TxtObservacao"
-                     Grid.Row="4"
-                     Grid.Column="2"
-                     Grid.ColumnSpan="6"
                      Width="600"
                      VerticalAlignment="Stretch"
                      materialDesign:HintAssist.Hint="Observação"
                      AcceptsReturn="True"
+                     IsReadOnly="{Binding ApenasVisualizar}"
                      MaxLength="150"
                      MaxLines="1"
                      Text="{Binding ObjectoEditar.Obs, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}"
@@ -147,20 +149,32 @@
                      Width="100"
                      materialDesign:HintAssist.Hint="Box"
                      IsEnabled="{Binding PodeEditar}"
+                     IsReadOnly="{Binding ApenasVisualizar}"
                      MaxLength="10"
                      Text="{Binding ObjectoEditar.Box}" />
+
         </StackPanel>
-        <StackPanel Grid.Row="6" Margin="0,15,0,0">
-            <TextBlock Background="{StaticResource PrimaryColor10}"
-                       FontFamily="{StaticResource CustomFont4}"
+        <StackPanel Grid.Row="4"
+                    HorizontalAlignment="Right">
+            <Button x:Name="Cancelar"
+                    Command="{Binding CancelarOsCommand}"
+                    IsEnabled="{Binding DataContext.PodeCancelar, ElementName=Cancelar}"
+                    Style="{StaticResource ButonCancelarStyle}" />
+        </StackPanel>
+        <StackPanel Grid.Row="6"
+                    Margin="0,15,0,0">
+            <TextBlock Background="{DynamicResource SecundaryBackgroundColor}"
+                       FontFamily="{DynamicResource CustomFont4}"
                        FontSize="22"
-                       Foreground="{StaticResource PrimaryColor7}"
+                       Foreground="{DynamicResource SecundaryTextColor}"
                        Text="   Seção Adicionar Itens" />
         </StackPanel>
-        <StackPanel Grid.Row="8" Orientation="Horizontal">
+        <StackPanel Grid.Row="8"
+                    Orientation="Horizontal">
             <wpfcc:AutoCompleteTextBox Width="250"
                                        materialDesign:HintAssist.Hint="Produto"
                                        DisplayMember="Nome"
+                                       IsEnabled="{Binding ApenasVisualizar, Converter={utils:InverterBooleanConverter}}"
                                        Provider="{Binding ProdutoProviderItem, Mode=OneWay}"
                                        SelectedItem="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Produto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <wpfcc:AutoCompleteTextBox.ItemTemplate>
@@ -182,8 +196,6 @@
             <TextBox x:Name="TxtQtdEst"
                      Width="100"
                      materialDesign:HintAssist.Hint="Disponível"
-                     BorderBrush="{StaticResource PrimaryColor7}"
-                     Foreground="{StaticResource PrimaryColor7}"
                      IsHitTestVisible="False"
                      IsReadOnly="True"
                      Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Produto.Estoque.Quantidade}" />
@@ -191,36 +203,42 @@
                              Width="100"
                              materialDesign:HintAssist.Hint="Val. Unitario"
                              Emoeda="True"
+                             IsReadOnly="{Binding ApenasVisualizar}"
                              MaxLength="15"
                              Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.ValUnitario, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <cc:NumeroTextBox x:Name="TxtQtd"
                               Width="100"
                               materialDesign:HintAssist.Hint="Quantidade"
+                              utils:EnterKeyBehavior.EnterCommand="{Binding AdicionarItemOsCommand}"
+                              IsReadOnly="{Binding ApenasVisualizar}"
                               MaxLength="10"
                               Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Quantidade, Converter={utils:DecimalConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <cc:NumeroTextBox x:Name="TxtDesconto"
                               Width="100"
                               materialDesign:HintAssist.Hint="Desconto. %"
+                              IsReadOnly="{Binding ApenasVisualizar}"
                               MaxLength="10"
                               Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.Desconto, Converter={utils:DecimalConverterSimples}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <cc:MoedaTextBox x:Name="TxtTotalItens"
                              Width="100"
                              materialDesign:HintAssist.Hint="Total"
-                             BorderBrush="{StaticResource PrimaryColor7}"
-                             Foreground="{StaticResource PrimaryColor7}"
                              IsHitTestVisible="False"
                              IsReadOnly="True"
                              Text="{Binding ObjectoEditar.ItemOsAdicionarPlanilha.TotalItem, Converter={utils:DecimalConverter}, Mode=OneWay}" />
         </StackPanel>
-        <WrapPanel Grid.Row="10" HorizontalAlignment="Right">
-            <Button Command="{Binding AdicionarItemOsCommand}" Style="{StaticResource ButonAdicionarStyle}" />
+        <WrapPanel Grid.Row="10"
+                   HorizontalAlignment="Right">
+            <Button x:Name="BtnAdd"
+                    Command="{Binding AdicionarItemOsCommand}"
+                    IsEnabled="{Binding DataContext.PodeClicar, ElementName=BtnAdd}"
+                    Style="{StaticResource ButonAdicionarStyle}" />
         </WrapPanel>
         <StackPanel Grid.Row="12">
             <TextBlock HorizontalAlignment="Left"
                        VerticalAlignment="Center"
-                       FontFamily="{StaticResource CustomFont4}"
+                       FontFamily="{DynamicResource CustomFont4}"
                        FontSize="15"
-                       Foreground="{StaticResource PrimaryColor11}">
+                       Foreground="{DynamicResource SecundaryTextColor}">
                 <Run Text="Número De Registros: " />
                 <Run Text="{Binding ObjectoEditar.NumberOfRecords}" />
             </TextBlock>
@@ -237,6 +255,7 @@
                                 <WrapPanel Margin="0,0,15,0">
                                     <Button Command="{Binding DataContext.ApagarItemOsCommand, ElementName=DgItensOsModel}"
                                             CommandParameter="{Binding}"
+                                            IsEnabled="{Binding DataContext.PodeClicar, ElementName=DgItensOsModel}"
                                             Style="{StaticResource ButtonDataGridStyle}" />
                                 </WrapPanel>
                             </DataTemplate>
@@ -246,42 +265,36 @@
             </DataGrid>
         </Grid>
         <StackPanel Grid.Row="16">
-            <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+            <StackPanel Margin="0,10,0,10"
+                        Orientation="Horizontal">
                 <cc:MoedaTextBox x:Name="TxtMaoObra"
                                  Width="90"
                                  materialDesign:HintAssist.Hint="M. Obra"
                                  Emoeda="True"
+                                 IsReadOnly="{Binding ApenasVisualizar}"
                                  MaxLength="15"
                                  Text="{Binding ObjectoEditar.TotalMaoObra, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBox x:Name="TxtSubTotal"
                          Width="150"
                          materialDesign:HintAssist.Hint="SubTotal Produto"
-                         BorderBrush="{StaticResource PrimaryColor7}"
-                         Foreground="{StaticResource PrimaryColor7}"
                          IsHitTestVisible="False"
                          IsReadOnly="True"
-                         Text="{Binding ObjectoEditar.SubTotalProduto, Mode=OneWay}" />
+                         Text="{Binding ObjectoEditar.SubTotalProduto, Mode=OneWay, Converter={utils:CapitalizeWordsConverter}}" />
                 <TextBox x:Name="TxtTotalDesc"
                          Width="150"
                          materialDesign:HintAssist.Hint="Total Desconto"
-                         BorderBrush="{StaticResource PrimaryColor7}"
-                         Foreground="{StaticResource PrimaryColor7}"
                          IsHitTestVisible="False"
                          IsReadOnly="True"
-                         Text="{Binding ObjectoEditar.TotalDescontoProduto, Mode=OneWay}" />
+                         Text="{Binding ObjectoEditar.TotalDescontoProduto, Mode=OneWay, Converter={utils:CapitalizeWordsConverter}}" />
                 <TextBox x:Name="TxtTotal"
                          Width="150"
                          materialDesign:HintAssist.Hint="Total Produto"
-                         BorderBrush="{StaticResource PrimaryColor7}"
-                         Foreground="{StaticResource PrimaryColor7}"
                          IsHitTestVisible="False"
                          IsReadOnly="True"
-                         Text="{Binding ObjectoEditar.TotalProduto, Mode=OneWay}" />
+                         Text="{Binding ObjectoEditar.TotalProduto, Mode=OneWay, Converter={utils:CapitalizeWordsConverter}}" />
                 <cc:MoedaTextBox x:Name="TxtTotalOs"
                                  Width="150"
                                  materialDesign:HintAssist.Hint="Total OS"
-                                 BorderBrush="{StaticResource PrimaryColor7}"
-                                 Foreground="{StaticResource PrimaryColor7}"
                                  IsHitTestVisible="False"
                                  IsReadOnly="True"
                                  Text="{Binding ObjectoEditar.TotalOS, Converter={utils:CapitalizeWordsConverter}, Mode=OneWay}" />

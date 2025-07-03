@@ -177,6 +177,7 @@ namespace GestãoEmpresarial
             { nameof(RelatorioProdutoMaisVendidoViewModel), () => new RelatorioProdutoMaisVendido(new RelatorioProdutoMaisVendidoViewModel(GetRepositorio<RRelatorioProdutoMaisVendidoDAL>())) },
             { nameof(RelatorioHistoricoVendasViewModel), () => new RelatorioHistoricoVenda(new RelatorioHistoricoVendasViewModel(GetRepositorio<RRelatorioHistoricoVendasDAL>())) },
             { nameof(RelatorioComissaoViewModel), () => new RelatorioComissao(new RelatorioComissaoViewModel(GetRepositorio<RRelatorioComissaoVendaDAL>())) },
+            { nameof(RelatorioHistoricoOsViewModel), () => new RelatorioHistoricoOs(new RelatorioHistoricoOsViewModel(GetRepositorio<RRelatorioHistoricoOsDAL>(), GetRepositorio<RCodigosDAL>())) },
         };
     }
 }

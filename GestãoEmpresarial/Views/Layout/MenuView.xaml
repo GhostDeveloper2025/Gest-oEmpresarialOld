@@ -1,55 +1,54 @@
 ﻿<UserControl x:Class="GestãoEmpresarial.Views.Layout.MenuView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:custom="clr-namespace:GestãoEmpresarial.CustomControls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:GestãoEmpresarial.Views.Layout"
              xmlns:localmodels="clr-namespace:GestãoEmpresarial.Models"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             d:DesignHeight="450"
-             d:DesignWidth="800"
+             d:DesignHeight="768"
+             d:DesignWidth="250"
              mc:Ignorable="d">
-    <UserControl.Resources>
-        <Style x:Key="TreeViewItemStyle_ExpandAll" TargetType="{x:Type materialDesign:TreeListViewItem}">
-            <Setter Property="IsExpanded" Value="True" />
-        </Style>
-    </UserControl.Resources>
-    <StackPanel>
-        <!--  Seção do cabeçalho com imagem e texto  -->
-        <StackPanel Width="100"
-                    Margin="10,10,10,10"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-            <!--  Imagem do usuário  -->
-            <Border Width="50"
-                    Height="50"
-                    Background="{DynamicResource SecondaryColor1}"
-                    CornerRadius="40">
-                <Image Width="50"
-                       Height="50"
-                       ClipToBounds="True"
-                       Source="/Styles/Usuario.png"
-                       Stretch="UniformToFill" />
-            </Border>
-            <!--  Textos ao lado da imagem  -->
-        </StackPanel>
-        <TextBlock Grid.Row="0"
-                   Margin="10,10,10,10"
-                   FontFamily="{StaticResource CustomFont2}"
-                   FontSize="12"
-                   Foreground="{StaticResource FontColor7}"
-                   Text="{Binding MenuCabecalho}" />
-        <materialDesign:TreeListView Name="TrMenu"
-                                     Width="250"
-                                     HorizontalAlignment="Left"
-                                     VerticalAlignment="Top"
-                                     ItemsSource="{Binding Items}"
-                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListView.ItemTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type localmodels:TreeviewMenu}" ItemsSource="{Binding Items}">
-                    <local:TituloModelo MouseDown="OnMenuItemClicked" />
-                </HierarchicalDataTemplate>
-            </ListView.ItemTemplate>
-        </materialDesign:TreeListView>
+    <StackPanel Width="250">
+
+        <Border Height="80"
+                Margin="10,10,10,10"
+                VerticalAlignment="Center"
+                Background="{DynamicResource PrimaryForegroundColor}"
+                CornerRadius="10">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10"
+                                  Direction="0"
+                                  RenderingBias="Performance"
+                                  ShadowDepth="0"
+                                  Color="#44A4F0" />
+            </Border.Effect>
+            <StackPanel Orientation="Horizontal">
+                <Border Width="48"
+                        Height="48"
+                        Margin="10,0,0,0"
+                        Background="{DynamicResource PrimaryIconeUsuarioColor}"
+                        CornerRadius="24">
+                    <Image ClipToBounds="True"
+                           Source="/Styles/Usuario.png"
+                           Stretch="UniformToFill" />
+                </Border>
+                <TextBlock Margin="10,0,0,0"
+                           VerticalAlignment="Center"
+                           FontSize="16"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource SeptenaryTextColor}"
+                           Text="{Binding MenuCabecalho}" />
+            </StackPanel>
+        </Border>
+
+        <ItemsControl ItemsSource="{Binding Items}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <custom:ExpanderMenuControl />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </StackPanel>
 </UserControl>

@@ -10,8 +10,8 @@
         <Setter Property="FontFamily" Value="Cambria Mat" />
         <Setter Property="BorderThickness" Value="0,0,0,1" />
         <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignTextBoxBorder}" />
-        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
-        <Setter Property="Foreground" Value="{StaticResource PrimaryColor7}" />
+        <Setter Property="Background" Value="{DynamicResource SecundaryTransparenteColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextAutoCompleteColor}" />
         <!--<Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>-->
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
@@ -34,7 +34,7 @@
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Center"
                                            Focusable="False"
-                                           Foreground="{StaticResource PrimaryColor7}"
+                                           Foreground="{DynamicResource SecundaryTransparenteColor}"
                                            Text="{TemplateBinding Watermark}"
                                            Visibility="Collapsed" />
                                 <TextBox x:Name="PART_Editor"
@@ -57,8 +57,8 @@
                                IsOpen="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
                                PopupAnimation="Slide">
                             <Border Padding="2"
-                                    Background="{StaticResource SecondaryColor1}"
-                                    BorderBrush="{StaticResource SecondaryColor3}"
+                                    Background="{DynamicResource PrimaryBackgroundAutoCompleteColor}"
+                                    BorderBrush="{DynamicResource SecundaryTransparenteColor}"
                                     BorderThickness="1"
                                     CornerRadius="5">
                                 <Grid>
@@ -66,7 +66,7 @@
                                              MaxHeight="{Binding Path=MaxPopupHeight, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
                                              BorderThickness="0"
                                              Focusable="False"
-                                             Foreground="{StaticResource PrimaryColor7}"
+                                             Foreground="{DynamicResource PrimaryTextAutoCompleteColor}"
                                              ItemTemplate="{TemplateBinding ItemTemplate}"
                                              ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                              ScrollViewer.HorizontalScrollBarVisibility="Auto"
@@ -90,7 +90,7 @@
                             <Setter TargetName="PART_Icon" Property="DockPanel.Dock" Value="Right" />
                         </Trigger>
                         <Trigger Property="Validation.HasError" Value="True">
-                            <Setter Property="BorderBrush" Value="{StaticResource SecondaryColor4}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource SecundaryTransparenteColor}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

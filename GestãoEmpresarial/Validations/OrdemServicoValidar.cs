@@ -18,12 +18,21 @@ namespace GestãoEmpresarial.Validations
             RCodigosDAL codigos = DI.GetRepositorio<RCodigosDAL>();
             //var prontoParaConsertoId = codigos.GetStatusProntoParaConsertoAsync().Result.Id;
             var orcamentoConcluidoId = codigos.GetStatusOrcamentoConcluidoAsync().Result.Id;
+            //Ver com o professor uma maneira melhor de se fazer
+            var consertoConcluidoId = codigos.GetStatusConsertoConcluidoAsync().Result.Id;
 
             When(x => x.Status == orcamentoConcluidoId, () =>
             {
                 RuleFor(x => x.Tecnico).NotEmpty();
                 RuleFor(x => x.Responsavel).NotEmpty();
             });
+            //Ver com o professor uma maneira melhor de se fazer
+            When(x => x.Status == consertoConcluidoId, () =>
+            {
+                RuleFor(x => x.Tecnico).NotEmpty();
+                RuleFor(x => x.Responsavel).NotEmpty();
+            });
+
 
             //When = Quando, portanto quando o estado é "X", o idresponsavel tem de estar preenchido
             //When(x => x.Status == prontoParaConsertoId, () =>

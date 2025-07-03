@@ -47,6 +47,7 @@
                     Orientation="Horizontal">
             <Button x:Name="BtnSalvar"
                     Command="{Binding SaveCommand}"
+                    IsEnabled="{Binding DataContext.PodeClicar, ElementName=BtnSalvar}"
                     Style="{StaticResource ButonSalvarStyle}" />
 
             <!--<Button Style="{StaticResource ButonImprimirStyle}" Click="Imprimir_Click"></Button>-->

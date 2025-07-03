@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Input;
 
 namespace GestãoEmpresarial.ViewModels
 {
@@ -13,14 +14,30 @@ namespace GestãoEmpresarial.ViewModels
         private readonly RRelatorioProdutoMaisVendidoDAL _relatoriosDAL;
         private DateTime? _dataInicial;
         private DateTime? _dataFinal;
-        private List<RelatorioProdutoMaisVendido> _listaRelatorioProdutoMaisVendido;
+
+        public PaginacaoModel<RelatorioProdutoMaisVendido> Paginas { get; set; }
 
         public RelatorioProdutoMaisVendidoViewModel(RRelatorioProdutoMaisVendidoDAL relatoriosDAL)
         {
             _relatoriosDAL = relatoriosDAL;
-            ListaRelatorioProdutoMaisVendido = new List<RelatorioProdutoMaisVendido>(); // Inicialmente vazio
+            Paginas = new PaginacaoModel<RelatorioProdutoMaisVendido>();
+            Paginas.ObterItens = AtualizarRelatorio;
+        }
+       
+        private (List<RelatorioProdutoMaisVendido>, int) AtualizarRelatorio(int pagina, int total)
+        {
+            if (DataInicial.HasValue && DataFinal.HasValue)
+            {
+                // Agora o método retorna uma tupla (Itens, TotalRegistros)
+                return _relatoriosDAL.ObterProdutoMaisVendidoAsync(DataInicial, DataFinal, pagina, total).GetAwaiter().GetResult();
+            }
+            else
+            {
+                return (new List<RelatorioProdutoMaisVendido>(), 0);
+            }
         }
 
+        //
         public DateTime? DataInicial
         {
             get { return _dataInicial; }
@@ -28,7 +45,7 @@ namespace GestãoEmpresarial.ViewModels
             {
                 _dataInicial = value;
                 RaisePropertyChanged(nameof(DataInicial));
-                ObterDadosRelatorio(); // Atualiza a lista ao mudar a data
+                Paginas.AtualizarPagina();
             }
         }
 
@@ -39,29 +56,7 @@ namespace GestãoEmpresarial.ViewModels
             {
                 _dataFinal = value;
                 RaisePropertyChanged(nameof(DataFinal));
-                ObterDadosRelatorio(); // Atualiza a lista ao mudar a data
-            }
-        }
-
-        public List<RelatorioProdutoMaisVendido> ListaRelatorioProdutoMaisVendido
-        {
-            get { return _listaRelatorioProdutoMaisVendido; }
-            private set
-            {
-                _listaRelatorioProdutoMaisVendido = value;
-                RaisePropertyChanged(nameof(ListaRelatorioProdutoMaisVendido));
-            }
-        }
-
-        private void ObterDadosRelatorio()
-        {
-            if (DataInicial.HasValue && DataFinal.HasValue)
-            {
-                ListaRelatorioProdutoMaisVendido = _relatoriosDAL.ObterProdutoMaisVendido(DataInicial, DataFinal);
-            }
-            else
-            {
-                ListaRelatorioProdutoMaisVendido = new List<RelatorioProdutoMaisVendido>(); // Mantém a lista vazia se as datas não estiverem definidas
+                Paginas.AtualizarPagina();
             }
         }
     }

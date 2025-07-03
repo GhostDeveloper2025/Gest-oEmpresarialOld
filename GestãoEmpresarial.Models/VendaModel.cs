@@ -33,6 +33,8 @@ namespace GestãoEmpresarial.Models
 
         public ClienteModel Cliente { get; set; }
         public int IdCliente { get; set; }
+        public decimal? CustoVenda { get; set; }
+        public bool Cancelada { get; set; } // Nova propriedade
 
     }
 }

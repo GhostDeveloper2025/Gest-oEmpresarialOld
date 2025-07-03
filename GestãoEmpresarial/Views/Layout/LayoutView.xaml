@@ -4,46 +4,106 @@
              xmlns:busyIndicator="https://github.com/moh3ngolshani/BusyIndicator"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:GestãoEmpresarial.Views.Layout"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="450"
              d:DesignWidth="800"
              mc:Ignorable="d">
     <DockPanel>
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <Grid Background="{StaticResource PrimaryColor0}">
+        <Border Margin="10,10,0,10"
+                Background="{DynamicResource PrimaryForegroundColor}"
+                CornerRadius="10,10,10,10">
+
+            <Grid Margin="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <!--  Painel De Informações:  -->
+
                 <local:MenuView Grid.Row="0" />
-                <StackPanel Grid.Row="1">
-                    <TextBlock Margin="10"
-                               FontFamily="{StaticResource CustomFont3}"
-                               FontSize="12"
-                               Foreground="{StaticResource FontColor7}"
-                               Text=" Versão 1.0" />
+                <StackPanel Grid.Row="1"
+                            Margin="10">
+
+                    <Border Margin="0,0,0,10"
+                            Background="{DynamicResource PrimaryForegroundColor}"
+                            CornerRadius="15">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="10"
+                                              Direction="0"
+                                              RenderingBias="Performance"
+                                              ShadowDepth="0"
+                                              Color="#44A4F0" />
+                        </Border.Effect>
+
+
+                        <StackPanel>
+                            <Label Margin="5"
+                                   HorizontalAlignment="Center"
+                                   Content="GestãoEmpresarial"
+                                   FontSize="18"
+                                   Foreground="{DynamicResource SeptenaryTextColor}" />
+                            <Label HorizontalAlignment="Center"
+                                   Content="Versão 2.5.5"
+                                   FontFamily="{StaticResource CustomFont4}"
+                                   FontSize="14"
+                                   Foreground="{DynamicResource SeptenaryTextColor}" />
+
+                            <Border Width="110"
+                                    Height="35"
+                                    Margin="10"
+                                    Background="{DynamicResource PrimaryForegroundColor}"
+                                    CornerRadius="18">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Width="20"
+                                                             Height="20"
+                                                             Margin="10,0,0,0"
+                                                             VerticalAlignment="Center"
+                                                             Foreground="{DynamicResource PrimaryIconeTemaDarckColor}"
+                                                             Kind="NightSky" />
+
+
+                                    <ToggleButton x:Name="TgbTheme"
+                                                  Margin="10,0,0,0"
+                                                  IsChecked="{Binding IsDarkTheme, Mode=TwoWay}"
+                                                  Style="{StaticResource ToggleButtonThemeStyle}" />
+
+
+
+
+                                    <materialDesign:PackIcon Width="20"
+                                                             Height="20"
+                                                             Margin="10,0,0,0"
+                                                             VerticalAlignment="Center"
+                                                             Foreground="{DynamicResource PrimaryIconeTemaLightColor}"
+                                                             Kind="WhiteBalanceSunny" />
+                                </StackPanel>
+
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="20"
+                                                      Direction="0"
+                                                      RenderingBias="Performance"
+                                                      ShadowDepth="0"
+                                                      Color="#44A4F0" />
+                                </Border.Effect>
+                            </Border>
+                        </StackPanel>
+                    </Border>
                 </StackPanel>
             </Grid>
-        </ScrollViewer>
 
-        <busyIndicator:BusyMask x:Name="BusyIndicator"
-                                Background="Transparent"
-                                BusyContent=""
-                                DockPanel.Dock="Bottom"
-                                IndicatorType="BouncingDot">
-            <Border Margin="10,10,10,10"
-                    Background="{StaticResource PrimaryColor0}"
-                    CornerRadius="10">
-                <DockPanel>
-                    <local:TituloModelo Margin="10,10,10,10"
-                                        HorizontalAlignment="Left"
-                                        DockPanel.Dock="Top" />
-                    <Grid Name="fContainer"
-                          Margin="10,10,10,10"
-                          Background="{StaticResource PrimaryColor0}" />
-                </DockPanel>
-            </Border>
-        </busyIndicator:BusyMask>
+        </Border>
+
+        <Border Margin="10"
+                Padding="10"
+                Background="{DynamicResource PrimaryForegroundColor}"
+                CornerRadius="12">
+            <DockPanel>
+                <local:TituloModelo DataContext="{Binding}"
+                                    DockPanel.Dock="Top" />
+                <ContentControl Name="fContainer"
+                                Background="{DynamicResource PrimaryForegroundColor}"
+                                Content="{Binding CurrentView}" />
+            </DockPanel>
+        </Border>
     </DockPanel>
 </UserControl>

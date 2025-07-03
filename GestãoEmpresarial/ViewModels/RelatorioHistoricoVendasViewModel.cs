@@ -1,49 +1,12 @@
 ﻿using GestãoEmpresarial.Models;
-using GestãoEmpresarial.Providers;
 using GestãoEmpresarial.Repositorios;
 using MicroMvvm;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace GestãoEmpresarial.ViewModels
 {
-    //public class RelatorioHistoricoVendasViewModel
-    //{
-    //    //private readonly RRelatoriosDAL _relatoriosDAL;
-
-    //    //public RelatorioHistoricoVendasViewModel(RRelatoriosDAL relatoriosDAL)
-    //    //{
-    //    //    _relatoriosDAL = relatoriosDAL;
-    //    //}
-
-    //    ////public ClienteProvider ClienteProviderItem { get; set; }
-
-    //    //private ClienteModel ClienteSelecionadoAux;
-    //    //public ClienteModel ClienteSelecionado
-    //    //{
-    //    //    get { return ClienteSelecionadoAux; }
-    //    //    set
-    //    //    {
-    //    //        ClienteSelecionadoAux = value;
-    //    //        /*Raiseprop*/
-    //    //    }
-    //    //}
-
-    //    //public List<RelatorioHistoricoVendasViewModel> ListaRelatorioProdutoMaisVendido
-    //    //{
-    //    //    //get
-    //    //    //{
-    //    //    //    //return _relatoriosDAL.ObterProdutoMaisVendido(ClienteSelecionado.Idcliente);
-    //    //    //}
-    //    //}
-    //}
-
     public class RelatorioHistoricoVendasViewModel : ObservableObject
     {
         private readonly RRelatorioHistoricoVendasDAL _historicoVendasDAL;
@@ -51,8 +14,38 @@ namespace GestãoEmpresarial.ViewModels
         public RelatorioHistoricoVendasViewModel(RRelatorioHistoricoVendasDAL historicoVendasDAL)
         {
             _historicoVendasDAL = historicoVendasDAL;
-            ListaHistoricoVendas = new ObservableCollection<RelatorioHistoricoVendasModel>();
-            BuscarHistoricoCommand = new RelayCommand(BuscarHistorico);
+            Paginas = new PaginacaoModel<RelatorioHistoricoVendasModel>();
+            Paginas.ObterItens = BuscarHistorico;
+            BuscarHistoricoCommand = new RelayCommand(Paginas.IrParaPrimeiraPagina);
+        }
+        public ICommand BuscarHistoricoCommand { get; }
+        public PaginacaoModel<RelatorioHistoricoVendasModel> Paginas { get; set; }
+
+        private (List<RelatorioHistoricoVendasModel>, int) BuscarHistorico(int pagina, int totalporpagina)
+        {
+            if (DataInicial.HasValue && DataFinal.HasValue)
+            {
+                var produtoId = ProdutoSelecionado?.IdProduto;
+                var clienteId = ClienteSelecionado?.Idcliente;
+
+                var resultado = _historicoVendasDAL.ObterHistoricoVendasAsync(
+                    clienteId,
+                    produtoId,
+                    DataInicial,
+                    DataFinal.Value.AddDays(1),
+                    pagina,
+                    totalporpagina
+                ).GetAwaiter().GetResult();
+
+                _totalVendido = resultado.TotalVendido;
+                //Atualiza os totais sempre que a página muda
+                RaisePropertyChanged(nameof(TotalVendido));
+                return (resultado.Itens, resultado.TotalRegistros);
+            }
+            else
+            {
+                return (new List<RelatorioHistoricoVendasModel>(), 0);
+            }
         }
 
         private ClienteModel _clienteSelecionado;
@@ -110,30 +103,14 @@ namespace GestãoEmpresarial.ViewModels
             }
         }
 
-        public ObservableCollection<RelatorioHistoricoVendasModel> ListaHistoricoVendas { get; }
-
-        public ICommand BuscarHistoricoCommand { get; }
-
-        private void BuscarHistorico()
+        private decimal _totalVendido;
+        public decimal TotalVendido
         {
-            if (DataInicial.HasValue && DataFinal.HasValue)
+            get
             {
-                var produtoId = ProdutoSelecionado?.IdProduto;
-                var clienteId = ClienteSelecionado?.Idcliente;
-                // var nomeCliente = ClienteSelecionado?.Nome;
-
-                var historicoVendas = _historicoVendasDAL.ObterHistoricoVendas(clienteId, produtoId, DataInicial.Value, DataFinal.Value);
-
-                ListaHistoricoVendas.Clear();
-                foreach (var item in historicoVendas)
-                {
-                    ListaHistoricoVendas.Add(item);
-                }
-            }
-            else
-            {
-                ListaHistoricoVendas.Clear();// Mantém a lista vazia se as datas não estiverem definidas
+                return _totalVendido;
             }
         }
+
     }
 }

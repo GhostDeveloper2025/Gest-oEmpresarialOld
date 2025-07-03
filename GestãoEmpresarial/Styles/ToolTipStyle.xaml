@@ -1,9 +1,10 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!--  Estilo para ToolTip  -->
     <Style TargetType="ToolTip">
-        <Setter Property="Background" Value="{StaticResource SecondaryColor1}" />
-        <Setter Property="Foreground" Value="{StaticResource SecondaryColor7}" />
-        <Setter Property="BorderBrush" Value="{StaticResource SecondaryColor1}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextTooltipColor}" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryBackGroundTooltipColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SecundaryTransparenteColor}" />
         <Setter Property="FontFamily" Value="{DynamicResource CustomFont4}" />
         <Setter Property="BorderThickness" Value="1" />
     </Style>

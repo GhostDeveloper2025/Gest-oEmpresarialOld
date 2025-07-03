@@ -13,6 +13,9 @@ namespace GestãoEmpresarial.Models
         [DisplayName("Nº Venda")]
         public int NumVenda { get; set; }
 
+        [DisplayName("Vendedor")]
+        public string VendedorNome { get; set; }
+
         [DisplayName("Data Venda")]
         [DisplayFormatDataBR()]
         public DateTime DataInicial { get; set; }
@@ -23,10 +26,14 @@ namespace GestãoEmpresarial.Models
 
         public int VendedorId { get; set; }
         public string VendedorCpf { get; set; }
-        public string VendedorNome { get; set; }
+        //  [DisplayName("Status Venda")]
         public int Situacao { get; set; }
+       // [DisplayName("Total Venda")]
         public decimal TotalVenda { get; set; }
         public decimal PercComissao { get; set; }
+        public decimal DescontoVenda { get; set; } // <-- Adicionamos esta propriedade
         public decimal ValComissao { get; set; }
+        public bool Cancelada { get; set; } // Nova propriedade
+
     }
 }

@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="GestãoEmpresarial.CustomControls.ExpanderMenuControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:GestãoEmpresarial.CustomControls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+    <Grid PreviewMouseLeftButtonUp="Grid_PreviewMouseLeftButtonUp">
+        <materialDesign:PackIcon Width="20"
+                                 Height="20"
+                                 Margin="10,12"
+                                 Foreground="{DynamicResource PrimaryIconeExpanderColor}"
+                                 Kind="{Binding Path=Icon}" />
+        <Expander x:Name="ExpanderMenu"
+                  Width="210"
+                  Margin="10,0,0,0"
+                  HorizontalAlignment="Right" Background="{x:Null}" Foreground="{DynamicResource PrimarySetaExpanderColor}"
+                  IsExpanded="False">
+            <Expander.Header>
+                <TextBlock FontFamily="{DynamicResource CustomFont4}" FontSize="20" Foreground="{DynamicResource PrimaryTextExpanderColor}"
+                           Text="{Binding Path=Header}" />
+            </Expander.Header>
+
+            <ListView x:Name="ListViewMenu"
+                      ItemsSource="{Binding Path=Items}"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      SelectionChanged="ListViewMenu_SelectionChanged">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Cursor="Hand"
+                                    Orientation="Horizontal">
+                            <materialDesign:PackIcon Width="25"
+                                                     Height="25"
+                                                     Margin="5,0,10,0"
+                                                     VerticalAlignment="Center" Foreground="{DynamicResource SecundaryIconeExpanderColor}"
+                                                     Kind="{Binding Path=Icon}" />
+                            <TextBlock Height="25"
+                                       Margin="0,5,0,0"
+                                       FontFamily="{DynamicResource CustomFont4}"
+                                       FontSize="16" Foreground="{DynamicResource SecundaryTextExpanderColor}"
+                                       Text="{Binding Path=Header}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Expander>
+    </Grid>
+</UserControl>

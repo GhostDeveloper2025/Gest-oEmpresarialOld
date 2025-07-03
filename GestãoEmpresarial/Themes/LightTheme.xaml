@@ -1,0 +1,203 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--  Background Primary Colors Para Partes Principais  -->
+    <!--<SolidColorBrush x:Key="PrimaryColor1" Color="#EDF4FF" />-->
+
+    <!--  Background Secundary Colors Para Partes Menos Importantes  -->
+    <!--<SolidColorBrush x:Key="SecundaryColor1" Color="#EA3680" />-->
+
+    <!--#region Cores-->
+    <SolidColorBrush x:Key="PrimaryForegroundColor" Color="#EDF4FF" />
+
+    <SolidColorBrush x:Key="PrimaryBackgroundColor" Color="#B9D4F6" />
+
+    <SolidColorBrush x:Key="PrimaryBarraTitloColor" Color="#9DC0EE" />
+
+    <SolidColorBrush x:Key="PrimaryDatePickerColor" Color="#0E1A32" />
+
+    <SolidColorBrush x:Key="PrimaryButtonFexarMinimizarColor" Color="#0B1426" />
+
+    <SolidColorBrush x:Key="SecundaryButtonFexarMinimizarColor" Color="#EA3680" />
+
+    <SolidColorBrush x:Key="PrimaryTextBarraTitloColor" Color="#801740" />
+    
+    <SolidColorBrush x:Key="PrimaryIconeBarraTitloColor" Color="#801740" />
+
+    <SolidColorBrush x:Key="PrimaryIconeLoginColor" Color="#16417C" />
+
+    <SolidColorBrush x:Key="PrimaryProgresbarColor" Color="#5D1663" />
+
+    <SolidColorBrush x:Key="PrimaryTextErrorColor" Color="#700B27" />
+
+    <SolidColorBrush x:Key="PrimaryIconeColor" Color="#E25813" />
+
+    <SolidColorBrush x:Key="PrimaryIconeUsuarioColor" Color="#AFDDFF" />
+
+    <SolidColorBrush x:Key="PrimaryIconeTemaDarckColor" Color="#113361" />
+
+    <SolidColorBrush x:Key="PrimaryIconeTemaLightColor" Color="#C7B710" />
+
+    <SolidColorBrush x:Key="PrimaryTextAutoCompleteColor" Color="#0E1A32" />
+
+    <SolidColorBrush x:Key="PrimaryBackgroundAutoCompleteColor" Color="#B9D4F6" />
+
+    <SolidColorBrush x:Key="SecundaryTransparenteColor" Color="Transparent" />
+
+    <SolidColorBrush x:Key="PrimaryBackgroundButtonColor" Color="#91B3FB" />
+
+    <SolidColorBrush x:Key="PrimaryTextButtonColor" Color="#16417C" />
+
+    <SolidColorBrush x:Key="PrimaryOverBackgroundButtonColor" Color="#A0B9DC" />
+
+    <SolidColorBrush x:Key="PrimaryOverTextButtonColor" Color="#0E1A32" />
+
+    <SolidColorBrush x:Key="PrimaryButtonPesquisarColor" Color="#16417C" />
+
+    <SolidColorBrush x:Key="PrimaryOverPesquisarButtonColor" Color="#EA3680" />
+
+    <SolidColorBrush x:Key="PrimaryBackgroundIconeButtonColor" Color="#16417C" />
+
+    <SolidColorBrush x:Key="PrimaryOverIconeButtonColor" Color="#EA3680" />
+
+    <SolidColorBrush x:Key="PrimaryBorderComboboxColor" Color="#0E1A32" />
+
+    <SolidColorBrush x:Key="PrimaryTextComboboxColor" Color="#0E1A32" />
+
+    <SolidColorBrush x:Key="PrimarytextGridColor" Color="#0E1A32" />
+
+    <SolidColorBrush x:Key="PrimarytextSelectedGridColor" Color="#0E1A32" />
+
+    <SolidColorBrush x:Key="PrimaryOverRowGridColor" Color="#BFDBFE" />
+
+    <SolidColorBrush x:Key="PrimaryBackgroundRowGridColor" Color="#A0B9DC" />
+
+    <SolidColorBrush x:Key="PrimaryTextCabeçalhoGridColor" Color="#E25813" />
+
+    <SolidColorBrush x:Key="PrimaryBackgroundDeletButtonColor" Color="#0E1A32" />
+
+    <SolidColorBrush x:Key="PrimaryBackgroundEditarButtonColor" Color="#0E1A32" />
+
+    <SolidColorBrush x:Key="PrimaryOverDeletButtonColor" Color="#EA3680" />
+
+    <SolidColorBrush x:Key="PrimaryOverEditarButtonColor" Color="#EA3680" />
+
+    <SolidColorBrush x:Key="PrimaryScrollviewColor" Color="#58779D" />
+
+    <SolidColorBrush x:Key="PrimaryBorderTextboxColor" Color="#0E1A32" />
+
+    <SolidColorBrush x:Key="PrimaryTextTextboxColor" Color="#0E1A32" />
+
+    <SolidColorBrush x:Key="PrimaryBackGroundTooltipColor" Color="#A0B9DC" />
+
+    <SolidColorBrush x:Key="PrimaryTextTooltipColor" Color="#0E1A32" />
+
+    <SolidColorBrush x:Key="PrimaryIconeExpanderColor" Color="#1484CF" />
+
+    <SolidColorBrush x:Key="PrimarySetaExpanderColor" Color="#080E1B" />
+
+    <SolidColorBrush x:Key="PrimaryTextExpanderColor" Color="#1484CF" />
+
+    <SolidColorBrush x:Key="SecundaryIconeExpanderColor" Color="#B5271C" />
+
+    <SolidColorBrush x:Key="SecundaryTextExpanderColor" Color="#B5271C" />
+
+    <SolidColorBrush x:Key="SecundaryBackgroundColor" Color="#BFDBFE" />
+
+    <SolidColorBrush x:Key="PrimaryTextColor" Color="#D62873" />
+    
+    <SolidColorBrush x:Key="SecundaryTextColor" Color="#B5271C" />
+
+    <SolidColorBrush x:Key="TertiaryTextColor" Color="#8F1B4D" />
+
+    <SolidColorBrush x:Key="QuaternaryTextColor" Color="#0E1A32" />
+
+    <SolidColorBrush x:Key="QuinaryTextColor" Color="#E25813" />
+
+    <SolidColorBrush x:Key="SenaryTextColor" Color="#21326C" />
+
+    <SolidColorBrush x:Key="SeptenaryTextColor" Color="#21326C" />
+    
+    <SolidColorBrush x:Key="SecundaryIconeColor" Color="#A1940D" />
+    
+    <SolidColorBrush x:Key="TertiaryIconeColor" Color="#2A6DCF" />
+    
+    <SolidColorBrush x:Key="SecundaryBackgrounDialogdColor" Color="#B9D4F6"/>
+
+    <SolidColorBrush x:Key="PrimaryBorderColor" Color="#D62873" />
+
+    <!--#endregion-->
+
+
+    <!--#region Lixo-->
+    <!--<SolidColorBrush x:Key="TextColor1d" Color="#E25813" />
+
+    <SolidColorBrush x:Key="TextColor1" Color="#0E1A32" />
+
+    <SolidColorBrush x:Key="TextColor2" Color="#E25813" />
+
+    <SolidColorBrush x:Key="TextColor3" Color="#16417C" />
+
+    <SolidColorBrush x:Key="TextColor4" Color="#21326C" />
+    
+    <SolidColorBrush x:Key="TextColor5" Color="#AFDDFF" />
+
+
+
+
+    <SolidColorBrush x:Key="SecundaryColor2" Color="Transparent" />
+    
+    
+    
+    <SolidColorBrush x:Key="SecundaryColor3" Color="#BFDBFE" />
+    
+    
+    
+    <SolidColorBrush x:Key="SecundaryColor4" Color="#A0B9DC" />
+    
+    
+    
+    <SolidColorBrush x:Key="SecundaryColor5" Color="#16417C" />
+    
+    
+    
+    <SolidColorBrush x:Key="SecundaryColor6" Color="#EA3680" />
+    
+    
+    <SolidColorBrush x:Key="SecundaryColor7" Color="#0E1A32" />
+    
+
+    <SolidColorBrush x:Key="TertiaryColor1" Color="#58779D" />
+    
+    <SolidColorBrush x:Key="TertiaryColor2"
+                     Color="#97ADC8" />
+
+    --><!--  TextColors  -->
+    
+    <!--  IconColors  --><!--
+    <SolidColorBrush x:Key="IconColor1" Color="#16417C" />
+
+
+    <SolidColorBrush x:Key="IconColor2"
+                     Color="#EA3680" />
+    <SolidColorBrush x:Key="IconColor3"
+                     Color="#F43897" />
+
+    --><!--  Textos/IconColors  -->
+    <!--<SolidColorBrush x:Key="TextIconColor1" Color="#0066CC" />--><!--
+    <SolidColorBrush x:Key="TextIconColor1"
+                     Color="#030914" />-->
+
+    <!--#endregion-->
+    
+    <!--  Para Recibo  -->
+    <SolidColorBrush x:Key="SecundaryColorRecibo" Color="#EFF1F5" />
+    
+    <SolidColorBrush x:Key="SecundaryColorRecibo1" Color="#FFFFFF" />
+
+    <SolidColorBrush x:Key="PrimaryColorRecibo1" Color="#EDF4FF" />
+
+    <SolidColorBrush x:Key="SecundaryColorRecibo2" Color="#B9D4F6" />
+
+    <SolidColorBrush x:Key="TextColorRecibo" Color="#000000" />
+
+</ResourceDictionary>

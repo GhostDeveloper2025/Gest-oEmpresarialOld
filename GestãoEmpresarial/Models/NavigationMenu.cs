@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace GestãoEmpresarial.Models
 {
-    public class TreeviewMenu
+    public class NavigationMenu
     {
         public string Header { get; set; }
 
@@ -17,6 +17,7 @@ namespace GestãoEmpresarial.Models
 
         public Func<UserControl> GetView { get; set; }
 
-        public TreeviewMenuCollection Items { get; set; }
+        public NavigationMenuCollection Items { get; set; }
+
     }
 }

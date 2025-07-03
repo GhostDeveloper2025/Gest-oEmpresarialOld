@@ -2,6 +2,8 @@
 using GestãoEmpresarial.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,12 +27,16 @@ namespace GestãoEmpresarial.Views.Layout
         public MenuView()
         {
             InitializeComponent();
-            DataContext = new MenuViewModel();
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                DataContext = new MenuViewModel();
+            }
+
         }
-        
+
         private void OnMenuItemClicked(object sender, MouseButtonEventArgs e)
         {
-            if (sender is StackPanel panel && panel.DataContext is TreeviewMenu menu)
+            if (sender is StackPanel panel && panel.DataContext is NavigationMenu menu)
             {
                 Switcher.Switch(menu); // Método para mudar para a tela desejada
             }

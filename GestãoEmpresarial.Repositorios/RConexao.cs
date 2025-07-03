@@ -48,7 +48,7 @@ namespace GestãoEmpresarial.Repositorios
                 }
             }
         }
-
+       
         protected MySqlDataReader ExecuteReader(string query, MySqlParameter[] parameters = null, bool isSp = false)
         {
             var connection = OpenConnection();

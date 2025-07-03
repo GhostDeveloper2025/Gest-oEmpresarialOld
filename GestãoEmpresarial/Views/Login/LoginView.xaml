@@ -8,7 +8,6 @@
              d:DesignHeight="450"
              d:DesignWidth="800"
              mc:Ignorable="d">
-
     <Grid>
         <!--  Divisão da tela em duas colunas  -->
         <Grid.ColumnDefinitions>
@@ -17,16 +16,18 @@
         </Grid.ColumnDefinitions>
 
         <!--  Parte da imagem  -->
-        <Grid Grid.Column="0" Background="{StaticResource SecondaryColor0}">
+        <Grid Grid.Column="0"
+              Background="{DynamicResource PrimaryForegroundColor}">
 
             <Image HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Source="/Styles/FundLogin.png"
+                   Source="/Styles/GeminiTelaLogin.png"
                    Stretch="Uniform" />
         </Grid>
 
         <!--  Parte do formulário  -->
-        <Grid Grid.Column="1" Background="{StaticResource PrimaryColor0}">
+        <Grid Grid.Column="1"
+              Background="{DynamicResource PrimaryBackgroundColor}">
             <StackPanel Width="300"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
@@ -35,15 +36,15 @@
                                          Height="100"
                                          Margin="0,0,0,20"
                                          HorizontalAlignment="Center"
-                                         Foreground="{StaticResource SecondaryColor8}"
+                                         Foreground="{DynamicResource PrimaryIconeLoginColor}"
                                          Kind="AccountChildCircle" />
                 <!--  Título  -->
                 <TextBlock Margin="0,0,0,20"
                            HorizontalAlignment="Center"
-                           FontFamily="{StaticResource CustomFont4}"
+                           FontFamily="{DynamicResource CustomFont4}"
                            FontSize="30"
                            FontWeight="Bold"
-                           Foreground="{StaticResource FontColor3}"
+                           Foreground="{DynamicResource SenaryTextColor}"
                            Text="Login" />
 
                 <!--  Campo de Usuário  -->
@@ -53,44 +54,52 @@
                          utils:FocusExtension.IsFocused="{Binding IsTextBoxFocused, Mode=TwoWay}"
                          Text="{Binding Usuario, UpdateSourceTrigger=PropertyChanged, Converter={utils:CapitalizeWordsConverter}}" />
 
-
                 <!--  Campo de Senha  -->
                 <PasswordBox Width="250"
                              Margin="0,10"
                              materialDesign:HintAssist.Hint="Senha"
                              KeyUp="TextBox_KeyUp"
                              PasswordChanged="PasswordBox_PasswordChanged" />
+
+                <CheckBox Margin="25,0,0,0"
+                          HorizontalAlignment="Left"
+                          Content="Lembrar Login."
+                          FontFamily="{DynamicResource CustomFont4}"
+                          FontSize="10"
+                          Foreground="{DynamicResource TertiaryTextColor}"
+                          IsChecked="{Binding LembrarUsuario}"
+                          ToolTip="Hey Quer entrar rapidinho? Selecione esta caixa e faça login automatico da proxima vez que entrar." />
                 <!--  Botão de Login  -->
                 <Button Name="LoginButton"
                         Command="{Binding LoginCommand}"
-                        Style="{StaticResource ButonLoginStyle}" />
+                        Style="{DynamicResource ButonLoginStyle}" />
 
                 <ProgressBar Width="70"
                              Height="15"
                              Margin="0,20,0,0"
-                             Foreground="{StaticResource FontColor4}"
+                             Foreground="{DynamicResource PrimaryProgresbarColor}"
                              IsIndeterminate="{Binding EstaAutenticando, Converter={StaticResource BooleanToIndeterminateConverter}}"
                              Maximum="100"
-                             Style="{StaticResource MaterialDesignCircularProgressBar}"
-                             Visibility="{Binding EstaAutenticando, Converter={StaticResource BooleanToVisibilityConverter}}"
+                             Style="{DynamicResource MaterialDesignCircularProgressBar}"
+                             Visibility="{Binding EstaAutenticando, Converter={StaticResource BoolToVisConverter}}"
                              Value="{Binding ProgressoLogin}" />
                 <!--  Texto de erro  -->
                 <TextBlock Margin="20"
                            HorizontalAlignment="Center"
-                           FontFamily="{StaticResource CustomFont4}"
+                           FontFamily="{DynamicResource CustomFont4}"
                            FontSize="15"
-                           Foreground="{StaticResource FontColor5}"
+                           Foreground="{DynamicResource PrimaryTextErrorColor}"
                            Text="{Binding Erro}"
                            TextWrapping="Wrap" />
 
                 <!--  Checkbox "Remember me"  -->
                 <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10">
-                    <CheckBox Content="Remember me" />
-                    <TextBlock Text="Forgot password?"
-                               Foreground="#1E88E5"
-                               Margin="20 0"
-                               Cursor="Hand" />
-                </StackPanel>-->
+                <CheckBox Content="Remember me" />
+                <TextBlock Text="Forgot password?"
+                           Foreground="#1E88E5"
+                           Margin="20 0"
+                           Cursor="Hand" />
+            </StackPanel>-->
             </StackPanel>
         </Grid>
     </Grid>

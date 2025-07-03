@@ -21,6 +21,7 @@ public class DataGridVendaModel
         NomeVendedor = GetNome(model.Vendedor);
         DataVenda = model.DataVenda;
         DataFinalizacao = model.DataFinalizacao;
+        //TotalVenda = model.CustoVenda;
     }
 
     private string GetNome(ColaboradorModel model)
@@ -52,4 +53,7 @@ public class DataGridVendaModel
 
     [DisplayName("Data Finalização")]
     public DateTime? DataFinalizacao { get; set; }
+
+    //[DisplayName("Total de Venda")]
+    //public decimal? TotalVenda { get; set; }
 }

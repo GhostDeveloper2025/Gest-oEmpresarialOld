@@ -97,13 +97,36 @@ namespace GestãoEmpresarial.Models
         public decimal CustoTotal
         { get { return Quantidade * ValUnitario; } } // => ValTotal
 
-        public decimal DescontoValor
-        { get { return Desconto <= 0 ? 0 : CustoTotal * Desconto / 100; } }
+        //public decimal DescontoValor
+        //{ get { return Desconto <= 0 ? 0 : CustoTotal * Desconto / 100; } }
 
-        [ColumnHeader("Total Item")]
+        //[ColumnHeader("Total Item")]
         //public decimal TotalItem { get { return CustoTotal - DescontoValor; } }
+        //public decimal TotalItem
+        //{ get { return Math.Round(CustoTotal - DescontoValor, 2); } }
+
+
+
+
+        // Certifique-se que os cálculos de desconto e total do item usam o mesmo arredondamento:
+        public decimal DescontoValor
+        {
+            get
+            {
+                return Math.Round((Desconto / 100) * (Quantidade * ValUnitario), 2, MidpointRounding.AwayFromZero);
+            }
+        }
+        [ColumnHeader("Total Item")]
         public decimal TotalItem
-        { get { return Math.Round(CustoTotal - DescontoValor, 2); } }
+        {
+            get
+            {
+                return Math.Round((Quantidade * ValUnitario) - DescontoValor, 2, MidpointRounding.AwayFromZero);
+            }
+        }
+
+
+
 
         private ProdutoModel _produto;
 

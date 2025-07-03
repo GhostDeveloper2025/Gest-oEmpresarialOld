@@ -35,5 +35,7 @@ namespace GestãoEmpresarial.Models
         public string Cargo { get; set; }
         public decimal Comissao { get; set; }
         public bool Ativo { get; set; }
+
+        public bool Gerente => string.Equals(Cargo, "GERENTE");
     }
 }

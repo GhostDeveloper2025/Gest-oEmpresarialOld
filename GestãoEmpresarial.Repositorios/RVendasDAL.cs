@@ -29,33 +29,35 @@ namespace GestãoEmpresarial.Repositorios
             rItensVendaDAL = new RItensVendaDAL(idFuncionario);
             rClienteDAL = new RClienteDAL(idFuncionario);
         }
-
+        // Criei fj
         public async Task DeleteAsync(VendaModel t)
         {
-            string query = "DELETE FROM tb_venda WHERE IdVenda = @id";
-            MySqlParameter[] arr = new MySqlParameter[]
-            {
-                new MySqlParameter() { Value = t.IdVenda, ParameterName = "@id" },
-            };
-            ExecuteNonQuery(query, arr); // Execução assíncrona
+            // Chama o método específico para cancelar a venda
+            await CancelarVendaAsync(t.IdVenda);
         }
-
+        // Criei fj
+        public async Task CancelarVendaAsync(int vendaId)
+        {
+            MySqlParameter[] parametros = new MySqlParameter[]
+            {
+        new MySqlParameter("venda_id", vendaId)
+            };
+            ExecuteNonQuery("usp_cancel_venda", parametros, true); // Execução assíncrona
+        }
         public async Task<VendaModel> GetByIdAsync(int id)
         {
             return (await GetListaAsync(true, null, null, id)).FirstOrDefault();
         }
-
         public async Task<int> InsertAsync(VendaModel t)
         {
-            string query = "INSERT INTO tb_venda (DataVenda, DataFinalizacao, Situacao, IdFuncionario, IdCliente, ValorFrete, IdCodigoTipoPagamento) " +
-                           "VALUES(NOW(), @DataFinalizacao, @Situacao, @IdFuncionario, @IdCliente, @ValorFrete, @IdCodigoTipoPagamento); " +
+            string query = "INSERT INTO tb_venda (DataVenda, Situacao, Cancelada, IdFuncionario, IdCliente, ValorFrete, IdCodigoTipoPagamento) " +
+                           "VALUES(NOW(), 0, @Cancelada, @IdFuncionario, @IdCliente, @ValorFrete, @IdCodigoTipoPagamento); " +
                            "SELECT last_insert_id();";
 
             List<MySqlParameter> lista = new List<MySqlParameter>();
             AddParameter(lista, "@IdFuncionario", idFuncionario);
             AddParameter(lista, "@IdCliente", t.Cliente.Idcliente);
-            AddParameter(lista, "@Situacao", t.Situacao);
-            AddParameter(lista, "@DataFinalizacao", t.Situacao ? DateTime.Now : (DateTime?)null);
+            AddParameter(lista, "@Cancelada", t.Cancelada); // Nova propriedade
             AddParameter(lista, "@ValorFrete", t.ValorFrete);
             AddParameter(lista, "@IdCodigoTipoPagamento", t.IdCodigoTipoPagamento);
 
@@ -67,7 +69,6 @@ namespace GestãoEmpresarial.Repositorios
         {
             return await GetListaAsync(false, nomeCliente, idCodigoTipoPagamento, IdVenda);
         }
-
         public async Task<List<VendaModel>> GetListaAsync(bool comItens, string nomeCliente, int? idCodigoTipoPagamento, int? idVenda)
         {
             var parametros = new List<MySqlParameter>();
@@ -85,9 +86,13 @@ namespace GestãoEmpresarial.Repositorios
                 conditions.Add("IdCliente IN (SELECT IdCliente FROM tb_cliente WHERE nome LIKE CONCAT(@nomeCliente, '%'))");
             }
 
+            // Adiciona a condição para excluir vendas canceladas
+            conditions.Add("Cancelada = 0");
+
             string conditionsJoin = conditions.Count > 0 ? string.Join(" AND ", conditions) : "1=1";
-            string query = $@"SELECT IdVenda, DataVenda, DataFinalizacao, Situacao, ValorFrete, IdCliente, IdFuncionario, IdCodigoTipoPagamento
-                      FROM tb_venda WHERE {conditionsJoin} LIMIT 200";
+            string query = $@"SELECT IdVenda, DataVenda, DataFinalizacao, Situacao, Cancelada, ValorFrete, IdCliente, IdFuncionario, IdCodigoTipoPagamento,
+              (SELECT SUM(COALESCE(b.ValTotal, 0)) FROM tb_itensvenda b WHERE b.IdVenda = a.IdVenda GROUP BY b.IdVenda) AS CustoVenda
+              FROM tb_venda a WHERE {conditionsJoin} ORDER BY IdVenda DESC LIMIT 200";
 
             List<VendaModel> lista = new List<VendaModel>();
             using (MySqlDataReader reader = ExecuteReader(query, parametros.ToArray()))
@@ -98,6 +103,11 @@ namespace GestãoEmpresarial.Repositorios
                 while (await reader.ReadAsync())
                 {
                     var obj = Mapeador.Map(new VendaModel(), reader);
+
+                    // Lê o valor booleano diretamente do reader
+                    int canceladaIndex = reader.GetOrdinal("Cancelada");
+                    obj.Cancelada = !reader.IsDBNull(canceladaIndex) && reader.GetBoolean(canceladaIndex);
+
                     lista.Add(obj);
                     idsClientes.Add(obj.IdCliente);
                     idsColaboradores.Add(obj.IdFuncionario);
@@ -109,7 +119,6 @@ namespace GestãoEmpresarial.Repositorios
                 foreach (var venda in lista)
                 {
                     venda.Cliente = clientes.FirstOrDefault(c => c.Idcliente == venda.IdCliente);
-                    // venda.Cadastrante = colaboradores.FirstOrDefault(c => c.IdFuncionario == venda.IdFuncionario);
                     venda.Vendedor = colaboradores.FirstOrDefault(c => c.IdFuncionario == venda.IdFuncionario);
 
                     if (comItens)
@@ -127,11 +136,11 @@ namespace GestãoEmpresarial.Repositorios
             List<MySqlParameter> lista = new List<MySqlParameter>();
             AddParameter(lista, "id", t.IdVenda);
             AddParameter(lista, "sitcao", t.Situacao);
+            AddParameter(lista, "cancelada", t.Cancelada); // Novo parâmetro
             AddParameter(lista, "valorFrete", t.ValorFrete);
             AddParameter(lista, "idCodigoTipoPagamento", t.IdCodigoTipoPagamento);
             ExecuteNonQuery("usp_upd_venda", lista.ToArray(), true); // Execução assíncrona
         }
-
         public VendaModel GetById(int id)
         {
             return GetByIdAsync(id).Result;

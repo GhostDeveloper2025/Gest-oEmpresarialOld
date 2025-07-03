@@ -3,15 +3,16 @@
                     xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <!--  Botao Salvar  -->
-    <Style x:Key="ButonSalvarStyle" TargetType="Button">
+    <Style x:Key="ButonSalvarStyle"
+           TargetType="Button">
         <Setter Property="Height" Value="50" />
         <Setter Property="Width" Value="160" />
         <Setter Property="Margin" Value="5,0,0,5" />
-        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
-        <Setter Property="Foreground" Value="{StaticResource PrimaryColor3}" />
-        <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryBackgroundButtonColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextButtonColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SecundaryTransparenteColor}" />
         <Setter Property="ToolTip" Value="Clique Para Salvar!" />
-        <Setter Property="FontFamily" Value="{StaticResource CustomFont4}" />
+        <Setter Property="FontFamily" Value="{DynamicResource CustomFont4}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Left" />
 
@@ -56,23 +57,24 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
-                <Setter Property="Background" Value="{StaticResource SecondaryColor2}" />
+                <Setter Property="Background" Value="{DynamicResource PrimaryOverBackgroundButtonColor}" />
                 <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
-                <Setter Property="Foreground" Value="{StaticResource PrimaryColor4}" />
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryOverTextButtonColor}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <!--  Botao Imprimir  -->
-    <Style x:Key="ButonImprimirStyle" TargetType="Button">
+    <Style x:Key="ButonImprimirStyle"
+           TargetType="Button">
         <Setter Property="Height" Value="50" />
         <Setter Property="Width" Value="160" />
         <Setter Property="Margin" Value="15,0,0,5" />
-        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
-        <Setter Property="Foreground" Value="{StaticResource PrimaryColor3}" />
-        <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryBackgroundButtonColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextButtonColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SecundaryTransparenteColor}" />
         <Setter Property="ToolTip" Value="Clique Para Imprimir!" />
-        <Setter Property="FontFamily" Value="{StaticResource CustomFont4}" />
+        <Setter Property="FontFamily" Value="{DynamicResource CustomFont4}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Left" />
 
@@ -117,23 +119,86 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
-                <Setter Property="Background" Value="{StaticResource SecondaryColor2}" />
+                <Setter Property="Background" Value="{DynamicResource PrimaryOverBackgroundButtonColor}" />
                 <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
-                <Setter Property="Foreground" Value="{StaticResource PrimaryColor4}" />
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryOverTextButtonColor}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Botao Nao Imprimir  -->
+    <Style x:Key="ButonNaoStyle"
+           TargetType="Button">
+        <Setter Property="Height" Value="50" />
+        <Setter Property="Width" Value="160" />
+        <Setter Property="Margin" Value="5,0,0,5" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryBackgroundButtonColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextButtonColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SecundaryTransparenteColor}" />
+        <Setter Property="ToolTip" Value="Clique Para Sair!" />
+        <Setter Property="FontFamily" Value="{DynamicResource CustomFont4}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="5">
+                        <Grid>
+                            <!--  Define duas colunas no Grid  -->
+                            <Grid.ColumnDefinitions>
+                                <!--  Largura para o ícone  -->
+                                <ColumnDefinition Width="50" />
+                                <!--  Espaço restante para o texto  -->
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!--  Ícone na primeira coluna  -->
+                            <materialDesign:PackIcon Grid.Column="0"
+                                                     Width="40"
+                                                     Height="40"
+                                                     Margin="5,0,5,0"
+                                                     HorizontalAlignment="Left"
+                                                     VerticalAlignment="Center"
+                                                     Kind="close" />
+
+                            <!--  Texto na segunda coluna  -->
+                            <TextBlock Grid.Column="1"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontFamily="{TemplateBinding FontFamily}"
+                                       FontSize="16"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Text="Não Imprimir!" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!--  Trigger para mudar a cor ao passar o mouse  -->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
+                <Setter Property="Background" Value="{DynamicResource PrimaryOverBackgroundButtonColor}" />
+                <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryOverTextButtonColor}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <!--  Botao Login  -->
-    <Style x:Key="ButonLoginStyle" TargetType="Button">
+    <Style x:Key="ButonLoginStyle"
+           TargetType="Button">
         <Setter Property="Height" Value="50" />
         <Setter Property="Width" Value="200" />
         <Setter Property="Margin" Value="5,10,0,5" />
-        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
-        <Setter Property="Foreground" Value="{StaticResource PrimaryColor3}" />
-        <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryBackgroundButtonColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextButtonColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SecundaryTransparenteColor}" />
         <Setter Property="ToolTip" Value="Clique Para Entrar!" />
-        <Setter Property="FontFamily" Value="{StaticResource CustomFont4}" />
+        <Setter Property="FontFamily" Value="{DynamicResource CustomFont4}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
 
@@ -178,23 +243,24 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
-                <Setter Property="Background" Value="{StaticResource SecondaryColor2}" />
+                <Setter Property="Background" Value="{DynamicResource PrimaryOverBackgroundButtonColor}" />
                 <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
-                <Setter Property="Foreground" Value="{StaticResource PrimaryColor4}" />
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryOverTextButtonColor}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <!--  Botao Adicionar  -->
-    <Style x:Key="ButonAdicionarStyle" TargetType="Button">
+    <Style x:Key="ButonAdicionarStyle"
+           TargetType="Button">
         <Setter Property="Height" Value="50" />
         <Setter Property="Width" Value="160" />
         <Setter Property="Margin" Value="5,0,0,15" />
-        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
-        <Setter Property="Foreground" Value="{StaticResource PrimaryColor3}" />
-        <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryBackgroundButtonColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextButtonColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SecundaryTransparenteColor}" />
         <Setter Property="ToolTip" Value="Clique Para Adicionar Um Item!" />
-        <Setter Property="FontFamily" Value="{StaticResource CustomFont4}" />
+        <Setter Property="FontFamily" Value="{DynamicResource CustomFont4}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Right" />
 
@@ -239,9 +305,9 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
-                <Setter Property="Background" Value="{StaticResource SecondaryColor2}" />
+                <Setter Property="Background" Value="{DynamicResource PrimaryOverBackgroundButtonColor}" />
                 <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
-                <Setter Property="Foreground" Value="{StaticResource PrimaryColor4}" />
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryOverTextButtonColor}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -250,8 +316,8 @@
     <Style x:Key="ToggleButtonPesquisarStyle"
            BasedOn="{StaticResource MaterialDesignActionToggleButton}"
            TargetType="ToggleButton">
-        <Setter Property="Foreground" Value="{StaticResource PrimaryColor3}" />
-        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryButtonPesquisarColor}" />
+        <Setter Property="Background" Value="{DynamicResource SecundaryTransparenteColor}" />
         <Setter Property="Height" Value="30" />
         <Setter Property="Width" Value="30" />
         <Setter Property="Margin" Value="10" />
@@ -274,19 +340,54 @@
         <!--  Trigger para mudar a cor ao passar o mouse  -->
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
-                <Setter Property="Foreground" Value="{StaticResource PrimaryColor5}" />
+                <Setter Property="Background" Value="{DynamicResource SecundaryTransparenteColor}" />
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryOverPesquisarButtonColor}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
-    <!--  Botao DataGrid  -->
-    <Style x:Key="ButtonDataGridStyle" TargetType="Button">
+    <!--  ToggleButton Theme  -->
+    <Style x:Key="ToggleButtonThemeStyle"
+           BasedOn="{StaticResource MaterialDesignActionToggleButton}"
+           TargetType="ToggleButton">
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryBackgroundIconeButtonColor}" />
+        <Setter Property="Background" Value="{DynamicResource SecundaryTransparenteColor}" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="ToolTip" Value="Clique Para Fazer A Busca" />
+        <Setter Property="Content">
+            <Setter.Value>
+                <materialDesign:PackIcon Width="30"
+                                         Height="30"
+                                         Kind="ArrowLeftCircle" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="materialDesign:ToggleButtonAssist.OnContent">
+            <Setter.Value>
+                <materialDesign:PackIcon Width="30"
+                                         Height="30"
+                                         Kind="ArrowRightCircle" />
+            </Setter.Value>
+        </Setter>
+
+        <!--  Trigger para mudar a cor ao passar o mouse  -->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource SecundaryTransparenteColor}" />
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryOverIconeButtonColor}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Botao Delet DataGrid  -->
+    <Style x:Key="ButtonDataGridStyle"
+           TargetType="Button">
         <!--  Normal button style  -->
         <Setter Property="Width" Value="30" />
         <Setter Property="Background" Value="Transparent" />
         <!--  Cor: Do Botao Fechar E Minimizar  -->
-        <Setter Property="Foreground" Value="{StaticResource FontColor2}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryBackgroundDeletButtonColor}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -308,20 +409,21 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
-                <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
+                <Setter Property="Background" Value="{DynamicResource SecundaryTransparenteColor}" />
                 <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
-                <Setter Property="Foreground" Value="{StaticResource PrimaryColor6}" />
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryOverDeletButtonColor}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <!--  Botao DataGrid Icone Editar  -->
-    <Style x:Key="ButtonDataGridStyleEditar" TargetType="Button">
+    <Style x:Key="ButtonDataGridStyleEditar"
+           TargetType="Button">
         <!--  Normal button style  -->
         <Setter Property="Width" Value="30" />
-        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
+        <Setter Property="Background" Value="{DynamicResource SecundaryTransparenteColor}" />
         <!--  Cor: Do Botao Fechar E Minimizar  -->
-        <Setter Property="Foreground" Value="{StaticResource SecondaryColor9}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryBackgroundEditarButtonColor}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -343,25 +445,97 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
-                <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
+                <Setter Property="Background" Value="{DynamicResource SecundaryTransparenteColor}" />
                 <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
-                <Setter Property="Foreground" Value="{StaticResource PrimaryColor6}" />
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryOverEditarButtonColor}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <!--  Botao Fechar  -->
-    <Style x:Key="ButonFecharStyle" TargetType="Button">
-        <Setter Property="Height" Value="20" />
+    <Style x:Key="ButonFecharStyle"
+           TargetType="Button">
+        <!--  Normal button style  -->
+        <Setter Property="Margin" Value="0,10,15,5" />
         <Setter Property="Width" Value="20" />
-        <Setter Property="Margin" Value="5" />
-        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
-        <Setter Property="Foreground" Value="{StaticResource PrimaryColor5}" />
-        <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor2}" />
-        <Setter Property="ToolTip" Value="Clique Para Fechar!" />
-        <Setter Property="FontFamily" Value="{StaticResource CustomFont4}" />
+        <Setter Property="Height" Value="20" />
+        <Setter Property="Background" Value="{DynamicResource SecundaryTransparenteColor}" />
+        <!--  Cor: Do Botao Fechar E Minimizar  -->
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryButtonFexarMinimizarColor}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="9">
+                        <fa:IconImage Width="20"
+                                      Height="20"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      Icon="CircleXmark" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!--  Trigger para mudar a cor ao passar o mouse  -->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
+                <Setter Property="Background" Value="{DynamicResource SecundaryTransparenteColor}" />
+                <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
+                <Setter Property="Foreground" Value="{DynamicResource SecundaryButtonFexarMinimizarColor}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Botao Minimizar  -->
+    <Style x:Key="BotaoMinimizarStyle"
+           TargetType="Button">
+        <Setter Property="Margin" Value="0,10,15,5" />
+        <Setter Property="Width" Value="20" />
+        <Setter Property="Height" Value="20" />
+        <Setter Property="Background" Value="{DynamicResource SecundaryTransparenteColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryButtonFexarMinimizarColor}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="5"
+                            SnapsToDevicePixels="True">
+                        <fa:IconImage Width="20"
+                                      Height="20"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      Icon="SquareMinus" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource SecundaryTransparenteColor}" />
+                <Setter Property="Foreground" Value="{DynamicResource SecundaryButtonFexarMinimizarColor}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Botao Cancelar  -->
+    <Style x:Key="ButonCancelarStyle"
+           TargetType="Button">
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Width" Value="150" />
+        <Setter Property="Margin" Value="5,0,0,15" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryBackgroundButtonColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextButtonColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SecundaryTransparenteColor}" />
+        <Setter Property="ToolTip" Value="Clique Para Cancelar A Venda!" />
+        <Setter Property="FontFamily" Value="{DynamicResource CustomFont4}" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -369,24 +543,255 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             CornerRadius="5">
-                        <Viewbox>
-                            <materialDesign:PackIcon HorizontalAlignment="Center"
+                        <Grid>
+                            <!--  Define duas colunas no Grid  -->
+                            <Grid.ColumnDefinitions>
+                                <!--  Largura para o ícone  -->
+                                <ColumnDefinition Width="40" />
+                                <!--  Espaço restante para o texto  -->
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!--  Ícone na primeira coluna  -->
+                            <materialDesign:PackIcon Grid.Column="0"
+                                                     Width="30"
+                                                     Height="30"
+                                                     Margin="5,0,5,0"
+                                                     HorizontalAlignment="Left"
                                                      VerticalAlignment="Center"
-                                                     Foreground="{TemplateBinding Foreground}"
-                                                     Kind="Close" />
-                        </Viewbox>
+                                                     Kind="Cancel" />
+
+                            <!--  Texto na segunda coluna  -->
+                            <TextBlock Grid.Column="1"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontFamily="{TemplateBinding FontFamily}"
+                                       FontSize="12"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Text="Cancelar Venda" />
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
         <!--  Trigger para mudar a cor ao passar o mouse  -->
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource SecondaryColor2}" />
-                <Setter Property="Foreground" Value="{StaticResource PrimaryColor4}" />
+                <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
+                <Setter Property="Background" Value="{DynamicResource PrimaryOverBackgroundButtonColor}" />
+                <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryOverTextButtonColor}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
+    <!--  Botao Anterior  -->
+    <Style x:Key="ButonAnterior"
+           TargetType="Button">
+        <Setter Property="Height" Value="35" />
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Margin" Value="5,0,0,15" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryBackgroundButtonColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextButtonColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SecundaryTransparenteColor}" />
+        <Setter Property="ToolTip" Value="Voltar Para Pagina Anterior!" />
+        <Setter Property="FontFamily" Value="{DynamicResource CustomFont4}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="5">
+                        <Grid>
+
+                            <!--  Ícone na primeira coluna  -->
+                            <materialDesign:PackIcon Grid.Column="0"
+                                                     Width="40"
+                                                     Height="40"
+                                                     Margin="5,0,5,0"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                     Kind="KeyboardArrowLeft" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!--  Trigger para mudar a cor ao passar o mouse  -->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
+                <Setter Property="Background" Value="{DynamicResource PrimaryOverBackgroundButtonColor}" />
+                <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryOverTextButtonColor}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Botao Voltar Todos  -->
+    <Style x:Key="ButonVoltarTodos"
+           TargetType="Button">
+        <Setter Property="Height" Value="35" />
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Margin" Value="5,0,0,15" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryBackgroundButtonColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextButtonColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SecundaryTransparenteColor}" />
+        <Setter Property="ToolTip" Value="Voltar Para Primeira Pagina!" />
+        <Setter Property="FontFamily" Value="{DynamicResource CustomFont4}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="5">
+                        <Grid>
+
+                            <!--  Ícone na primeira coluna  -->
+                            <materialDesign:PackIcon Grid.Column="0"
+                                                     Width="40"
+                                                     Height="40"
+                                                     Margin="5,0,5,0"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                     Kind="ChevronDoubleLeft" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!--  Trigger para mudar a cor ao passar o mouse  -->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
+                <Setter Property="Background" Value="{DynamicResource PrimaryOverBackgroundButtonColor}" />
+                <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryOverTextButtonColor}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Botao Proximo  -->
+    <Style x:Key="ButonProximo"
+           TargetType="Button">
+        <Setter Property="Height" Value="35" />
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Margin" Value="5,0,0,15" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryBackgroundButtonColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextButtonColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SecundaryTransparenteColor}" />
+        <Setter Property="ToolTip" Value="Avançar Para Proxima Pagina!" />
+        <Setter Property="FontFamily" Value="{DynamicResource CustomFont4}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="5">
+                        <Grid>
+
+                            <!--  Ícone na primeira coluna  -->
+                            <materialDesign:PackIcon Grid.Column="0"
+                                                     Width="40"
+                                                     Height="40"
+                                                     Margin="5,0,5,0"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                     Kind="KeyboardArrowRight" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!--  Trigger para mudar a cor ao passar o mouse  -->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
+                <Setter Property="Background" Value="{DynamicResource PrimaryOverBackgroundButtonColor}" />
+                <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryOverTextButtonColor}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Botao Avançar Todos  -->
+    <Style x:Key="ButonAvançarTodos"
+           TargetType="Button">
+        <Setter Property="Height" Value="35" />
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Margin" Value="5,0,0,15" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryBackgroundButtonColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextButtonColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SecundaryTransparenteColor}" />
+        <Setter Property="ToolTip" Value="Avançar Para Ultima Pagina!" />
+        <Setter Property="FontFamily" Value="{DynamicResource CustomFont4}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="5">
+                        <Grid>
+
+                            <!--  Ícone na primeira coluna  -->
+                            <materialDesign:PackIcon Grid.Column="0"
+                                                     Width="40"
+                                                     Height="40"
+                                                     Margin="5,0,5,0"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                     Kind="ChevronDoubleRight" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!--  Trigger para mudar a cor ao passar o mouse  -->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <!--  Muda A Cor Do Fundo do Botao Ao Passar O Mouse  -->
+                <Setter Property="Background" Value="{DynamicResource PrimaryOverBackgroundButtonColor}" />
+                <!--  Muda A Cor Da Fonte AO Passar O Mouse  -->
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryOverTextButtonColor}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Tcheck box  -->
+    <Style x:Key="BordaCheckBoxStyle"
+           TargetType="CheckBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="16"
+                                Height="16"
+                                BorderBrush="{DynamicResource PrimaryBorderColor}"
+                                BorderThickness="2">
+                            <Grid>
+                                <Rectangle Width="16"
+                                           Height="16"
+                                           Fill="{DynamicResource SecundaryTransparenteColor}" />
+                                <ContentPresenter />
+                            </Grid>
+                        </Border>
+                        <TextBlock Margin="5,0,0,0"
+                                   Text="{TemplateBinding Content}" />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

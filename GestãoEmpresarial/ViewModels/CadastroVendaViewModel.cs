@@ -27,23 +27,77 @@ namespace GestãoEmpresarial.ViewModels
 
         public ICommand AdicionarItemVendaCommand { get; set; }
         public ICommand ApagarItemVendaCommand { get; set; }
+        public ProdutoProvider ProdutoProviderItem { get; set; }
+
+        public ICommand CancelarVendaCommand { get; set; }
 
         public CadastroVendaViewModel(int? id, VendaValidar validar, IDAL<VendaModel> repositorio, RCodigosDAL codigosDAL, RItensVendaDAL itensVendaDAL, ItemVendaValidar itemVendaValidar)
-            : base(id, validar, repositorio)
+    : base(id, validar, repositorio)
         {
             AdicionarItemVendaCommand = new RelayCommandWithParameterAsync(ExecutarGuardarItemNaListaAsync, CanExecuteAdicionarItem);
-            ApagarItemVendaCommand = new RelayCommandWithParameterAsync(ExecutarApagarItemNaListaAsync, CanExecuteApagarItem);
+
+            ApagarItemVendaCommand = new RelayCommandWithParameterAsync(ExecutarApagarItemGrideAsync, CanExecuteAdicionarItemGrid);
+
+            CancelarVendaCommand = new RelayCommandWithParameterAsync(ExecutarCancelarVendaAsync, CanExecuteCancelarVenda); // Novo comando
             ProdutoProviderItem = new ProdutoProvider();
 
             _itemVendaDal = itensVendaDAL;
             _codigosDal = codigosDAL;
             _itemValidador = itemVendaValidar;
 
-            // Chamada assíncrona ao inicializar
             InitializeAsync(id).ConfigureAwait(false);
 
+            if (ObjectoEditar.Situacao)
+            {
+                if (LoginViewModel.Instancia.colaborador.Gerente == false)
+                    ApenasVisualizar = true;
+            }
+        }
+        public bool PodeCancelar => LoginViewModel.Instancia.colaborador.Cargo.ToUpper() == "GERENTE";
+
+        public async Task ExecutarApagarItemGrideAsync(object tag)
+        {
+            var item = (ItemVendaModelObservavel)tag;
+            if (item.IdVenda > 0)
+            {
+                var objBD = ItemVendaModelObservavel.MapearItemVendaModel(item);
+                await _itemVendaDal.DeleteDelItemAsync(objBD);  // Alterado para assíncrono
+                
+            }
+            ObjectoEditar.RemoverDaLista(item);
+            ProdutoProviderItem.ListaExclusoes.Remove(item.Produto.IdProduto);
         }
 
+        public bool CanExecuteAdicionarItemGrid(object parameter)
+        {
+            return true;
+        }
+        
+        private bool CanExecuteCancelarVenda(object parameter)
+        {
+            return ObjectoEditar != null && ObjectoEditar.IdVenda > 0 && !ObjectoEditar.Cancelada;
+        }
+
+        private async Task ExecutarCancelarVendaAsync(object parameter)
+        {
+            MessageBoxResult result = MessageBox.Show("Tem certeza que deseja cancelar esta venda?", "Cancelar Venda", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                // Chama o método para cancelar a venda
+                await _repositorio.DeleteAsync(ObjectoEditar.DevolveObjectoBD());
+
+                // Atualiza o status da venda no ViewModel
+                ObjectoEditar.Cancelada = true;
+
+                MessageBox.Show("Venda cancelada com sucesso!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            Id = null; // obrigamos a limpar
+            PodeInserir = true; // Garante que a próxima operação será de inserção
+            ObjectoEditar = NovoObjectoEditar();
+            RaisePropertyChanged(nameof(ObjectoEditar));
+        }
+
+        //
         private async Task InitializeAsync(int? id)
         {
             TiposPagamento = (await _codigosDal.GetListaTiposPagamentosAsync()).ToDictionary(b => b.Id, a => a.Nome);
@@ -54,6 +108,7 @@ namespace GestãoEmpresarial.ViewModels
                 ProdutoProviderItem.ListaExclusoes.Add(item.Produto.IdProduto);
             }
         }
+
 
         public bool CanExecuteApagarItem(object parameter)
         {
@@ -69,6 +124,7 @@ namespace GestãoEmpresarial.ViewModels
                 await _itemVendaDal.DeleteAsync(objBD);  // Alterado para assíncrono
                 ProdutoProviderItem.ListaExclusoes.Remove(item.Produto.IdProduto);
             }
+            // ProdutoProviderItem.ListaExclusoes.Remove(item.Produto.IdProduto);
             ObjectoEditar.RemoverDaLista(item);
         }
 
@@ -112,8 +168,6 @@ namespace GestãoEmpresarial.ViewModels
             await Task.CompletedTask; // Task dummy para manter o método assíncrono
         }
 
-        public ProdutoProvider ProdutoProviderItem { get; set; }
-
         public override async Task<int> InserirObjectoBDAsync()
         {
             int idVenda = await base.InserirObjectoBDAsync();
@@ -128,7 +182,7 @@ namespace GestãoEmpresarial.ViewModels
             await AtualizarItensVendaAsync(ObjectoEditar.IdVenda);
             await base.AtualizarObjectoBDAsync();
         }
-
+        // Codigo ExecutarSalvar
         public override async Task ExecutarSalvar(object parameter)
         {
             // Verifique se ObjectoEditar é o tipo EditarVendaModel e se a lista de itens está vazia
@@ -139,19 +193,117 @@ namespace GestãoEmpresarial.ViewModels
             }
 
             // Verificação de situação da venda
+            //if (ObjectoEditar.Situacao != true)
+            //{
+            //    MessageBoxResult result = MessageBox.Show("Quer finalizar a venda?", "Finalizar", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            //    if (result == MessageBoxResult.Yes)
+            //    {
+            //        ObjectoEditar.Situacao = true;
+            //    }
+            //}
+
+
             if (ObjectoEditar.Situacao != true)
             {
                 MessageBoxResult result = MessageBox.Show("Quer finalizar a venda?", "Finalizar", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    ObjectoEditar.Situacao = true;
+                    // Verifica o estoque de cada item
+                    var itensComEstoqueInsuficiente = ObjectoEditar.ListItensVenda
+                        .Where(item => item.Quantidade > (item.Produto?.Estoque?.Quantidade ?? 0))
+                        .ToList();
+
+                    if (itensComEstoqueInsuficiente.Any())
+                    {
+                        string mensagemErro = "Não foi possível finalizar a venda. Os seguintes produtos estão com estoque insuficiente:\n\n";
+                        foreach (var item in itensComEstoqueInsuficiente)
+                        {
+                            mensagemErro += $"- {item.Produto.Nome} (Disponível: {item.Produto.Estoque?.Quantidade ?? 0}, Solicitado: {item.Quantidade})\n";
+                        }
+
+                        MessageBox.Show(mensagemErro, "Erro ao Finalizar", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return; // Impede a finalização
+                    }
+
+                    ObjectoEditar.Situacao = true; // Só define como finalizada se tudo estiver OK
                 }
             }
 
+
             await base.ExecutarSalvar(parameter); // Salvar ou atualizar
+            ProdutoProviderItem.ListaExclusoes.Clear();
         }
 
 
+        // Substitua o seu método ExecutarSalvar existente por este
+        #region
+        //public override async Task ExecutarSalvar(object parameter)
+        //{
+        //    // 1. Verificação inicial para garantir que a venda não está vazia
+        //    if (ObjectoEditar is EditarVendaModel editarVendaModel && !editarVendaModel.ListItensVenda.Any())
+        //    {
+        //        MessageBox.Show("Não é possível salvar a venda sem produtos adicionados.", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+        //        return;
+        //    }
+
+        //    // Flag para saber se estamos tentando finalizar a venda nesta execução
+        //    bool tentandoFinalizar = false;
+
+        //    // 2. Verifica se a venda ainda não foi finalizada e pergunta ao usuário
+        //    if (ObjectoEditar.Situacao != true)
+        //    {
+        //        MessageBoxResult result = MessageBox.Show("Quer finalizar a venda?", "Finalizar", MessageBoxButton.YesNo, MessageBoxImage.Question);
+        //        if (result == MessageBoxResult.Yes)
+        //        {
+        //            // O usuário quer finalizar. Marcamos isso.
+        //            tentandoFinalizar = true;
+        //        }
+        //    }
+
+        //    // 3. NOVA LÓGICA: Se o usuário decidiu finalizar, verificamos o estoque ANTES de salvar
+        //    if (tentandoFinalizar)
+        //    {
+        //        // Lista para guardar os nomes dos produtos com estoque insuficiente
+        //        var produtosComEstoqueInsuficiente = new List<string>();
+
+        //        // Percorre cada item na lista de venda
+        //        foreach (var item in ObjectoEditar.ListItensVenda)
+        //        {
+        //            // Compara a quantidade na venda com o estoque atual do produto
+        //            // Assumindo que 'item.Produto.Estoque.Quantidade' tem o valor mais recente.
+        //            if (item.Quantidade > item.Produto.Estoque.Quantidade)
+        //            {
+        //                // Adiciona o produto e a informação de estoque na lista de erros
+        //                produtosComEstoqueInsuficiente.Add(
+        //                    $"- {item.Produto.Nome} (Pedido: {item.Quantidade}, Estoque: {item.Produto.Estoque.Quantidade})"
+        //                );
+        //            }
+        //        }
+
+        //        // 4. Se a lista de erros não estiver vazia, exibe a mensagem e para a execução
+        //        if (produtosComEstoqueInsuficiente.Any())
+        //        {
+        //            // Monta a mensagem de erro final
+        //            string mensagemErro = "A venda não pôde ser finalizada por falta de estoque:\n\n" +
+        //                                  string.Join("\n", produtosComEstoqueInsuficiente) +
+        //                                  "\n\nAjuste os itens ou o estoque. A venda continuará salva como um orçamento.";
+
+        //            MessageBox.Show(mensagemErro, "Estoque Insuficiente", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+        //            // IMPORTANTE: Não prossegue com a finalização. A venda continua como orçamento.
+        //            return;
+        //        }
+
+        //        // Se o estoque estiver OK, definimos a situação como finalizada
+        //        ObjectoEditar.Situacao = true;
+        //    }
+
+        //    // 5. Se chegamos até aqui, ou o usuário não quis finalizar, ou o estoque estava OK.
+        //    // Então, podemos prosseguir com o salvamento padrão.
+        //    await base.ExecutarSalvar(parameter);
+        //    ProdutoProviderItem.ListaExclusoes.Clear();
+        //}
+        #endregion
         private async Task AtualizarItensVendaAsync(int id)
         {
             foreach (var item in ObjectoEditar.ListItensVenda)

@@ -85,6 +85,7 @@ namespace GestãoEmpresarial.Repositorios
                         Idcliente = reader.GetInt32("Idcliente"),
                         Nome = DALHelper.GetString(reader, "Nome"),
                         CPF = DALHelper.GetString(reader, "CPF"),
+                        Celular = DALHelper.GetString(reader, "Celular"),
                         // Adicione os outros campos conforme necessário...
                     };
                     lista.Add(obj);

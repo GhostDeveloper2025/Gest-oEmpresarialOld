@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GestãoEmpresarial.Models;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace GestãoEmpresarial.Repositorios
 {
@@ -37,7 +38,14 @@ namespace GestãoEmpresarial.Repositorios
 
         public async Task<CodigoModel> GetByIdAsync(int id)
         {
-            var list = await ListAsync(id.ToString());
+            string query = "SELECT a.Id, a.Nome, a.Descricao FROM config_tb_codigos a "
+                + " INNER JOIN config_tb_codigos_grupo b ON a.idcodigogrupo = b.id"
+                + " WHERE a.Id = @Id";
+
+            List<MySqlParameter> lista = new List<MySqlParameter>();
+            AddParameter(lista, "@Id", id);
+
+            var list =  GetList(query, lista.ToArray());
             return list.FirstOrDefault();
         }
 
@@ -54,6 +62,11 @@ namespace GestãoEmpresarial.Repositorios
 
             switch (statusAtual.Nome)
             {
+                case "CONSERTO CONCLUÍDO":
+                case "AUTORIZADO":
+                case "PRONTO PARA CONSERTO":
+                case "NÃO AUTORIZADO":
+                case "AGUARDANDO PEÇAS":
                 case "ORÇAMENTO CONCLUÍDO":
                 case "O.S ABERTA":
                 case "":
@@ -65,20 +78,49 @@ namespace GestãoEmpresarial.Repositorios
 
         public async Task<CodigoModel> GetStatusOrcamentoConcluidoAsync()
         {
-            var list = await ListAsync(CodigoGrupoStatusOS, "ORÇAMENTO CONCLUÍDO");
+            //var list = await ListAsync(CodigoGrupoStatusOS, "AUTORIZADO");
+            var list = await ListAsync(CodigoGrupoStatusOS, "NÃO AUTORIZADO");
             return list.First();
         }
-       
+
         public async Task<CodigoModel> GetStatusAbertaAsync()
         {
             var list = await ListAsync(CodigoGrupoStatusOS, "O.S ABERTA");
             return list.First();
         }
+        public async Task<CodigoModel> GetStatusOrçamentoAsync()
+        {
+            var list = await ListAsync(CodigoGrupoStatusOS, "ORÇAMENTO CONCLUÍDO");
+            return list.First();
+        }
+        public async Task<CodigoModel> GetStatusConsertoConcluidoAsync()
+        {
+            //var list = await ListAsync(CodigoGrupoStatusOS, "AUTORIZADO");
+            var list = await ListAsync(CodigoGrupoStatusOS, "CONSERTO CONCLUÍDO");
+            return list.First();
+        }
 
+        public async Task<CodigoModel> GetStatusCanceladaAsync()
+        {
+            var list = await ListAsync(CodigoGrupoStatusOS, "CANCELADA");
+            return list.First();
+        }
+
+        public async Task<CodigoModel> GetStatusEntregueAsync()
+        {
+            var list = await ListAsync(CodigoGrupoStatusOS, "ENTREGUE");
+            return list.First();
+        }
+
+        public async Task<CodigoModel> GetStatusEntregueSemConsertoAsync()
+        {
+            var list = await ListAsync(CodigoGrupoStatusOS, "ENTREGUE SEM CONSERTO");
+            return list.First();
+        }
 
         //public async Task<CodigoModel> GetStatusProntoParaConsertoAsync()
         //{
-        //    var list = await ListAsync(CodigoGrupoStatusOS, "PRONTO PARA CONSERTO");
+        //    var list = await ListAsync(CodigoGrupoStatusOS, "CONSERTO CONCLUÍDO");
         //    return list.FirstOrDefault(); // Usar FirstOrDefault para evitar exceções se a lista estiver vazia
         //}
 
@@ -129,7 +171,6 @@ namespace GestãoEmpresarial.Repositorios
 
         private async Task<List<CodigoModel>> ListAsync(string codigoGrupo, string codigo = null)
         {
-            List<CodigoModel> list = new List<CodigoModel>();
             string query = "SELECT a.Id, a.Nome, a.Descricao FROM config_tb_codigos a "
                 + " INNER JOIN config_tb_codigos_grupo b ON a.idcodigogrupo = b.id"
                 + " WHERE (@codigoGrupo IS NULL OR b.Nome = @codigoGrupo)"
@@ -138,8 +179,13 @@ namespace GestãoEmpresarial.Repositorios
             List<MySqlParameter> lista = new List<MySqlParameter>();
             AddParameter(lista, "@codigoGrupo", codigoGrupo);
             AddParameter(lista, "@codigo", codigo);
+            return GetList(query, lista.ToArray());
+        }
 
-            using (MySqlDataReader reader = ExecuteReader(query, lista.ToArray()))
+        private List<CodigoModel> GetList(string query, MySqlParameter[] parameters)
+        {
+            List<CodigoModel> list = new List<CodigoModel>();
+            using (MySqlDataReader reader = ExecuteReader(query, parameters))
             {
                 while (reader.Read())
                 {

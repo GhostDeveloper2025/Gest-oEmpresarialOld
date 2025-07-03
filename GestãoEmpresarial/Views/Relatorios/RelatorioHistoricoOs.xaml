@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="GestãoEmpresarial.Views.Relatorios.RelatorioHistoricoOs"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:cc="clr-namespace:GestãoEmpresarial.CustomControls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:GestãoEmpresarial.Views.Relatorios"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:providers="clr-namespace:GestãoEmpresarial.Providers"
+             xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
+             xmlns:wpfcc="http://wpfcontrols.com/"
+             d:DesignHeight="800"
+             d:DesignWidth="1000"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style BasedOn="{StaticResource FormComboBox}"
+               TargetType="ComboBox" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  Filtros  -->
+        <StackPanel Grid.Row="0"
+                    Margin="10"
+                    Orientation="Horizontal">
+            <ComboBox x:Name="CbxStatus"
+                      materialDesign:HintAssist.Hint="Status. OS"
+                      DisplayMemberPath="Value"
+                      ItemsSource="{Binding StatusList}"
+                      SelectedValue="{Binding StatusSelecionado, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedValuePath="Key" />
+            <wpfcc:AutoCompleteTextBox Width="200"
+                                       materialDesign:HintAssist.Hint="Cliente"
+                                       DisplayMember="Nome"
+                                       Provider="{providers:ClienteProvider}"
+                                       SelectedItem="{Binding ClienteSelecionado, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <wpfcc:AutoCompleteTextBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Path=Nome}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </wpfcc:AutoCompleteTextBox.ItemTemplate>
+            </wpfcc:AutoCompleteTextBox>
+
+            <wpfcc:AutoCompleteTextBox Width="200"
+                                       materialDesign:HintAssist.Hint="Tecnico"
+                                       DisplayMember="Nome"
+                                       IsEnabled="{Binding Converter={utils:InverterBooleanConverter}}"
+                                       Provider="{providers:ColaboradorTecnicoProvider}"
+                                       SelectedItem="{Binding ColaboradorSelecionado, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <wpfcc:AutoCompleteTextBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Path=Nome}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </wpfcc:AutoCompleteTextBox.ItemTemplate>
+            </wpfcc:AutoCompleteTextBox>
+
+            <DatePicker Width="120"
+                        materialDesign:HintAssist.Hint="Data Inicial"
+                        SelectedDate="{Binding DataInicial, Mode=TwoWay}" />
+            <DatePicker Width="120"
+                        materialDesign:HintAssist.Hint="Data Final"
+                        SelectedDate="{Binding DataFinal, Mode=TwoWay}" />
+
+            <ToggleButton x:Name="TgbBuscar"
+                          Checked="ToggleButton_Checked"
+                          Command="{Binding BuscarHistoricoCommand}"
+                          Style="{StaticResource ToggleButtonPesquisarStyle}" />
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <TextBlock HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       FontFamily="{StaticResource CustomFont4}"
+                       FontSize="15"
+                       Foreground="{DynamicResource SecundaryTextColor}">
+                <Run Text="Número De Registros: " />
+                <!--  No XAML:  -->
+                <Run Text="{Binding Paginas.TotalRegistos}" />
+            </TextBlock>
+        </StackPanel>
+
+        <!--  Grid de Histórico  -->
+        <cc:DataGridAuto Grid.Row="2"
+                         AutoGenerateColumns="True"
+                         ItemsSource="{Binding Paginas.ListaPorPagina, Mode=OneWay}" />
+
+        <!--  Totalizador  -->
+        <DockPanel Grid.Row="3"
+                   Margin="10">
+            <cc:MoedaTextBox materialDesign:HintAssist.Hint="valo Totl Os "
+                             IsReadOnly="True"
+                             Text="{Binding TotalVendido, Mode=OneWay, Converter={utils:DecimalConverter}}" />
+            <cc:ControlePaginação />
+        </DockPanel>
+    </Grid>
+</UserControl>

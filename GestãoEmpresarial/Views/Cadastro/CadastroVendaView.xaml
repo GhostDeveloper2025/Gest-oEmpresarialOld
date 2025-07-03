@@ -12,7 +12,8 @@
              d:DesignWidth="1150"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <Style BasedOn="{StaticResource FormComboBox}" TargetType="ComboBox" />
+        <Style BasedOn="{StaticResource FormComboBox}"
+               TargetType="ComboBox" />
         <!--
             Este recurso é utilizado para converter o texto em
             cada palavra para que a primeira letra de cada palavra seja maiúscula.
@@ -32,11 +33,13 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal">
             <wpfcc:AutoCompleteTextBox x:Name="TxtCliente"
                                        Width="250"
                                        materialDesign:HintAssist.Hint="Cliente"
                                        DisplayMember="Nome"
+                                       IsEnabled="{Binding ApenasVisualizar, Converter={utils:InverterBooleanConverter}}"
                                        Provider="{providers:ClienteProvider}"
                                        SelectedItem="{Binding ObjectoEditar.Cliente, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
@@ -51,21 +54,31 @@
             <ComboBox x:Name="CbxStatus"
                       Width="250"
                       HorizontalAlignment="Left"
-                      materialDesign:ColorZoneAssist.Mode="SecondaryLight"
                       materialDesign:HintAssist.Hint="Tipos De Pagamento"
                       DisplayMemberPath="Value"
+                      IsEnabled="{Binding ApenasVisualizar, Converter={utils:InverterBooleanConverter}}"
                       ItemsSource="{Binding TiposPagamento}"
                       SelectedValue="{Binding ObjectoEditar.IdCodigoTipoPagamento, UpdateSourceTrigger=PropertyChanged}"
                       SelectedValuePath="Key"
                       Tag="Buscar" />
 
         </StackPanel>
+
+        <StackPanel Grid.Row="0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom">
+
+            <Button x:Name="Cancelar"
+                    Command="{Binding CancelarVendaCommand}"
+                    IsEnabled="{Binding DataContext.PodeCancelar, ElementName=Cancelar}"
+                    Style="{StaticResource ButonCancelarStyle}" />
+        </StackPanel>
         <StackPanel Grid.Row="2">
             <Grid Margin="0,15,0,0">
-                <TextBlock Background="{StaticResource PrimaryColor10}"
-                           FontFamily="{StaticResource CustomFont4}"
+                <TextBlock Background="{DynamicResource SecundaryBackgroundColor}"
+                           FontFamily="{DynamicResource CustomFont4}"
                            FontSize="22"
-                           Foreground="{StaticResource PrimaryColor7}"
+                           Foreground="{DynamicResource SecundaryTextColor}"
                            Text="   Seção Adicionar Itens" />
             </Grid>
         </StackPanel>
@@ -75,6 +88,7 @@
                                            Width="250"
                                            materialDesign:HintAssist.Hint="Produto"
                                            DisplayMember="Nome"
+                                           IsEnabled="{Binding ApenasVisualizar, Converter={utils:InverterBooleanConverter}}"
                                            Provider="{Binding ProdutoProviderItem, Mode=OneWay}"
                                            SelectedItem="{Binding ObjectoEditar.ItemVendaAdicionarPlanilha.Produto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <wpfcc:AutoCompleteTextBox.ItemTemplate>
@@ -95,8 +109,6 @@
                 <TextBox x:Name="TxtQtdEst"
                          Width="100"
                          materialDesign:HintAssist.Hint="Disponível"
-                         BorderBrush="{StaticResource PrimaryColor7}"
-                         Foreground="{StaticResource PrimaryColor7}"
                          IsHitTestVisible="False"
                          IsReadOnly="True"
                          Text="{Binding ObjectoEditar.ItemVendaAdicionarPlanilha.Produto.Estoque.Quantidade}" />
@@ -104,23 +116,24 @@
                                  Width="100"
                                  materialDesign:HintAssist.Hint="Val. Unitario"
                                  Emoeda="True"
+                                 IsReadOnly="{Binding ApenasVisualizar}"
                                  MaxLength="15"
                                  Text="{Binding ObjectoEditar.ItemVendaAdicionarPlanilha.ValUnitario, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <cc:NumeroTextBox x:Name="TxtQtd"
                                   Width="100"
                                   materialDesign:HintAssist.Hint="Quantidade"
+                                  IsReadOnly="{Binding ApenasVisualizar}"
                                   MaxLength="10"
                                   Text="{Binding ObjectoEditar.ItemVendaAdicionarPlanilha.Quantidade, Converter={utils:DecimalConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <cc:NumeroTextBox x:Name="TxtDesconto"
                                   Width="100"
                                   materialDesign:HintAssist.Hint="Desconto. %"
+                                  IsReadOnly="{Binding ApenasVisualizar}"
                                   MaxLength="10"
                                   Text="{Binding ObjectoEditar.ItemVendaAdicionarPlanilha.Desconto, Converter={utils:DecimalConverterSimples}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <cc:MoedaTextBox x:Name="TxtTotalItens"
                                  Width="100"
                                  materialDesign:HintAssist.Hint="Total"
-                                 BorderBrush="{StaticResource PrimaryColor7}"
-                                 Foreground="{StaticResource PrimaryColor7}"
                                  IsHitTestVisible="False"
                                  IsReadOnly="True"
                                  Text="{Binding ObjectoEditar.ItemVendaAdicionarPlanilha.TotalItem, Converter={utils:DecimalConverter}, Mode=OneWay}" />
@@ -128,14 +141,17 @@
         </StackPanel>
         <StackPanel Grid.Row="6">
             <WrapPanel HorizontalAlignment="Right">
-                <Button Command="{Binding AdicionarItemVendaCommand}" Style="{StaticResource ButonAdicionarStyle}" />
+                <Button x:Name="BtnAdd"
+                        Command="{Binding AdicionarItemVendaCommand}"
+                        IsEnabled="{Binding DataContext.PodeClicar, ElementName=BtnAdd}"
+                        Style="{StaticResource ButonAdicionarStyle}" />
             </WrapPanel>
             <TextBlock HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        FontFamily="Cambria Mat"
                        FontSize="15"
                        FontWeight="Medium"
-                       Foreground="#836EFB">
+                       Foreground="{DynamicResource SecundaryTextColor}">
                 <Run Text="Número De Registros: " />
                 <Run Text="{Binding ObjectoEditar.NumberOfRecords}" />
             </TextBlock>
@@ -152,6 +168,7 @@
                                 <WrapPanel Margin="0,0,15,0">
                                     <Button Command="{Binding DataContext.ApagarItemVendaCommand, ElementName=DgItensModel}"
                                             CommandParameter="{Binding}"
+                                            IsEnabled="{Binding DataContext.PodeClicar, ElementName=DgItensModel}"
                                             Style="{StaticResource ButtonDataGridStyle}" />
                                 </WrapPanel>
                             </DataTemplate>
@@ -161,42 +178,36 @@
             </DataGrid>
         </Grid>
         <StackPanel Grid.Row="10">
-            <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+            <StackPanel Margin="0,10,0,10"
+                        Orientation="Horizontal">
                 <cc:MoedaTextBox x:Name="TxtValorFrete"
                                  Width="90"
                                  materialDesign:HintAssist.Hint="Valor Frete"
                                  Emoeda="True"
+                                 IsReadOnly="{Binding ApenasVisualizar}"
                                  MaxLength="15"
                                  Text="{Binding ObjectoEditar.ValorFrete, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBox x:Name="TxtSubTotal"
                          Width="150"
                          materialDesign:HintAssist.Hint="SubTotal Produto"
-                         BorderBrush="{StaticResource PrimaryColor7}"
-                         Foreground="{StaticResource PrimaryColor7}"
                          IsHitTestVisible="False"
                          IsReadOnly="True"
                          Text="{Binding ObjectoEditar.SubTotalProduto, Mode=OneWay, Converter={utils:DecimalConverter}}" />
                 <TextBox x:Name="TxtTotalDesc"
                          Width="150"
                          materialDesign:HintAssist.Hint="Total Desconto"
-                         BorderBrush="{StaticResource PrimaryColor7}"
-                         Foreground="{StaticResource PrimaryColor7}"
                          IsHitTestVisible="False"
                          IsReadOnly="True"
                          Text="{Binding ObjectoEditar.TotalDescontoProduto, Mode=OneWay, Converter={utils:DecimalConverter}}" />
                 <TextBox x:Name="TxtTotal"
                          Width="150"
                          materialDesign:HintAssist.Hint="Total Produto"
-                         BorderBrush="{StaticResource PrimaryColor7}"
-                         Foreground="{StaticResource PrimaryColor7}"
                          IsHitTestVisible="False"
                          IsReadOnly="True"
                          Text="{Binding ObjectoEditar.TotalProduto, Mode=OneWay, Converter={utils:DecimalConverter}}" />
                 <cc:MoedaTextBox x:Name="TxtTotalOs"
                                  Width="150"
                                  materialDesign:HintAssist.Hint="Total Venda"
-                                 BorderBrush="{StaticResource PrimaryColor7}"
-                                 Foreground="{StaticResource PrimaryColor7}"
                                  IsHitTestVisible="False"
                                  IsReadOnly="True"
                                  Text="{Binding ObjectoEditar.TotalVenda, Converter={utils:DecimalConverter}, Mode=OneWay}" />

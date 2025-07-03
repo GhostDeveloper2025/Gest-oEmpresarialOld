@@ -4,65 +4,44 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:utils="clr-namespace:GestãoEmpresarial.Utils"
              StartupUri="MainWindow.xaml">
+
     <Application.Resources>
         <ResourceDictionary>
-            <!--#region  Custon Fontes-->
-            <!--  Fonte Custon  -->
-            <FontFamily x:Key="CustomFont">/GestãoEmpresarial;component/Fonts/Philosopher.ttf#Philosopher</FontFamily>
-            <FontFamily x:Key="CustomFont1">/GestãoEmpresarial;component/Fonts/Afacad.ttf#Afacad</FontFamily>
-            <FontFamily x:Key="CustomFont2">/GestãoEmpresarial;component/Fonts/Ibarra Real Nova.ttf#Ibarra Real Nova</FontFamily>
-            <FontFamily x:Key="CustomFont3">/GestãoEmpresarial;component/Fonts/Sansita.ttf#Sansita</FontFamily>
-            <FontFamily x:Key="CustomFont4">/GestãoEmpresarial;component/Fonts/STIX Two Text.ttf#STIX Two Text</FontFamily>
-            <!--#endregion-->
 
-            <!--#region  Converters-->
+            <!--  Custom Fonts  -->
+            <FontFamily x:Key="CustomFont">
+                /GestãoEmpresarial;component/Fonts/Philosopher.ttf#Philosopher
+            </FontFamily>
+            <FontFamily x:Key="CustomFont1">
+                /GestãoEmpresarial;component/Fonts/Afacad.ttf#Afacad
+            </FontFamily>
+            <FontFamily x:Key="CustomFont2">
+                /GestãoEmpresarial;component/Fonts/Ibarra Real Nova.ttf#Ibarra Real Nova
+            </FontFamily>
+            <FontFamily x:Key="CustomFont3">
+                /GestãoEmpresarial;component/Fonts/Sansita.ttf#Sansita
+            </FontFamily>
+            <FontFamily x:Key="CustomFont4">
+                /GestãoEmpresarial;component/Fonts/STIX Two Text.ttf#STIX Two Text
+            </FontFamily>
+
             <!--  Converters  -->
-
             <utils:BooleanToIndeterminateConverter x:Key="BooleanToIndeterminateConverter" />
-            <!--<util:DecimalConverter x:Key="DecimalConverter"/>
-            <util:EnumDescriptionConverter x:Key="EnumConverter"/>
-            <util:CapitalizeWordsConverter  x:Key="CapitalizeWordsConverter "/>-->
-            <!--#endregion-->
-
-            <!--#region MergedDictionaries recursos compartilhados...-->
-            <!--  É utilizado para incluir dicionários de recursos adicionais. Podendo conter estilos, temas ou outros recursos compartilhados.  -->
+            <!--  Merged Dictionaries (Styles & Themes)  -->
             <ResourceDictionary.MergedDictionaries>
-                <!--#region My Default Custom Theme Dark...-->
-                <!--  My Default Custom Theme...  -->
-                <!--<materialDesign:CustomColorTheme BaseTheme="Dark" PrimaryColor="Purple" SecondaryColor="LightBlue" />-->
-                <!--#endregion-->
+                <!--  Material Design 3 Defaults  -->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
+
+                <!--  Custom Theme (Dark + Purple)  -->
+                <materialDesign:CustomColorTheme BaseTheme="Light"
+                                                 PrimaryColor="#3372B3"
+                                                 SecondaryColor="#B9D4F6" />
+
+                <!--  Busy Indicator  -->
                 <ResourceDictionary Source="pack://application:,,,/BusyIndicator;component/Theme/Default.xaml" />
 
-                <!--#region My Custom Them Light...-->
-                <!--  My Custom Them...  -->
-                <materialDesign:CustomColorTheme BaseTheme="Dark"
-                                                 PrimaryColor="#6D2FFF"
-                                                 SecondaryColor="#141724" />
-                <!--#endregion-->
-
-                <!--#region Default Theme...-->
-                <!--  Default Theme...  -->
-                <!--<materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="Blue" SecondaryColor="DeepOrange" />-->
-                <!--#endregion-->
-
-                <!--#region include your primary palette...-->
-                <!--  include your primary palette...  -->
-                <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />-->
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
-                <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />-->
-                <!--#endregion-->
-
-                <!--#region Importam diferentes dicionários de recursos...-->
-                <!--
-                    As linhas a seguir importam diferentes dicionários de recursos
-                    contendo estilos para controles de interface do usuário, botões,
-                    caixas de texto, listas suspensas, visões de rolagem, grades de dados
-                    e controles de autocompletar. Esses estilos aprimoram a aparência
-                    visual e o comportamento de vários elementos na interface do usuário
-                    da aplicação.
-                -->
-                <ResourceDictionary Source="Styles/ColorResources.xaml" />
+                <!--  Custom Styles  -->
+                <ResourceDictionary Source="/Themes/DarkTheme.xaml" />
                 <ResourceDictionary Source="Styles/ButtonStyle.xaml" />
                 <ResourceDictionary Source="Styles/TextBoxStyle.xaml" />
                 <ResourceDictionary Source="Styles/PasswordBoxStyle.xaml" />
@@ -72,9 +51,8 @@
                 <ResourceDictionary Source="Styles/DataGridStyle.xaml" />
                 <ResourceDictionary Source="Styles/AutocompleteStyle.xaml" />
                 <ResourceDictionary Source="Styles/ToolTipStyle.xaml" />
-                <!--#endregion-->
             </ResourceDictionary.MergedDictionaries>
-            <!--#endregion-->
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

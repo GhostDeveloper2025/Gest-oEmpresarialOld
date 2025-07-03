@@ -16,8 +16,15 @@ namespace GestãoEmpresarial.Repositorios
         {
             rProdutoDal = new RProdutoDAL(idFuncionario);
         }
-
         public async Task DeleteAsync(ItemVendaModel t)
+        {
+            MySqlParameter[] arr = new MySqlParameter[]
+            {
+        new MySqlParameter() { Value = t.IdVenda, ParameterName = "venda_id" },
+            };
+            ExecuteNonQuery("usp_cancel_venda", arr, true); // Execução assíncrona
+        }
+        public async Task DeleteDelItemAsync(ItemVendaModel t)
         {
             MySqlParameter[] arr = new MySqlParameter[]
             {

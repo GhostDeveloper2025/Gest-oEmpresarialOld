@@ -9,15 +9,21 @@
              d:DesignWidth="900"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <Style TargetType="{x:Type Paragraph}">
-            <Setter Property="Margin" Value="0" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="TextAlignment" Value="Left" />
-            <Setter Property="Foreground" Value="Black" />
-        </Style>
-        <Style TargetType="{x:Type RichTextBox}">
-            <Setter Property="IsReadOnly" Value="True" />
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/DataGridStyleRecibo.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="{x:Type Paragraph}">
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="TextAlignment" Value="Left" />
+                <Setter Property="Foreground" Value="Black" />
+            </Style>
+            <Style TargetType="{x:Type RichTextBox}">
+                <Setter Property="IsReadOnly" Value="True" />
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
         <Grid>
@@ -26,66 +32,83 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Source="/Styles/FM.png" />
+            <Image Grid.Column="0"
+                   Source="/Styles/FM.png" />
             <RichTextBox Grid.Column="1"
-                         Background="{StaticResource PrimaryColor13}"
+                         Background="{DynamicResource SecundaryColorRecibo}"
                          BorderThickness="0">
                 <FlowDocument>
                     <Paragraph />
                     <Paragraph Margin="5,5,0,5"
-                               FontFamily="{StaticResource CustomFont3}"
+                               FontFamily="{StaticResource CustomFont4}"
                                FontSize="20">
                         Forte Maquinas Ferramentas Eletricas!
                     </Paragraph>
-                    <Paragraph Margin="5,5,0,5" FontFamily="{StaticResource CustomFont3}">CNPJ: 13.436.516 0001-25</Paragraph>
-                    <Paragraph Margin="5,5,0,5" FontFamily="{StaticResource CustomFont3}">Rua Presidente Rodrigues Alves N° 1.355 Jardim Presidente Goiana Go</Paragraph>
-                    <Paragraph Margin="5,5,0,5" FontFamily="{StaticResource CustomFont3}">Fones: (62) 3258-4646 / (62) 3289-0694</Paragraph>
-                    <Paragraph Margin="5,5,0,5" FontFamily="{StaticResource CustomFont3}">Fones: (62) 3288-7174</Paragraph>
-                    <Paragraph Margin="5,5,0,5" FontFamily="{StaticResource CustomFont3}">Email: fortemaquinas1@hotmail.com</Paragraph>
+                    <Paragraph Margin="5,5,0,5"
+                               FontFamily="{StaticResource CustomFont4}">
+                        CNPJ: 13.436.516 0001-25
+                    </Paragraph>
+                    <Paragraph Margin="5,5,0,5"
+                               FontFamily="{StaticResource CustomFont4}">
+                        Rua Presidente Rodrigues Alves N° 1.355 Jardim Presidente Goiana Go
+                    </Paragraph>
+                    <Paragraph Margin="5,5,0,5"
+                               FontFamily="{StaticResource CustomFont4}">
+                        Fones: (62) 3258-4646 / (62) 3289-0694
+                    </Paragraph>
+                    <Paragraph Margin="5,5,0,5"
+                               FontFamily="{StaticResource CustomFont4}">
+                        Fones: (62) 3288-7174
+                    </Paragraph>
+                    <Paragraph Margin="5,5,0,5"
+                               FontFamily="{StaticResource CustomFont4}">
+                        Email: fortemaquinas1@hotmail.com
+                    </Paragraph>
                 </FlowDocument>
             </RichTextBox>
             <RichTextBox Grid.Column="2"
-                         Background="{StaticResource PrimaryColor13}"
+                         Background="{DynamicResource SecundaryColorRecibo}"
                          BorderThickness="0">
                 <FlowDocument>
                     <Paragraph Margin="5,10,0,5"
-                               FontFamily="{StaticResource CustomFont3}"
+                               FontFamily="{StaticResource CustomFont4}"
                                FontSize="40"
-                               Foreground="{StaticResource FontColor5}">
+                               Foreground="{DynamicResource TextColorRecibo}">
                         O.S:
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Margin="0,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
-                                   Foreground="{StaticResource FontColor5}"
+                                   FontFamily="{StaticResource CustomFont4}"
+                                   Foreground="{DynamicResource TextColorRecibo}"
                                    Text="N°:" />
                         <TextBlock Margin="0,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
-                                   Foreground="{StaticResource FontColor5}"
+                                   FontFamily="{StaticResource CustomFont4}"
+                                   Foreground="{DynamicResource TextColorRecibo}"
                                    Text="{Binding Relatorio.OsModel.IdOs}" />
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Margin="0,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="Data Entrada:" />
                         <TextBlock Margin="0,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="{Binding Relatorio.OsModel.DataEntrada, Converter={utils:DataPTConverter}}" />
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Margin="0,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="Data Entrega:" />
                         <TextBlock Margin="0,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="{Binding Relatorio.OsModel.DataFinalizacao, Converter={utils:DataPTConverter}}" />
                     </Paragraph>
+
                     <Paragraph>
                         <TextBlock Margin="0,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="Status:" />
                         <TextBlock Margin="0,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="{Binding Relatorio.NomeStatus}" />
                     </Paragraph>
                 </FlowDocument>
@@ -99,71 +122,79 @@
             </Grid.ColumnDefinitions>
 
             <RichTextBox Grid.Column="0"
-                         Background="{StaticResource PrimaryColor15}"
+                         Background="{DynamicResource SecundaryColorRecibo1}"
                          BorderThickness="0"
                          IsReadOnly="true">
                 <FlowDocument>
                     <Paragraph Margin="10,5,0,0"
-                               FontFamily="{StaticResource CustomFont3}"
+                               FontFamily="{StaticResource CustomFont4}"
                                FontSize="20">
                         Cliente:
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Margin="10,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="Nome:" />
                         <TextBlock Margin="5,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="{Binding Relatorio.NomeCliente}" />
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Margin="10,5,0,0"
-                        FontFamily="{StaticResource CustomFont3}"
-                        Text="Celular:" />
+                                   FontFamily="{StaticResource CustomFont4}"
+                                   Text="Celular:" />
                         <TextBlock Margin="5,5,0,0"
-                        FontFamily="{StaticResource CustomFont3}"
-                        Text="{Binding Relatorio.CelularCliente}"
-                        TextWrapping="Wrap" />
-
-                        <TextBlock Margin="10,5,0,0"
-                                    FontFamily="{StaticResource CustomFont3}"
-                                    Text="Cnpj:" />
-                        <TextBlock Margin="5,5,0,0"
-                                    FontFamily="{StaticResource CustomFont3}"
-                                    Text="{Binding Relatorio.CnpjCliente}"
-                                    TextWrapping="Wrap" />
-
+                                   FontFamily="{StaticResource CustomFont4}"
+                                   Text="{Binding Relatorio.CelularCliente}"
+                                   TextWrapping="Wrap" />
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Margin="10,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
+                                   Text="Cnpj:" />
+                        <TextBlock Margin="5,5,0,0"
+                                   FontFamily="{StaticResource CustomFont4}"
+                                   Text="{Binding Relatorio.CnpjCliente}"
+                                   TextWrapping="Wrap" />
+
+                        <TextBlock Margin="10,5,0,0"
+                                   FontFamily="{StaticResource CustomFont4}"
+                                   Text="CPf:" />
+                        <TextBlock Margin="5,5,0,0"
+                                   FontFamily="{StaticResource CustomFont4}"
+                                   Text="{Binding Relatorio.CpfCliente}"
+                                   TextWrapping="Wrap" />
+                    </Paragraph>
+                    <Paragraph>
+                        <TextBlock Margin="10,5,0,0"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="Ferramenta:" />
                         <TextBlock Margin="5,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="{Binding Relatorio.OsModel.Ferramenta}" />
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Margin="10,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="Marca:" />
                         <TextBlock Margin="5,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="{Binding Relatorio.NomeMarca}" />
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Margin="10,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="Modelo:" />
                         <TextBlock Margin="5,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="{Binding Relatorio.OsModel.Modelo}" />
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Margin="10,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="Observações:" />
                         <TextBlock Margin="5,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="{Binding Relatorio.OsModel.Obs}"
                                    TextWrapping="Wrap" />
 
@@ -173,96 +204,88 @@
                 </FlowDocument>
             </RichTextBox>
             <RichTextBox Grid.Column="2"
-                         Background="{StaticResource PrimaryColor15}"
+                         Background="{DynamicResource SecundaryColorRecibo1}"
                          BorderThickness="0"
                          IsReadOnly="true">
                 <FlowDocument>
                     <Paragraph Margin="5,5,0,0"
-                               FontFamily="{StaticResource CustomFont3}"
+                               FontFamily="{StaticResource CustomFont4}"
                                FontSize="20">
                         Detalhes:
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Margin="5,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="Atendente:" />
                         <TextBlock Margin="5,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="{Binding Relatorio.NomeCadastrante}" />
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Margin="5,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="Técnico:" />
                         <TextBlock Margin="5,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="{Binding Relatorio.NomeTecnico}" />
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Margin="5,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="Resp.Orçamento:" />
                         <TextBlock Margin="5,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="{Binding Relatorio.NomeResponsavel}" />
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Margin="5,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="Garantia:" />
                         <TextBlock Margin="5,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="{Binding Relatorio.OsModel.Garantia, Converter={utils:BooleanPTConverter}}" />
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Margin="5,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="Box:" />
                         <TextBlock Margin="5,5,0,0"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
                                    Text="{Binding Relatorio.OsModel.Box}" />
                     </Paragraph>
                 </FlowDocument>
             </RichTextBox>
         </Grid>
-
-        <RichTextBox BorderThickness="0" IsReadOnly="true">
+        <StackPanel Height="1"
+                    Margin="5"
+                    Background="{DynamicResource SecundaryColorRecibo2}" />
+        <RichTextBox BorderThickness="0"
+                     IsReadOnly="true">
             <FlowDocument>
                 <Paragraph Margin="10,5,0,0">
-                    <DataGrid x:Name="DgItensOsModel" 
+                    <DataGrid x:Name="DgItensOsModel"
                               AutoGenerateColumns="False"
-                              ItemsSource="{Binding ListItemsObservaveis}" >
-                        <!-- Estilizando os cabeçalhos -->
-                        <DataGrid.ColumnHeaderStyle>
-                            <Style TargetType="DataGridColumnHeader">
-                                <Setter Property="Foreground" Value="Black"/>
-                                <Setter Property="Height" Value="40" />
-                                <Setter Property="Margin" Value="0,0,30,0" />
-                                <Setter Property="Background" Value="Transparent"/>
-                                <!-- Remove fundo do cabeçalho -->
-                                <Setter Property="BorderThickness" Value="0"/>
-                                <!-- Remove borda -->
-                            </Style>
-                        </DataGrid.ColumnHeaderStyle>
-                        <DataGrid.Resources>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Foreground" Value="Black" />
-                            </Style>
-                        </DataGrid.Resources>
-                    </DataGrid>
+                              ItemsSource="{Binding ListItemsObservaveis, Mode=OneWay}"
+                              Style="{DynamicResource DataGridStyleRecibo}" />
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-
+        <StackPanel Height="1"
+                    Margin="5"
+                    Background="{DynamicResource SecundaryColorRecibo2}" />
         <Grid>
             <StackPanel Grid.Row="4"
                         Grid.ColumnSpan="4"
                         Margin="10,5,5,5"
                         Orientation="Horizontal">
-                <TextBox Foreground="{StaticResource PrimaryColor14}" Text="{Binding Relatorio.TotalProduto, Mode=OneWay}" />
-                <TextBox Foreground="{StaticResource PrimaryColor14}" Text="{Binding Relatorio.Desconto, Mode=OneWay}" />
-                <TextBox Foreground="{StaticResource PrimaryColor14}" Text="{Binding Relatorio.MaoDeObra, Mode=OneWay}" />
-                <TextBox Foreground="{StaticResource PrimaryColor14}" Text="{Binding Relatorio.TotalOS, Mode=OneWay}" />
+                <TextBox Foreground="{DynamicResource TextColorRecibo}"
+                         Text="{Binding Relatorio.TotalProduto, Mode=OneWay}" />
+                <TextBox Foreground="{DynamicResource TextColorRecibo}"
+                         Text="{Binding Relatorio.Desconto, Mode=OneWay}" />
+                <TextBox Foreground="{DynamicResource TextColorRecibo}"
+                         Text="{Binding Relatorio.MaoDeObra, Mode=OneWay}" />
+                <TextBox Foreground="{DynamicResource TextColorRecibo}"
+                         Text="{Binding Relatorio.TotalOS, Mode=OneWay}" />
             </StackPanel>
         </Grid>
 
@@ -276,50 +299,60 @@
 
             <RichTextBox Grid.Column="0"
                          Margin="15,20,0,0"
-                         BorderBrush="{StaticResource PrimaryColor14}"
+                         BorderBrush="{DynamicResource TextColorRecibo}"
                          BorderThickness="2"
                          IsReadOnly="true">
                 <FlowDocument>
                     <Paragraph>
                         <TextBlock Margin="15,5,5,5"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
+                                   FontSize="25"
                                    Text="N° OS:" />
                         <TextBlock Margin="0,5,5,5"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
+                                   FontSize="25"
                                    Text="{Binding Relatorio.OsModel.IdOs}" />
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Margin="15,5,5,5"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
+                                   FontSize="20"
                                    Text="Cliente:" />
-                        <TextBlock Margin="0,5,5,5"
-                                   FontFamily="{StaticResource CustomFont3}"
-                                   Text="{Binding Relatorio.NomeCliente}" />
+                        <TextBlock Margin="15,5,5,5"
+                                   FontFamily="{StaticResource CustomFont4}"
+                                   FontSize="20"
+                                   Text="{Binding Relatorio.NomeCliente}"
+                                   TextWrapping="Wrap" />
                     </Paragraph>
                 </FlowDocument>
             </RichTextBox>
 
             <RichTextBox Grid.Column="2"
                          Margin="0,20,0,0"
-                         BorderBrush="{StaticResource PrimaryColor14}"
+                         BorderBrush="{DynamicResource TextColorRecibo}"
                          BorderThickness="2"
                          IsReadOnly="true">
                 <FlowDocument>
                     <Paragraph>
                         <TextBlock Margin="5,5,5,5"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
+                                   FontSize="25"
                                    Text="N° OS:" />
                         <TextBlock Margin="0,5,5,5"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
+                                   FontSize="25"
                                    Text="{Binding Relatorio.OsModel.IdOs}" />
                     </Paragraph>
                     <Paragraph>
                         <TextBlock Margin="5,5,5,5"
-                                   FontFamily="{StaticResource CustomFont3}"
+                                   FontFamily="{StaticResource CustomFont4}"
+                                   FontSize="20"
                                    Text="Cliente:" />
-                        <TextBlock Margin="0,5,5,5"
-                                   FontFamily="{StaticResource CustomFont3}"
-                                   Text="{Binding Relatorio.NomeCliente}" />
+                        <TextBlock Margin="5,5,5,5"
+                                   FontFamily="{StaticResource CustomFont4}"
+                                   FontSize="20"
+                                   Text="{Binding Relatorio.NomeCliente}"
+                                   TextWrapping="Wrap" />
                     </Paragraph>
                 </FlowDocument>
             </RichTextBox>

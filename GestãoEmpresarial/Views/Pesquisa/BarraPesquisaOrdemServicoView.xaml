@@ -25,8 +25,7 @@
     <ComboBox x:Name="CbxStatus" 
               utils:EnterKeyBehavior.EnterCommand="{Binding PesquisarCommand}"
               materialDesign:HintAssist.Hint="Status. OS" 
-              SelectedValuePath="Key" DisplayMemberPath="Value" 
-              materialDesign:ColorZoneAssist.Mode="SecondaryLight"
+              SelectedValuePath="Key" DisplayMemberPath="Value"
               ItemsSource="{Binding StatusList}" 
               SelectedValue="{Binding PesquisaStatus, UpdateSourceTrigger=PropertyChanged}"
                   />

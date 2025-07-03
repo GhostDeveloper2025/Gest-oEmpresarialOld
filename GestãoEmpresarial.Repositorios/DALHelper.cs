@@ -1,12 +1,27 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using static Mysqlx.Expect.Open.Types;
 
 namespace GestãoEmpresarial.Helpers
 {
     static class DALHelper
     {
+        public static decimal? GetDecimalNullable(MySqlDataReader reader, string column_name)
+        {
+            try
+            {
+                if (!reader.IsDBNull(reader.GetOrdinal(column_name)))
+                    return reader.GetDecimal(column_name);
+                return null;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return null;
+            }
+        }
+
         public static string GetString(MySqlDataReader reader, string column_name)
         {
             string text = string.Empty;

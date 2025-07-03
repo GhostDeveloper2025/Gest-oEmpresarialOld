@@ -38,6 +38,8 @@ namespace GestãoEmpresarial.Repositorios
             model.IdCliente = DALHelper.GetInt32(reader, "IdCliente").Value;
             model.IdFuncionario = DALHelper.GetInt32(reader, "IdFuncionario").Value;
 
+            model.CustoVenda = DALHelper.GetDecimalNullable(reader, "CustoVenda");
+
             return model;
         }
 

@@ -1,5 +1,6 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!--#region Antigo...-->
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--#region DatePicker...-->
     <Style x:Key="StyleDP"
            BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}"
            TargetType="DatePicker">
@@ -9,11 +10,13 @@
         <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="FontFamily" Value="{DynamicResource CustomFont4}" />
 
-        <Setter Property="Background" Value="{StaticResource PrimaryColor2}" />
-        <Setter Property="Foreground" Value="{StaticResource FontColor1}" />
-        <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor3}" />
+        <Setter Property="Background" Value="{DynamicResource SecundaryTransparenteColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryDatePickerColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryDatePickerColor}" />
         <Setter Property="Margin" Value="5" />
     </Style>
-    <Style BasedOn="{StaticResource StyleDP}" TargetType="DatePicker" />
+    <Style BasedOn="{StaticResource StyleDP}"
+           TargetType="DatePicker" />
     <!--#endregion-->
+
 </ResourceDictionary>

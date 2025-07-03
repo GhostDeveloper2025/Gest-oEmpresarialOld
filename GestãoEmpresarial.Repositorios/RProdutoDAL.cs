@@ -219,11 +219,33 @@ namespace GestãoEmpresarial.Repositorios
             }
             return list;
         }
+        #region Este codigo nao salva a data ao atualizar
+        //public async Task UpdateAsync(ProdutoModel t)
+        //{
+        //    string query = "UPDATE tb_produto SET Nome = @Nome, CodProduto = @CodProduto, Descricao = @Descricao, " +
+        //                   "IdMarcaF = @Marca, ValorCusto = @ValorCusto, ValorVenda = @ValorVenda, IdCategoria = @IdCategoria " +
+        //                   "WHERE IdProduto = @Id;";
 
+        //    List<MySqlParameter> lista = new List<MySqlParameter>();
+        //    AddParameter(lista, "@Nome", t.Nome);
+        //    AddParameter(lista, "@CodProduto", t.CodProduto);
+        //    AddParameter(lista, "@Descricao", t.Descricao);
+        //    AddParameter(lista, "@Marca", t.IdMarca);
+        //    AddParameter(lista, "@ValorCusto", t.ValorCusto);
+        //    AddParameter(lista, "@ValorVenda", t.ValorVenda);
+        //    AddParameter(lista, "@IdCategoria", t.IdCategoria);
+        //    AddParameter(lista, "@Id", t.IdProduto);
+
+        //    ExecuteNonQuery(query, lista.ToArray());
+        //}
+        #endregion
+
+        // Salva a data ao atualizar
         public async Task UpdateAsync(ProdutoModel t)
         {
             string query = "UPDATE tb_produto SET Nome = @Nome, CodProduto = @CodProduto, Descricao = @Descricao, " +
-                           "IdMarcaF = @Marca, ValorCusto = @ValorCusto, ValorVenda = @ValorVenda, IdCategoria = @IdCategoria " +
+                           "IdMarcaF = @Marca, ValorCusto = @ValorCusto, ValorVenda = @ValorVenda, IdCategoria = @IdCategoria, " +
+                           "DataCadastro = NOW() " +  // Atualiza a data de cadastro para a data atual
                            "WHERE IdProduto = @Id;";
 
             List<MySqlParameter> lista = new List<MySqlParameter>();
@@ -235,6 +257,8 @@ namespace GestãoEmpresarial.Repositorios
             AddParameter(lista, "@ValorVenda", t.ValorVenda);
             AddParameter(lista, "@IdCategoria", t.IdCategoria);
             AddParameter(lista, "@Id", t.IdProduto);
+
+            //await ExecuteNonQueryAsync(query, lista.ToArray());
 
             ExecuteNonQuery(query, lista.ToArray());
         }

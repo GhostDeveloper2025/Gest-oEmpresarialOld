@@ -9,11 +9,11 @@ using System.Windows.Controls;
 
 namespace GestãoEmpresarial.Models
 {
-    public class TreeviewMenuCollection : ObservableCollection<TreeviewMenu>
+    public class NavigationMenuCollection : ObservableCollection<NavigationMenu>
     {
         public void Add(string header, PackIconKind icon)
         {
-            var obj = new TreeviewMenu()
+            var obj = new NavigationMenu()
             {
                 Header = header,
                 Icon = icon,
@@ -23,7 +23,7 @@ namespace GestãoEmpresarial.Models
 
         public void Add(string header, PackIconKind icon, Func<UserControl> getView)
         {
-            var obj = new TreeviewMenu()
+            var obj = new NavigationMenu()
             {
                 Header = header,
                 Icon = icon,
@@ -31,5 +31,6 @@ namespace GestãoEmpresarial.Models
             };
             Add(obj);
         }
+
     }
 }

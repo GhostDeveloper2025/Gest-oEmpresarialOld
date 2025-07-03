@@ -29,16 +29,20 @@ namespace GestãoEmpresarial.Repositorios
             object existe = ExecuteScalar("usp_pode_editar_ordem_servico", lista.ToArray(), true);
             return Convert.ToBoolean(existe);
         }
-
+        
+        // Criei fj
         public async Task DeleteAsync(OrdemServicoModel t)
         {
-            string query = "DELETE FROM tb_os WHERE IdOs = @id";
-            MySqlParameter[] arr = new MySqlParameter[]
-            {
-                new MySqlParameter() { Value = t.IdOs, ParameterName= "@id" },
-            };
-            ExecuteNonQuery(query, arr); // Executa de forma assíncrona
+            // Chama o método específico para cancelar a venda
+            //CancelarOs(t.IdOs);
         }
+        
+        // Criei fj
+        //public void CancelarOs(int osId)
+        //{
+        //    MySqlParameter[] parametros = new MySqlParameter[] { new MySqlParameter("Os_id", osId) };
+        //    ExecuteNonQuery("usp_cancel_Os", parametros, true); // Execução síncrona
+        //}
 
         public async Task<OrdemServicoModel> GetByIdAsync(int id)
         {
@@ -117,8 +121,8 @@ namespace GestãoEmpresarial.Repositorios
 
             string conditionsJoin = string.Join(" AND ", conditions); // Usar "AND" para combinar condições
             string query = $@"SELECT IdOs, DataEntrada, DataFinalizacao, IdCadastrante, IdCliente, Finalizado, Ferramenta, Modelo, Obs, IdTecnico,
-     IdResponsavel, TotalMaoObra, Box, Garantia, SubTotalProduto, DescontoProduto, TotalProduto, TotalOS, idcodigostatus, idcodigomarcasf
-     FROM tb_os WHERE {conditionsJoin} LIMIT 200";
+            IdResponsavel, TotalMaoObra, Box, Garantia, SubTotalProduto, DescontoProduto, TotalProduto, TotalOS, idcodigostatus, idcodigomarcasf
+            FROM tb_os WHERE {conditionsJoin} ORDER BY IdOs DESC LIMIT 200";
 
             List<OrdemServicoModel> lista = new List<OrdemServicoModel>();
             using (MySqlDataReader reader = ExecuteReader(query, parametros.ToArray()))
@@ -207,6 +211,10 @@ namespace GestãoEmpresarial.Repositorios
             AddParameter(lista, "DescontoProduto", t.TotalDescontoProduto);
             AddParameter(lista, "TotalProduto", t.TotalProduto);
             AddParameter(lista, "TotalOS", t.TotalOS);
+            AddParameter(lista, "idCliente", t.Cliente.Idcliente); // Novo parâmetro
+            AddParameter(lista, "ferramenta", t.Ferramenta); // Novo parâmetro
+            AddParameter(lista, "marca", t.Marca); // Novo parâmetro
+            AddParameter(lista, "modelo", t.Modelo); // Novo parâmetro
 
             ExecuteNonQuery("usp_upd_ordem_servico", lista.ToArray(), true); // Execução assíncrona
         }

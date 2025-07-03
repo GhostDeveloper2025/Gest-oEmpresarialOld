@@ -26,7 +26,7 @@ namespace GestãoEmpresarial.Models
 
         // Variável privada para armazenar o número de registros
         private int _numberOfRecords;
-
+       
         public int NumberOfRecords
         {
             get { return _numberOfRecords; } // Obtém o número de registros

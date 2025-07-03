@@ -21,6 +21,7 @@ namespace GestãoEmpresarial.Models
         public string Cep { get; set; }
         public string Telefone { get; set; }
         public string Celular { get; set; }
+        public string CelularNum { get { return Celular.GetNumber(); } }
         public string CNPJ { get; set; }
         public string CNPJNum { get { return CNPJ.GetNumber(); } }
         public string Email { get; set; }

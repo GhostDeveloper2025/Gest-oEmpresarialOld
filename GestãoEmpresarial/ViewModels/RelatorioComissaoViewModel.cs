@@ -20,7 +20,43 @@ namespace GestãoEmpresarial.ViewModels
         {
             _relatorioComissaoDAL = relatorioComissaoDAL;
             ListaComissaoVendas = new ObservableCollection<RelatorioComissaoVendasModel>();
-            BuscarComissaoCommand = new RelayCommand(BuscarComissao);
+            Paginas = new PaginacaoModel<RelatorioComissaoVendasModel>();
+            Paginas.ObterItens = BuscarHistorico;
+            BuscarHistoricoCommand = new RelayCommand(Paginas.IrParaPrimeiraPagina);
+        }
+        public ObservableCollection<RelatorioComissaoVendasModel> ListaComissaoVendas { get; }
+
+        public ICommand BuscarHistoricoCommand { get; }
+        public PaginacaoModel<RelatorioComissaoVendasModel> Paginas { get; set; }
+        // Adicione este método para atualizar os totais
+        private void AtualizarTotais()
+        {
+            RaisePropertyChanged(nameof(TotalVendido));
+            RaisePropertyChanged(nameof(TotalComissao));
+        }
+
+        private (List<RelatorioComissaoVendasModel>, int) BuscarHistorico(int pagina, int totalporpagina)
+        {
+            if (DataInicial.HasValue && DataFinal.HasValue)
+            {
+                var resultado = _relatorioComissaoDAL.ObterComissaoVendasAsync(
+                    ColaboradorSelecionado?.IdFuncionario,
+                    DataInicial,
+                    DataFinal.Value.AddDays(1),
+                    pagina,
+                    totalporpagina
+                ).GetAwaiter().GetResult();
+
+                _totalVendido = resultado.TotalVendido;
+                _TotalComissao = resultado.TotalComissao;
+                AtualizarTotais();
+                return (resultado.Itens, resultado.TotalRegistros);
+            }
+            else
+            {
+                AtualizarTotais();
+                return (new List<RelatorioComissaoVendasModel>(), 0);
+            }
         }
 
         private ColaboradorModel _colaboradorSelecionado;
@@ -64,25 +100,23 @@ namespace GestãoEmpresarial.ViewModels
                 }
             }
         }
+        private decimal _totalVendido;
 
-        public decimal TotalVendido { get { return ListaComissaoVendas.Sum(a => a.TotalVenda);  } }
-        public decimal TotalComissao { get { return ListaComissaoVendas.Sum(a => a.ValComissao);  } }
-
-        public ObservableCollection<RelatorioComissaoVendasModel> ListaComissaoVendas { get; }
-
-        public ICommand BuscarComissaoCommand { get; }
-
-        private void BuscarComissao()
+        public decimal TotalVendido
         {
-            var comissaoVendas = _relatorioComissaoDAL.ObterComissaoVendas(ColaboradorSelecionado?.IdFuncionario, DataInicial, DataFinal);
-
-            ListaComissaoVendas.Clear();
-            foreach (var item in comissaoVendas)
+            get
             {
-                ListaComissaoVendas.Add(item);
+                return _totalVendido;
             }
-            RaisePropertyChanged(nameof(TotalComissao));
-            RaisePropertyChanged(nameof(TotalVendido));
+        }
+
+        private decimal _TotalComissao;
+        public decimal TotalComissao
+        {
+            get
+            {
+                return _TotalComissao;
+            }
         }
 
     }
